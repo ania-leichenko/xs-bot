@@ -10,7 +10,7 @@ Amazon Web Services wrapper
 
 [2. Domain](#2-Domain)
 
-[3. Database Schema](#2-Database-Schema)
+[3. Database Schema](#3-Database-Schema)
 
 [4. Architecture](#4-Architecture)
 
