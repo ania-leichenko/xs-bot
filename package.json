@@ -1,0 +1,47 @@
+{
+  "name": "bws",
+  "private": "true",
+  "engines": {
+    "node": ">=16 <17",
+    "npm": ">=7 <8"
+  },
+  "scripts": {
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:fs": "ls-lint",
+    "lint:shared:js": "cd shared && npm run lint:js",
+    "lint:shared": "cd shared && npm run lint",
+    "lint:backend:js": "cd backend && npm run lint:js",
+    "lint:backend": "cd backend && npm run lint",
+    "lint:frontend:css": "cd frontend && npm run lint:css",
+    "lint:frontend:js": "cd frontend && npm run lint:js",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:css": "npm run lint:frontend:css",
+    "lint:js": "npm run lint:shared:js && npm run lint:backend:js && npm run lint:frontend:js",
+    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:css && npm run lint:js",
+    "install:shared": "cd shared && npm install --production=false",
+    "install:frontend": "cd frontend && npm install --production=false",
+    "install:backend": "cd backend && npm install --production=false",
+    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
+    "build:shared": "cd shared && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build": "npm run build:frontend && npm run build:backend"
+  },
+  "devDependencies": {
+    "@ls-lint/ls-lint": "1.10.0",
+    "@typescript-eslint/eslint-plugin": "5.9.1",
+    "editorconfig-checker": "4.0.2",
+    "eslint": "8.6.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "lint-staged": "12.1.7",
+    "prettier": "2.5.1",
+    "simple-git-hooks": "2.7.0",
+    "stylelint": "14.2.0",
+    "stylelint-config-standard": "24.0.0",
+    "stylelint-order": "5.0.0",
+    "typescript": "4.5.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  }
+}
