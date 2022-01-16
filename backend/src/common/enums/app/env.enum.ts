@@ -3,13 +3,21 @@ import { AppEnvironment } from '~/common/enums/app/app-environment.enum';
 
 config();
 
-const { NODE_ENV, PORT, DATABASE_URL, DB_POOL_MIN, DB_POOL_MAX, DB_DIALECT } =
-  process.env;
+const {
+  NODE_ENV,
+  PORT,
+  ADDRESS,
+  DATABASE_URL,
+  DB_POOL_MIN,
+  DB_POOL_MAX,
+  DB_DIALECT,
+} = process.env;
 
 const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: Number(PORT),
+    SERVER_ADDRESS: ADDRESS || 'http://localhost',
   },
   DB: {
     CONNECTION_STRING: DATABASE_URL,

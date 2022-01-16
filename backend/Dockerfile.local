@@ -1,0 +1,18 @@
+FROM node:16-alpine as shared-builder
+COPY package.json package-lock.json tsconfig.json .eslintrc.yml ./
+RUN npm ci
+
+WORKDIR /shared
+COPY ./shared/package.json ./shared/package-lock.json ./shared/tsconfig.json ./
+RUN npm ci
+COPY ./shared .
+RUN npm run build
+
+FROM node:16-alpine as backend-builder
+WORKDIR /backend
+COPY ./backend/package.json ./backend/package-lock.json ./backend/tsconfig.json ./
+RUN npm ci
+COPY --from=shared-builder / ../
+COPY ./backend .
+RUN npm update bws-shared
+RUN npm run build

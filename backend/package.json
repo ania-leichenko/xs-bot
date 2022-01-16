@@ -14,6 +14,7 @@
     "lint:js": "npx eslint \"src/**/*.ts\"",
     "lint": "npm run lint:js",
     "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/server.ts",
+    "start:prod": "node ./build/src/server.js",
     "prestart": "npm run migrate",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tsc-alias -p tsconfig.json",
@@ -26,12 +27,12 @@
     "fastify": "3.25.3",
     "knex": "1.0.1",
     "objection": "3.0.1",
-    "pg": "8.7.1"
+    "pg": "8.7.1",
+    "tsc-alias": "1.5.0",
+    "ts-node": "10.4.0"
   },
   "devDependencies": {
     "nodemon": "2.0.15",
-    "pino-pretty": "7.3.0",
-    "ts-node": "10.4.0",
-    "tsc-alias": "1.5.0"
+    "pino-pretty": "7.3.0"
   }
 }

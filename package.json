@@ -21,7 +21,7 @@
     "install:shared": "cd shared && npm install --production=false",
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
-    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
+    "install:all": "npm install && npm run install:shared && npm run install:frontend && npm run install:backend",
     "build:shared": "cd shared && npm run build",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
@@ -38,7 +38,9 @@
     "simple-git-hooks": "2.7.0",
     "stylelint": "14.2.0",
     "stylelint-config-standard": "24.0.0",
-    "stylelint-order": "5.0.0",
+    "stylelint-order": "5.0.0"
+  },
+  "dependencies": {
     "typescript": "4.5.4"
   },
   "simple-git-hooks": {
