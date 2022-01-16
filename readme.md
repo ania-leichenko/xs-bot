@@ -10,11 +10,13 @@ Amazon Web Services wrapper
 
 [2. Domain](#2-Domain)
 
-[3. Architecture](#3-Architecture)
+[3. Database Schema](#3-Database-Schema)
 
-[4. List of Technologies](#4-List-of-Technologies)
+[4. Architecture](#4-Architecture)
 
-[5. How to Run](#5-How-to-Run)
+[5. List of Technologies](#5-List-of-Technologies)
+
+[6. How to Run](#6-How-to-Run)
 
 ## 1. Introduction
 
@@ -26,14 +28,19 @@ Amazon Web Services wrapper
 
 TODO: explain domain
 
-## 3. Architecture
+## 3. Database Schema
+
+Database schema is available [here](https://dbdiagram.io/d/61dc0204f8370f0a2eebc133). It uses a couple of conventions:
+1. Data is splitted into several [schemas](https://www.postgresql.org/docs/9.1/ddl-schemas.html). Tables are named as follows: `{schema}___{table}`. In postgres it should be converted into `{schema}.{table}` (this modelling tool does not support dots in table names).
+
+## 4. Architecture
 
 TODO: explain architecture decisions
 
-## 4. List of Technologies
+## 5. List of Technologies
 
 TODO: write list of used technologies
 
-## 5. How to Run
+## 6. How to Run
 
 TODO: explain how to run app locally
