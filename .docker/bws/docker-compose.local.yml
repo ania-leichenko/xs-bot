@@ -45,8 +45,6 @@ services:
     restart: on-failure
     ports:
       - 3000:80
-    env_file:
-      - ../../.env/frontend.env
     networks:
       - bws_backend_network
       - bws_frontend_network

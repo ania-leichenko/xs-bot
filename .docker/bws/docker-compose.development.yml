@@ -37,16 +37,29 @@ services:
     image: docker.pkg.github.com/binarystudioacademy/bsa-winter-2021-2022-bws/bws-frontend-development:latest
     restart: on-failure
     ports:
-      - 80:80
-      - 443:443
-    env_file:
-      - ../../.env/frontend.env
+      - 3000:80
     networks:
       - bws_backend_network
       - bws_frontend_network
 
+  bws_frontend_auto_ssl:
+    image: valian/docker-nginx-auto-ssl
+    restart: on-failure
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - bws_frontend_auto_ssl_data:/etc/resty-auto-ssl
+    environment:
+      ALLOWED_DOMAINS: 'development.bws-cloud.com'
+      SITES: 'development.bws-cloud.com=bws_frontend:80'
+    networks:
+      - bws_frontend_network
+
 volumes:
   bws_postgres_data:
+    driver: local
+  bws_frontend_auto_ssl_data:
     driver: local
 
 networks:
