@@ -37,7 +37,8 @@ services:
     image: docker.pkg.github.com/binarystudioacademy/bsa-winter-2021-2022-bws/bws-frontend-development:latest
     restart: on-failure
     ports:
-      - 3000:80
+      - 80:80
+      - 443:443
     networks:
       - bws_backend_network
       - bws_frontend_network
