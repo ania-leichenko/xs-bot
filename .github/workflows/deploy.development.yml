@@ -3,7 +3,6 @@ name: Build
 on:
   push:
     branches:
-      - production
       - development
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -11,95 +10,67 @@ on:
 jobs:
   build-backend:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        stages:
-          - stage: development
-            shouldRelease: ${{ contains(github.ref, 'development') }}
-          - stage: production
-            shouldRelease: ${{ contains(github.ref, 'production') }}
+    environment: development
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Build image
-      if: ${{ matrix.stages.shouldRelease }}
       uses: whoan/docker-build-with-cache-action@v5
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        image_name: bws-backend-${{ matrix.stages.stage }}
+        image_name: bws-backend-development
         registry: docker.pkg.github.com
         image_tag: latest
         context: ./
-        dockerfile: "./backend/Dockerfile.${{ matrix.stages.stage }}"
+        dockerfile: ./backend/Dockerfile.development
 
   build-frontend:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        stages:
-          - stage: development
-            shouldRelease: ${{ contains(github.ref, 'development') }}
-          - stage: production
-            shouldRelease: ${{ contains(github.ref, 'production') }}
+    environment: development
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Build image
-      if: ${{ matrix.stages.shouldRelease }}
       uses: whoan/docker-build-with-cache-action@v5
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-        image_name: bws-frontend-${{ matrix.stages.stage }}
+        image_name: bws-frontend-development
         registry: docker.pkg.github.com
         image_tag: latest
         context: ./
-        dockerfile: "./frontend/Dockerfile.${{ matrix.stages.stage }}"
+        dockerfile: ./frontend/Dockerfile.development
         build_extra_args: "--build-arg=NGINX_CONFIG_NAME=nginx.development.conf"
 
   deploy:
     needs: [build-backend, build-frontend]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        stages:
-          - stage: development
-            shouldRelease: ${{ contains(github.ref, 'development') }}
-            DEPLOYMENT_HOST: DEVELOPMENT_DEPLOYMENT_HOST
-            DEPLOYMENT_USERNAME: DEVELOPMENT_DEPLOYMENT_USERNAME
-            DEPLOYMENT_SSH_KEY: DEVELOPMENT_DEPLOYMENT_SSH_KEY
-          # - stage: production
-          #   shouldRelease: ${{ contains(github.ref, 'production') }}
-          #   DEPLOYMENT_HOST: PRODUCTION_DEPLOYMENT_HOST
-          #   DEPLOYMENT_USERNAME: PRODUCTION_DEPLOYMENT_USERNAME
-          #   DEPLOYMENT_PASSWORD: PRODUCTION_DEPLOYMENT_PASSWORD
+    environment: development
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Copy docker-compose.yml to deployment server
-      if: ${{ matrix.stages.shouldRelease }}
       uses: appleboy/scp-action@master
       with:
-        host: ${{ secrets[matrix.stages.DEPLOYMENT_HOST] }}
-        username: ${{ secrets[matrix.stages.DEPLOYMENT_USERNAME] }}
-        key: ${{ secrets[matrix.stages.DEPLOYMENT_SSH_KEY] }}
-        source: ".docker/bws/docker-compose.${{ matrix.stages.stage }}.yml"
-        target: "app"
+        host: ${{ secrets.DEPLOYMENT_HOST }}
+        username: ${{ secrets.DEPLOYMENT_USERNAME }}
+        key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+        source: .docker/bws/docker-compose.development.yml
+        target: app
 
     - name: Run docker-compose.yml on deployment server
-      if: ${{ matrix.stages.shouldRelease }}
       uses: appleboy/ssh-action@master
       env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        host: ${{ secrets[matrix.stages.DEPLOYMENT_HOST] }}
-        username: ${{ secrets[matrix.stages.DEPLOYMENT_USERNAME] }}
-        key: ${{ secrets[matrix.stages.DEPLOYMENT_SSH_KEY] }}
+        host: ${{ secrets.DEPLOYMENT_HOST }}
+        username: ${{ secrets.DEPLOYMENT_USERNAME }}
+        key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
         envs: GITHUB_USERNAME,GITHUB_TOKEN
         script: |
           export GITHUB_USERNAME=$GITHUB_USERNAME
