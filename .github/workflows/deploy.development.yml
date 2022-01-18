@@ -43,7 +43,7 @@ jobs:
         image_tag: latest
         context: ./
         dockerfile: ./frontend/Dockerfile.development
-        build_extra_args: "--compress=true --build-arg=REACT_APP_API_ORIGIN_URL=/api/v1"
+        build_extra_args: "--build-arg=REACT_APP_API_ORIGIN_URL=/api/v1"
 
   deploy:
     needs: [build-backend, build-frontend]
