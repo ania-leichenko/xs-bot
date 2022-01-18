@@ -41,6 +41,7 @@ services:
       dockerfile: frontend/Dockerfile.local
       args:
         NGINX_CONFIG_NAME: nginx.local.conf
+        REACT_APP_API_ORIGIN_URL: /api/v1
     restart: on-failure
     ports:
       - 3000:80
