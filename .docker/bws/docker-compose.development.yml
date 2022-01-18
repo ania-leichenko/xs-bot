@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  bws_postgres:
+    container_name: bws_postgres
+    image: postgres:14.1
+    restart: on-failure
+    ports:
+      - 7433:5432
+    networks:
+      - bws_backend_network
+    env_file:
+      - ../../.env/postgres.env
+    volumes:
+      - bws_postgres_data:/var/lib/postgresql/data
+
+  bws_backend:
+    container_name: bws_backend
+    image: docker.pkg.github.com/binarystudioacademy/bsa-winter-2021-2022-bws/bws-backend-development:latest
+    restart: on-failure
+    command:
+      - /bin/sh
+      - -c
+      - |
+        npm run migrate:dev
+        npm run start:prod
+    ports:
+      - 3001:3001
+    env_file:
+      - ../../.env/backend.env
+    networks:
+      - bws_backend_network
+      - bws_frontend_network
+
+  bws_frontend:
+    container_name: bws_frontend
+    image: docker.pkg.github.com/binarystudioacademy/bsa-winter-2021-2022-bws/bws-frontend-development:latest
+    restart: on-failure
+    ports:
+      - 3000:80
+    networks:
+      - bws_backend_network
+      - bws_frontend_network
+
+volumes:
+  bws_postgres_data:
+    driver: local
+
+networks:
+  bws_backend_network:
+    driver: bridge
+  bws_frontend_network:
+    driver: bridge
