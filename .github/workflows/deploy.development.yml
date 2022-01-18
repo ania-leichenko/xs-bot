@@ -77,9 +77,9 @@ jobs:
           export GITHUB_TOKEN=$GITHUB_TOKEN
           echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u $GITHUB_USERNAME -p $GITHUB_TOKEN
           cd app/.docker/bws
-          docker-compose -f docker-compose.${{ matrix.stages.stage }}.yml pull
-          docker-compose -f docker-compose.${{ matrix.stages.stage }}.yml stop
-          docker-compose -f docker-compose.${{ matrix.stages.stage }}.yml up -d --build
+          docker-compose -f docker-compose.development.yml pull
+          docker-compose -f docker-compose.development.yml stop
+          docker-compose -f docker-compose.development.yml up -d --build
 
   # notify:
   #   needs: deploy
