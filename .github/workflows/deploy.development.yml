@@ -43,7 +43,6 @@ jobs:
         image_tag: latest
         context: ./
         dockerfile: ./frontend/Dockerfile.development
-        build_extra_args: "--build-arg=NGINX_CONFIG_NAME=nginx.development.conf"
 
   deploy:
     needs: [build-backend, build-frontend]
