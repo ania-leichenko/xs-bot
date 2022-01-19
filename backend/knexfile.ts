@@ -4,7 +4,13 @@ import { AppEnvironment, ENV, TableName } from './src/common/enums/enums';
 
 const DEFAULT_ENV_CONFIG: Knex.Config = {
   client: ENV.DB.DIALECT,
-  connection: ENV.DB.CONNECTION_STRING,
+  connection: {
+    user: ENV.DB.USER,
+    password: ENV.DB.PASSWORD,
+    database: ENV.DB.DATABASE,
+    host: ENV.DB.HOST,
+    port: ENV.DB.PORT,
+  },
   pool: {
     min: ENV.DB.POOL_MIN,
     max: ENV.DB.POOL_MIN,

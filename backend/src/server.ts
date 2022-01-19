@@ -17,7 +17,7 @@ app.register(initApi, {
   prefix: ENV.API.V1_PREFIX,
 });
 
-app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_ADDRESS, (err, address) => {
+app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
   if (err) {
     app.log.error(err);
   }

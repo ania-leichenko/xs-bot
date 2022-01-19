@@ -11,6 +11,10 @@ services:
       - bws_backend_network
     env_file:
       - ../../.env/postgres.env
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=bws
+      - PGDATA=/var/lib/postgresql/data
     volumes:
       - bws_postgres_data:/var/lib/postgresql/data
 
@@ -29,7 +33,12 @@ services:
     ports:
       - 3001:3001
     env_file:
-      - ../../.env/backend.env
+      - ../../backend/.env
+    environment:
+      - DB_USER=postgres
+      - DB_DATABASE=bws
+      - DB_HOST=bws_postgres
+      - DB_PORT=5432
     networks:
       - bws_backend_network
       - bws_frontend_network
