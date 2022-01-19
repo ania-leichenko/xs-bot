@@ -17,7 +17,7 @@ const ENV = {
   APP: {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: Number(PORT),
-    SERVER_ADDRESS: ADDRESS || 'http://localhost',
+    SERVER_ADDRESS: ADDRESS ?? 'http://localhost',
   },
   DB: {
     CONNECTION_STRING: DATABASE_URL,
