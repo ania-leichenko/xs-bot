@@ -134,7 +134,7 @@ You should use \*.example files as a reference.
 
 4. Apply migrations: `cd backend && npm run migrate:dev`
 
-5. Run backend: `cd backend && npm run start`
+5. Run backend: `cd backend && npm run start:dev`
 
 6. Run frontend: `cd frontend && npm run start`
 
