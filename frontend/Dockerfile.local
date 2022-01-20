@@ -21,7 +21,7 @@ RUN npm run build
 
 FROM nginx:1.21.1-alpine
 ARG NGINX_CONFIG_NAME
-COPY ./frontend/nginx/$NGINX_CONFIG_NAME /etc/nginx/nginx.conf
+COPY ./nginx/$NGINX_CONFIG_NAME /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=frontend-builder /frontend/build/ /usr/share/nginx/html
 EXPOSE 80 443
