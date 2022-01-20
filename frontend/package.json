@@ -9,7 +9,7 @@
     "lint:js": "npx eslint \"src/**/*.{ts,tsx}\" --resolve-plugins-relative-to .",
     "lint:css": "npx stylelint \"src/**/*.scss\"",
     "lint": "npm run lint:css && npm run lint:js",
-    "start": "react-scripts start",
+    "start": "env-cmd -f ../.env/frontend.env react-scripts start",
     "build": "react-scripts build"
   },
   "dependencies": {
@@ -18,6 +18,7 @@
     "@reduxjs/toolkit": "1.7.1",
     "bws-shared": "file:../shared/build",
     "clsx": "1.1.1",
+    "env-cmd": "^10.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "7.24.0",

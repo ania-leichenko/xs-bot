@@ -24,11 +24,12 @@
     "bws-shared": "file:../shared/build",
     "dotenv": "12.0.4",
     "fastify": "3.25.3",
+    "fastify-cors": "^6.0.2",
     "knex": "1.0.1",
     "objection": "3.0.1",
     "pg": "8.7.1",
-    "tsc-alias": "1.5.0",
-    "ts-node": "10.4.0"
+    "ts-node": "10.4.0",
+    "tsc-alias": "1.5.0"
   },
   "devDependencies": {
     "nodemon": "2.0.15",

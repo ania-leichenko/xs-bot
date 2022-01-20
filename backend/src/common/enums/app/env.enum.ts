@@ -1,12 +1,13 @@
 import { config } from 'dotenv';
 import { AppEnvironment } from '~/common/enums/app/app-environment.enum';
 
-config();
+config({ path: '../.env/backend.env' });
 
 const {
   NODE_ENV,
   PORT,
   HOST,
+  FRONTEND_URL,
   DB_USER,
   DB_PASSWORD,
   DB_DATABASE,
@@ -22,6 +23,7 @@ const ENV = {
     NODE_ENV: <AppEnvironment>NODE_ENV,
     SERVER_PORT: Number(PORT),
     SERVER_HOST: HOST ?? 'http://localhost',
+    FRONTEND_URL: FRONTEND_URL,
   },
   DB: {
     USER: DB_USER,

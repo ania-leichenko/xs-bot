@@ -20,6 +20,8 @@ services:
 
   bws_backend:
     container_name: bws_backend
+    depends_on:
+      - bws_postgres
     image: docker.pkg.github.com/binarystudioacademy/bsa-winter-2021-2022-bws/bws-backend-development:latest
     restart: on-failure
     command:
@@ -31,12 +33,13 @@ services:
     ports:
       - 3001:3001
     env_file:
-      - ../../backend/.env
+      - ../../.env/backend.env
     environment:
       - DB_USER=postgres
       - DB_DATABASE=bws
       - DB_HOST=bws_postgres
       - DB_PORT=5432
+      - FRONTEND_URL=http://bws_frontend:80
     networks:
       - bws_backend_network
       - bws_frontend_network

@@ -4,6 +4,7 @@ import { Model } from 'objection';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
+import cors from 'fastify-cors';
 
 const app = Fastify({
   logger: {
@@ -12,6 +13,10 @@ const app = Fastify({
 });
 
 Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
+
+app.register(cors, {
+  origin: ENV.APP.FRONTEND_URL,
+});
 
 app.register(initApi, {
   prefix: ENV.API.V1_PREFIX,
@@ -22,6 +27,6 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
     app.log.error(err);
   }
   app.log.info(
-    `Listening to connections on — ${address}, Environment: ${ENV.APP.NODE_ENV}`,
+    `Listening to connections on - ${address}, Environment: ${ENV.APP.NODE_ENV}`,
   );
 });
