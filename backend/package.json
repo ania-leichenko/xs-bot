@@ -18,8 +18,7 @@
     "prestart": "npm run migrate",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tsc-alias -p tsconfig.json",
-    "build:copy": "cp -r package.json package-lock.json build",
-    "build": "npm run build:ts && npm run build:copy"
+    "build": "npm run build:ts"
   },
   "dependencies": {
     "bws-shared": "file:../shared/build",
