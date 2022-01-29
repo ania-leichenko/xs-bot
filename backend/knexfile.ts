@@ -1,6 +1,7 @@
 import { Knex } from 'knex';
 import { knexSnakeCaseMappers } from 'objection';
-import { AppEnvironment, ENV, TableName } from './src/common/enums/enums';
+import { TableName } from '~/data/common/table-name.enum';
+import { AppEnvironment, ENV } from './src/common/enums/enums';
 
 const DEFAULT_ENV_CONFIG: Knex.Config = {
   client: ENV.DB.DIALECT,

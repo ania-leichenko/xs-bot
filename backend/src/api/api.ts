@@ -1,22 +1,14 @@
+import { ApiPath } from 'bws-shared/common/enums/enums';
 import { FastifyPluginAsync } from 'fastify';
-import { ApiPath } from '~/common/enums/enums';
-import { auth, user } from '~/services/services';
-import { initAuthApi } from './auth/auth.api';
-import { initUsersApi } from './users/users.api';
+import { masterService } from '~/services/services';
+import { initMastersApi } from './masters/masters.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
-  fastify.register(initAuthApi, {
+  fastify.register(initMastersApi, {
     services: {
-      auth,
+      masterService,
     },
-    prefix: ApiPath.AUTH,
-  });
-
-  fastify.register(initUsersApi, {
-    services: {
-      user,
-    },
-    prefix: ApiPath.USERS,
+    prefix: ApiPath.MASTERS,
   });
 };
 

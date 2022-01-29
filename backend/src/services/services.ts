@@ -1,13 +1,8 @@
-import { user as userRepository } from '~/data/repositories/repositories';
-import { Auth } from './auth/auth.service';
-import { User } from './user/user.service';
+import { masterRepository } from '~/data/repositories/repositories';
+import { MasterService } from './master/master.service';
 
-const auth = new Auth({
-  userRepository,
+const masterService = new MasterService({
+  masterRepository,
 });
 
-const user = new User({
-  userRepository,
-});
-
-export { auth, user };
+export { masterService };

@@ -1,8 +1,8 @@
-import { UserModel } from '~/data/models/models';
-import { User } from './user/user.repository';
+import { MasterModel } from '~/data/models/models';
+import { MasterRepository } from './master/master.repository';
 
-const user = new User({
-  UserModel,
+const masterRepository = new MasterRepository({
+  MasterModel,
 });
 
-export { user };
+export { masterRepository };
