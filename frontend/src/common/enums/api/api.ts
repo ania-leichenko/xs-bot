@@ -1,1 +1,1 @@
-export { ApiPath, AuthApiPath } from 'bws-shared/common/enums/enums';
+export { ApiPath, MastersApiPath } from 'bws-shared/common/enums/enums';

@@ -1,5 +1,4 @@
 enum ApiPath {
-  AUTH = '/auth',
   MASTERS = '/masters',
 }
 

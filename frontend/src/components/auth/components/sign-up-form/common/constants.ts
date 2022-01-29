@@ -1,8 +1,9 @@
-import { UserPayloadKey } from 'common/enums/enums';
-import { UserCreatePayload } from 'common/types/types';
+import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
 
-const DEFAULT_REGISTER_PAYLOAD: UserCreatePayload = {
-  [UserPayloadKey.EMAIL]: '',
+const DEFAULT_REGISTER_PAYLOAD: MasterSignUpDto = {
+  email: '',
+  name: '',
+  password: '',
 };
 
 export { DEFAULT_REGISTER_PAYLOAD };

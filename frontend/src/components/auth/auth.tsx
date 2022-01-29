@@ -1,7 +1,7 @@
 import { FC } from 'react';
+import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
 import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
-import { UserCreatePayload } from 'common/types/types';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
 import { SignInForm, SignUpForm } from './components/components';
 
@@ -13,7 +13,7 @@ const Auth: FC = () => {
     // handle sign in
   };
 
-  const handleSignUpSubmit = (payload: UserCreatePayload): void => {
+  const handleSignUpSubmit = (payload: MasterSignUpDto): void => {
     dispatch(authActions.signUp(payload));
   };
 
