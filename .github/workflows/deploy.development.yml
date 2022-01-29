@@ -85,6 +85,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     if: always()
+    environment: development
     steps:
       - name: Trigger this job at the end of workflow
         uses: technote-space/workflow-conclusion-action@v2
