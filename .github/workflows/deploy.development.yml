@@ -81,20 +81,20 @@ jobs:
           docker-compose -f docker-compose.development.yml stop
           docker-compose -f docker-compose.development.yml up -d --build
 
-  # notify:
-  #   needs: deploy
-  #   runs-on: ubuntu-latest
-  #   if: always()
-  #   steps:
-  #     - name: Trigger this job at the end of workflow
-  #       uses: technote-space/workflow-conclusion-action@v2
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Trigger this job at the end of workflow
+        uses: technote-space/workflow-conclusion-action@v2
 
-  #     - name: Slack Notification
-  #       if: always()
-  #       uses: rtCamp/action-slack-notify@v2.2.0
-  #       env:
-  #         SLACK_USERNAME: Deployment
-  #         SLACK_TITLE: Status
-  #         # WORKFLOW_CONCLUSION: neutral, success, skipped, cancelled, timed_out, action_required, failure
-  #         SLACK_MESSAGE: "Deployment is ${{ env.WORKFLOW_CONCLUSION == 'success' && 'Success 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }}"
-  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Slack Notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2.2.0
+        env:
+          SLACK_USERNAME: Deployment
+          SLACK_TITLE: Status
+          # WORKFLOW_CONCLUSION: neutral, success, skipped, cancelled, timed_out, action_required, failure
+          SLACK_MESSAGE: "Deployment is ${{ env.WORKFLOW_CONCLUSION == 'success' && 'Success 🟢' || env.WORKFLOW_CONCLUSION == 'cancelled' && 'Cancelled 🟡' || env.WORKFLOW_CONCLUSION == 'skipped' && 'Skipped 🔵' || 'Error 🔴' }}"
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
