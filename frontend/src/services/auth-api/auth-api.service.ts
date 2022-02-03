@@ -4,7 +4,7 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
+import { MasterSignUpDto, Master } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
 
@@ -22,7 +22,7 @@ class AuthApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public signUp(payload: MasterSignUpDto): Promise<void> {
+  public signUp(payload: MasterSignUpDto): Promise<Master> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.SIGN_UP),
       {

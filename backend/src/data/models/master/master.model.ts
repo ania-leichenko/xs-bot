@@ -1,8 +1,8 @@
-import { MasterTableField } from './master-table-field.enum';
-import { TableName } from '../../common/table-name.enum';
+import { TableName } from '~/common/enums/enums';
 import { AbstractModel } from '../abstract/abstract.model';
+import { MasterTableField } from './master-table-field.enum';
 
-class MasterModel extends AbstractModel {
+class Master extends AbstractModel {
   [MasterTableField.EMAIL]: string;
   [MasterTableField.NAME]: string;
   [MasterTableField.PASSWORD_HASH]: string;
@@ -13,4 +13,4 @@ class MasterModel extends AbstractModel {
   }
 }
 
-export { MasterModel };
+export { Master };

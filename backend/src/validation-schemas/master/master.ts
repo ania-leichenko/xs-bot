@@ -1,1 +1,1 @@
-export { masterSignUpValidationSchema } from 'bws-shared/validation/master/master';
+export { masterSignUp } from 'bws-shared/validation/master/master';

@@ -1,8 +1,8 @@
-import { masterRepository } from '~/data/repositories/repositories';
-import { MasterService } from './master/master.service';
+import { master as masterRepository } from '~/data/repositories/repositories';
+import { Master } from './master/master.service';
 
-const masterService = new MasterService({
+const master = new Master({
   masterRepository,
 });
 
-export { masterService };
+export { master };

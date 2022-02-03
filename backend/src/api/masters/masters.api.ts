@@ -1,22 +1,18 @@
-import { masterService as masterServ } from '~/services/services';
-import {
-  HttpCode,
-  HttpMethod,
-  MastersApiPath,
-} from 'bws-shared/common/enums/enums';
-import { masterSignUpValidationSchema } from 'bws-shared/validation/master/master';
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { MasterSignUpDto } from 'bws-shared/dtos/dtos';
+import { master as masterServ } from '~/services/services';
+import { masterSignUp as masterSignUpValidationSchema } from '~/validation-schemas/validation-schemas';
+import { HttpCode, HttpMethod, MastersApiPath } from '~/common/enums/enums';
+import { MasterSignUpDto } from '~/common/types/types';
 
 type Options = {
   services: {
-    masterService: typeof masterServ;
+    master: typeof masterServ;
   };
 };
 
 const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { masterService } = opts.services;
+  const { master: masterService } = opts.services;
 
   fastify.route({
     method: HttpMethod.GET,

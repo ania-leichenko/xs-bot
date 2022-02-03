@@ -1,28 +1,25 @@
-import { MasterDto, MasterSignUpDto } from 'bws-shared/dtos/dtos';
-import { masterRepository as masterRep } from '~/data/repositories/repositories';
-import { MasterEntity } from './master.entity';
+import { Master as TMaster, MasterSignUpDto } from '~/common/types/types';
+import { master as masterRep } from '~/data/repositories/repositories';
+import { Master as MasterEntity } from './master.entity';
 
 type Constructor = {
   masterRepository: typeof masterRep;
 };
 
-class MasterService {
+class Master {
   #masterRepository: typeof masterRep;
 
   constructor({ masterRepository }: Constructor) {
     this.#masterRepository = masterRepository;
   }
 
-  async getAll(): Promise<MasterDto[]> {
+  async getAll(): Promise<TMaster[]> {
     const masters = await this.#masterRepository.getAll();
 
-    return masters.map((m) => {
-      const master: MasterDto = {
-        id: m.id,
-        email: m.email,
-      };
-      return master;
-    });
+    return masters.map((m) => ({
+      id: m.id,
+      email: m.email,
+    }));
   }
 
   async create(createMasterDto: MasterSignUpDto): Promise<void> {
@@ -34,4 +31,4 @@ class MasterService {
   }
 }
 
-export { MasterService };
+export { Master };

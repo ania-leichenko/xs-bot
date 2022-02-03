@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 import { getFormattedISODate } from '~/helpers/helpers';
-import { TableName } from '~/data/common/table-name.enum';
+import { TableName } from '~/common/enums/enums';
 
 const TABLE_NAME = TableName.MASTERS;
 

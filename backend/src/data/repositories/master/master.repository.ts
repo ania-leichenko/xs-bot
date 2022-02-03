@@ -1,11 +1,11 @@
-import { MasterModel as MasterM } from '~/data/models/models';
-import { MasterEntity } from '~/services/master/master.entity';
+import { Master as MasterM } from '~/data/models/models';
+import { Master as MasterEntity } from '~/services/master/master.entity';
 
 type Constructor = {
   MasterModel: typeof MasterM;
 };
 
-class MasterRepository {
+class Master {
   #MasterModel: typeof MasterM;
 
   constructor({ MasterModel }: Constructor) {
@@ -14,7 +14,7 @@ class MasterRepository {
 
   async getAll(): Promise<MasterEntity[]> {
     const masters = await this.#MasterModel.query();
-    return masters.map(MasterRepository.modelToEntity);
+    return masters.map(Master.modelToEntity);
   }
 
   create(master: MasterEntity): Promise<void> {
@@ -24,8 +24,8 @@ class MasterRepository {
         id: master.id,
         email: master.email,
         name: master.name,
-        password_hash: '', //TODO: replace by actual values
-        password_salt: '',
+        passwordHash: '', //TODO: replace by actual values
+        passwordSalt: '',
         createdAt: master.createdAt.toISOString(),
       })
       .then();
@@ -41,4 +41,4 @@ class MasterRepository {
   }
 }
 
-export { MasterRepository };
+export { Master };

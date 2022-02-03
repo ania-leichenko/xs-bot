@@ -11,3 +11,4 @@ export {
 } from './form/form';
 export { type HttpOptions } from './http/http';
 export { type ValidationSchema } from './validation/validation';
+export { type MasterSignUpDto, type Master } from './master/master';

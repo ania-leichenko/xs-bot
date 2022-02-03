@@ -1,1 +1,1 @@
-export { MasterModel } from './master/master.model';
+export { Master } from './master/master.model';

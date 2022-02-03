@@ -1,1 +1,1 @@
-export { type ValidationSchema } from 'bws-shared/validation/validation-schemas';
+export { type ValidationSchema } from 'bws-shared/common/types/types';
