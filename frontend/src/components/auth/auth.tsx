@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
+import { MasterSignUpDto } from 'common/types/types';
 import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';

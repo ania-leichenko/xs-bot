@@ -1,1 +1,1 @@
-export { nameof } from './nameof/nameof';
+export { getNameOf } from './get-name-of/get-name-of';

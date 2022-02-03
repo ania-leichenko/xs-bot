@@ -1,8 +1,8 @@
-import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
-import { nameof } from 'bws-shared/helpers/typescript/typescript';
-import { masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
+import { masterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
 import { ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
+import { getNameOf } from 'helpers/helpers';
+import { MasterSignUpDto } from 'common/types/types';
 import { Button, Input } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 
@@ -25,7 +25,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             type={InputType.TEXT}
             label="Email"
             placeholder="Enter your email"
-            name={nameof<MasterSignUpDto>('email')}
+            name={getNameOf<MasterSignUpDto>('email')}
             control={control}
             errors={errors}
           />
@@ -33,7 +33,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             type={InputType.TEXT}
             label="Name"
             placeholder="Enter your name"
-            name={nameof<MasterSignUpDto>('name')}
+            name={getNameOf<MasterSignUpDto>('name')}
             control={control}
             errors={errors}
           />
@@ -41,7 +41,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             type={InputType.TEXT}
             label="Password"
             placeholder="Enter your password"
-            name={nameof<MasterSignUpDto>('password')}
+            name={getNameOf<MasterSignUpDto>('password')}
             control={control}
             errors={errors}
           />

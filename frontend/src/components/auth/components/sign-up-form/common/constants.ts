@@ -1,4 +1,4 @@
-import { MasterSignUpDto } from 'bws-shared/dtos/master/master';
+import { MasterSignUpDto } from 'common/types/types';
 
 const DEFAULT_REGISTER_PAYLOAD: MasterSignUpDto = {
   email: '',

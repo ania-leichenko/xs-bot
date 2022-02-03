@@ -1,8 +1,8 @@
 enum MasterTableField {
   NAME = 'name',
   EMAIL = 'email',
-  PASSWORD_HASH = 'password_hash',
-  PASSWORD_SALT = 'password_salt',
+  PASSWORD_HASH = 'passwordHash',
+  PASSWORD_SALT = 'passwordSalt',
 }
 
 export { MasterTableField };

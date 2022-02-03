@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { getRandomId } from '~/helpers/helpers';
 
-class MasterEntity {
+class Master {
   public id: string;
   public name: string;
   public email: string;
@@ -33,8 +33,8 @@ class MasterEntity {
     name: string;
     email: string;
     createdAt: Date;
-  }): MasterEntity {
-    return new MasterEntity({
+  }): Master {
+    return new Master({
       id,
       name,
       email,
@@ -48,9 +48,9 @@ class MasterEntity {
   }: {
     name: string;
     email: string;
-  }): MasterEntity {
-    return new MasterEntity({
-      id: uuidv4(),
+  }): Master {
+    return new Master({
+      id: getRandomId(),
       name,
       email,
       createdAt: new Date(),
@@ -58,4 +58,4 @@ class MasterEntity {
   }
 }
 
-export { MasterEntity };
+export { Master };

@@ -1,1 +1,1 @@
-export { masterSignUpValidationSchema } from './master-sign-up/master-sign-up.validation-schema';
+export { masterSignUp } from './master-sign-up/master-sign-up.validation-schema';
