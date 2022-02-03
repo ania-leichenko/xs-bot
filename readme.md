@@ -122,31 +122,33 @@ As we are already using js on both frontend and backend it would be useful to sh
 
 1. Create and fill all .env files. These files are:
 
-- ./frontend/.env
-- ./backend/.env
+- .env/frontend.env
+- .env/backend.env
 - .env/postgres.env
 
-You should use \*.example files as a reference.
+You should use .env.example folder as a reference.
 
 2. Install dependencies (node_modules). Run `npm run install:all` in the root folder.
 
-3. Run database. You can either run it in docker using command `cd ./docker/bws && docker-compose -f docker-compose.services.yml up --build` or by installing postgres on your computer. Docker variant is preferred.
+3. Install pre-commit hooks: `npx simple-git-hooks` in the root folder. This hook is used to verify code style on commit.
 
-4. Apply migrations: `cd backend && npm run migrate:dev`
+4. Run database. You can either run it in docker using command `cd ./docker/bws && docker-compose -f docker-compose.services.yml up --build` or by installing postgres on your computer. Docker variant is preferred.
 
-5. Run backend: `cd backend && npm run start:dev`
+5. Apply migrations: `cd backend && npm run migrate:dev`
 
-6. Run frontend: `cd frontend && npm run start`
+6. Run backend: `cd backend && npm run start:dev`
+
+7. Run frontend: `cd frontend && npm run start`
 
 ### 5.2 In Docker (without hot reload)
 
 1. Create and fill all .env files. These files are:
 
-- ./frontend/.env
-- ./backend/.env
+- .env/frontend.env
+- .env/backend.env
 - .env/postgres.env
 
-You should use \*.example files as a reference.
+You should use .env.example folder as a reference.
 
 2. Run docker: `cd .docker/bws && docker-compose -f docker-compose.yml up --build`
 
