@@ -1,7 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 .sign-up-title,
-.sign-up-form {
+.sign-up-form,
+.sign-in-link,
+.sign-up-form-policy {
   width: 25%;
   margin: 0 auto;
   font-family: Montserrat, sans-serif;
@@ -14,7 +16,12 @@
   border-radius: 10px 10px 0 0;
 }
 
-.sign-up-form {
+.sign-up-form,
+.sign-in-link {
+  padding: 0 50px;
+}
+
+.sign-up-form-policy {
   padding: 0 50px 50px;
   border-radius: 0 0 10px 10px;
 }

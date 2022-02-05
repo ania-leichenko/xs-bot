@@ -1,9 +1,9 @@
 import { masterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
-import { ButtonType, InputType } from 'common/enums/enums';
+import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { MasterSignUpDto } from 'common/types/types';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import './sign-up-form.scss';
 
@@ -20,6 +20,10 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <>
       <h1 className="sign-up-title">Sign Up</h1>
+      <div className="sign-in-link">
+        <span>Already have an account? </span>
+        <Link to={AppRoute.SIGN_IN}>Sign in</Link>
+      </div>
       <form className="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
         <p className="sign-up-form-content">
           <Input
@@ -49,6 +53,10 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
+      <div className="sign-up-form-policy">
+        <span>By using bws you are agreeing to our </span>
+        <Link to={AppRoute.ROOT}>privacy policy.</Link>
+      </div>
     </>
   );
 };
