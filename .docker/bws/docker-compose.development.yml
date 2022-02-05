@@ -32,6 +32,9 @@ services:
         npm run start:prod
     ports:
       - 3001:3001
+    networks:
+      - bws_backend_network
+      - bws_frontend_network
     env_file:
       - ../../.env/backend.env
     environment:
@@ -40,9 +43,6 @@ services:
       - DB_HOST=bws_postgres
       - DB_PORT=5432
       - FRONTEND_URL=http://bws_frontend:80
-    networks:
-      - bws_backend_network
-      - bws_frontend_network
 
   bws_frontend:
     container_name: bws_frontend
@@ -60,13 +60,14 @@ services:
     ports:
       - 80:80
       - 443:443
+    networks:
+      - bws_backend_network
+      - bws_frontend_network
     volumes:
       - bws_frontend_auto_ssl_data:/etc/resty-auto-ssl
     environment:
       ALLOWED_DOMAINS: 'development.bws-cloud.com'
       SITES: 'development.bws-cloud.com=bws_frontend:80'
-    networks:
-      - bws_frontend_network
 
 volumes:
   bws_postgres_data:
