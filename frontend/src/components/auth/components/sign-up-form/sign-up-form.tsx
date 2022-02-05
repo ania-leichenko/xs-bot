@@ -1,4 +1,5 @@
 import { masterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
+import logo from 'assets/img/logo.svg';
 import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
@@ -19,6 +20,9 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
+      <div className="sign-up-logo">
+        <img src={logo} width="50" alt="logo" />
+      </div>
       <h1 className="sign-up-title">Sign Up</h1>
       <div className="sign-in-link">
         <span>Already have an account? </span>

@@ -3,19 +3,24 @@
 .sign-up-title,
 .sign-up-form,
 .sign-in-link,
-.sign-up-form-policy {
+.sign-up-form-policy,
+.sign-up-logo {
   width: 25%;
   margin: 0 auto;
   font-family: Montserrat, sans-serif;
   background-color: #393939;
 }
 
-.sign-up-title {
-  padding: 50px 50px 0;
-  color: #ffffff;
+.sign-up-logo {
+  padding: 50px 50px 25px;
   border-radius: 10px 10px 0 0;
 }
 
+.sign-up-title {
+  color: #ffffff;
+}
+
+.sign-up-title,
 .sign-up-form,
 .sign-in-link {
   padding: 0 50px;
