@@ -1,4 +1,3 @@
-const rounds = 10;
-const MASTER_PASSWORD_SALT_ROUNDS = rounds.toString();
+const MASTER_PASSWORD_SALT_ROUNDS = 10;
 
 export { MASTER_PASSWORD_SALT_ROUNDS };

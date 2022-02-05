@@ -1,6 +1,7 @@
-import { hash } from 'bcrypt';
-import { MASTER_PASSWORD_SALT_ROUNDS as salt } from '~/common/constants/master.constants';
+import { hash, genSaltSync } from 'bcrypt';
 
-const encrypt = (data: string): Promise<string> => hash(data, salt);
+const createSalt = (saltRounds: number): string => genSaltSync(saltRounds);
+const encrypt = (data: string, salt: string): Promise<string> =>
+  hash(data, salt);
 
-export { encrypt };
+export { createSalt, encrypt };

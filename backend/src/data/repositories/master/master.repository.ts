@@ -1,7 +1,8 @@
 import { Master as MasterM } from '~/data/models/models';
 import { Master as MasterEntity } from '~/services/master/master.entity';
-import { MASTER_PASSWORD_SALT_ROUNDS as salt } from '~/common/constants/master.constants';
-import { encrypt } from '~/helpers/crypt/encrypt/encrypt.helper';
+import { MasterFilter as filter } from '~/common/types/master/master-filter';
+import { MASTER_PASSWORD_SALT_ROUNDS as saltRounds } from '~/common/constants/master.constants';
+import { createSalt, encrypt } from '~/helpers/crypt/encrypt/encrypt.helper';
 
 type Constructor = {
   MasterModel: typeof MasterM;
@@ -19,13 +20,14 @@ class Master {
     return masters.map(Master.modelToEntity);
   }
 
-  async getByFilter(filter: {
-    string: string;
-  }): Promise<MasterEntity | undefined> {
+  async getByFilter(
+    filterName: filter,
+    value: string,
+  ): Promise<MasterEntity | undefined> {
     const master = await this.#MasterModel
       .query()
       .select()
-      .where({ filter })
+      .where({ [filterName]: value })
       .first();
     if (!master) {
       return;
@@ -34,18 +36,16 @@ class Master {
     return Master.modelToEntity(master);
   }
 
-  async create(password: string, master: MasterEntity): Promise<void> {
-    return this.#MasterModel
-      .query()
-      .insert({
-        id: master.id,
-        email: master.email,
-        name: master.name,
-        passwordHash: await encrypt(password),
-        passwordSalt: salt,
-        createdAt: master.createdAt.toISOString(),
-      })
-      .then();
+  async create(password: string, master: MasterEntity): Promise<MasterM> {
+    const salt = createSalt(saltRounds);
+    return this.#MasterModel.query().insert({
+      id: master.id,
+      email: master.email,
+      name: master.name,
+      passwordHash: await encrypt(password, salt),
+      passwordSalt: salt,
+      createdAt: master.createdAt.toISOString(),
+    });
   }
 
   public static modelToEntity(model: MasterM): MasterEntity {
