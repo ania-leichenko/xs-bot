@@ -12,8 +12,24 @@ const masterSignUp = Joi.object({
       'string.email': MasterSignUpValidationMessage.EMAIL_WRONG,
       'string.empty': MasterSignUpValidationMessage.EMAIL_REQUIRE,
     }),
-  [getNameOf<MasterSignUpDto>('name')]: Joi.string().trim().required(),
-  [getNameOf<MasterSignUpDto>('password')]: Joi.string().trim().required(),
+  [getNameOf<MasterSignUpDto>('name')]: Joi.string()
+    .trim()
+    .min(4)
+    .regex(/^[a-zA-Z].+$/)
+    .required()
+    .messages({
+      'string.empty': MasterSignUpValidationMessage.NAME_REQUIRE,
+      'string.min': MasterSignUpValidationMessage.NAME_MIN_LENGTH,
+      'string.pattern.base': MasterSignUpValidationMessage.NAME_FIRST_CHARTER,
+    }),
+  [getNameOf<MasterSignUpDto>('password')]: Joi.string()
+    .trim()
+    .min(6)
+    .required()
+    .messages({
+      'string.empty': MasterSignUpValidationMessage.PASSWORD_REQUIRE,
+      'string.min': MasterSignUpValidationMessage.PASSWORD_MIN_LENGTH,
+    }),
 });
 
 export { masterSignUp };
