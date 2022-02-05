@@ -5,6 +5,7 @@ import { getNameOf } from 'helpers/helpers';
 import { MasterSignUpDto } from 'common/types/types';
 import { Button, Input } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
+import './sign-up-form.scss';
 
 type Props = {
   onSubmit: (payload: MasterSignUpDto) => void;
@@ -18,9 +19,9 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
-      <h1>Sign Up ⚛️</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>
+      <h1 className="sign-up-title">Sign Up</h1>
+      <form className="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
+        <p className="sign-up-form-content">
           <Input
             type={InputType.TEXT}
             label="Email"

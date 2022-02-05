@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
+.sign-up-title,
+.sign-up-form {
+  width: 25%;
+  margin: 0 auto;
+  font-family: Montserrat, sans-serif;
+  background-color: #393939;
+}
+
+.sign-up-title {
+  padding: 50px 50px 0;
+  color: #ffffff;
+  border-radius: 10px 10px 0 0;
+}
+
+.sign-up-form {
+  padding: 0 50px 50px;
+  border-radius: 0 0 10px 10px;
+}
+
+.sign-up-form,
+.sign-up-form-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-up-form-content {
+  gap: 5px;
+}
