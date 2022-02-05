@@ -27,7 +27,7 @@ class Master {
       name: createMasterDto.name,
       email: createMasterDto.email,
     });
-    await this.#masterRepository.create(master);
+    await this.#masterRepository.create(createMasterDto.password, master);
   }
 }
 
