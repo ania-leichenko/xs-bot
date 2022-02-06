@@ -6,7 +6,7 @@ import { getNameOf } from 'helpers/helpers';
 import { MasterSignUpDto } from 'common/types/types';
 import { Button, Input, Link } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
-import './sign-up-form.scss';
+import styles from './sign-up-form.module.scss';
 
 type Props = {
   onSubmit: (payload: MasterSignUpDto) => void;
@@ -20,16 +20,19 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
-      <div className="sign-up-logo">
+      <div className={styles['sign-up-logo']}>
         <img src={logo} width="50" alt="logo" />
       </div>
-      <h1 className="sign-up-title">Sign Up</h1>
-      <div className="sign-in-link">
+      <h1 className={styles['sign-up-title']}>Sign Up</h1>
+      <div className={styles['sign-in-link']}>
         <span>Already have an account? </span>
         <Link to={AppRoute.SIGN_IN}>Sign in</Link>
       </div>
-      <form className="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
-        <p className="sign-up-form-content">
+      <form
+        className={styles['sign-up-form']}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <p className={styles['sign-up-form-content']}>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -57,7 +60,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
-      <div className="sign-up-form-policy">
+      <div className={styles['sign-up-form-policy']}>
         <span>By using bws you are agreeing to our </span>
         <Link to={AppRoute.ROOT}>privacy policy.</Link>
       </div>
