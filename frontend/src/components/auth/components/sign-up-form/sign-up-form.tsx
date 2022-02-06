@@ -20,19 +20,16 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
-      <div className={styles['sign-up-logo']}>
+      <div className={styles.signUpLogo}>
         <img src={logo} width="50" alt="logo" />
       </div>
-      <h1 className={styles['sign-up-title']}>Sign Up</h1>
-      <div className={styles['sign-in-link']}>
+      <h1 className={styles.signUpTitle}>Sign Up</h1>
+      <div className={styles.signInLink}>
         <span>Already have an account? </span>
         <Link to={AppRoute.SIGN_IN}>Sign in</Link>
       </div>
-      <form
-        className={styles['sign-up-form']}
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <p className={styles['sign-up-form-content']}>
+      <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
+        <p className={styles.signUpFormContent}>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -60,7 +57,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
-      <div className={styles['sign-up-form-policy']}>
+      <div className={styles.signUpFormPolicy}>
         <span>By using bws you are agreeing to our </span>
         <Link to={AppRoute.ROOT}>privacy policy.</Link>
       </div>
