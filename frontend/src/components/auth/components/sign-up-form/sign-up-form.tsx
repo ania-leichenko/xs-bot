@@ -1,5 +1,7 @@
 import { masterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
 import logo from 'assets/img/logo.svg';
+import decorate from 'assets/img/decorate.svg';
+import network from 'assets/img/network.svg';
 import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
@@ -60,6 +62,10 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
           <span>By using bws you are agreeing to our </span>
           <Link to={AppRoute.ROOT}>privacy policy.</Link>
         </div>
+      </div>
+      <div className={styles.signUpFormBackground}>
+        <img className={styles.decorate} src={decorate} alt="" />
+        <img className={styles.network} src={network} alt="" />
       </div>
     </>
   );
