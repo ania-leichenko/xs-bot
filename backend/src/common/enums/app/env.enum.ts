@@ -6,6 +6,7 @@ config({ path: '../.env/backend.env' });
 const {
   NODE_ENV,
   PORT,
+  SECRET_KEY,
   HOST,
   FRONTEND_URL,
   DB_USER,
@@ -24,6 +25,10 @@ const ENV = {
     SERVER_PORT: Number(PORT),
     SERVER_HOST: HOST ?? 'http://localhost',
     FRONTEND_URL: FRONTEND_URL,
+  },
+  JWT: {
+    SECRET: SECRET_KEY,
+    EXPIRES_IN: '24h',
   },
   DB: {
     USER: DB_USER,
