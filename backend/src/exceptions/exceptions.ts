@@ -1,1 +1,4 @@
-export { HttpError } from 'bws-shared/exceptions/exceptions';
+export {
+  HttpError,
+  InvalidCredentialsError,
+} from 'bws-shared/exceptions/exceptions';
