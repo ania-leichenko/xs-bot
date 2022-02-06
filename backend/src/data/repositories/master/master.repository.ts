@@ -1,12 +1,13 @@
 import { Master as MasterM } from '~/data/models/models';
 import { Master as MasterEntity } from '~/services/master/master.entity';
-import { MasterFilter as filter } from '~/common/types/master/master-filter';
 import { MASTER_PASSWORD_SALT_ROUNDS as saltRounds } from '~/common/constants/master.constants';
 import { createSalt, encrypt } from '~/helpers/crypt/encrypt/encrypt.helper';
 
 type Constructor = {
   MasterModel: typeof MasterM;
 };
+
+type Filter = 'id' | 'email' | 'name';
 
 class Master {
   #MasterModel: typeof MasterM;
@@ -21,7 +22,7 @@ class Master {
   }
 
   async getByFilter(
-    filterName: filter,
+    filterName: Filter,
     value: string,
   ): Promise<MasterEntity | undefined> {
     const master = await this.#MasterModel
