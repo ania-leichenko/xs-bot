@@ -5,6 +5,15 @@ type Constructor = {
   MasterModel: typeof MasterM;
 };
 
+type MasterCreate = {
+  id: string;
+  email: string;
+  name: string;
+  passwordHash: string;
+  passwordSalt: string;
+  createdAt: Date;
+};
+
 class Master {
   #MasterModel: typeof MasterM;
 
@@ -43,17 +52,13 @@ class Master {
     return Master.modelToEntity(master);
   }
 
-  async create(
-    passwordSalt: string,
-    passwordHash: string,
-    master: MasterEntity,
-  ): Promise<MasterM> {
+  async create(master: MasterCreate): Promise<MasterM> {
     return this.#MasterModel.query().insert({
       id: master.id,
       email: master.email,
       name: master.name,
-      passwordHash,
-      passwordSalt,
+      passwordHash: master.passwordHash,
+      passwordSalt: master.passwordSalt,
       createdAt: master.createdAt.toISOString(),
     });
   }

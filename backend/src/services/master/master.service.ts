@@ -1,14 +1,18 @@
-import { Master as TMaster, MasterSignUpDto } from '~/common/types/types';
+import {
+  MasterDto as TMaster,
+  MasterSignUpDto,
+  MasterSignUpRequestDto,
+} from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { createToken } from '~/helpers/token/create-token/create-token.helper';
+import { MASTER_PASSWORD_SALT_ROUNDS as saltRounds } from '~/common/constants/master.constants';
 import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
+import { createSalt, encrypt } from '~/helpers/crypt/encrypt/encrypt.helper';
 
 type Constructor = {
   masterRepository: typeof masterRep;
 };
-
-type MasterPromise = { token: string; user: MasterEntity };
 
 class Master {
   #masterRepository: typeof masterRep;
@@ -26,13 +30,14 @@ class Master {
     }));
   }
 
-  async login(id: string): Promise<MasterPromise> {
+  async login(id: string): Promise<MasterSignUpDto> {
+    const { email } = (await this.#masterRepository.getById(
+      id,
+    )) as MasterEntity;
     return {
       token: createToken(id),
-      user: (await this.#masterRepository.getByFilter(
-        'id',
-        id,
-      )) as MasterEntity,
+      email,
+      id,
     };
   }
 
@@ -40,22 +45,25 @@ class Master {
     email,
     name,
     password,
-  }: MasterSignUpDto): Promise<MasterPromise | never> {
-    const masterByEmail = await this.#masterRepository.getByFilter(
-      'email',
-      email,
-    );
+  }: MasterSignUpRequestDto): Promise<MasterSignUpDto> {
+    const masterByEmail = await this.#masterRepository.getByEmail(email);
     if (masterByEmail) {
       throw new InvalidCredentialsError();
     }
 
+    const passwordSalt = createSalt(saltRounds);
+    const passwordHash = await encrypt(password, passwordSalt);
     const master = MasterEntity.createNew({
       name,
       email,
     });
-    const newMaster = await this.#masterRepository.create(password, master);
+    const { id } = await this.#masterRepository.create({
+      ...master,
+      passwordSalt,
+      passwordHash,
+    });
 
-    return this.login(newMaster.id);
+    return this.login(id);
   }
 }
 

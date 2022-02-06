@@ -1,4 +1,5 @@
 export {
+  type MasterSignUpRequestDto,
+  type MasterDto,
   type MasterSignUpDto,
-  type Master,
 } from 'bws-shared/common/types/types';
