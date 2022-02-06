@@ -1,4 +1,1 @@
-export {
-  MasterSignUpValidationMessage,
-  MasterSignInValidationMessage,
-} from './master/master';
+export { MasterValidationMessage } from './master/master';

@@ -8,7 +8,6 @@ export {
   type FormControlPath,
   type FormControlValues,
   type FormControl,
-  type FormMode,
 } from './form/form';
 export { type HttpOptions } from './http/http';
 export { type ValidationSchema } from './validation/validation';

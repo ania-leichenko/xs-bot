@@ -1,5 +1,5 @@
 type MasterSignInDto = {
-  name: string;
+  email: string;
   password: string;
 };
 

@@ -1,7 +1,7 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
 import { MasterSignUpDto } from '~/common/types/types';
-import { MasterSignUpValidationMessage } from '~/common/enums/enums';
+import { MasterValidationMessage } from '~/common/enums/enums';
 
 const masterSignUp = Joi.object({
   [getNameOf<MasterSignUpDto>('email')]: Joi.string()
@@ -9,10 +9,10 @@ const masterSignUp = Joi.object({
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': MasterSignUpValidationMessage.EMAIL_WRONG,
-      'string.empty': MasterSignUpValidationMessage.EMAIL_REQUIRE,
+      'string.email': MasterValidationMessage.EMAIL_WRONG,
+      'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
     }),
-  [getNameOf<MasterSignUpDto>('name')]: Joi.string().trim().required(),
+  [getNameOf<MasterSignUpDto>('email')]: Joi.string().trim().required(),
   [getNameOf<MasterSignUpDto>('password')]: Joi.string().trim().required(),
 });
 
