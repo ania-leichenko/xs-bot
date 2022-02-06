@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
 import { MasterSignUpDto } from '~/common/types/types';
 import { MasterSignUpValidationMessage } from '~/common/enums/enums';
+import { MasterSignUpValidationRule } from '~/common/enums/enums';
 
 const masterSignUp = Joi.object({
   [getNameOf<MasterSignUpDto>('email')]: Joi.string()
@@ -14,8 +15,8 @@ const masterSignUp = Joi.object({
     }),
   [getNameOf<MasterSignUpDto>('name')]: Joi.string()
     .trim()
-    .min(4)
-    .regex(/^[a-zA-Z].+$/)
+    .min(MasterSignUpValidationRule.NAME_MIN_LENGTH)
+    .regex(MasterSignUpValidationRule.NAME_FIRST_CHARTER)
     .required()
     .messages({
       'string.empty': MasterSignUpValidationMessage.NAME_REQUIRE,
@@ -24,7 +25,7 @@ const masterSignUp = Joi.object({
     }),
   [getNameOf<MasterSignUpDto>('password')]: Joi.string()
     .trim()
-    .min(6)
+    .min(MasterSignUpValidationRule.PASSWORD_MIN_LENGTH)
     .required()
     .messages({
       'string.empty': MasterSignUpValidationMessage.PASSWORD_REQUIRE,
