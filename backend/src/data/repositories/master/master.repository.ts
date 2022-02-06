@@ -17,6 +17,20 @@ class Master {
     return masters.map(Master.modelToEntity);
   }
 
+  async getByEmail(email: string): Promise<MasterEntity | undefined> {
+    const masterByEmail = await this.#MasterModel
+      .query()
+      .select()
+      .where({ email })
+      .first();
+
+    if (!masterByEmail) {
+      return;
+    }
+
+    return Master.modelToEntity(masterByEmail);
+  }
+
   create(master: MasterEntity): Promise<void> {
     return this.#MasterModel
       .query()
