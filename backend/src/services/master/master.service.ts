@@ -2,8 +2,7 @@ import { Master as TMaster, MasterSignUpDto } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { createToken } from '~/helpers/token/create-token/create-token.helper';
-import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { CustomExceptionMessage } from '~/common/enums/enums';
+import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
 
 type Constructor = {
   masterRepository: typeof masterRep;
@@ -47,14 +46,7 @@ class Master {
       email,
     );
     if (masterByEmail) {
-      const message = CustomExceptionMessage.INCORRECT_EMAIL;
-      throw new InvalidCredentialsError({ message });
-    }
-
-    const masterByName = await this.#masterRepository.getByFilter('name', name);
-    if (masterByName) {
-      const message = CustomExceptionMessage.USERNAME_ALREADY_EXISTS;
-      throw new InvalidCredentialsError({ message });
+      throw new InvalidCredentialsError();
     }
 
     const master = MasterEntity.createNew({
