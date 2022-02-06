@@ -1,4 +1,4 @@
-import { MasterSignUpValidationRule } from './master-sign-up.validation-rule';
+import { MasterSignUpValidationRule } from './master-sign-up-validation-rule.enum';
 
 const MasterSignUpValidationMessage = {
   EMAIL_REQUIRE: 'Email is required',
