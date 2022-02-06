@@ -38,12 +38,8 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       };
     },
     async handler(req: FastifyRequest<{ Body: MasterSignUpDto }>, rep) {
-      try {
-        const data = await masterService.create(req.body);
-        return rep.send(data).status(HttpCode.CREATED);
-      } catch (err) {
-        return rep.send(err);
-      }
+      const user = await masterService.create(req.body);
+      return rep.send(user).status(HttpCode.CREATED);
     },
   });
 };
