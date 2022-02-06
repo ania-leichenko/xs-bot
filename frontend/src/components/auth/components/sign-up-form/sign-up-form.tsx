@@ -9,7 +9,6 @@ import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 type Props = {
   onSubmit: (payload: MasterSignUpDto) => void;
 };
-
 const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const { control, errors, handleSubmit } = useAppForm<MasterSignUpDto>({
     defaultValues: DEFAULT_REGISTER_PAYLOAD,

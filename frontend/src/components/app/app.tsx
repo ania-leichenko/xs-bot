@@ -4,6 +4,7 @@ import { Link, Routes, Route } from 'components/common/common';
 import { useLocation } from 'hooks/hooks';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
+import { SignWrapperForm } from 'components/auth/components/components';
 
 const App: FC = () => {
   const { pathname } = useLocation();
@@ -31,6 +32,7 @@ const App: FC = () => {
           <Route path={AppRoute.SIGN_UP} element={<Auth />} />
         </Routes>
       </div>
+      <SignWrapperForm></SignWrapperForm>
     </>
   );
 };
