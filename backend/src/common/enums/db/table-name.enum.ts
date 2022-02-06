@@ -6,6 +6,7 @@ enum TableName {
   WORKERS = 'entity_access_management.workers',
   GROUPS = 'entity_access_management.groups',
   USERS_GROUPS = 'entity_access_management.users_groups',
+  GROUPS_PERMISSIONS = 'entity_access_management.groups_permission',
   MIGRATIONS = 'migrations',
 }
 
