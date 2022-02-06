@@ -2,8 +2,7 @@ import { Knex } from 'knex';
 import { TableName } from '~/common/enums/enums';
 
 const TABLE_NAME = TableName.WORKERS;
-
-export async function up(knex: Knex): Promise<void> {
+async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table
       .uuid('id')
@@ -18,6 +17,8 @@ export async function up(knex: Knex): Promise<void> {
   });
 }
 
-export async function down(knex: Knex): Promise<void> {
+async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTableIfExists(TABLE_NAME);
 }
+
+export { up, down };
