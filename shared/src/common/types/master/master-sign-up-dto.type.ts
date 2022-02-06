@@ -1,5 +1,7 @@
-import { MasterDto } from './master-dto.type';
-
-type MasterSignUpDto = MasterDto & { token: string };
+type MasterSignUpDto = {
+  email: string;
+  name: string;
+  password: string;
+};
 
 export { type MasterSignUpDto };

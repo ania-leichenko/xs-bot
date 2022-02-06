@@ -1,5 +1,5 @@
 export {
-  type MasterSignUpRequestDto,
+  type MasterSignUpResponseDto,
   type MasterDto,
   type MasterSignUpDto,
 } from './master/master';

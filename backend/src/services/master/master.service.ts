@@ -1,14 +1,13 @@
 import {
   MasterDto as TMaster,
   MasterSignUpDto,
-  MasterSignUpRequestDto,
+  MasterSignUpResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { createToken } from '~/helpers/token/create-token/create-token.helper';
-import { MASTER_PASSWORD_SALT_ROUNDS as saltRounds } from '~/common/constants/master.constants';
 import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
-import { createSalt, encrypt } from '~/helpers/crypt/encrypt/encrypt.helper';
+import { encrypt } from '~/services/services';
 
 type Constructor = {
   masterRepository: typeof masterRep;
@@ -30,7 +29,7 @@ class Master {
     }));
   }
 
-  async login(id: string): Promise<MasterSignUpDto> {
+  async login(id: string): Promise<MasterSignUpResponseDto> {
     const { email } = (await this.#masterRepository.getById(
       id,
     )) as MasterEntity;
@@ -45,14 +44,14 @@ class Master {
     email,
     name,
     password,
-  }: MasterSignUpRequestDto): Promise<MasterSignUpDto> {
+  }: MasterSignUpDto): Promise<MasterSignUpResponseDto> {
     const masterByEmail = await this.#masterRepository.getByEmail(email);
     if (masterByEmail) {
       throw new InvalidCredentialsError();
     }
 
-    const passwordSalt = createSalt(saltRounds);
-    const passwordHash = await encrypt(password, passwordSalt);
+    const passwordSalt = encrypt.createSalt();
+    const passwordHash = await encrypt.createHash(password, passwordSalt);
     const master = MasterEntity.createNew({
       name,
       email,
