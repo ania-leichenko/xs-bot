@@ -7,7 +7,7 @@ import { Button, Input } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
-import style from './common/sign-in-form.module.scss';
+import style from './sign-in-form.module.scss';
 type Props = {
   onSubmit: (payload: MasterSignInDto) => void;
 };
