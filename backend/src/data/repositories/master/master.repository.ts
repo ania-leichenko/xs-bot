@@ -17,27 +17,27 @@ class Master {
     return masters.map(Master.modelToEntity);
   }
 
-  async getByEmail(email: string): Promise<MasterEntity | undefined> {
+  async getByEmail(email: string): Promise<MasterEntity | null> {
     const master = await this.#MasterModel
       .query()
       .select()
       .where({ email })
       .first();
     if (!master) {
-      return;
+      return null;
     }
 
     return Master.modelToEntity(master);
   }
 
-  async getById(id: string): Promise<MasterEntity | undefined> {
+  async getById(id: string): Promise<MasterEntity | null> {
     const master = await this.#MasterModel
       .query()
       .select()
       .where({ id })
       .first();
     if (!master) {
-      return;
+      return null;
     }
 
     return Master.modelToEntity(master);
