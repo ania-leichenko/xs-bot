@@ -1,6 +1,6 @@
 export {
-  type MasterSignUpDto,
+  type MasterSignUpRequestDto,
   type MasterSignInDto,
-  type Master,
+  type MasterDto,
 } from './master/master';
 export { type ValidationSchema } from './validation/validation';
