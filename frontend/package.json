@@ -13,9 +13,6 @@
     "build": "react-scripts build"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.36",
-    "@fortawesome/free-solid-svg-icons": "5.15.4",
-    "@fortawesome/react-fontawesome": "0.1.17",
     "@hookform/error-message": "2.0.0",
     "@hookform/resolvers": "2.8.5",
     "@reduxjs/toolkit": "1.7.1",

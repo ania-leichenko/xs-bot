@@ -3,11 +3,12 @@ import { ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { MasterSignInDto } from 'common/types/types';
-import { Button, Input, Password } from 'components/common/common';
+import { Button, Input, PasswordInput } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import style from './common/sign-in-form.module.scss';
+
 type Props = {
   onSubmit: (payload: MasterSignInDto) => void;
 };
@@ -33,7 +34,13 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-          <Password control={control} errors={errors} />
+          <PasswordInput
+            label="Password"
+            placeholder="Enter your password"
+            name={getNameOf<MasterSignInDto>('password')}
+            control={control}
+            errors={errors}
+          />
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign in" />
         <div className={style.subtitle}>

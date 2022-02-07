@@ -4,4 +4,4 @@ export { Button } from './button/button';
 export { Input } from './input/input';
 export { Link } from './link/link';
 export { Table } from './table/table';
-export { Password } from './input_password/password';
+export { PasswordInput } from './input_password/password';

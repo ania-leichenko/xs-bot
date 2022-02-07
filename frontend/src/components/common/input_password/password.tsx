@@ -3,44 +3,47 @@ import { Input } from 'components/common/common';
 import {
   FormControl,
   FormControlErrors,
-  MasterSignUpDto,
+  FormControlPath,
 } from 'common/types/types';
 import { InputType } from 'common/enums/enums';
-import { getNameOf } from 'helpers/helpers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import eye from 'assets/img/eye.svg';
 
 type Props = {
+  label: string;
+  name: FormControlPath;
   control: FormControl;
   errors: FormControlErrors;
+  placeholder?: string;
 };
 
-const Password: React.FC<Props> = ({ control, errors }) => {
-  const [show, setShow] = useState(false);
+const PasswordInput: React.FC<Props> = ({
+  label,
+  name,
+  control,
+  errors,
+  placeholder = '',
+}) => {
+  const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
+
+  const handleShowToggle = (): void => {
+    setIsShowPassword(!isShowPassword);
+  };
 
   return (
     <div>
       <Input
-        type={show ? InputType.TEXT : InputType.PASSWORD}
-        label={'Password'}
-        placeholder={'Enter your password'}
-        name={getNameOf<MasterSignUpDto>('password')}
+        type={isShowPassword ? InputType.TEXT : InputType.PASSWORD}
+        label={label}
+        placeholder={placeholder}
+        name={name}
         control={control}
         errors={errors}
       />
-      <button
-        onClick={(): void => {
-          setShow(!show);
-        }}
-      >
-        {show ? (
-          <FontAwesomeIcon icon={faEyeSlash} />
-        ) : (
-          <FontAwesomeIcon icon={faEye} />
-        )}
+      <button onClick={handleShowToggle}>
+        <img src={eye} alt={'eye'} width="20" />
       </button>
     </div>
   );
 };
 
-export { Password };
+export { PasswordInput };
