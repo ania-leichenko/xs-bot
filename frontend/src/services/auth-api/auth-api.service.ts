@@ -4,7 +4,11 @@ import {
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
-import { MasterSignUpDto, Master } from 'common/types/types';
+import {
+  MasterSignUpRequestDto,
+  MasterSignInDto,
+  MasterDto,
+} from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
 
@@ -22,9 +26,19 @@ class AuthApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public signUp(payload: MasterSignUpDto): Promise<Master> {
+  public signUp(payload: MasterSignUpRequestDto): Promise<MasterDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.SIGN_UP),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+  public signIn(payload: MasterSignInDto): Promise<MasterDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.SIGN_IN),
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,

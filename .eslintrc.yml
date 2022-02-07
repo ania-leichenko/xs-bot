@@ -49,6 +49,8 @@ rules:
       args: after-used
       argsIgnorePattern: ^_
       caughtErrors: all
+  '@typescript-eslint/no-explicit-any':
+    - error
   '@typescript-eslint/no-empty-interface':
     - error
     - allowSingleExtends: true

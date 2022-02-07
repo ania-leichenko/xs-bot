@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { MasterSignUpDto } from 'common/types/types';
+import { MasterSignUpRequestDto, MasterSignInDto } from 'common/types/types';
 import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
@@ -9,11 +9,11 @@ const Auth: FC = () => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
-  const handleSignInSubmit = (): void => {
-    // handle sign in
+  const handleSignInSubmit = (payload: MasterSignInDto): void => {
+    dispatch(authActions.signIn(payload));
   };
 
-  const handleSignUpSubmit = (payload: MasterSignUpDto): void => {
+  const handleSignUpSubmit = (payload: MasterSignUpRequestDto): void => {
     dispatch(authActions.signUp(payload));
   };
 

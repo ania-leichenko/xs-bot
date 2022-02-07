@@ -7,3 +7,10 @@ quoteProps: preserve
 trailingComma: all
 bracketSpacing: true
 arrowParens: always
+overrides:
+  - files: '*.scss'
+    options:
+      singleQuote: false
+  - files: '*.html'
+    options:
+      printWidth: 9999
