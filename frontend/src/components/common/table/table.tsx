@@ -1,23 +1,19 @@
 import React from 'react';
-import { useTable } from 'react-table';
+import { useTable, Column } from 'react-table';
 
 import styles from './table.module.scss';
 
-interface ISchemaItem {
-  Header: string;
-  accessor: string;
-}
-
-interface ISchemaItems extends Array<ISchemaItem> {}
-
 type Props = {
-  columns: ISchemaItems;
-  data: Record<string, unknown>[];
+  columns: Column[];
+  data: unknown[];
 };
 
 const Table: React.FC<Props> = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({
+      columns: columns as Column<Record<string, string>>[],
+      data: data as Record<string, string>[],
+    });
 
   return (
     <table {...getTableProps()} className={styles.clientSideTable}>
