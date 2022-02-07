@@ -3,7 +3,7 @@ import { ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { MasterSignInDto } from 'common/types/types';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, Password } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
@@ -33,14 +33,7 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-          <Input
-            type={InputType.TEXT}
-            label="Password"
-            placeholder="Enter your password"
-            name={getNameOf<MasterSignInDto>('password')}
-            control={control}
-            errors={errors}
-          />
+          <Password control={control} errors={errors} />
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign in" />
         <div className={style.subtitle}>
