@@ -5,6 +5,8 @@ plugins:
   - stylelint-order
 
 rules:
+  selector-class-pattern: null
+  stylelint declaration-colon-newline-after: null
   color-hex-length: long
   declaration-no-important: true
   max-nesting-depth: 0
@@ -12,7 +14,6 @@ rules:
   unit-disallowed-list:
     - em
     - rem
-  selector-class-pattern: null
   order/order:
     - custom-properties
     - declarations
