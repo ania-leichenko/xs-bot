@@ -4,8 +4,6 @@ import { Link, Routes, Route } from 'components/common/common';
 import { useLocation } from 'hooks/hooks';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
-import { Home } from 'components/auth/components/home';
-import { PrivateRoute } from '../auth/hoc/PrivateRoute';
 
 const App: FC = () => {
   const { pathname } = useLocation();
@@ -31,14 +29,6 @@ const App: FC = () => {
         <Routes>
           <Route path={AppRoute.SIGN_IN} element={<Auth />} />
           <Route path={AppRoute.SIGN_UP} element={<Auth />} />
-          <Route
-            path={AppRoute.ROOT}
-            element={
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            }
-          />
         </Routes>
       </div>
     </>

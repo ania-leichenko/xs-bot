@@ -26,6 +26,7 @@ const Auth: FC = () => {
         return <SignUpForm onSubmit={handleSignUpSubmit} />;
       }
     }
+
     return null;
   };
 
