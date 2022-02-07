@@ -12,7 +12,7 @@ rules:
   unit-disallowed-list:
     - em
     - rem
-
+  selector-class-pattern: null
   order/order:
     - custom-properties
     - declarations

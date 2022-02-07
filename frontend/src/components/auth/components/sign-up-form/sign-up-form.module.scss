@@ -1,0 +1,41 @@
+.signUpTitle,
+.signUpForm,
+.signInLink,
+.signUpFormPolicy,
+.signUpLogo {
+  width: 25%;
+  margin: 0 auto;
+  color: #a0a0a0;
+  background-color: #393939;
+}
+
+.signUpLogo {
+  padding: 50px 50px 25px;
+  border-radius: 10px 10px 0 0;
+}
+
+.signUpTitle {
+  color: #ffffff;
+}
+
+.signUpTitle,
+.signUpForm,
+.signInLink {
+  padding: 0 50px;
+}
+
+.signUpFormPolicy {
+  padding: 0 50px 50px;
+  border-radius: 0 0 10px 10px;
+}
+
+.signUpForm,
+.signUpFormContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signUpFormContent {
+  gap: 5px;
+}
