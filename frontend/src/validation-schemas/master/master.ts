@@ -1,1 +1,4 @@
-export { masterSignUp } from 'bws-shared/validation/master/master';
+export {
+  masterSignUp,
+  masterSignIn,
+} from 'bws-shared/validation/master/master';
