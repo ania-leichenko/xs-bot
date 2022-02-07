@@ -7,17 +7,20 @@ import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { createToken } from '~/helpers/token/create-token/create-token.helper';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { encrypt } from '~/services/services';
+import { encryptService as encryptServ } from '~/services/services';
 
 type Constructor = {
   masterRepository: typeof masterRep;
+  encryptService: typeof encryptServ;
 };
 
 class Master {
   #masterRepository: typeof masterRep;
+  #encryptService: typeof encryptServ;
 
-  constructor({ masterRepository }: Constructor) {
+  constructor({ masterRepository, encryptService }: Constructor) {
     this.#masterRepository = masterRepository;
+    this.#encryptService = encryptService;
   }
 
   async getAll(): Promise<TMaster[]> {
@@ -52,8 +55,11 @@ class Master {
       throw new InvalidCredentialsError();
     }
 
-    const passwordSalt = encrypt.createSalt();
-    const passwordHash = await encrypt.createHash(password, passwordSalt);
+    const passwordSalt = await this.#encryptService.createSalt();
+    const passwordHash = await this.#encryptService.createHash(
+      password,
+      passwordSalt,
+    );
     const master = MasterEntity.createNew({
       name,
       email,
