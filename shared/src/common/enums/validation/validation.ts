@@ -1,1 +1,4 @@
-export { MasterValidationMessage } from './master/master';
+export {
+  MasterValidationMessage,
+  MasterSignUpValidationRule,
+} from './master/master';

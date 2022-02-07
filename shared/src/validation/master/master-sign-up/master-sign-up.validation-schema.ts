@@ -1,8 +1,11 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
 import { MasterSignUpDto } from '~/common/types/types';
-import { MasterValidationMessage } from '~/common/enums/enums';
-import { MasterSignUpValidationRule } from '~/common/enums/validation/master/master-sign-up-validation-rule.enum';
+import {
+  MasterValidationMessage,
+  MasterSignUpValidationRule,
+} from '~/common/enums/enums';
+
 const masterSignUp = Joi.object({
   [getNameOf<MasterSignUpDto>('email')]: Joi.string()
     .trim()
