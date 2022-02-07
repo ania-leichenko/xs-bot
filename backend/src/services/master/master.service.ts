@@ -7,14 +7,14 @@ import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
-  tokenService as tokenServ,
-  encryptService as encryptServ,
+  token as tokenServ,
+  encrypt as encryptServ,
 } from '~/services/services';
 
 type Constructor = {
   masterRepository: typeof masterRep;
-  encryptService: typeof encryptServ;
-  tokenService: typeof tokenServ;
+  encrypt: typeof encryptServ;
+  token: typeof tokenServ;
 };
 
 class Master {
@@ -22,10 +22,10 @@ class Master {
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
 
-  constructor({ masterRepository, encryptService, tokenService }: Constructor) {
+  constructor({ masterRepository, encrypt, token }: Constructor) {
     this.#masterRepository = masterRepository;
-    this.#tokenService = tokenService;
-    this.#encryptService = encryptService;
+    this.#encryptService = encrypt;
+    this.#tokenService = token;
   }
 
   async getAll(): Promise<TMaster[]> {
