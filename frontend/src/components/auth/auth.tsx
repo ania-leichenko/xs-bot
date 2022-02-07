@@ -1,19 +1,21 @@
 import { FC } from 'react';
-import { MasterSignUpDto } from 'common/types/types';
+import { MasterSignUpRequestDto, MasterSignInDto } from 'common/types/types';
 import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
+import logo from 'assets/img/logo.svg';
 import { SignInForm, SignUpForm } from './components/components';
+import styles from './auth.module.scss';
 
 const Auth: FC = () => {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
-  const handleSignInSubmit = (): void => {
-    // handle sign in
+  const handleSignInSubmit = (payload: MasterSignInDto): void => {
+    dispatch(authActions.signIn(payload));
   };
 
-  const handleSignUpSubmit = (payload: MasterSignUpDto): void => {
+  const handleSignUpSubmit = (payload: MasterSignUpRequestDto): void => {
     dispatch(authActions.signUp(payload));
   };
 
@@ -30,7 +32,14 @@ const Auth: FC = () => {
     return null;
   };
 
-  return <>{getScreen(pathname)}</>;
+  return (
+    <div className={styles.authConteiner}>
+      <div className={styles.authWrapper}>
+        <img className={styles.signUpLogo} src={logo} alt="logo" />
+        {getScreen(pathname)}
+      </div>
+    </div>
+  );
 };
 
 export { Auth };

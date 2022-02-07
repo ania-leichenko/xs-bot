@@ -3,7 +3,7 @@ import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { master as masterServ } from '~/services/services';
 import { masterSignUp as masterSignUpValidationSchema } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, MastersApiPath } from '~/common/enums/enums';
-import { MasterSignUpDto } from '~/common/types/types';
+import { MasterSignUpRequestDto } from '~/common/types/types';
 
 type Options = {
   services: {
@@ -32,12 +32,12 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       schema,
     }: FastifyRouteSchemaDef<typeof masterSignUpValidationSchema>) {
       return (
-        data: MasterSignUpDto,
+        data: MasterSignUpRequestDto,
       ): ReturnType<typeof masterSignUpValidationSchema['validate']> => {
         return schema.validate(data);
       };
     },
-    async handler(req: FastifyRequest<{ Body: MasterSignUpDto }>, rep) {
+    async handler(req: FastifyRequest<{ Body: MasterSignUpRequestDto }>, rep) {
       const user = await masterService.create(req.body);
       return rep.send(user).status(HttpCode.CREATED);
     },

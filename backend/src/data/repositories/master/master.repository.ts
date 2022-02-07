@@ -17,32 +17,49 @@ class Master {
     return masters.map(Master.modelToEntity);
   }
 
-  async getByEmail(email: string): Promise<MasterEntity | undefined> {
-    const masterByEmail = await this.#MasterModel
+  async getByEmail(email: string): Promise<MasterEntity | null> {
+    const master = await this.#MasterModel
       .query()
       .select()
       .where({ email })
       .first();
-
-    if (!masterByEmail) {
-      return;
+    if (!master) {
+      return null;
     }
 
-    return Master.modelToEntity(masterByEmail);
+    return Master.modelToEntity(master);
   }
 
-  create(master: MasterEntity): Promise<void> {
-    return this.#MasterModel
+  async getById(id: string): Promise<MasterEntity | null> {
+    const master = await this.#MasterModel
       .query()
-      .insert({
-        id: master.id,
-        email: master.email,
-        name: master.name,
-        passwordHash: '', //TODO: replace by actual values
-        passwordSalt: '',
-        createdAt: master.createdAt.toISOString(),
-      })
-      .then();
+      .select()
+      .where({ id })
+      .first();
+    if (!master) {
+      return null;
+    }
+
+    return Master.modelToEntity(master);
+  }
+
+  async create({
+    master,
+    passwordHash,
+    passwordSalt,
+  }: {
+    master: MasterEntity;
+    passwordHash: string;
+    passwordSalt: string;
+  }): Promise<MasterM> {
+    return this.#MasterModel.query().insert({
+      id: master.id,
+      email: master.email,
+      name: master.name,
+      passwordHash,
+      passwordSalt,
+      createdAt: master.createdAt.toISOString(),
+    });
   }
 
   public static modelToEntity(model: MasterM): MasterEntity {
