@@ -4,6 +4,7 @@ import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
 import { SignInForm, SignUpForm } from './components/components';
+import styles from './auth.module.scss';
 
 const Auth: FC = () => {
   const { pathname } = useLocation();
@@ -30,7 +31,11 @@ const Auth: FC = () => {
     return null;
   };
 
-  return <>{getScreen(pathname)}</>;
+  return (
+    <div className={styles.authConteiner}>
+      <div className={styles.authWrapper}>{getScreen(pathname)}</div>
+    </div>
+  );
 };
 
 export { Auth };
