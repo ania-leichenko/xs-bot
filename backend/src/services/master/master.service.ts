@@ -6,7 +6,7 @@ import {
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { createToken } from '~/helpers/token/create-token/create-token.helper';
-import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
+import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { encrypt } from '~/services/services';
 
 type Constructor = {
@@ -34,9 +34,11 @@ class Master {
       id,
     )) as MasterEntity;
     return {
+      user: {
+        email,
+        id,
+      },
       token: createToken(id),
-      email,
-      id,
     };
   }
 
@@ -57,7 +59,7 @@ class Master {
       email,
     });
     const { id } = await this.#masterRepository.create({
-      ...master,
+      master,
       passwordSalt,
       passwordHash,
     });

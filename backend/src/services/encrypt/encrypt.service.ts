@@ -1,11 +1,11 @@
 import { hash, genSaltSync } from 'bcrypt';
-import { MASTER_PASSWORD_SALT_ROUNDS as saltRounds } from '~/common/constants/master.constants';
+import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
 
 class Encrypt {
   saltRounds: number;
 
   constructor(rounds?: number) {
-    this.saltRounds = rounds || saltRounds;
+    this.saltRounds = rounds ?? MASTER_PASSWORD_SALT_ROUNDS;
   }
 
   createSalt = (): string => genSaltSync(this.saltRounds);
