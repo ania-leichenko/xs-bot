@@ -1,6 +1,6 @@
 import {
   MasterDto as TMaster,
-  MasterSignUpDto,
+  MasterSignUpRequestDto,
   MasterSignUpResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
@@ -54,7 +54,7 @@ class Master {
     email,
     name,
     password,
-  }: MasterSignUpDto): Promise<MasterSignUpResponseDto> {
+  }: MasterSignUpRequestDto): Promise<MasterSignUpResponseDto> {
     const masterByEmail = await this.#masterRepository.getByEmail(email);
     if (masterByEmail) {
       throw new InvalidCredentialsError();
