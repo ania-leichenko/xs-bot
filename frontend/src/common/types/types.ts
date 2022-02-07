@@ -12,7 +12,7 @@ export {
 export { type HttpOptions } from './http/http';
 export { type ValidationSchema } from './validation/validation';
 export {
-  type MasterSignUpDto,
+  type MasterSignUpRequestDto,
   type MasterSignInDto,
-  type Master,
+  type MasterDto,
 } from './master/master';
