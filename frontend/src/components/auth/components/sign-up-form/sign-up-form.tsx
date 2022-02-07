@@ -19,7 +19,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   });
 
   return (
-    <div className={styles.signUpWrapper}>
+    <>
       <img className={styles.signUpLogo} src={logo} alt="logo" />
       <h1 className={styles.signUpTitle}>Sign Up</h1>
       <div className={styles.signInLink}>
@@ -55,7 +55,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         </div>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
-    </div>
+    </>
   );
 };
 
