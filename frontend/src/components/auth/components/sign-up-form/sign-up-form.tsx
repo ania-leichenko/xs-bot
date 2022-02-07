@@ -27,7 +27,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         <Link to={AppRoute.SIGN_IN}>Sign in</Link>
       </div>
       <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
-        <p className={styles.signUpFormContent}>
+        <div className={styles.signUpFormContent}>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -52,7 +52,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-        </p>
+        </div>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
       <div className={styles.signUpFormPolicy}>
