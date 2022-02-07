@@ -16,7 +16,8 @@
 .authWrapper {
   display: flex;
   flex-direction: column;
-  width: 470px;
+  width: 100%;
+  max-width: 470px;
   height: 650px;
   padding: 120px 100px;
   font-style: normal;
