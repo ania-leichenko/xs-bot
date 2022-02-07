@@ -7,7 +7,7 @@ import { Button, Input } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
-import style from './common/sign-in-form.module.scss';
+import styles from './sign-in-form.module.scss';
 type Props = {
   onSubmit: (payload: MasterSignInDto) => void;
 };
@@ -20,11 +20,13 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
-      <h1 className={style.title}>Sign In</h1>
-      <span className={style.subtitle}>Need to create a new account</span>
-      <Link children="SignUp" to={AppRoute.SIGN_UP}></Link>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>
+      <h1 className={styles.title}>Sign In</h1>
+      <div className={styles.subtitle}>
+        <span>Don't have an account? </span>
+        <Link to={AppRoute.SIGN_UP}>Sign Un</Link>
+      </div>
+      <form className={styles.signInForm} onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.signInFormContent}>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -41,12 +43,8 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-        </p>
-        <Button type={ButtonType.SUBMIT} label="Sign in" />
-        <div className={style.subtitle}>
-          By using SWS you are agreeing to our{' '}
-          <span className={style.link}>privacy policy</span>
         </div>
+        <Button type={ButtonType.SUBMIT} label="Sign in" />
       </form>
     </>
   );

@@ -1,5 +1,4 @@
 import { masterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
-import logo from 'assets/img/logo.svg';
 import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
@@ -11,6 +10,7 @@ import styles from './sign-up-form.module.scss';
 type Props = {
   onSubmit: (payload: MasterSignUpRequestDto) => void;
 };
+
 const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const { control, errors, handleSubmit } = useAppForm<MasterSignUpRequestDto>({
     defaultValues: DEFAULT_REGISTER_PAYLOAD,
@@ -19,16 +19,13 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
 
   return (
     <>
-      <div className={styles.signUpLogo}>
-        <img src={logo} width="50" alt="logo" />
-      </div>
-      <h1 className={styles.signUpTitle}>Sign Up</h1>
-      <div className={styles.signInLink}>
+      <h1 className={styles.title}>Sign Up</h1>
+      <div className={styles.subtitle}>
         <span>Already have an account? </span>
-        <Link to={AppRoute.SIGN_IN}>Sign in</Link>
+        <Link to={AppRoute.SIGN_IN}>Sign In</Link>
       </div>
       <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
-        <p className={styles.signUpFormContent}>
+        <div className={styles.signUpFormContent}>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -53,13 +50,9 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-        </p>
+        </div>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
-      <div className={styles.signUpFormPolicy}>
-        <span>By using bws you are agreeing to our </span>
-        <Link to={AppRoute.ROOT}>privacy policy.</Link>
-      </div>
     </>
   );
 };
