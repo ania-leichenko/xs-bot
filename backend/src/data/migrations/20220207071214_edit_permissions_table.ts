@@ -1,26 +1,14 @@
 import { Knex } from 'knex';
-import { Permissions, TableName } from '~/common/enums/enums';
+import { TableName } from '~/common/enums/enums';
 
 const TABLE_NAME = TableName.PERMISSIONS;
 
+const permissions = ['manage-eam', 'manage-sc', 'manage-slc', 'manage-bs'];
+
 export async function up(knex: Knex): Promise<void> {
-  return knex
-    .insert([
-      { name: Permissions.MANAGE_EAM },
-      { name: Permissions.MANAGE_SC },
-      { name: Permissions.MANAGE_SLC },
-      { name: Permissions.MANAGE_BS },
-    ])
-    .into(TABLE_NAME);
+  return knex.insert(permissions.map((name) => ({ name }))).into(TABLE_NAME);
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex(TABLE_NAME)
-    .whereIn('name', [
-      Permissions.MANAGE_EAM,
-      Permissions.MANAGE_SC,
-      Permissions.MANAGE_SLC,
-      Permissions.MANAGE_BS,
-    ])
-    .del();
+  return knex(TABLE_NAME).whereIn('name', permissions).del();
 }
