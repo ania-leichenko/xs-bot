@@ -1,13 +1,13 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
-import { MasterSignUpDto } from '~/common/types/types';
+import { MasterSignUpRequestDto } from '~/common/types/types';
 import {
   MasterValidationMessage,
   MasterSignUpValidationRule,
 } from '~/common/enums/enums';
 
 const masterSignUp = Joi.object({
-  [getNameOf<MasterSignUpDto>('email')]: Joi.string()
+  [getNameOf<MasterSignUpRequestDto>('email')]: Joi.string()
     .trim()
     .email({ tlds: { allow: false } })
     .required()
@@ -15,7 +15,7 @@ const masterSignUp = Joi.object({
       'string.email': MasterValidationMessage.EMAIL_WRONG,
       'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
     }),
-  [getNameOf<MasterSignUpDto>('name')]: Joi.string()
+  [getNameOf<MasterSignUpRequestDto>('name')]: Joi.string()
     .trim()
     .min(MasterSignUpValidationRule.NAME_MIN_LENGTH)
     .regex(MasterSignUpValidationRule.NAME_FIRST_CHARTER)
@@ -25,7 +25,7 @@ const masterSignUp = Joi.object({
       'string.min': MasterValidationMessage.NAME_MIN_LENGTH,
       'string.pattern.base': MasterValidationMessage.NAME_FIRST_CHARTER,
     }),
-  [getNameOf<MasterSignUpDto>('password')]: Joi.string()
+  [getNameOf<MasterSignUpRequestDto>('password')]: Joi.string()
     .trim()
     .min(MasterSignUpValidationRule.PASSWORD_MIN_LENGTH)
     .required()
