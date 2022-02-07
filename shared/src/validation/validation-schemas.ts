@@ -1,1 +1,1 @@
-export { masterSignUp } from './master/master';
+export { masterSignUp, masterSignIn } from './master/master';
