@@ -22,10 +22,11 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
+
       <span className={styles.subtitle}>Need to create a new account</span>
       <Link children="SignUp" to={AppRoute.SIGN_UP}></Link>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <p>
+        <div>
           <Input
             type={InputType.TEXT}
             label="Email"
@@ -41,12 +42,8 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-        </p>
-        <Button type={ButtonType.SUBMIT} label="Sign in" />
-        <div className={styles.subtitle}>
-          By using SWS you are agreeing to our{' '}
-          <span className={styles.link}>privacy policy</span>
         </div>
+        <Button type={ButtonType.SUBMIT} label="Sign in" />
       </form>
     </>
   );
