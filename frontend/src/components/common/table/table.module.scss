@@ -2,6 +2,29 @@
   border-collapse: collapse;
 }
 
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background-color: #3a3a3a;
+  border-radius: 20px;
+}
+
+.tableHat {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  vertical-align: center;
+}
+
+.tableTitle {
+  font-weight: bold;
+  font-size: 20px;
+  font-style: normal;
+  line-height: 32px;
+  letter-spacing: 0.15px;
+}
+
 .tableHeaderCell,
 .tableCell {
   padding: 13px 100px 13px 13px;
