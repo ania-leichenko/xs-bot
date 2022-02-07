@@ -11,7 +11,6 @@ import styles from './sign-up-form.module.scss';
 type Props = {
   onSubmit: (payload: MasterSignUpDto) => void;
 };
-
 const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const { control, errors, handleSubmit } = useAppForm<MasterSignUpDto>({
     defaultValues: DEFAULT_REGISTER_PAYLOAD,

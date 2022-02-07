@@ -1,6 +1,5 @@
 import { MasterSignUpValidationRule } from './master-sign-up-validation-rule.enum';
-
-const MasterSignUpValidationMessage = {
+const MasterValidationMessage = {
   EMAIL_REQUIRE: 'Email is required',
   EMAIL_WRONG: 'Email is wrong',
   NAME_REQUIRE: 'Name is required',
@@ -10,4 +9,4 @@ const MasterSignUpValidationMessage = {
   PASSWORD_MIN_LENGTH: `Password must have at least ${MasterSignUpValidationRule.NAME_MIN_LENGTH} characters`,
 } as const;
 
-export { MasterSignUpValidationMessage };
+export { MasterValidationMessage };
