@@ -5,21 +5,26 @@ import {
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
-import { createToken } from '~/helpers/token/create-token/create-token.helper';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { encryptService as encryptServ } from '~/services/services';
+import {
+  tokenService as tokenServ,
+  encryptService as encryptServ,
+} from '~/services/services';
 
 type Constructor = {
   masterRepository: typeof masterRep;
   encryptService: typeof encryptServ;
+  tokenService: typeof tokenServ;
 };
 
 class Master {
   #masterRepository: typeof masterRep;
   #encryptService: typeof encryptServ;
+  #tokenService: typeof tokenServ;
 
-  constructor({ masterRepository, encryptService }: Constructor) {
+  constructor({ masterRepository, encryptService, tokenService }: Constructor) {
     this.#masterRepository = masterRepository;
+    this.#tokenService = tokenService;
     this.#encryptService = encryptService;
   }
 
@@ -41,7 +46,7 @@ class Master {
         email,
         id,
       },
-      token: createToken(id),
+      token: this.#tokenService.create(id),
     };
   }
 
