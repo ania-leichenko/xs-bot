@@ -11,6 +11,7 @@ import styles from './sign-up-form.module.scss';
 type Props = {
   onSubmit: (payload: MasterSignUpDto) => void;
 };
+
 const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
   const { control, errors, handleSubmit } = useAppForm<MasterSignUpDto>({
     defaultValues: DEFAULT_REGISTER_PAYLOAD,
@@ -54,10 +55,6 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
         </div>
         <Button type={ButtonType.SUBMIT} label="Sign up" />
       </form>
-      <div className={styles.signUpFormPolicy}>
-        <span>By using bws you are agreeing to our </span>
-        <Link to={AppRoute.ROOT}>privacy policy.</Link>
-      </div>
     </div>
   );
 };

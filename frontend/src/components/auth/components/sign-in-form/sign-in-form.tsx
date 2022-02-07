@@ -43,10 +43,6 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
           />
         </p>
         <Button type={ButtonType.SUBMIT} label="Sign in" />
-        <div className={style.subtitle}>
-          By using SWS you are agreeing to our{' '}
-          <span className={style.link}>privacy policy</span>
-        </div>
       </form>
     </>
   );
