@@ -9,23 +9,27 @@ import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
   token as tokenServ,
   encrypt as encryptServ,
+  tenant as tenantServ,
 } from '~/services/services';
 
 type Constructor = {
   masterRepository: typeof masterRep;
   encrypt: typeof encryptServ;
   token: typeof tokenServ;
+  tenant: typeof tenantServ;
 };
 
 class Master {
   #masterRepository: typeof masterRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
+  #tenantServ: typeof tenantServ;
 
-  constructor({ masterRepository, encrypt, token }: Constructor) {
+  constructor({ masterRepository, encrypt, token, tenant }: Constructor) {
     this.#masterRepository = masterRepository;
     this.#encryptService = encrypt;
     this.#tokenService = token;
+    this.#tenantServ = tenant;
   }
 
   async getAll(): Promise<TMaster[]> {
@@ -69,10 +73,13 @@ class Master {
       name,
       email,
     });
+    const tenant = await this.#tenantServ.create();
+
     const { id } = await this.#masterRepository.create({
       master,
       passwordSalt,
       passwordHash,
+      tenantId: tenant.id,
     });
 
     return this.login(id);
