@@ -7,6 +7,7 @@ class Master extends AbstractModel {
   [MasterTableField.NAME]: string;
   [MasterTableField.PASSWORD_HASH]: string;
   [MasterTableField.PASSWORD_SALT]: string;
+  [MasterTableField.TENANT_ID]: string;
 
   static get tableName(): string {
     return TableName.MASTERS;
