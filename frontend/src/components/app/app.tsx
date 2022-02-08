@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Home } from 'components/auth/components/home';
-import { PrivateRoute } from '../auth/hoc/PrivateRoute';
+import { PrivateRoute } from '../auth/hoc/private-route';
 
 const App: FC = () => {
   return (
