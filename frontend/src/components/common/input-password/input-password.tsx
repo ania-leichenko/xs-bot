@@ -30,7 +30,7 @@ const PasswordInput: FC<Props> = ({
   };
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Input
         type={isShowPassword ? InputType.TEXT : InputType.PASSWORD}
         label={label}
