@@ -6,6 +6,7 @@ import {
   FormControlPath,
 } from 'common/types/types';
 import { InputType } from 'common/enums/enums';
+import styles from './input-password.module.scss';
 
 type Props = {
   label: string;
@@ -38,7 +39,7 @@ const PasswordInput: FC<Props> = ({
         control={control}
         errors={errors}
       />
-      <button onClick={handleShowToggle} className={'eye-icon'}>
+      <button onClick={handleShowToggle} className={styles.eye_icon}>
         <span className="visually-hidden">Toggle password visibility</span>
       </button>
     </div>
