@@ -3,19 +3,17 @@ import {
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
   MasterSignInDto,
+  MasterSignInResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
-import {
-  InvalidCredentialsError,
-  InvalidCredentialsErrorException,
-} from '~/exceptions/exceptions';
+import { InvalidCredentialsError } from '~/exceptions/exceptions';
+import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
 } from '~/services/services';
-import { JwtPayload } from 'jsonwebtoken';
 
 type Constructor = {
   masterRepository: typeof masterRep;
@@ -63,7 +61,10 @@ class Master {
   }: MasterSignUpRequestDto): Promise<MasterSignUpResponseDto> {
     const masterByEmail = await this.#masterRepository.getByEmail(email);
     if (masterByEmail) {
-      throw new InvalidCredentialsError();
+      throw new InvalidCredentialsError(
+        ExceptionMessage.USER_EXISTS,
+        HttpCode.UNAUTHORIZED,
+      );
     }
 
     const passwordSalt = await this.#encryptService.createSalt();
@@ -74,7 +75,8 @@ class Master {
     const master = MasterEntity.createNew({
       name,
       email,
-      password,
+      passwordHash,
+      passwordSalt,
     });
     const { id } = await this.#masterRepository.create({
       master,
@@ -87,30 +89,31 @@ class Master {
 
   async verifyLoginCredentials(
     verifyMasterDto: MasterSignInDto,
-  ): Promise<MasterEntity> {
+  ): Promise<MasterSignInResponseDto> {
     const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);
 
     if (!user) {
-      throw new InvalidCredentialsErrorException(
+      throw new InvalidCredentialsError(
         ExceptionMessage.INCORRECT_EMAIL,
+        HttpCode.NOT_FOUND,
       );
     }
 
-    const isEqualPassword = await this.#encryptService.cryptCompare(
-      verifyMasterDto.password,
-      user.password,
-    );
+    const isEqualPassword =
+      (await this.#encryptService.createHash(
+        verifyMasterDto.password,
+        user.passwordSalt,
+      )) === user.passwordHash;
+
     if (!isEqualPassword) {
-      throw new InvalidCredentialsErrorException(
-        ExceptionMessage.PASSWORDS_NOT_MATCH,
+      throw new InvalidCredentialsError(
+        ExceptionMessage.INVALID_CREDENTIALS,
+        HttpCode.UNAUTHORIZED,
       );
     }
 
-    return user;
-  }
-
-  async verifyToken(token: string): Promise<string | JwtPayload> {
-    return tokenServ.verify(token);
+    const token = this.#tokenService.create(user.id);
+    return { token, user };
   }
 }
 
