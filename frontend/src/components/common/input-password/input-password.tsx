@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, FC } from 'react';
 import { Input } from 'components/common/common';
 import {
   FormControl,
@@ -6,7 +6,6 @@ import {
   FormControlPath,
 } from 'common/types/types';
 import { InputType } from 'common/enums/enums';
-import eye from 'assets/img/eye.svg';
 
 type Props = {
   label: string;
@@ -16,7 +15,7 @@ type Props = {
   placeholder?: string;
 };
 
-const PasswordInput: React.FC<Props> = ({
+const PasswordInput: FC<Props> = ({
   label,
   name,
   control,
@@ -39,8 +38,8 @@ const PasswordInput: React.FC<Props> = ({
         control={control}
         errors={errors}
       />
-      <button onClick={handleShowToggle}>
-        <img src={eye} alt={'eye'} width="20" />
+      <button onClick={handleShowToggle} className={'eye-icon'}>
+        <span className="visually-hidden">Toggle password visibility</span>
       </button>
     </div>
   );
