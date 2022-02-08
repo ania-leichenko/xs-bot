@@ -1,1 +1,1 @@
-export { Permissions } from './permissions.enum';
+export { Permission } from './permission.enum';

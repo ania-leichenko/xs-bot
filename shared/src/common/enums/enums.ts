@@ -6,4 +6,4 @@ export {
   MasterSignUpValidationMessage,
   MasterSignUpValidationRule,
 } from './validation/validation';
-export { Permissions } from './permissions/permissions';
+export { Permission } from './permissions/permissions';

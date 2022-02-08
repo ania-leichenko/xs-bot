@@ -1,1 +1,1 @@
-export { Permissions } from 'bws-shared/common/enums/enums';
+export { Permission } from 'bws-shared/common/enums/enums';
