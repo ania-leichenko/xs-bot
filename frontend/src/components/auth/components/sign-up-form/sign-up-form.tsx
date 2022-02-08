@@ -50,7 +50,11 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             errors={errors}
           />
         </div>
-        <Button type={ButtonType.SUBMIT} label="Sign up" />
+        <Button
+          type={ButtonType.SUBMIT}
+          label="Sign up"
+          onClick={handleSubmit(onSubmit)}
+        />
       </form>
     </>
   );

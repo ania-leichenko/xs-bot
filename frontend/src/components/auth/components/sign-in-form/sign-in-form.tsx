@@ -43,7 +43,11 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             errors={errors}
           />
         </div>
-        <Button type={ButtonType.SUBMIT} label="Sign in" />
+        <Button
+          type={ButtonType.SUBMIT}
+          label="Sign in"
+          onClick={handleSubmit(onSubmit)}
+        />
       </form>
     </>
   );
