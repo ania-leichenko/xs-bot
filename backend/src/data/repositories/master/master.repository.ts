@@ -67,6 +67,7 @@ class Master {
       id: model.id,
       name: model.name,
       email: model.email,
+      password: model.passwordHash,
       createdAt: new Date(model.createdAt),
     });
   }

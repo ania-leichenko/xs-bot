@@ -2,14 +2,20 @@ import {
   MasterDto as TMaster,
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
+  MasterSignInDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
-import { InvalidCredentialsError } from '~/exceptions/exceptions';
+import {
+  InvalidCredentialsError,
+  InvalidCredentialsErrorException,
+} from '~/exceptions/exceptions';
+import { ExceptionMessage } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
 } from '~/services/services';
+import { JwtPayload } from 'jsonwebtoken';
 
 type Constructor = {
   masterRepository: typeof masterRep;
@@ -68,6 +74,7 @@ class Master {
     const master = MasterEntity.createNew({
       name,
       email,
+      password,
     });
     const { id } = await this.#masterRepository.create({
       master,
@@ -76,6 +83,34 @@ class Master {
     });
 
     return this.login(id);
+  }
+
+  async verifyLoginCredentials(
+    verifyMasterDto: MasterSignInDto,
+  ): Promise<MasterEntity> {
+    const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);
+
+    if (!user) {
+      throw new InvalidCredentialsErrorException(
+        ExceptionMessage.INCORRECT_EMAIL,
+      );
+    }
+
+    const isEqualPassword = await this.#encryptService.cryptCompare(
+      verifyMasterDto.password,
+      user.password,
+    );
+    if (!isEqualPassword) {
+      throw new InvalidCredentialsErrorException(
+        ExceptionMessage.PASSWORDS_NOT_MATCH,
+      );
+    }
+
+    return user;
+  }
+
+  async verifyToken(token: string): Promise<string | JwtPayload> {
+    return tokenServ.verify(token);
   }
 }
 

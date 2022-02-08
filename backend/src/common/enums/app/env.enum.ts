@@ -6,7 +6,6 @@ config({ path: '../.env/backend.env' });
 const {
   NODE_ENV,
   PORT,
-  SECRET_KEY,
   HOST,
   FRONTEND_URL,
   SECRET_KEY,
