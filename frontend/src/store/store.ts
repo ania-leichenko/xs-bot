@@ -4,6 +4,7 @@ import { authApi } from 'services/services';
 
 const extraArgument = {
   authApi,
+  history,
 };
 
 const store = configureStore({
