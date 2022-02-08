@@ -3,7 +3,7 @@ import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { MasterSignUpRequestDto } from 'common/types/types';
-import { Button, Input, Link } from 'components/common/common';
+import { Button, Input, Link, PasswordInput } from 'components/common/common';
 import { DEFAULT_REGISTER_PAYLOAD } from './common/constants';
 import styles from './sign-up-form.module.scss';
 
@@ -42,8 +42,7 @@ const SignUpForm: React.FC<Props> = ({ onSubmit }) => {
             control={control}
             errors={errors}
           />
-          <Input
-            type={InputType.TEXT}
+          <PasswordInput
             label="Password"
             placeholder="Enter your password"
             name={getNameOf<MasterSignUpRequestDto>('password')}
