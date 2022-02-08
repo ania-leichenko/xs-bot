@@ -47,10 +47,12 @@ class Master {
     master,
     passwordHash,
     passwordSalt,
+    tenantId,
   }: {
     master: MasterEntity;
     passwordHash: string;
     passwordSalt: string;
+    tenantId: string;
   }): Promise<MasterM> {
     return this.#MasterModel.query().insert({
       id: master.id,
@@ -59,6 +61,7 @@ class Master {
       passwordHash,
       passwordSalt,
       createdAt: master.createdAt.toISOString(),
+      tenantId,
     });
   }
 
