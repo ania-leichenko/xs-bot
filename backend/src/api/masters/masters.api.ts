@@ -42,6 +42,27 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       return rep.send(user).status(HttpCode.CREATED);
     },
   });
+
+  fastify.route({
+    method: HttpMethod.POST,
+    url: MastersApiPath.SIGN_IN,
+    schema: {
+      body: masterSignUpValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof masterSignUpValidationSchema>) {
+      return (
+        data: MasterSignUpRequestDto,
+      ): ReturnType<typeof masterSignUpValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
+    async handler(req: FastifyRequest<{ Body: MasterSignUpRequestDto }>, rep) {
+      const user = await masterService.verifyLoginCredentials(req.body);
+      return rep.send(user).status(HttpCode.OK);
+    },
+  });
 };
 
 export { initMastersApi };
