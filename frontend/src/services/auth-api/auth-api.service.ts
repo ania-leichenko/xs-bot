@@ -46,6 +46,15 @@ class AuthApi {
       },
     );
   }
+
+  public getCurrentUser(id: number): Promise<MasterDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.ROOT, id),
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
 }
 
 export { AuthApi };

@@ -24,4 +24,13 @@ const signIn = createAsyncThunk<
   return authApi.signIn(registerPayload);
 });
 
-export { signUp, signIn };
+const loadCurrentUser = createAsyncThunk<
+  Promise<MasterDto>,
+  number,
+  AsyncThunkConfig
+>(ActionType.SIGN_IN, async (id, { extra }) => {
+  const { authApi } = extra;
+  return await authApi.getCurrentUser(id);
+});
+
+export { signUp, signIn, loadCurrentUser };
