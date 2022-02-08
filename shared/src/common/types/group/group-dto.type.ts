@@ -1,7 +1,7 @@
 type GroupDto = {
   id: string;
   name: string;
-  createdAt: string;
+  createdAt: Date;
   tenant_id: string;
 };
 
