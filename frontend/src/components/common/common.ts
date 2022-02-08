@@ -4,3 +4,4 @@ export { Button } from './button/button';
 export { Input } from './input/input';
 export { Link } from './link/link';
 export { Table } from './table/table';
+export { PrivateRoute } from './private-route/private-route';

@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Routes, Route, Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
-import { Home } from 'components/auth/components/home';
-import { PrivateRoute } from '../auth/hoc/private-route';
+import { Dashboard } from 'components/dashboard/dashboard';
+import { PrivateRoute } from 'components/common/private-route/private-route';
 
 const App: FC = () => {
   return (
@@ -21,7 +21,7 @@ const App: FC = () => {
           path={AppRoute.ROOT}
           element={
             <PrivateRoute>
-              <Home />
+              <Dashboard />
             </PrivateRoute>
           }
         />
