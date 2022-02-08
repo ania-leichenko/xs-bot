@@ -4,6 +4,7 @@ import { GroupTableField } from './group-table-field.enum';
 
 class Group extends AbstractModel {
   [GroupTableField.NAME]: string;
+  [GroupTableField.TENANT_ID]: string;
 
   static get tableName(): string {
     return TableName.GROUPS;
