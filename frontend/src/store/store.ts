@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
-import { authApi } from 'services/services';
+import { authApi, navigation } from 'services/services';
 
 const extraArgument = {
   authApi,
-  history,
+  navigation,
 };
 
 const store = configureStore({

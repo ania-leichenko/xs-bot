@@ -1,7 +1,7 @@
+import { createBrowserHistory } from 'history';
 import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
-import { createBrowserHistory } from 'history';
 import { Navigation } from './navigation/navigation.service';
 const http = new Http();
 

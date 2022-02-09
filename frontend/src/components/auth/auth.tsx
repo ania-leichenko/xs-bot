@@ -1,12 +1,11 @@
 import { FC } from 'react';
 import { MasterSignUpRequestDto, MasterSignInDto } from 'common/types/types';
 import { auth as authActions } from 'store/actions';
-import { navigation as navigationActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
-import logo from 'assets/img/logo.svg';
 import { SignInForm, SignUpForm } from './components/components';
 import styles from './auth.module.scss';
+import logo from 'assets/img/logo.svg';
 
 const Auth: FC = () => {
   const { pathname } = useLocation();
@@ -16,11 +15,8 @@ const Auth: FC = () => {
     dispatch(authActions.signIn(payload));
   };
 
-  const location = useLocation();
-  const fromPage: string | AppRoute = location.pathname || AppRoute.ROOT;
   const handleSignUpSubmit = (payload: MasterSignUpRequestDto): void => {
     dispatch(authActions.signUp(payload));
-    dispatch(navigationActions.pushHistory(fromPage));
   };
 
   const getScreen = (screen: string): React.ReactElement | null => {
