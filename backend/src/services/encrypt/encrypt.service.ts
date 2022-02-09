@@ -17,7 +17,11 @@ class Encrypt {
     data: string,
     salt: string,
     passwordHash: string,
-  ): Promise<boolean> => (await this.createHash(data, salt)) === passwordHash;
+  ): Promise<boolean> => {
+    const hash = await this.createHash(data, salt);
+
+    return hash === passwordHash;
+  };
 }
 
 export { Encrypt };
