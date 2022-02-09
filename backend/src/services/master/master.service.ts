@@ -74,7 +74,7 @@ class Master {
       throw new InvalidCredentialsError();
     }
 
-    const passwordSalt = await this.#encryptService.createSalt();
+    const passwordSalt = this.#encryptService.saltRounds;
     const passwordHash = await this.#encryptService.createHash(
       password,
       passwordSalt,

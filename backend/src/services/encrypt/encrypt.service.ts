@@ -1,17 +1,23 @@
-import { hash, genSalt } from 'bcrypt';
-import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
+import { hash } from 'bcrypt';
+
+type Constructor = {
+  salt: string;
+};
 
 class Encrypt {
-  #saltRounds: number;
+  #saltRounds: string;
 
-  constructor(rounds?: number) {
-    this.#saltRounds = rounds ?? MASTER_PASSWORD_SALT_ROUNDS;
+  constructor({ salt }: Constructor) {
+    this.#saltRounds = salt;
   }
 
-  createSalt = (): Promise<string> => genSalt(this.#saltRounds);
+  get saltRounds(): string {
+    return this.#saltRounds;
+  }
 
-  createHash = (data: string, salt: string): Promise<string> =>
-    hash(data, salt);
+  createHash = (data: string, salt: string): Promise<string> => {
+    return hash(data, salt);
+  };
 
   compare = async (
     data: string,
