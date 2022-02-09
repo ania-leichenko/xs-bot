@@ -73,13 +73,13 @@ class Master {
       name,
       email,
     });
-    const tenantId = (await this.#tenantServ.create()).id;
+    const tenant = await this.#tenantServ.create();
 
     const { id } = await this.#masterRepository.create({
       master,
       passwordSalt,
       passwordHash,
-      tenantId,
+      tenantId: tenant.id,
     });
 
     return this.login(id);
