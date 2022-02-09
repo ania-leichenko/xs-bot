@@ -12,17 +12,13 @@ class Master {
     this.#MasterModel = MasterModel;
   }
 
-  async getAll(): Promise<MasterEntity[]> {
-    const masters = await this.#MasterModel.query();
-    return masters.map(Master.modelToEntity);
-  }
-
   async getByEmail(email: string): Promise<MasterEntity | null> {
     const master = await this.#MasterModel
       .query()
       .select()
       .where({ email })
       .first();
+
     if (!master) {
       return null;
     }
@@ -36,6 +32,7 @@ class Master {
       .select()
       .where({ id })
       .first();
+
     if (!master) {
       return null;
     }

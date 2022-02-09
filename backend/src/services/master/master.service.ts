@@ -1,5 +1,4 @@
 import {
-  MasterDto as TMaster,
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
@@ -42,15 +41,6 @@ class Master {
     this.#tenantService = tenantService;
   }
 
-  async getAll(): Promise<TMaster[]> {
-    const masters = await this.#masterRepository.getAll();
-
-    return masters.map((m) => ({
-      id: m.id,
-      email: m.email,
-    }));
-  }
-
   async login(id: string): Promise<MasterSignUpResponseDto> {
     const { email } = (await this.#masterRepository.getById(
       id,
@@ -74,7 +64,7 @@ class Master {
       throw new InvalidCredentialsError();
     }
 
-    const passwordSalt = this.#encryptService.saltRounds;
+    const passwordSalt = await this.#encryptService.createSalt();
     const passwordHash = await this.#encryptService.createHash(
       password,
       passwordSalt,

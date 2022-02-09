@@ -21,14 +21,6 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { master: masterService } = opts.services;
 
   fastify.route({
-    method: HttpMethod.GET,
-    url: MastersApiPath.ROOT,
-    async handler(_req, rep) {
-      return rep.send(await masterService.getAll()).status(HttpCode.OK);
-    },
-  });
-
-  fastify.route({
     method: HttpMethod.POST,
     url: MastersApiPath.SIGN_UP,
     schema: {

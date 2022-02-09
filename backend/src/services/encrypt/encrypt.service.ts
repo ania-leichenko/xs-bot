@@ -1,19 +1,19 @@
-import { hash } from 'bcrypt';
+import { hash, genSalt } from 'bcrypt';
 
 type Constructor = {
-  salt: string;
+  salt: number;
 };
 
 class Encrypt {
-  #saltRounds: string;
+  #saltRounds: number;
 
   constructor({ salt }: Constructor) {
     this.#saltRounds = salt;
   }
 
-  get saltRounds(): string {
-    return this.#saltRounds;
-  }
+  createSalt = (): Promise<string> => {
+    return genSalt(this.#saltRounds);
+  };
 
   createHash = (data: string, salt: string): Promise<string> => {
     return hash(data, salt);
