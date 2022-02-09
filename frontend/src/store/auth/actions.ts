@@ -4,21 +4,21 @@ import {
   MasterDto,
   MasterSignInDto,
   MasterSignUpRequestDto,
-  MasterSignUpResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { StorageKeys } from '../../common/enums/app/storage';
 
 const signUp = createAsyncThunk<
-  Promise<MasterSignUpResponseDto>,
+  MasterDto,
   MasterSignUpRequestDto,
   AsyncThunkConfig
 >(ActionType.SIGN_UP, async (registerPayload, { extra }) => {
   const { authApi, storage } = extra;
-  const response = await authApi.signUp(registerPayload);
-  storage.setItem(StorageKeys.TOKEN, response.token);
-  return response;
+  const { user, token } = await authApi.signUp(registerPayload);
+  storage.setItem(StorageKeys.TOKEN, token);
+  return user;
 });
+
 const signIn = createAsyncThunk<
   Promise<MasterDto>,
   MasterSignInDto,
