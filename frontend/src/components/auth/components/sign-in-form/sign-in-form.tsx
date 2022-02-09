@@ -22,9 +22,10 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <>
       <h1 className={styles.title}>Sign In</h1>
-
-      <span className={styles.subtitle}>Need to create a new account</span>
-      <Link children="SignUp" to={AppRoute.SIGN_UP}></Link>
+      <div className={styles.subtitle}>
+        <span>Need to create a new account? </span>
+        <Link to={AppRoute.SIGN_UP}>SignUp</Link>
+      </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
