@@ -35,10 +35,10 @@ class Tenant {
     });
   }
 
-  public static createNew(): Tenant {
+  public static createNew({ name }: { name: string }): Tenant {
     return new Tenant({
       id: getRandomId(),
-      name: getRandomId(),
+      name: name,
       createdAt: new Date(),
     });
   }
