@@ -1,12 +1,12 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
-import { master } from '~/services/services';
+import { masterService } from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initMastersApi, {
     services: {
-      master,
+      masterService,
     },
     prefix: ApiPath.MASTERS,
   });

@@ -1,7 +1,7 @@
 import { hash, genSalt } from 'bcrypt';
 import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
 
-class Encrypt {
+class EncryptService {
   #saltRounds: number;
 
   constructor(rounds?: number) {
@@ -14,4 +14,4 @@ class Encrypt {
     hash(data, salt);
 }
 
-export { Encrypt };
+export { EncryptService };

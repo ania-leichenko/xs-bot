@@ -5,7 +5,7 @@ type Constructor = {
   TenantModel: typeof TenantM;
 };
 
-class Tenant {
+class TenantRepository {
   #TenantModel: typeof TenantM;
 
   constructor({ TenantModel }: Constructor) {
@@ -19,14 +19,6 @@ class Tenant {
       createdAt: tenant.createdAt.toISOString(),
     });
   }
-
-  public static modelToEntity(model: TenantM): TenantEntity {
-    return TenantEntity.initialize({
-      id: model.id,
-      name: model.name,
-      createdAt: new Date(model.createdAt),
-    });
-  }
 }
 
-export { Tenant };
+export { TenantRepository };

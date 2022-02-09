@@ -1,1 +1,1 @@
-export { type TenantDto } from './tenant-dto.type';
+export { type TenantResponseDto } from './tenant-dto.type';

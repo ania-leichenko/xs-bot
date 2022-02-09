@@ -1,1 +1,1 @@
-export { type TenantDto } from 'bws-shared/common/types/types';
+export { type TenantResponseDto } from 'bws-shared/common/types/types';

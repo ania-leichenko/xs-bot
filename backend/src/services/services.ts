@@ -1,24 +1,24 @@
 import {
-  master as masterRepository,
-  tenant as tenantRepository,
+  masterRepository,
+  tenantRepository,
 } from '~/data/repositories/repositories';
-import { Master } from './master/master.service';
-import { Encrypt } from './encrypt/encrypt.service';
-import { Token } from './token/token.service';
-import { Tenant } from './tenant/tenant.service';
+import { MasterService } from './master/master.service';
+import { EncryptService } from './encrypt/encrypt.service';
+import { TokenService } from './token/token.service';
+import { TenantService } from './tenant/tenant.service';
 
-const token = new Token();
-const encrypt = new Encrypt();
+const tokenService = new TokenService();
+const encryptService = new EncryptService();
 
-const tenant = new Tenant({
+const tenantService = new TenantService({
   tenantRepository,
 });
 
-const master = new Master({
+const masterService = new MasterService({
   masterRepository,
-  token,
-  encrypt,
-  tenant,
+  tokenService,
+  encryptService,
+  tenantService,
 });
 
-export { master, token, encrypt, tenant };
+export { masterService, encryptService, tokenService, tenantService };

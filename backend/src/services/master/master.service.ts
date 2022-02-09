@@ -3,33 +3,38 @@ import {
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
 } from '~/common/types/types';
-import { master as masterRep } from '~/data/repositories/repositories';
+import { masterRepository as MasterRepository } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
-  token as tokenServ,
-  encrypt as encryptServ,
-  tenant as tenantServ,
+  tokenService as TokenService,
+  encryptService as EncryptService,
+  tenantService as TenantService,
 } from '~/services/services';
 
 type Constructor = {
-  masterRepository: typeof masterRep;
-  encrypt: typeof encryptServ;
-  token: typeof tokenServ;
-  tenant: typeof tenantServ;
+  masterRepository: typeof MasterRepository;
+  encryptService: typeof EncryptService;
+  tokenService: typeof TokenService;
+  tenantService: typeof TenantService;
 };
 
-class Master {
-  #masterRepository: typeof masterRep;
-  #encryptService: typeof encryptServ;
-  #tokenService: typeof tokenServ;
-  #tenantServ: typeof tenantServ;
+class MasterService {
+  #masterRepository: typeof MasterRepository;
+  #encryptService: typeof EncryptService;
+  #tokenService: typeof TokenService;
+  #tenantService: typeof TenantService;
 
-  constructor({ masterRepository, encrypt, token, tenant }: Constructor) {
+  constructor({
+    masterRepository,
+    encryptService,
+    tokenService,
+    tenantService,
+  }: Constructor) {
     this.#masterRepository = masterRepository;
-    this.#encryptService = encrypt;
-    this.#tokenService = token;
-    this.#tenantServ = tenant;
+    this.#encryptService = encryptService;
+    this.#tokenService = tokenService;
+    this.#tenantService = tenantService;
   }
 
   async getAll(): Promise<TMaster[]> {
@@ -73,7 +78,7 @@ class Master {
       name,
       email,
     });
-    const tenant = await this.#tenantServ.create();
+    const tenant = await this.#tenantService.create();
 
     const { id } = await this.#masterRepository.create({
       master,
@@ -86,4 +91,4 @@ class Master {
   }
 }
 
-export { Master };
+export { MasterService };
