@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { authApi } from 'services/services';
+import { errorHandlingMiddleware } from './middlewares/error-handling-middleware';
 
 const extraArgument = {
   authApi,
@@ -13,7 +14,8 @@ const store = configureStore({
       thunk: {
         extraArgument,
       },
-    });
+      serializableCheck: false,
+    }).prepend(errorHandlingMiddleware);
   },
 });
 
