@@ -2,10 +2,14 @@ import {
   MasterDto as TMaster,
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
+  MasterSignInRequestDto,
+  MasterSignInResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
+import { HttpCode } from '~/common/enums/http/http';
+import { ExceptionMessage } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
@@ -94,6 +98,34 @@ class Master {
     const { id } = await this.#masterRepository.create(master);
 
     return this.login(id);
+  }
+
+  async verifyLoginCredentials(
+    verifyMasterDto: MasterSignInRequestDto,
+  ): Promise<MasterSignInResponseDto> {
+    const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);
+
+    if (!user) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INCORRECT_EMAIL,
+      });
+    }
+
+    const isEqualPassword = await this.#encryptService.compare(
+      verifyMasterDto.password,
+      user.passwordSalt,
+      user.passwordHash,
+    );
+
+    if (!isEqualPassword) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INVALID_CREDENTIALS,
+      });
+    }
+
+    return this.login(user.id);
   }
 }
 

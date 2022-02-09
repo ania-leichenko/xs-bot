@@ -14,6 +14,6 @@ export { type ValidationSchema } from './validation/validation';
 export {
   type MasterSignUpResponseDto,
   type MasterSignUpRequestDto,
-  type MasterSignInDto,
+  type MasterSignInRequestDto,
   type MasterDto,
 } from './master/master';
