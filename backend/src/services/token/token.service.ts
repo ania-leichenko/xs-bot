@@ -1,20 +1,15 @@
 import jwt, { Secret } from 'jsonwebtoken';
-import jwt_decode from 'jwt-decode';
 import { ENV } from '~/common/enums/app/env.enum';
-
-type decoded = {
-  'data': string;
-  'iat': number;
-  'exp': number;
-};
+import jwtDecode from 'jwt-decode';
 
 class Token {
   create = (data: string): string =>
     jwt.sign({ data }, <Secret>ENV.JWT.SECRET, {
       expiresIn: ENV.JWT.EXPIRES_IN,
     });
-  decode = (token: string): decoded => {
-    return jwt_decode(token);
+
+  decode = <T>(token: string): T => {
+    return jwtDecode<T>(token);
   };
 }
 

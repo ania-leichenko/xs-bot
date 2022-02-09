@@ -51,13 +51,13 @@ class AuthApi {
     );
   }
 
-  public getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
+  public getCurrentUser(): Promise<MasterSignUpResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.USER),
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,
-        authorization: token,
+        hasAuth: true,
       },
     );
   }

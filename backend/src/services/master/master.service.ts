@@ -12,6 +12,7 @@ import {
   tenant as tenantServ,
 } from '~/services/services';
 import { getRandomId as getRandomName } from '~/helpers/helpers';
+import { TokenPayload } from 'bws-shared/common/types/types';
 
 type Constructor = {
   masterRepository: typeof masterRep;
@@ -61,7 +62,7 @@ class Master {
   }
 
   async getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
-    const { data } = this.#tokenService.decode(token);
+    const { data } = this.#tokenService.decode<TokenPayload>(token);
     return this.login(data);
   }
 

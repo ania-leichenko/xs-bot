@@ -1,6 +1,8 @@
 import { HttpError } from 'exceptions/exceptions';
 import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
+import { storage } from 'services/services';
+import { StorageKey } from '../../common/enums/app/storage-key';
 
 class Http {
   load<T = unknown>(
@@ -11,9 +13,9 @@ class Http {
       method = HttpMethod.GET,
       payload = null,
       contentType,
-      authorization,
+      hasAuth = true,
     } = options;
-    const headers = this.getHeaders(contentType, authorization);
+    const headers = this.getHeaders(contentType, hasAuth);
 
     return fetch(url, {
       method,
@@ -25,17 +27,18 @@ class Http {
       .catch(this.throwError);
   }
 
-  private getHeaders(
-    contentType?: ContentType,
-    authorization?: string | null,
-  ): Headers {
+  #storage = storage;
+
+  private getHeaders(contentType?: ContentType, hasAuth?: boolean): Headers {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
     }
-    if (authorization) {
-      headers.append(HttpHeader.AUTHORIZATION, authorization);
+    if (hasAuth) {
+      const token = this.#storage.getItem(StorageKey.TOKEN);
+
+      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
 
     return headers;

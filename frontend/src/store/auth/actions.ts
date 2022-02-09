@@ -6,7 +6,7 @@ import {
   MasterSignUpRequestDto,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { StorageKeys } from '../../common/enums/app/storage';
+import { StorageKey } from '../../common/enums/app/storage-key';
 
 const signUp = createAsyncThunk<
   MasterDto,
@@ -15,7 +15,7 @@ const signUp = createAsyncThunk<
 >(ActionType.SIGN_UP, async (registerPayload, { extra }) => {
   const { authApi, storage } = extra;
   const { user, token } = await authApi.signUp(registerPayload);
-  storage.setItem(StorageKeys.TOKEN, token);
+  storage.setItem(StorageKey.TOKEN, token);
   return user;
 });
 
@@ -31,9 +31,8 @@ const signIn = createAsyncThunk<
 const loadCurrentUser = createAsyncThunk<MasterDto, void, AsyncThunkConfig>(
   ActionType.SIGN_IN,
   async (payload, { extra }) => {
-    const { authApi, storage } = extra;
-    const token = storage.getItem(StorageKeys.TOKEN);
-    const { user } = await authApi.getCurrentUser(JSON.stringify(token));
+    const { authApi } = extra;
+    const { user } = await authApi.getCurrentUser();
     return user;
   },
 );

@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import { useAppDispatch, useEffect } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
 import { Routes, Route, PrivateRoute } from 'components/common/common';
