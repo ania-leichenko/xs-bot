@@ -10,7 +10,14 @@ const App: FC = () => {
       <Routes>
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
         <Route path={AppRoute.SIGN_UP} element={<Auth />} />
-        <PrivateRoute path={AppRoute.ROOT} element={<Dashboard />} />
+        <Route
+          path={AppRoute.ROOT}
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );
