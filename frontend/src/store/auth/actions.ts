@@ -1,19 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  MasterSignUpRequestDto,
-  MasterSignInDto,
-  MasterDto,
   AsyncThunkConfig,
+  MasterDto,
+  MasterSignInDto,
+  MasterSignUpRequestDto,
+  MasterSignUpResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
+import { StorageKeys } from '../../common/enums/app/storage';
 
 const signUp = createAsyncThunk<
-  Promise<MasterDto>,
+  Promise<MasterSignUpResponseDto>,
   MasterSignUpRequestDto,
   AsyncThunkConfig
 >(ActionType.SIGN_UP, async (registerPayload, { extra }) => {
-  const { authApi } = extra;
-  return authApi.signUp(registerPayload);
+  const { authApi, storage } = extra;
+  const response = await authApi.signUp(registerPayload);
+  storage.setItem(StorageKeys.TOKEN, response.token);
+  return response;
 });
 const signIn = createAsyncThunk<
   Promise<MasterDto>,
@@ -26,11 +30,12 @@ const signIn = createAsyncThunk<
 
 const loadCurrentUser = createAsyncThunk<
   Promise<MasterDto>,
-  number,
+  void,
   AsyncThunkConfig
->(ActionType.SIGN_IN, async (id, { extra }) => {
-  const { authApi } = extra;
-  return await authApi.getCurrentUser(id);
+>(ActionType.SIGN_IN, async (payload, { extra }) => {
+  const { authApi, storage } = extra;
+  const token = storage.getItem(StorageKeys.TOKEN);
+  return await authApi.getCurrentUser(JSON.stringify(token));
 });
 
 export { signUp, signIn, loadCurrentUser };

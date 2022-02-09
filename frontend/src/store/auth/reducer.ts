@@ -1,16 +1,16 @@
-import { createReducer, isAnyOf } from '@reduxjs/toolkit';
+import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { signUp, signIn, loadCurrentUser } from './actions';
+import { signUp, loadCurrentUser } from './actions';
+import { MasterDto } from '../../common/types/types';
 
 type State = {
   dataStatus: DataStatus;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  user: any; // will be change
+  user: MasterDto | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  user: false,
+  user: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -23,12 +23,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(signUp.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addMatcher(
-    isAnyOf(signIn.fulfilled, loadCurrentUser.fulfilled),
-    (state, payload) => {
-      state.user = payload;
-    },
-  );
+  builder.addCase(loadCurrentUser.fulfilled, (state) => {
+    state.user = null;
+  });
 });
 
 export { reducer };

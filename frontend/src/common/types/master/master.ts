@@ -1,4 +1,5 @@
 export {
+  type MasterSignUpResponseDto,
   type MasterSignUpRequestDto,
   type MasterSignInDto,
   type MasterDto,

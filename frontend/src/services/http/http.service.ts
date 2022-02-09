@@ -7,8 +7,13 @@ class Http {
     url: string,
     options: Partial<HttpOptions> = {},
   ): Promise<T> {
-    const { method = HttpMethod.GET, payload = null, contentType } = options;
-    const headers = this.getHeaders(contentType);
+    const {
+      method = HttpMethod.GET,
+      payload = null,
+      contentType,
+      authorization,
+    } = options;
+    const headers = this.getHeaders(contentType, authorization);
 
     return fetch(url, {
       method,
@@ -20,11 +25,17 @@ class Http {
       .catch(this.throwError);
   }
 
-  private getHeaders(contentType?: ContentType): Headers {
+  private getHeaders(
+    contentType?: ContentType,
+    authorization?: string | null,
+  ): Headers {
     const headers = new Headers();
 
     if (contentType) {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
+    }
+    if (authorization) {
+      headers.append(HttpHeader.AUTHORIZATION, authorization);
     }
 
     return headers;

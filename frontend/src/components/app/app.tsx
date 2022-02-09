@@ -1,5 +1,5 @@
-import { FC, useEffect } from 'react';
-import { useAppDispatch } from 'hooks/hooks';
+import { FC } from 'react';
+import { useAppDispatch, useEffect } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
 
 import { Routes, Route } from 'components/common/common';
@@ -8,13 +8,10 @@ import { Auth } from 'components/auth/auth';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
-  const userId = Number(localStorage.getItem('userId')); // need change
 
   useEffect(() => {
-    if (userId) {
-      dispatch(authActions.loadCurrentUser(userId));
-    }
-  }, [userId, dispatch]);
+    dispatch(authActions.loadCurrentUser());
+  }, [dispatch]);
 
   return (
     <>

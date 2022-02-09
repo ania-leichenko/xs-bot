@@ -50,6 +50,11 @@ class Master {
     };
   }
 
+  async getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
+    const { data } = this.#tokenService.decode(token);
+    return this.login(data);
+  }
+
   async create({
     email,
     name,
