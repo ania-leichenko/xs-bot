@@ -12,3 +12,8 @@ export {
 } from './tenant/tenant';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
+export {
+  type EAMCreateWorkerRequestDto,
+  type EAMCreateWorkerResponseDto,
+  type EAMCreateWorkerFormDto,
+} from './worker/worker';

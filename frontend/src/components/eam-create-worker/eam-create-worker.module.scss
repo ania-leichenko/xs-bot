@@ -1,0 +1,26 @@
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.addUserHeader {
+  margin-bottom: 16px;
+  color: lightgrey;
+  font-size: 30px;
+}
+
+.title {
+  margin-top: 4px;
+  margin-bottom: 16px;
+  font-size: 18px;
+  border-bottom: 3px solid #d6d3d3;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  margin-left: 8px;
+}

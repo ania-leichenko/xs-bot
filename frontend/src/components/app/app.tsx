@@ -6,6 +6,8 @@ import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
+import { Eam } from '../eam/eam';
+import { EamCreateWorker } from 'components/eam-create-worker/eam-create-worker';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +31,11 @@ const App: FC = () => {
               <Dashboard />
             </PrivateRoute>
           }
+        />
+        <Route path={AppRoute.EAM} element={<Eam />} />
+        <Route
+          path={AppRoute.EAM_CREATE_WORKER}
+          element={<EamCreateWorker />}
         />
       </Routes>
       <Toaster />
