@@ -1,4 +1,4 @@
-import { GroupDto } from '~/common/types/types';
+import { GroupResponseDto } from '~/common/types/types';
 import { group as groupRep } from '~/data/repositories/repositories';
 // import { Group as GroupEntity } from "~/services/group/group.entity";
 
@@ -13,14 +13,14 @@ class Group {
     this.#groupRepository = groupRepository;
   }
 
-  async getAll(): Promise<GroupDto[]> {
+  async getAll(): Promise<GroupResponseDto[]> {
     const groups = await this.#groupRepository.getAll();
 
     return groups.map((g) => ({
       id: g.id,
       name: g.name,
       createdAt: g.createdAt,
-      tenant_id: g.tenant_id,
+      tenantId: g.tenantId,
     }));
   }
 }

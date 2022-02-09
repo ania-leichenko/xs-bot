@@ -35,7 +35,7 @@ class Group {
       id: group.id,
       name: group.name,
       createdAt: group.createdAt,
-      tenant_id: group.tenant_id,
+      tenantId: group.tenantId,
     });
   }
 
@@ -44,7 +44,7 @@ class Group {
       id: model.id,
       name: model.name,
       createdAt: new Date(model.createdAt),
-      tenant_id: model.tenant_id,
+      tenantId: model.tenantId,
     });
   }
 }

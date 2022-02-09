@@ -1,8 +1,8 @@
-type GroupDto = {
+type GroupResponseDto = {
   id: string;
   name: string;
   createdAt: Date;
-  tenant_id: string;
+  tenantId: string;
 };
 
-export { type GroupDto };
+export { type GroupResponseDto };

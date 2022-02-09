@@ -1,1 +1,1 @@
-export { type GroupDto } from 'bws-shared/common/types/types';
+export { type GroupResponseDto } from 'bws-shared/common/types/types';

@@ -1,1 +1,1 @@
-export type { GroupDto } from './group-dto.type';
+export type { GroupResponseDto } from './group-dto.type';
