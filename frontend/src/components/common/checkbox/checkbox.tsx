@@ -3,16 +3,15 @@ import './styles.module.scss';
 
 type Props = {
   label: string;
-  isChecked: boolean;
+  isChecked?: boolean;
   isDisabled?: boolean;
-  name?: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 const Checkbox: React.FC<Props> = ({
   label,
-  isChecked = false,
   onChange,
+  isChecked = false,
   isDisabled = false,
 }) => {
   return (
