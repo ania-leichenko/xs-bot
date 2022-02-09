@@ -1,13 +1,11 @@
-import { HttpCode } from '~/common/enums/enums';
-
-const DEFAULT_MESSAGE = 'User already exists';
+import { HttpCode, ExceptionMessage } from '~/common/enums/enums';
 
 class InvalidCredentialsError extends Error {
   status: HttpCode;
 
   constructor({
     status = HttpCode.UNAUTHORIZED,
-    message = DEFAULT_MESSAGE,
+    message = ExceptionMessage.EMAIL_ALREADY_EXISTS,
   } = {}) {
     super(message);
     this.status = status;

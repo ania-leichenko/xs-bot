@@ -37,6 +37,18 @@ class Master {
     }));
   }
 
+  async getMasterById(id: string): Promise<TMaster | null> {
+    const master = await this.#masterRepository.getById(id);
+    if (!master) {
+      return null;
+    }
+
+    return {
+      id: master.id,
+      email: master.id,
+    };
+  }
+
   async login(id: string): Promise<MasterSignUpResponseDto> {
     const { email } = (await this.#masterRepository.getById(
       id,
