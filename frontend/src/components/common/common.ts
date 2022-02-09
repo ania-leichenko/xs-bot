@@ -5,3 +5,4 @@ export { Input } from './input/input';
 export { Link } from './link/link';
 export { Table } from './table/table';
 export { Toastr } from './toastr/toastr';
+export { PasswordInput } from './input-password/input-password';
