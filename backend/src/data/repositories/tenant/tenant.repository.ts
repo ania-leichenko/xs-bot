@@ -12,11 +12,11 @@ class Tenant {
     this.#TenantModel = TenantModel;
   }
 
-  async create(Tenant: TenantEntity): Promise<TenantM> {
+  async create(tenant: TenantEntity): Promise<TenantM> {
     return this.#TenantModel.query().insert({
-      id: Tenant.id,
-      name: Tenant.name,
-      createdAt: Tenant.createdAt.toISOString(),
+      id: tenant.id,
+      name: tenant.name,
+      createdAt: tenant.createdAt.toISOString(),
     });
   }
 
