@@ -3,27 +3,28 @@ import {
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
 } from '~/common/types/types';
-import { master as MasterRep } from '~/data/repositories/repositories';
+import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
-  token as TokenServ,
-  encrypt as EncryptServ,
-  tenant as TenantServ,
+  token as tokenServ,
+  encrypt as encryptServ,
+  tenant as tenantServ,
 } from '~/services/services';
+import { getRandomId as getRandomName } from 'bws-shared';
 
 type Constructor = {
-  masterRepository: typeof MasterRep;
-  encryptService: typeof EncryptServ;
-  tokenService: typeof TokenServ;
-  tenantService: typeof TenantServ;
+  masterRepository: typeof masterRep;
+  encryptService: typeof encryptServ;
+  tokenService: typeof tokenServ;
+  tenantService: typeof tenantServ;
 };
 
 class Master {
-  #masterRepository: typeof MasterRep;
-  #encryptService: typeof EncryptServ;
-  #tokenService: typeof TokenServ;
-  #tenantService: typeof TenantServ;
+  #masterRepository: typeof masterRep;
+  #encryptService: typeof encryptServ;
+  #tokenService: typeof tokenServ;
+  #tenantService: typeof tenantServ;
 
   constructor({
     masterRepository,
@@ -74,18 +75,17 @@ class Master {
       password,
       passwordSalt,
     );
+    const tenant = await this.#tenantService.create(getRandomName());
+
     const master = MasterEntity.createNew({
       name,
       email,
-    });
-    const tenant = await this.#tenantService.create();
-
-    const { id } = await this.#masterRepository.create({
-      master,
-      passwordSalt,
       passwordHash,
+      passwordSalt,
       tenantId: tenant.id,
     });
+
+    const { id } = await this.#masterRepository.create(master);
 
     return this.login(id);
   }

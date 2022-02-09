@@ -13,9 +13,11 @@ class Tenant {
   }
 
   async create(tenant: TenantEntity): Promise<TenantM> {
+    const { id, name } = tenant;
+
     return this.#TenantModel.query().insert({
-      id: tenant.id,
-      name: tenant.name,
+      id,
+      name,
       createdAt: tenant.createdAt.toISOString(),
     });
   }

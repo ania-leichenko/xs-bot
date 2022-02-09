@@ -1,13 +1,13 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { master as MasterServ } from '~/services/services';
+import { master as masterServ } from '~/services/services';
 import { masterSignUp as masterSignUpValidationSchema } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, MastersApiPath } from '~/common/enums/enums';
 import { MasterSignUpRequestDto } from '~/common/types/types';
 
 type Options = {
   services: {
-    master: typeof MasterServ;
+    master: typeof masterServ;
   };
 };
 
