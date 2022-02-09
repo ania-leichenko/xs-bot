@@ -6,7 +6,10 @@ import {
   masterSignIn as masterSignInValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, MastersApiPath } from '~/common/enums/enums';
-import { MasterSignUpRequestDto, MasterSignInDto } from '~/common/types/types';
+import {
+  MasterSignUpRequestDto,
+  MasterSignInRequestDto,
+} from '~/common/types/types';
 
 type Options = {
   services: {
@@ -56,14 +59,16 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       schema,
     }: FastifyRouteSchemaDef<typeof masterSignInValidationSchema>) {
       return (
-        data: MasterSignInDto,
+        data: MasterSignInRequestDto,
       ): ReturnType<typeof masterSignInValidationSchema['validate']> => {
         return schema.validate(data);
       };
     },
-    async handler(req: FastifyRequest<{ Body: MasterSignInDto }>, rep) {
-      const user = await masterService.verifyLoginCredentials(req.body);
-      return rep.send(user).status(HttpCode.OK);
+    async handler(req: FastifyRequest<{ Body: MasterSignInRequestDto }>, rep) {
+      const signInUserPayload = await masterService.verifyLoginCredentials(
+        req.body,
+      );
+      return rep.send(signInUserPayload).status(HttpCode.OK);
     },
   });
 };

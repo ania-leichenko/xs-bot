@@ -12,6 +12,12 @@ class Encrypt {
 
   createHash = (data: string, salt: string): Promise<string> =>
     hash(data, salt);
+
+  compare = async (
+    data: string,
+    salt: string,
+    passwordHash: string,
+  ): Promise<boolean> => (await this.createHash(data, salt)) === passwordHash;
 }
 
 export { Encrypt };

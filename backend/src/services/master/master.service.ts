@@ -2,7 +2,7 @@ import {
   MasterDto as TMaster,
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
-  MasterSignInDto,
+  MasterSignInRequestDto,
   MasterSignInResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
@@ -61,10 +61,7 @@ class Master {
   }: MasterSignUpRequestDto): Promise<MasterSignUpResponseDto> {
     const masterByEmail = await this.#masterRepository.getByEmail(email);
     if (masterByEmail) {
-      throw new InvalidCredentialsError(
-        ExceptionMessage.USER_EXISTS,
-        HttpCode.UNAUTHORIZED,
-      );
+      throw new InvalidCredentialsError();
     }
 
     const passwordSalt = await this.#encryptService.createSalt();
@@ -88,32 +85,31 @@ class Master {
   }
 
   async verifyLoginCredentials(
-    verifyMasterDto: MasterSignInDto,
+    verifyMasterDto: MasterSignInRequestDto,
   ): Promise<MasterSignInResponseDto> {
     const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);
 
     if (!user) {
-      throw new InvalidCredentialsError(
-        ExceptionMessage.INCORRECT_EMAIL,
-        HttpCode.NOT_FOUND,
-      );
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INCORRECT_EMAIL,
+      });
     }
 
-    const isEqualPassword =
-      (await this.#encryptService.createHash(
-        verifyMasterDto.password,
-        user.passwordSalt,
-      )) === user.passwordHash;
+    const isEqualPassword = await this.#encryptService.compare(
+      verifyMasterDto.password,
+      user.passwordSalt,
+      user.passwordHash,
+    );
 
     if (!isEqualPassword) {
-      throw new InvalidCredentialsError(
-        ExceptionMessage.INVALID_CREDENTIALS,
-        HttpCode.UNAUTHORIZED,
-      );
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INVALID_CREDENTIALS,
+      });
     }
 
-    const token = this.#tokenService.create(user.id);
-    return { token, user };
+    return this.login(user.id);
   }
 }
 
