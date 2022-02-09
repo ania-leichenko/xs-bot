@@ -27,8 +27,6 @@ class Http {
       .catch(this.throwError);
   }
 
-  #storage = storage;
-
   private getHeaders(contentType?: ContentType, hasAuth?: boolean): Headers {
     const headers = new Headers();
 
@@ -36,8 +34,7 @@ class Http {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
     }
     if (hasAuth) {
-      const token = this.#storage.getItem(StorageKey.TOKEN);
-
+      const token = storage.getItem(StorageKey.TOKEN);
       headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
 
