@@ -28,14 +28,14 @@ const signIn = createAsyncThunk<
   return authApi.signIn(registerPayload);
 });
 
-const loadCurrentUser = createAsyncThunk<
-  Promise<MasterDto>,
-  void,
-  AsyncThunkConfig
->(ActionType.SIGN_IN, async (payload, { extra }) => {
-  const { authApi, storage } = extra;
-  const token = storage.getItem(StorageKeys.TOKEN);
-  return await authApi.getCurrentUser(JSON.stringify(token));
-});
+const loadCurrentUser = createAsyncThunk<MasterDto, void, AsyncThunkConfig>(
+  ActionType.SIGN_IN,
+  async (payload, { extra }) => {
+    const { authApi, storage } = extra;
+    const token = storage.getItem(StorageKeys.TOKEN);
+    const { user } = await authApi.getCurrentUser(JSON.stringify(token));
+    return user;
+  },
+);
 
 export { signUp, signIn, loadCurrentUser };

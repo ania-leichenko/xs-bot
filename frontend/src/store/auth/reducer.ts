@@ -24,8 +24,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(signUp.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(loadCurrentUser.fulfilled, (state) => {
-    state.user = null;
+  builder.addCase(loadCurrentUser.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.user = action.payload;
   });
 });
 

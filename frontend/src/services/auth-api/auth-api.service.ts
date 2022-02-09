@@ -51,7 +51,7 @@ class AuthApi {
     );
   }
 
-  public getCurrentUser(token: string): Promise<MasterDto> {
+  public getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.USER),
       {
