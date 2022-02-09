@@ -43,33 +43,31 @@ class Master {
     return Master.modelToEntity(master);
   }
 
-  async create({
-    master,
-    passwordHash,
-    passwordSalt,
-  }: {
-    master: MasterEntity;
-    passwordHash: string;
-    passwordSalt: string;
-  }): Promise<MasterM> {
+  async create(master: MasterEntity): Promise<MasterM> {
+    const { id, name, email, passwordHash, passwordSalt, tenantId } = master;
+
     return this.#MasterModel.query().insert({
-      id: master.id,
-      email: master.email,
-      name: master.name,
+      id,
+      name,
+      email,
       passwordHash,
       passwordSalt,
       createdAt: master.createdAt.toISOString(),
+      tenantId,
     });
   }
 
   public static modelToEntity(model: MasterM): MasterEntity {
+    const { id, name, email, passwordHash, passwordSalt, tenantId } = model;
+
     return MasterEntity.initialize({
-      id: model.id,
-      name: model.name,
-      email: model.email,
-      passwordHash: model.passwordHash,
-      passwordSalt: model.passwordSalt,
+      id,
+      name,
+      email,
+      passwordHash,
+      passwordSalt,
       createdAt: new Date(model.createdAt),
+      tenantId,
     });
   }
 }

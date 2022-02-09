@@ -7,6 +7,7 @@ class Master {
   public passwordHash: string;
   public passwordSalt: string;
   public createdAt: Date;
+  public tenantId: string;
 
   private constructor({
     id,
@@ -15,6 +16,7 @@ class Master {
     passwordHash,
     passwordSalt,
     createdAt,
+    tenantId,
   }: {
     id: string;
     name: string;
@@ -22,6 +24,7 @@ class Master {
     passwordHash: string;
     passwordSalt: string;
     createdAt: Date;
+    tenantId: string;
   }) {
     this.id = id;
     this.name = name;
@@ -29,6 +32,7 @@ class Master {
     this.passwordHash = passwordHash;
     this.passwordSalt = passwordSalt;
     this.createdAt = createdAt;
+    this.tenantId = tenantId;
   }
 
   public static initialize({
@@ -38,6 +42,7 @@ class Master {
     passwordHash,
     passwordSalt,
     createdAt,
+    tenantId,
   }: {
     id: string;
     name: string;
@@ -45,6 +50,7 @@ class Master {
     passwordHash: string;
     passwordSalt: string;
     createdAt: Date;
+    tenantId: string;
   }): Master {
     return new Master({
       id,
@@ -53,6 +59,7 @@ class Master {
       passwordHash,
       passwordSalt,
       createdAt,
+      tenantId,
     });
   }
 
@@ -61,11 +68,13 @@ class Master {
     email,
     passwordHash,
     passwordSalt,
+    tenantId,
   }: {
     name: string;
     email: string;
     passwordHash: string;
     passwordSalt: string;
+    tenantId: string;
   }): Master {
     return new Master({
       id: getRandomId(),
@@ -74,6 +83,7 @@ class Master {
       passwordHash,
       passwordSalt,
       createdAt: new Date(),
+      tenantId,
     });
   }
 }

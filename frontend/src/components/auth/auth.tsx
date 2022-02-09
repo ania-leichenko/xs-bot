@@ -6,9 +6,9 @@ import {
 import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { useLocation, useAppDispatch } from 'hooks/hooks';
-import logo from 'assets/img/logo.svg';
 import { SignInForm, SignUpForm } from './components/components';
 import styles from './auth.module.scss';
+import logo from 'assets/img/logo.svg';
 
 const Auth: FC = () => {
   const { pathname } = useLocation();
@@ -31,7 +31,6 @@ const Auth: FC = () => {
         return <SignUpForm onSubmit={handleSignUpSubmit} />;
       }
     }
-
     return null;
   };
 

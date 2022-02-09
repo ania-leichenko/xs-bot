@@ -13,23 +13,33 @@ import { ExceptionMessage } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
+  tenant as tenantServ,
 } from '~/services/services';
+import { getRandomId as getRandomName } from '~/helpers/helpers';
 
 type Constructor = {
   masterRepository: typeof masterRep;
-  encrypt: typeof encryptServ;
-  token: typeof tokenServ;
+  encryptService: typeof encryptServ;
+  tokenService: typeof tokenServ;
+  tenantService: typeof tenantServ;
 };
 
 class Master {
   #masterRepository: typeof masterRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
+  #tenantService: typeof tenantServ;
 
-  constructor({ masterRepository, encrypt, token }: Constructor) {
+  constructor({
+    masterRepository,
+    encryptService,
+    tokenService,
+    tenantService,
+  }: Constructor) {
     this.#masterRepository = masterRepository;
-    this.#encryptService = encrypt;
-    this.#tokenService = token;
+    this.#encryptService = encryptService;
+    this.#tokenService = tokenService;
+    this.#tenantService = tenantService;
   }
 
   async getAll(): Promise<TMaster[]> {
@@ -69,17 +79,17 @@ class Master {
       password,
       passwordSalt,
     );
+    const tenant = await this.#tenantService.create(getRandomName());
+
     const master = MasterEntity.createNew({
       name,
       email,
       passwordHash,
       passwordSalt,
+      tenantId: tenant.id,
     });
-    const { id } = await this.#masterRepository.create({
-      master,
-      passwordSalt,
-      passwordHash,
-    });
+
+    const { id } = await this.#masterRepository.create(master);
 
     return this.login(id);
   }
