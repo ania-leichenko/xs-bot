@@ -11,7 +11,7 @@ import {
   encrypt as encryptServ,
   tenant as tenantServ,
 } from '~/services/services';
-import { getRandomId as getRandomName } from 'bws-shared';
+import { getRandomId as getRandomName } from '~/helpers/helpers';
 
 type Constructor = {
   masterRepository: typeof masterRep;
