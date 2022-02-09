@@ -2,15 +2,15 @@ import {
   Master as MasterModel,
   Tenant as TenantModel,
 } from '~/data/models/models';
-import { MasterRepository } from './master/master.repository';
-import { TenantRepository } from './tenant/tenant.repository';
+import { Master } from './master/master.repository';
+import { Tenant } from './tenant/tenant.repository';
 
-const masterRepository = new MasterRepository({
+const master = new Master({
   MasterModel,
 });
 
-const tenantRepository = new TenantRepository({
+const tenant = new Tenant({
   TenantModel,
 });
 
-export { masterRepository, tenantRepository };
+export { master, tenant };

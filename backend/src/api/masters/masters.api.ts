@@ -1,18 +1,18 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { masterService as MasterService } from '~/services/services';
+import { master as MasterServ } from '~/services/services';
 import { masterSignUp as masterSignUpValidationSchema } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, MastersApiPath } from '~/common/enums/enums';
 import { MasterSignUpRequestDto } from '~/common/types/types';
 
 type Options = {
   services: {
-    masterService: typeof MasterService;
+    master: typeof MasterServ;
   };
 };
 
 const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { masterService: masterService } = opts.services;
+  const { master: masterService } = opts.services;
 
   fastify.route({
     method: HttpMethod.GET,

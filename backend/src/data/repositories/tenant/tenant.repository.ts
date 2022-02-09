@@ -5,7 +5,7 @@ type Constructor = {
   TenantModel: typeof TenantM;
 };
 
-class TenantRepository {
+class Tenant {
   #TenantModel: typeof TenantM;
 
   constructor({ TenantModel }: Constructor) {
@@ -21,4 +21,4 @@ class TenantRepository {
   }
 }
 
-export { TenantRepository };
+export { Tenant };

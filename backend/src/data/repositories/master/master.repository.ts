@@ -5,7 +5,7 @@ type Constructor = {
   MasterModel: typeof MasterM;
 };
 
-class MasterRepository {
+class Master {
   #MasterModel: typeof MasterM;
 
   constructor({ MasterModel }: Constructor) {
@@ -14,7 +14,7 @@ class MasterRepository {
 
   async getAll(): Promise<MasterEntity[]> {
     const masters = await this.#MasterModel.query();
-    return masters.map(MasterRepository.modelToEntity);
+    return masters.map(Master.modelToEntity);
   }
 
   async getByEmail(email: string): Promise<MasterEntity | null> {
@@ -27,7 +27,7 @@ class MasterRepository {
       return null;
     }
 
-    return MasterRepository.modelToEntity(master);
+    return Master.modelToEntity(master);
   }
 
   async getById(id: string): Promise<MasterEntity | null> {
@@ -40,7 +40,7 @@ class MasterRepository {
       return null;
     }
 
-    return MasterRepository.modelToEntity(master);
+    return Master.modelToEntity(master);
   }
 
   async create({
@@ -75,4 +75,4 @@ class MasterRepository {
   }
 }
 
-export { MasterRepository };
+export { Master };

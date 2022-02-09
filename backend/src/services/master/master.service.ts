@@ -3,27 +3,27 @@ import {
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
 } from '~/common/types/types';
-import { masterRepository as MasterRepository } from '~/data/repositories/repositories';
+import { master as MasterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
-  tokenService as TokenService,
-  encryptService as EncryptService,
-  tenantService as TenantService,
+  token as TokenServ,
+  encrypt as EncryptServ,
+  tenant as TenantServ,
 } from '~/services/services';
 
 type Constructor = {
-  masterRepository: typeof MasterRepository;
-  encryptService: typeof EncryptService;
-  tokenService: typeof TokenService;
-  tenantService: typeof TenantService;
+  masterRepository: typeof MasterRep;
+  encryptService: typeof EncryptServ;
+  tokenService: typeof TokenServ;
+  tenantService: typeof TenantServ;
 };
 
-class MasterService {
-  #masterRepository: typeof MasterRepository;
-  #encryptService: typeof EncryptService;
-  #tokenService: typeof TokenService;
-  #tenantService: typeof TenantService;
+class Master {
+  #masterRepository: typeof MasterRep;
+  #encryptService: typeof EncryptServ;
+  #tokenService: typeof TokenServ;
+  #tenantService: typeof TenantServ;
 
   constructor({
     masterRepository,
@@ -91,4 +91,4 @@ class MasterService {
   }
 }
 
-export { MasterService };
+export { Master };
