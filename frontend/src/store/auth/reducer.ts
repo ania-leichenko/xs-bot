@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { MasterDto } from 'bws-shared';
 import { DataStatus } from 'common/enums/enums';
+import { MasterDto } from 'common/types/types';
 import { signUp } from './actions';
 
 type State = {

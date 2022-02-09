@@ -4,7 +4,6 @@ import { useAppSelector } from 'hooks/hooks';
 
 type Props = RouteProps & {
   redirectTo?: AppRoute;
-  children: JSX.Element;
 };
 
 const PrivateRoute: React.FC<Props> = ({
@@ -21,6 +20,6 @@ const PrivateRoute: React.FC<Props> = ({
     return <Navigate to={redirectTo} />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 export { PrivateRoute };
