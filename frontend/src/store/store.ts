@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { rootReducer } from './root-reducer';
 import { authApi } from 'services/services';
-import { errorHandlingMiddleware } from './middlewares/error-handling-middleware';
+import { handleError } from './middlewares/middlewares';
 
 const extraArgument = {
   authApi,
@@ -15,7 +15,7 @@ const store = configureStore({
         extraArgument,
       },
       serializableCheck: false,
-    }).prepend(errorHandlingMiddleware);
+    }).concat(handleError);
   },
 });
 

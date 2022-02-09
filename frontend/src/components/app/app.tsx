@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Routes, Route } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
-import { Toastr } from 'components/common/common';
+import { Toaster } from 'components/common/common';
 
 const App: FC = () => {
   return (
@@ -11,7 +11,7 @@ const App: FC = () => {
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
         <Route path={AppRoute.SIGN_UP} element={<Auth />} />
       </Routes>
-      <Toastr />
+      <Toaster />
     </>
   );
 };
