@@ -3,6 +3,7 @@ import {
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
   MasterSignInResponseDto,
+  TokenPayload,
   MasterDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
@@ -65,6 +66,11 @@ class Master {
       },
       token: this.#tokenService.create(id),
     };
+  }
+
+  public async getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
+    const { data } = this.#tokenService.decode<TokenPayload>(token);
+    return this.login(data);
   }
 
   public async create({

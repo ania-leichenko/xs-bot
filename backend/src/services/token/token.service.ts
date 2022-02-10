@@ -1,4 +1,4 @@
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import jwt, { Secret } from 'jsonwebtoken';
 import { ENV } from '~/common/enums/app/env.enum';
 
 class Token {
@@ -7,8 +7,9 @@ class Token {
       expiresIn: ENV.JWT.EXPIRES_IN,
     });
 
-  public decode = (token: string): null | JwtPayload | string =>
-    jwt.decode(token);
+  public decode = <T>(token: string): T => {
+    return jwt.decode(token) as T;
+  };
 }
 
 export { Token };
