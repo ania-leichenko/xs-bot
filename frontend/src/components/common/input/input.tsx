@@ -6,7 +6,7 @@ import {
 import { useFormControl } from 'hooks/hooks';
 import { InputType } from 'common/enums/enums';
 import { ErrorMessage } from 'components/common/common';
-import { getValidClasses } from '../../../helpers/dom/get-valid-classes/get-valid-classes.helper';
+import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {

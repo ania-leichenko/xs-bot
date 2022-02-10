@@ -1,24 +1,24 @@
-import { ButtonType, ButtonColor } from 'common/enums/enums';
-import { getValidClasses } from '../../../helpers/dom/get-valid-classes/get-valid-classes.helper';
+import { ButtonType, ButtonStyle } from 'common/enums/enums';
+import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
   label: string;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
-  btnStyle?: ButtonColor;
+  btnStyle?: ButtonStyle;
 };
 
 const Button: React.FC<Props> = ({
   label,
   onClick,
   type = ButtonType.BUTTON,
-  btnStyle = ButtonColor.FILLED,
+  btnStyle = ButtonStyle.FILLED,
 }) => (
   <button
     onClick={onClick}
     type={type}
-    className={getValidClasses(styles.btn, styles[`${btnStyle}`])}
+    className={getValidClasses(styles.btn, styles[`btnStyle--${btnStyle}`])}
   >
     {label}
   </button>

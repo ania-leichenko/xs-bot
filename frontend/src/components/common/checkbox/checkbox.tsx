@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.module.scss';
+import style from './styles.module.scss';
 
 type Props = {
   label: string;
@@ -15,17 +15,18 @@ const Checkbox: React.FC<Props> = ({
   isDisabled = false,
 }) => {
   return (
-    <div className="container">
-      <label>
+    <>
+      <label className={style.label}>
         <input
+          className={style.checkbox}
           type="checkbox"
           onChange={onChange}
           disabled={isDisabled}
           checked={isChecked}
         />
-        <span>{label}</span>
+        <span className={style.span}>{label}</span>
       </label>
-    </div>
+    </>
   );
 };
 

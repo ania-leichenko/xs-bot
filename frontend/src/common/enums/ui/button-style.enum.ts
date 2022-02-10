@@ -1,6 +1,6 @@
-enum ButtonColor {
+enum ButtonStyle {
   FILLED = 'filled',
   OUTLINED = 'outlined',
 }
 
-export { ButtonColor };
+export { ButtonStyle };
