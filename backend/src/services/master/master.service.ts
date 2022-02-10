@@ -56,7 +56,7 @@ class Master {
   }
 
   public async login(id: string): Promise<MasterSignUpResponseDto> {
-    const { email } = (await this.#masterRepository.getById(
+    const { email, tenantId } = (await this.#masterRepository.getById(
       id,
     )) as MasterEntity;
     return {
@@ -67,6 +67,7 @@ class Master {
       token: this.#tokenService.create({
         userId: id,
       }),
+      tenantId,
     };
   }
 
