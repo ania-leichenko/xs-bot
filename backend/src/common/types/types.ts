@@ -6,4 +6,4 @@ export {
   type MasterDto,
 } from './master/master';
 export { type TenantResponseDto } from './tenant/tenant';
-export { type TokenPayload } from './token/token-payload';
+export { type TokenPayload } from './token-payload/token-payload';

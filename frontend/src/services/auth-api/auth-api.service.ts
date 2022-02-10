@@ -6,12 +6,12 @@ import {
 } from 'common/enums/enums';
 import {
   MasterSignUpResponseDto,
+  MasterSignInResponseDto,
   MasterSignUpRequestDto,
   MasterSignInRequestDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
-import { MasterSignInResponseDto } from '../../../../shared/build';
 
 type Constructor = {
   http: Http;

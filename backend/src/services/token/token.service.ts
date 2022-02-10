@@ -7,9 +7,8 @@ class Token {
       expiresIn: ENV.JWT.EXPIRES_IN,
     });
 
-  decode = <T>(data: string): T => {
-    const token = data.split(' ');
-    return jwt.decode(token[1]) as T;
+  decode = <T>(token: string): T => {
+    return jwt.decode(token) as T; // jwt.decode does not accept type
   };
 }
 
