@@ -64,13 +64,15 @@ class Master {
         email,
         id,
       },
-      token: this.#tokenService.create(id),
+      token: this.#tokenService.create({
+        userId: id,
+      }),
     };
   }
 
   public async getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
-    const { data } = this.#tokenService.decode<TokenPayload>(token);
-    return this.login(data);
+    const { userId } = this.#tokenService.decode<TokenPayload>(token);
+    return this.login(userId);
   }
 
   public async create({

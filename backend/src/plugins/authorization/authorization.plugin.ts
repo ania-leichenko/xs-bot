@@ -1,5 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ControllerHook, ExceptionMessage } from '~/common/enums/enums';
+import { TokenPayload } from '~/common/types/types';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { master as masterServ, token as tokenServ } from '~/services/services';
 
@@ -24,9 +25,9 @@ const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
     }
 
     const [, token] = request.headers?.authorization?.split(' ') ?? [];
-    const { id } = (await tokenService.decode(token)) as { id: string };
+    const { userId } = tokenService.decode<TokenPayload>(token);
 
-    const authorizedUser = await master.getMasterById(id);
+    const authorizedUser = await master.getMasterById(userId);
     if (!authorizedUser) {
       throw new InvalidCredentialsError({
         message: ExceptionMessage.INVALID_TOKEN,
