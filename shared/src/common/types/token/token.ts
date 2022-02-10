@@ -1,7 +1,1 @@
-type TokenPayload = {
-  data: string;
-  iat: number;
-  exp: number;
-};
-
-export { type TokenPayload };
+export { type TokenPayload } from './token-payload.type';
