@@ -2,16 +2,14 @@ import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import { ControllerHook, ExceptionMessage } from '../../common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { master, token } from '~/services/services';
-
-type Services = {
-  master: typeof master;
-  token: typeof token;
-};
+import { master as masterServ, token as tokenServ } from '~/services/services';
 
 type Options = {
   routesWhiteList: string[];
-  services: Services;
+  services: {
+    master: typeof masterServ;
+    token: typeof tokenServ;
+  };
 };
 
 const authorization = fp(
@@ -24,7 +22,6 @@ const authorization = fp(
       const isWhiteRoute = routesWhiteList.some(
         (route) => route === request.routerPath,
       );
-
       if (isWhiteRoute) {
         return;
       }
