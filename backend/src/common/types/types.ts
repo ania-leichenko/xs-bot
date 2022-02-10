@@ -10,3 +10,4 @@ export {
   type GroupCreateRequestDto,
 } from './group/group';
 export { type TenantResponseDto } from './tenant/tenant';
+export { type TokenPayload } from './token/token';

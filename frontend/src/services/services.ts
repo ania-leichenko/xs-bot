@@ -2,10 +2,15 @@ import { createBrowserHistory } from 'history';
 import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
+import { Storage } from './storage/storage.service';
 import { Notification } from './notifications/notification.service';
 import { Navigation } from './navigation/navigation.service';
 
-const http = new Http();
+const storage = new Storage({
+  storage: window.localStorage,
+});
+
+const http = new Http({ storage });
 
 const notification = new Notification();
 
@@ -17,4 +22,4 @@ const navigation = new Navigation({
   history: createBrowserHistory(),
 });
 
-export { authApi, navigation, notification };
+export { authApi, storage, navigation, notification };

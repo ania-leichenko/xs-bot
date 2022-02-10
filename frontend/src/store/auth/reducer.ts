@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
+import { signUp, loadCurrentUser, signIn } from './actions';
 import { MasterDto } from 'common/types/types';
-import { signUp } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -23,6 +23,14 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(signUp.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(signIn.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.user = action.payload;
+  });
+  builder.addCase(loadCurrentUser.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.user = action.payload;
   });
 });
 
