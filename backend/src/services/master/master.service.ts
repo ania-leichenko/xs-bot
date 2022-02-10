@@ -3,6 +3,8 @@ import {
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
   MasterSignInResponseDto,
+  TokenPayload,
+  MasterDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
@@ -41,7 +43,19 @@ class Master {
     this.#tenantService = tenantService;
   }
 
-  async login(id: string): Promise<MasterSignUpResponseDto> {
+  public async getMasterById(id: string): Promise<MasterDto | null> {
+    const master = await this.#masterRepository.getById(id);
+    if (!master) {
+      return null;
+    }
+
+    return {
+      id: master.id,
+      email: master.id,
+    };
+  }
+
+  public async login(id: string): Promise<MasterSignUpResponseDto> {
     const { email } = (await this.#masterRepository.getById(
       id,
     )) as MasterEntity;
@@ -50,11 +64,18 @@ class Master {
         email,
         id,
       },
-      token: this.#tokenService.create(id),
+      token: this.#tokenService.create({
+        userId: id,
+      }),
     };
   }
 
-  async create({
+  public async getCurrentUser(token: string): Promise<MasterSignUpResponseDto> {
+    const { userId } = this.#tokenService.decode<TokenPayload>(token);
+    return this.login(userId);
+  }
+
+  public async create({
     email,
     name,
     password,
@@ -84,7 +105,7 @@ class Master {
     return this.login(id);
   }
 
-  async verifyLoginCredentials(
+  public async verifyLoginCredentials(
     verifyMasterDto: MasterSignInRequestDto,
   ): Promise<MasterSignInResponseDto> {
     const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);

@@ -12,6 +12,8 @@ export {
 export { type HttpOptions } from './http/http';
 export { type ValidationSchema } from './validation/validation';
 export {
+  type MasterSignUpResponseDto,
+  type MasterSignInResponseDto,
   type MasterSignUpRequestDto,
   type MasterSignInRequestDto,
   type MasterDto,
