@@ -52,7 +52,7 @@
   height: 25px;
 }
 
-.dropdownMenu:hover img {
+.dropdownMenu img:hover {
   background-color: #393939;
   border-radius: 50%;
   cursor: pointer;
@@ -62,7 +62,6 @@
   position: absolute;
   top: 100%;
   right: 0;
-  display: none;
   width: 150px;
   padding: 5px 0;
   color: #ffffff;
@@ -71,10 +70,6 @@
   text-align: right;
   background-color: #2a2a2a;
   border: 2px solid rgba(25 25 25 / 50%);
-}
-
-.dropdownMenu:hover .dropdownContent {
-  display: block;
 }
 
 .dropdownItem {
