@@ -42,7 +42,7 @@ class Master {
     this.#tenantService = tenantService;
   }
 
-  async getMasterById(id: string): Promise<MasterDto | null> {
+  public async getMasterById(id: string): Promise<MasterDto | null> {
     const master = await this.#masterRepository.getById(id);
     if (!master) {
       return null;
@@ -54,7 +54,7 @@ class Master {
     };
   }
 
-  async login(id: string): Promise<MasterSignUpResponseDto> {
+  public async login(id: string): Promise<MasterSignUpResponseDto> {
     const { email } = (await this.#masterRepository.getById(
       id,
     )) as MasterEntity;
@@ -67,7 +67,7 @@ class Master {
     };
   }
 
-  async create({
+  public async create({
     email,
     name,
     password,
@@ -97,7 +97,7 @@ class Master {
     return this.login(id);
   }
 
-  async verifyLoginCredentials(
+  public async verifyLoginCredentials(
     verifyMasterDto: MasterSignInRequestDto,
   ): Promise<MasterSignInResponseDto> {
     const user = await this.#masterRepository.getByEmail(verifyMasterDto.email);

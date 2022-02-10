@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
 import { master, token } from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
-import { authorization as authorizationPlugin } from '~/plugins/authorization/authorization.plugin';
+import { authorization as authorizationPlugin } from '~/plugins/plugins';
 import { WHITE_ROUTES } from '~/common/constants/api.constants';
 
 const initApi: FastifyPluginAsync = async (fastify) => {

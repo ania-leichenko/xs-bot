@@ -1,4 +1,4 @@
-import { ApiPath, MastersApiPath, ENV } from '../enums/enums';
+import { ApiPath, MastersApiPath, ENV } from '~/common/enums/enums';
 
 const WHITE_ROUTES = [
   `${ENV.API.V1_PREFIX}${ApiPath.MASTERS}${MastersApiPath.SIGN_UP}`,

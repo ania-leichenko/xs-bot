@@ -1,6 +1,5 @@
-import fp from 'fastify-plugin';
-import { FastifyInstance } from 'fastify';
-import { ControllerHook, ExceptionMessage } from '../../common/enums/enums';
+import { FastifyPluginAsync } from 'fastify';
+import { ControllerHook, ExceptionMessage } from '~/common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { master as masterServ, token as tokenServ } from '~/services/services';
 
@@ -12,36 +11,29 @@ type Options = {
   };
 };
 
-const authorization = fp(
-  (
-    fastify: FastifyInstance,
-    { routesWhiteList, services }: Options,
-    done: (err?: Error) => void,
-  ) => {
-    fastify.addHook(ControllerHook.ON_REQUEST, async (request) => {
-      const isWhiteRoute = routesWhiteList.some(
-        (route) => route === request.routerPath,
-      );
-      if (isWhiteRoute) {
-        return;
-      }
+const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
+  const { routesWhiteList, services } = opts;
 
-      const [, token] = request.headers?.authorization?.split(' ') ?? [];
-      const { master, token: tokenService } = services;
-      const { id } = (await tokenService.verify(token)) as { id: string };
+  fastify.addHook(ControllerHook.ON_REQUEST, async (request) => {
+    const isWhiteRoute = routesWhiteList.some(
+      (route) => route === request.routerPath,
+    );
+    if (isWhiteRoute) {
+      return;
+    }
 
-      const authorizedUser = await master.getMasterById(id);
-      if (!authorizedUser) {
-        throw new InvalidCredentialsError({
-          message: ExceptionMessage.INVALID_TOKEN,
-        });
-      }
+    const [, token] = request.headers?.authorization?.split(' ') ?? [];
+    const { master, token: tokenService } = services;
+    const { id } = (await tokenService.verify(token)) as { id: string };
 
-      fastify.decorateRequest('user', authorizedUser);
-    });
+    const authorizedUser = await master.getMasterById(id);
+    if (!authorizedUser) {
+      throw new InvalidCredentialsError({
+        message: ExceptionMessage.INVALID_TOKEN,
+      });
+    }
 
-    done();
-  },
-);
-
+    fastify.decorateRequest('user', authorizedUser);
+  });
+};
 export { authorization };
