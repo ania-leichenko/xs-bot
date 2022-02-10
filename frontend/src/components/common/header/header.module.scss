@@ -32,7 +32,7 @@
   border-right: 2px solid rgba(25 25 25 / 50%);
 }
 
-.profile span {
+.profileName {
   margin: auto 20px;
   color: #ffffff;
   font-weight: 600;
@@ -47,12 +47,12 @@
   margin-left: 30px;
 }
 
-.dropdownMenu img {
+.dropdownMenuImg {
   width: 25px;
   height: 25px;
 }
 
-.dropdownMenu img:hover {
+.dropdownMenuImg:hover {
   background-color: #393939;
   border-radius: 50%;
   cursor: pointer;

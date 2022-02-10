@@ -26,10 +26,12 @@ const Header: React.FC<Props> = ({ img, name, onLogOut }) => {
         <div className={styles.menu}>
           <div className={styles.profile}>
             <img src={img ?? profile} alt="profile" />
-            <span>{name ?? 'Binary studio'}</span>
+            <span className={styles.profileName}>
+              {name ?? 'Binary studio'}
+            </span>
           </div>
           <div className={styles.dropdownMenu} onClick={handleOnVisible}>
-            <img src={menu} alt="menu" />
+            <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
             {isVisible && (
               <div className={styles.dropdownContent}>
                 <div className={styles.dropdownItem} onClick={onLogOut}>
