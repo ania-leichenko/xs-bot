@@ -1,17 +1,9 @@
-interface IStorage {
-  getItem(key: string): string | null;
-
-  setItem(key: string, value: string): void;
-
-  removeItem(key: string): void;
-}
-
 type Constructor = {
-  storage: IStorage;
+  storage: globalThis.Storage;
 };
 
 class Storage {
-  #storage: IStorage;
+  #storage: globalThis.Storage;
 
   constructor({ storage }: Constructor) {
     this.#storage = storage;

@@ -8,10 +8,10 @@ import {
   MasterSignUpResponseDto,
   MasterSignUpRequestDto,
   MasterSignInRequestDto,
-  MasterDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
+import { MasterSignInResponseDto } from '../../../../shared/build';
 
 type Constructor = {
   http: Http;
@@ -40,7 +40,9 @@ class AuthApi {
     );
   }
 
-  public signIn(payload: MasterSignInRequestDto): Promise<MasterDto> {
+  public signIn(
+    payload: MasterSignInRequestDto,
+  ): Promise<MasterSignInResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.MASTERS, MastersApiPath.SIGN_IN),
       {
@@ -57,7 +59,6 @@ class AuthApi {
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,
-        hasAuth: true,
       },
     );
   }

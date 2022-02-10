@@ -3,6 +3,7 @@ import {
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
   MasterSignInResponseDto,
+  TokenPayload,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
@@ -15,7 +16,6 @@ import {
   tenant as tenantServ,
 } from '~/services/services';
 import { getRandomId as getRandomName } from '~/helpers/helpers';
-import { TokenPayload } from 'bws-shared/common/types/types';
 
 type Constructor = {
   masterRepository: typeof masterRep;

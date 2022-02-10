@@ -1,6 +1,5 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { ENV } from '~/common/enums/app/env.enum';
-import jwtDecode from 'jwt-decode';
 
 class Token {
   create = (data: string): string =>
@@ -8,8 +7,9 @@ class Token {
       expiresIn: ENV.JWT.EXPIRES_IN,
     });
 
-  decode = <T>(token: string): T => {
-    return jwtDecode<T>(token);
+  decode = <T>(data: string): T => {
+    const token = data.split(' ');
+    return jwt.decode(token[1]) as T;
   };
 }
 

@@ -1,10 +1,24 @@
 import { HttpError } from 'exceptions/exceptions';
-import { ContentType, HttpHeader, HttpMethod } from 'common/enums/enums';
+import {
+  ContentType,
+  HttpHeader,
+  HttpMethod,
+  StorageKey,
+} from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
-import { storage } from 'services/services';
-import { StorageKey } from '../../common/enums/app/storage-key';
+import { Storage } from '../storage/storage.service';
+
+type Constructor = {
+  storage: Storage;
+};
 
 class Http {
+  #storage: Storage;
+
+  constructor({ storage }: Constructor) {
+    this.#storage = storage;
+  }
+
   load<T = unknown>(
     url: string,
     options: Partial<HttpOptions> = {},
@@ -34,7 +48,7 @@ class Http {
       headers.append(HttpHeader.CONTENT_TYPE, contentType);
     }
     if (hasAuth) {
-      const token = storage.getItem(StorageKey.TOKEN);
+      const token = this.#storage.getItem(StorageKey.TOKEN);
       headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
     }
 

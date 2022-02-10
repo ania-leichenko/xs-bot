@@ -6,7 +6,11 @@ import { Storage } from './storage/storage.service';
 import { Notification } from './notifications/notification.service';
 import { Navigation } from './navigation/navigation.service';
 
-const http = new Http();
+const storage = new Storage({
+  storage: window.localStorage,
+});
+
+const http = new Http({ storage });
 
 const notification = new Notification();
 
@@ -16,10 +20,6 @@ const authApi = new AuthApi({
 });
 const navigation = new Navigation({
   history: createBrowserHistory(),
-});
-
-const storage = new Storage({
-  storage: window.localStorage,
 });
 
 export { authApi, storage, navigation, notification };
