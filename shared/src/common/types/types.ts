@@ -5,7 +5,7 @@ export {
   type MasterDto,
 } from './master/master';
 export {
-  type GroupResponseDto,
-  type GroupCreateRequestDto,
-} from './group/group';
+  type EAMGroupResponseDto,
+  type EAMGroupCreateRequestDto,
+} from './eam-group/eam-group';
 export { type ValidationSchema } from './validation/validation';

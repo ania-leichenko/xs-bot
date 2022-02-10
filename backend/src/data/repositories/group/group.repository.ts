@@ -17,28 +17,6 @@ class Group {
     return groups.map(Group.modelToEntity);
   }
 
-  async getByName(name: string): Promise<GroupEntity | null> {
-    const group = await this.#GroupModel
-      .query()
-      .select()
-      .where({ name })
-      .first();
-    if (!group) {
-      return null;
-    }
-
-    return Group.modelToEntity(group);
-  }
-
-  async create({ group }: { group: GroupM }): Promise<GroupM> {
-    return this.#GroupModel.query().insert({
-      id: group.id,
-      name: group.name,
-      createdAt: group.createdAt,
-      tenantId: group.tenantId,
-    });
-  }
-
   public static modelToEntity(model: GroupM): GroupEntity {
     return GroupEntity.initialize({
       id: model.id,

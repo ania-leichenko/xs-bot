@@ -1,5 +1,6 @@
 enum GroupsApiPath {
-  ROOT = '/',
+  ROOT = '/group',
+  EDIT = '/group/edit/',
 }
 
 export { GroupsApiPath };

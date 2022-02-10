@@ -1,6 +1,5 @@
 import { GroupResponseDto } from '~/common/types/types';
 import { group as groupRep } from '~/data/repositories/repositories';
-// import { Group as GroupEntity } from "~/services/group/group.entity";
 
 type Constructor = {
   groupRepository: typeof groupRep;

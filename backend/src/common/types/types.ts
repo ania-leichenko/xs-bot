@@ -3,4 +3,7 @@ export {
   type MasterDto,
   type MasterSignUpRequestDto,
 } from './master/master';
-export { type GroupResponseDto } from './group/group';
+export {
+  type GroupResponseDto,
+  type GroupCreateRequestDto,
+} from './group/group';
