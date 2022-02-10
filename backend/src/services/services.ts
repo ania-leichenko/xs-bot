@@ -1,3 +1,4 @@
+import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
 import {
   master as masterRepository,
   tenant as tenantRepository,
@@ -8,7 +9,9 @@ import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
 
 const token = new Token();
-const encrypt = new Encrypt();
+const encrypt = new Encrypt({
+  salt: MASTER_PASSWORD_SALT_ROUNDS,
+});
 
 const tenant = new Tenant({
   tenantRepository,
