@@ -4,7 +4,7 @@ import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { master as masterServ, token as tokenServ } from '~/services/services';
 
 type Options = {
-  routesWhiteList: string[];
+  whiteRoutes: string[];
   services: {
     master: typeof masterServ;
     token: typeof tokenServ;
@@ -12,10 +12,11 @@ type Options = {
 };
 
 const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { routesWhiteList, services } = opts;
+  const { whiteRoutes, services } = opts;
+  const { master, token: tokenService } = services;
 
   fastify.addHook(ControllerHook.ON_REQUEST, async (request) => {
-    const isWhiteRoute = routesWhiteList.some(
+    const isWhiteRoute = whiteRoutes.some(
       (route) => route === request.routerPath,
     );
     if (isWhiteRoute) {
@@ -23,8 +24,7 @@ const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
     }
 
     const [, token] = request.headers?.authorization?.split(' ') ?? [];
-    const { master, token: tokenService } = services;
-    const { id } = (await tokenService.verify(token)) as { id: string };
+    const { id } = (await tokenService.decode(token)) as { id: string };
 
     const authorizedUser = await master.getMasterById(id);
     if (!authorizedUser) {

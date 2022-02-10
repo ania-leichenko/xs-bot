@@ -7,8 +7,8 @@ class Token {
       expiresIn: ENV.JWT.EXPIRES_IN,
     });
 
-  public verify = (token: string): JwtPayload | string =>
-    jwt.verify(token, <Secret>ENV.JWT.SECRET);
+  public decode = (token: string): null | JwtPayload | string =>
+    jwt.decode(token);
 }
 
 export { Token };
