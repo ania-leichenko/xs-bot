@@ -3,6 +3,7 @@ import {
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
   MasterSignInResponseDto,
+  MasterDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
@@ -41,7 +42,7 @@ class Master {
     this.#tenantService = tenantService;
   }
 
-  async getMasterById(id: string): Promise<TMaster | null> {
+  async getMasterById(id: string): Promise<MasterDto | null> {
     const master = await this.#masterRepository.getById(id);
     if (!master) {
       return null;

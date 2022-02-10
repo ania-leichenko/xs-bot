@@ -2,22 +2,24 @@ import fp from 'fastify-plugin';
 import { FastifyInstance } from 'fastify';
 import { ControllerHook, ExceptionMessage } from '../../common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { master, token as tokenServ } from '~/services/services';
+import { master, token } from '~/services/services';
+
+type Services = {
+  master: typeof master;
+  token: typeof token;
+};
+
+type Options = {
+  routesWhiteList: string[];
+  services: Services;
+};
 
 const authorization = fp(
   (
     fastify: FastifyInstance,
-    {
-      routesWhiteList,
-      services,
-    }: {
-      routesWhiteList: string[];
-      services: { master: typeof master };
-    },
+    { routesWhiteList, services }: Options,
     done: (err?: Error) => void,
   ) => {
-    fastify.decorateRequest('user', null);
-
     fastify.addHook(ControllerHook.ON_REQUEST, async (request) => {
       const isWhiteRoute = routesWhiteList.some(
         (route) => route === request.routerPath,
@@ -28,8 +30,8 @@ const authorization = fp(
       }
 
       const [, token] = request.headers?.authorization?.split(' ') ?? [];
-      const { master } = services;
-      const { id } = (await tokenServ.verify(token)) as { id: string };
+      const { master, token: tokenService } = services;
+      const { id } = (await tokenService.verify(token)) as { id: string };
 
       const authorizedUser = await master.getMasterById(id);
       if (!authorizedUser) {
@@ -38,7 +40,7 @@ const authorization = fp(
         });
       }
 
-      request.user = authorizedUser;
+      fastify.decorateRequest('user', authorizedUser);
     });
 
     done();
