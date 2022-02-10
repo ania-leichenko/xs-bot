@@ -6,7 +6,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { StorageKey } from '../../common/enums/app/storage-key';
+import { StorageKey } from 'common/enums/enums';
 
 const signUp = createAsyncThunk<
   MasterDto,
