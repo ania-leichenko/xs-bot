@@ -1,5 +1,4 @@
 import {
-  MasterDto as TMaster,
   MasterSignUpRequestDto,
   MasterSignUpResponseDto,
   MasterSignInRequestDto,
@@ -41,15 +40,6 @@ class Master {
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
     this.#tenantService = tenantService;
-  }
-
-  async getAll(): Promise<TMaster[]> {
-    const masters = await this.#masterRepository.getAll();
-
-    return masters.map((m) => ({
-      id: m.id,
-      email: m.email,
-    }));
   }
 
   async login(id: string): Promise<MasterSignUpResponseDto> {
