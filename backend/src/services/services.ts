@@ -2,11 +2,13 @@ import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants
 import {
   master as masterRepository,
   tenant as tenantRepository,
+  worker as workerRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Encrypt } from './encrypt/encrypt.service';
 import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
+import { Worker } from './worker/worker.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -24,4 +26,10 @@ const master = new Master({
   tenantService: tenant,
 });
 
-export { master, encrypt, token, tenant };
+const worker = new Worker({
+  workerRepository,
+  tenantService: tenant,
+  encryptService: encrypt,
+});
+
+export { master, encrypt, token, tenant, worker };
