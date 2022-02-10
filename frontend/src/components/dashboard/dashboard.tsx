@@ -1,5 +1,11 @@
 import { FC } from 'react';
+import { Header } from './header/header';
+
 const Dashboard: FC = () => {
-  return <>HOME</>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 };
 export { Dashboard };
