@@ -44,9 +44,8 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.GET,
     url: MastersApiPath.USER,
     async handler(req, rep) {
-      const bearerHeader: string = req.headers['authorization'] ?? '';
-      const bearer: Array<string> = bearerHeader.split(' ');
-      const token: string = bearer[1];
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+
       return rep
         .send(await masterService.getCurrentUser(token))
         .status(HttpCode.OK);

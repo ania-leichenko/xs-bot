@@ -8,7 +8,7 @@ class Token {
     });
 
   decode = <T>(token: string): T => {
-    return jwt.decode(token) as T; // jwt.decode does not accept type
+    return jwt.decode(token) as T;
   };
 }
 
