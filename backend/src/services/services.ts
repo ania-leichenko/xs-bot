@@ -28,8 +28,9 @@ const master = new Master({
 
 const worker = new Worker({
   workerRepository,
-  tenantService: tenant,
   encryptService: encrypt,
+  tokenService: token,
+  masterService: master,
 });
 
 export { master, encrypt, token, tenant, worker };

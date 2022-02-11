@@ -2,40 +2,71 @@ import { worker as workerRep } from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerResponseDto,
+  TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
-import { getRandomId as getRandomName } from '../../../../shared/build';
+import { HttpCode } from '~/common/enums/http/http';
 import {
   encrypt as encryptServ,
-  tenant as tenantServ,
+  token as tokenServ,
+  master as masterServ,
 } from '~/services/services';
+import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
 
 type Constructor = {
   workerRepository: typeof workerRep;
-  tenantService: typeof tenantServ;
   encryptService: typeof encryptServ;
+  tokenService: typeof tokenServ;
+  masterService: typeof masterServ;
 };
 
 class Worker {
   #workerRepository: typeof workerRep;
-  #tenantService: typeof tenantServ;
   #encryptService: typeof encryptServ;
+  #tokenService: typeof tokenServ;
+  #masterService: typeof masterServ;
 
   constructor({
     workerRepository,
     encryptService,
-    tenantService,
+    tokenService,
+    masterService,
   }: Constructor) {
     this.#workerRepository = workerRepository;
-    this.#tenantService = tenantService;
     this.#encryptService = encryptService;
+    this.#tokenService = tokenService;
+    this.#masterService = masterService;
+  }
+
+  public async getAll(): Promise<Array<EAMWorkerResponseDto>> {
+    return await this.#workerRepository.getAll();
   }
 
   public async create({
     name,
     password,
+    token,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerResponseDto> {
-    const tenant = await this.#tenantService.create(getRandomName());
+    const workerByName = await this.#workerRepository.getByName(name);
+
+    if (workerByName) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: `Worker with name ${name} exist`,
+      });
+    }
+
+    const { userId } = this.#tokenService.decode<TokenPayload>(token);
+
+    const master = await this.#masterService.getMasterById(userId);
+
+    if (!master) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: 'Master not Found',
+      });
+    }
+
     const passwordSalt = await this.#encryptService.createSalt();
     const passwordHash = await this.#encryptService.createHash(
       password,
@@ -46,7 +77,7 @@ class Worker {
       name,
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
-      tenantId: tenant.id,
+      tenantId: master.tenantId,
     });
 
     await this.#workerRepository.create(worker);

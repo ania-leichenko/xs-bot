@@ -13,13 +13,31 @@ const initWorkerApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { worker: workerService } = opts.services;
 
   fastify.route({
+    method: HttpMethod.GET,
+    url: WorkerApiPath.ROOT,
+    async handler(req, rep) {
+      return rep.send(await workerService.getAll());
+    },
+  });
+
+  fastify.route({
     method: HttpMethod.POST,
     url: WorkerApiPath.WORKER,
     async handler(
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,
     ) {
-      return rep.send(await workerService.create(req.body)).status(HttpCode.OK);
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+
+      return rep
+        .send(
+          await workerService.create({
+            name: req.body.name,
+            password: req.body.password,
+            token,
+          }),
+        )
+        .status(HttpCode.OK);
     },
   });
 };
