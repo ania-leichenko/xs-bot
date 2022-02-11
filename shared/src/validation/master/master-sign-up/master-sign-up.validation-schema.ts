@@ -1,62 +1,62 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
-import { MasterSignUpRequestDto } from '~/common/types/types';
+import { EAMMasterSignUpRequestDto } from '~/common/types/types';
 import {
-  MasterValidationMessage,
-  MasterSignUpValidationRule,
+  EAMMasterValidationMessage,
+  EAMMasterSignUpValidationRule,
 } from '~/common/enums/enums';
 
-const masterSignUp = Joi.object({
-  [getNameOf<MasterSignUpRequestDto>('email')]: Joi.string()
+const eamMasterSignUp = Joi.object({
+  [getNameOf<EAMMasterSignUpRequestDto>('email')]: Joi.string()
     .trim()
     .email({ tlds: { allow: false } })
-    .pattern(MasterSignUpValidationRule.EMAIL_LENGTH)
-    .pattern(MasterSignUpValidationRule.EMAIL_LOCAL_PART_FIRST_CHARTER, {
+    .pattern(EAMMasterSignUpValidationRule.EMAIL_LENGTH)
+    .pattern(EAMMasterSignUpValidationRule.EMAIL_LOCAL_PART_FIRST_CHARTER, {
       name: 'localPart',
     })
-    .pattern(MasterSignUpValidationRule.EMAIL_LOCAL_PART_LAST_CHARTER, {
+    .pattern(EAMMasterSignUpValidationRule.EMAIL_LOCAL_PART_LAST_CHARTER, {
       name: 'localPart',
     })
     .required()
     .messages({
-      'string.email': MasterValidationMessage.EMAIL_WRONG,
-      'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
-      'string.pattern.base': MasterValidationMessage.EMAIL_LENGTH,
+      'string.email': EAMMasterValidationMessage.EMAIL_WRONG,
+      'string.empty': EAMMasterValidationMessage.EMAIL_REQUIRE,
+      'string.pattern.base': EAMMasterValidationMessage.EMAIL_LENGTH,
       'string.pattern.name':
-        MasterValidationMessage.NAME_FIRST_AND_LAST_CHARTER,
+        EAMMasterValidationMessage.NAME_FIRST_AND_LAST_CHARTER,
     }),
-  [getNameOf<MasterSignUpRequestDto>('name')]: Joi.string()
+  [getNameOf<EAMMasterSignUpRequestDto>('name')]: Joi.string()
     .trim()
-    .min(MasterSignUpValidationRule.NAME_MIN_LENGTH)
-    .max(MasterSignUpValidationRule.NAME_MAX_LENGTH)
-    .pattern(MasterSignUpValidationRule.NAME_PATTERN)
-    .pattern(MasterSignUpValidationRule.NAME_FIRST_CHARTER, {
+    .min(EAMMasterSignUpValidationRule.NAME_MIN_LENGTH)
+    .max(EAMMasterSignUpValidationRule.NAME_MAX_LENGTH)
+    .pattern(EAMMasterSignUpValidationRule.NAME_PATTERN)
+    .pattern(EAMMasterSignUpValidationRule.NAME_FIRST_CHARTER, {
       name: 'firstAndLastCharacter',
     })
-    .pattern(MasterSignUpValidationRule.NAME_LAST_CHARTER, {
+    .pattern(EAMMasterSignUpValidationRule.NAME_LAST_CHARTER, {
       name: 'firstAndLastCharacter',
     })
     .required()
     .messages({
-      'string.empty': MasterValidationMessage.NAME_REQUIRE,
-      'string.min': MasterValidationMessage.NAME_MIN_LENGTH,
-      'string.max': MasterValidationMessage.NAME_MAX_LENGTH,
-      'string.pattern.base': MasterValidationMessage.NAME_PATTERN,
+      'string.empty': EAMMasterValidationMessage.NAME_REQUIRE,
+      'string.min': EAMMasterValidationMessage.NAME_MIN_LENGTH,
+      'string.max': EAMMasterValidationMessage.NAME_MAX_LENGTH,
+      'string.pattern.base': EAMMasterValidationMessage.NAME_PATTERN,
       'string.pattern.name':
-        MasterValidationMessage.NAME_FIRST_AND_LAST_CHARTER,
+        EAMMasterValidationMessage.NAME_FIRST_AND_LAST_CHARTER,
     }),
-  [getNameOf<MasterSignUpRequestDto>('password')]: Joi.string()
+  [getNameOf<EAMMasterSignUpRequestDto>('password')]: Joi.string()
     .trim()
-    .min(MasterSignUpValidationRule.PASSWORD_MIN_LENGTH)
-    .max(MasterSignUpValidationRule.PASSWORD_MAX_LENGTH)
-    .pattern(MasterSignUpValidationRule.PASSWORD_PATTERN)
+    .min(EAMMasterSignUpValidationRule.PASSWORD_MIN_LENGTH)
+    .max(EAMMasterSignUpValidationRule.PASSWORD_MAX_LENGTH)
+    .pattern(EAMMasterSignUpValidationRule.PASSWORD_PATTERN)
     .required()
     .messages({
-      'string.empty': MasterValidationMessage.PASSWORD_REQUIRE,
-      'string.min': MasterValidationMessage.PASSWORD_MIN_LENGTH,
-      'string.max': MasterValidationMessage.PASSWORD_MAX_LENGTH,
-      'string.pattern.base': MasterValidationMessage.PASSWORD_PATTERN,
+      'string.empty': EAMMasterValidationMessage.PASSWORD_REQUIRE,
+      'string.min': EAMMasterValidationMessage.PASSWORD_MIN_LENGTH,
+      'string.max': EAMMasterValidationMessage.PASSWORD_MAX_LENGTH,
+      'string.pattern.base': EAMMasterValidationMessage.PASSWORD_PATTERN,
     }),
 });
 
-export { masterSignUp };
+export { eamMasterSignUp };
