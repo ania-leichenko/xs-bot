@@ -23,7 +23,7 @@ export {
   type TenantResponseDto,
   type TenantDto,
 } from './tenant/tenant';
-export { 
+export {
   type EAMCreateWorkerRequestDto,
   type EAMCreateWorkerResponseDto,
   type EAMCreateWorkerFormDto,
