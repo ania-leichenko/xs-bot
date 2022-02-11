@@ -7,8 +7,8 @@
   width: 100%;
   color: #9a9a9a;
   font-size: 14px;
-  background: #393939;
-  border-top: 5px solid #ff0000;
+  background: var(--color-boltgun);
+  border-top: 5px solid var(--color-red);
 }
 
 .wrapper > div > div:first-child > div {

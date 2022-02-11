@@ -2,12 +2,12 @@
   position: fixed;
   right: 0;
   left: 0;
-  min-height: 80px;
+  max-height: 80px;
   padding: 0 40px;
-  background-color: #2a2a2a;
+  background-color: var(--color-background);
 }
 
-.headerConteiner {
+.headerContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,7 +34,7 @@
 
 .profileName {
   margin: auto 20px;
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: 600;
   font-size: 16px;
 }
@@ -53,7 +53,7 @@
 }
 
 .dropdownMenuImg:hover {
-  background-color: #393939;
+  background-color: var(--color-boltgun);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -64,11 +64,11 @@
   right: 0;
   width: 150px;
   padding: 5px 0;
-  color: #ffffff;
+  color: var(--color-white);
   font-weight: 600;
   font-size: 16px;
   text-align: right;
-  background-color: #2a2a2a;
+  background-color: var(--color-background);
   border: 2px solid rgba(25 25 25 / 50%);
 }
 
@@ -78,6 +78,6 @@
 }
 
 .dropdownItem:hover {
-  background-color: #393939;
+  background-color: var(--color-boltgun);
   cursor: pointer;
 }

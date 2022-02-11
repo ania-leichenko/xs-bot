@@ -1,6 +1,6 @@
 enum ButtonStyle {
-  FILLED = 'filled',
-  OUTLINED = 'outlined',
+  FILLED = 'Filled',
+  OUTLINED = 'Outlined',
 }
 
 export { ButtonStyle };

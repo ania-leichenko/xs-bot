@@ -1,5 +1,5 @@
-import React from 'react';
-import style from './styles.module.scss';
+import { FC } from 'react';
+import styles from './checkbox.module.scss';
 
 type Props = {
   label: string;
@@ -8,22 +8,22 @@ type Props = {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 };
 
-const Checkbox: React.FC<Props> = ({
+const Checkbox: FC<Props> = ({
   label,
   onChange,
   isChecked = false,
   isDisabled = false,
 }) => {
   return (
-    <label className={style.label}>
+    <label className={styles.label}>
       <input
-        className={style.checkbox}
+        className={styles.checkbox}
         type="checkbox"
         onChange={onChange}
         disabled={isDisabled}
         checked={isChecked}
       />
-      <span className={style.span}>{label}</span>
+      <span className={styles.span}>{label}</span>
     </label>
   );
 };

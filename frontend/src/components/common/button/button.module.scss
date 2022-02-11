@@ -1,18 +1,24 @@
+@import "src/assets/css/styles";
+
 .btn {
   width: 100%;
   min-height: 45px;
   margin: 10px 0;
-  color: white;
+  color: var(--color-white);
   font-weight: 800;
   font-size: 16px;
   border: 2px solid var(--color-orange);
   border-radius: 50px;
 }
 
-.btnStyle--filled {
+.btn:hover {
+  cursor: pointer;
+}
+
+.btnStyleFilled {
   background-color: var(--color-orange);
 }
 
-.btnStyle--outlined {
+.btnStyleOutlined {
   background-color: var(--color-boltgun);
 }

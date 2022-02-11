@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { masterSignIn as masterSignInValidationSchema } from 'validation-schemas/validation-schemas';
 import { ButtonType, InputType, AppRoute } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
@@ -11,7 +12,7 @@ type Props = {
   onSubmit: (payload: MasterSignInRequestDto) => void;
 };
 
-const SignInForm: React.FC<Props> = ({ onSubmit }) => {
+const SignInForm: FC<Props> = ({ onSubmit }) => {
   const { control, errors, handleSubmit } = useAppForm<MasterSignInRequestDto>({
     defaultValues: DEFAULT_LOGIN_PAYLOAD,
     validationSchema: masterSignInValidationSchema,
@@ -42,7 +43,7 @@ const SignInForm: React.FC<Props> = ({ onSubmit }) => {
             errors={errors}
           />
         </div>
-        <Button type={ButtonType.SUBMIT} label="Sign in" />
+        <Button type={ButtonType.SUBMIT} label="Sign In" />
       </form>
     </>
   );

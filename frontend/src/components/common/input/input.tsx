@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
   FormControl,
   FormControlErrors,
@@ -7,7 +8,7 @@ import { useFormControl } from 'hooks/hooks';
 import { InputType } from 'common/enums/enums';
 import { ErrorMessage } from 'components/common/common';
 import { getValidClasses } from 'helpers/helpers';
-import styles from './styles.module.scss';
+import styles from './input.module.scss';
 
 type Props = {
   label: string;
@@ -18,7 +19,7 @@ type Props = {
   placeholder?: string;
 };
 
-const Input: React.FC<Props> = ({
+const Input: FC<Props> = ({
   label,
   name,
   control,
