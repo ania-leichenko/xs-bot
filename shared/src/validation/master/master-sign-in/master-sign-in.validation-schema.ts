@@ -8,7 +8,7 @@ const eamMasterSignIn = Joi.object({
     .trim()
     .required()
     .messages({
-      'string.email': EAMMasterValidationMessage.EMAIL_WRONG,
+      'string.email': EAMMasterValidationMessage.EMAIL_NOT_VALID,
       'string.empty': EAMMasterValidationMessage.EMAIL_REQUIRE,
     }),
   [getNameOf<EAMMasterSignInRequestDto>('password')]: Joi.string()
