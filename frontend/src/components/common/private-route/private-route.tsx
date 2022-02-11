@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { RouteProps } from 'react-router-dom';
 import { AppRoute } from 'common/enums/enums';
 import { useAppSelector } from 'hooks/hooks';
@@ -7,7 +8,7 @@ type Props = RouteProps & {
   redirectTo?: AppRoute;
 };
 
-const PrivateRoute: React.FC<Props> = ({
+const PrivateRoute: FC<Props> = ({
   redirectTo = AppRoute.SIGN_IN,
   children,
 }) => {

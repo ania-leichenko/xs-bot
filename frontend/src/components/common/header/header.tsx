@@ -4,9 +4,8 @@ import menu from 'assets/img/menu.svg';
 import { FC } from 'react';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
-import { useState } from 'react';
 import styles from './header.module.scss';
-import { useAppSelector } from 'hooks/hooks';
+import { useState, useAppSelector } from 'hooks/hooks';
 
 const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
@@ -18,7 +17,7 @@ const Header: FC = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerConteiner}>
+      <div className={styles.headerContainer}>
         <Link to={AppRoute.SIGN_IN}>
           <img className={styles.logo} src={logo} alt="logo" />
         </Link>
