@@ -18,3 +18,8 @@ export {
   type MasterSignInRequestDto,
   type MasterDto,
 } from './master/master';
+export {
+  type TenantRequestDto,
+  type TenantResponseDto,
+  type TenantDto,
+} from './tenant/tenant';

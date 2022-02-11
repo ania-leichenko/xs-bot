@@ -18,7 +18,7 @@ type Props = {
 };
 const Toaster: React.FC<Props> = ({
   position = 'top-right',
-  timeOut = 20000,
+  timeOut = 4000,
   isNewestOnTop,
   isDuplicatesPrevented,
   hasProgressBar,
