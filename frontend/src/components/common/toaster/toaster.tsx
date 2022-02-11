@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import ReduxToastr, {
   positionType,
   transitionInType,
@@ -16,7 +17,7 @@ type Props = {
   transitionOut?: transitionOutType;
   className?: string;
 };
-const Toaster: React.FC<Props> = ({
+const Toaster: FC<Props> = ({
   position = 'top-right',
   timeOut = 4000,
   isNewestOnTop,
