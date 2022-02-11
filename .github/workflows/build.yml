@@ -16,7 +16,7 @@ jobs:
     - name: Build image
       uses: whoan/docker-build-with-cache-action@v5
       with:
-        image_name: bws-backend-development
+        image_name: bws-backend-development-build
         push_image_and_stages: false
         context: ./
         dockerfile: ./backend/Dockerfile.development
@@ -28,7 +28,7 @@ jobs:
     - name: Build image
       uses: whoan/docker-build-with-cache-action@v5
       with:
-        image_name: bws-frontend-development
+        image_name: bws-frontend-development-build
         push_image_and_stages: false
         context: ./
         dockerfile: ./frontend/Dockerfile.development
