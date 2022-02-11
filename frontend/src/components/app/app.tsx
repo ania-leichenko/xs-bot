@@ -6,7 +6,7 @@ import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
-import { Eam } from '../eam/eam';
+import { Eam } from 'components/eam/eam';
 import { EamCreateWorker } from 'components/eam-create-worker/eam-create-worker';
 
 const App: FC = () => {
