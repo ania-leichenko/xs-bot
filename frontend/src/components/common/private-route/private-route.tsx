@@ -1,12 +1,14 @@
-import { RouteProps, Navigate } from 'react-router-dom';
+import { FC } from 'react';
+import { RouteProps } from 'react-router-dom';
 import { AppRoute } from 'common/enums/enums';
 import { useAppSelector } from 'hooks/hooks';
+import { Navigate } from 'components/common/common';
 
 type Props = RouteProps & {
   redirectTo?: AppRoute;
 };
 
-const PrivateRoute: React.FC<Props> = ({
+const PrivateRoute: FC<Props> = ({
   redirectTo = AppRoute.SIGN_IN,
   children,
 }) => {
@@ -15,8 +17,7 @@ const PrivateRoute: React.FC<Props> = ({
   }));
 
   const hasUser = Boolean(user);
-
-  if (hasUser) {
+  if (!hasUser) {
     return <Navigate to={redirectTo} />;
   }
 
