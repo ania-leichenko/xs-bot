@@ -1,7 +1,7 @@
 import { worker as workerRep } from '~/data/repositories/repositories';
 import {
-  WorkerCreateRequestDto,
-  WorkerResponseDto,
+  EAMWorkerCreateRequestDto,
+  EAMWorkerResponseDto,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
 import { getRandomId as getRandomName } from '../../../../shared/build';
@@ -34,7 +34,7 @@ class Worker {
   public async create({
     name,
     password,
-  }: WorkerCreateRequestDto): Promise<WorkerResponseDto> {
+  }: EAMWorkerCreateRequestDto): Promise<EAMWorkerResponseDto> {
     const tenant = await this.#tenantService.create(getRandomName());
     const passwordSalt = await this.#encryptService.createSalt();
     const passwordHash = await this.#encryptService.createHash(
@@ -42,12 +42,16 @@ class Worker {
       passwordSalt,
     );
 
-    return WorkerEntity.createNew({
+    const worker = WorkerEntity.createNew({
       name,
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
       tenantId: tenant.id,
     });
+
+    await this.#workerRepository.create(worker);
+
+    return worker;
   }
 }
 

@@ -1,4 +1,4 @@
 export {
-  type WorkerResponseDto,
-  type WorkerCreateRequestDto,
+  type EAMWorkerResponseDto,
+  type EAMWorkerCreateRequestDto,
 } from 'bws-shared/common/types/types';

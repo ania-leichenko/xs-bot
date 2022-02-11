@@ -7,8 +7,8 @@ export {
 } from './master/master';
 
 export {
-  type WorkerResponseDto,
-  type WorkerCreateRequestDto,
+  type EAMWorkerResponseDto,
+  type EAMWorkerCreateRequestDto,
 } from './worker/worker';
 
 export {
