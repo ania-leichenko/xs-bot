@@ -18,7 +18,7 @@ const Header: FC = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.headerConteiner}>
+      <div className={styles.headerContainer}>
         <Link to={AppRoute.SIGN_IN}>
           <img className={styles.logo} src={logo} alt="logo" />
         </Link>
