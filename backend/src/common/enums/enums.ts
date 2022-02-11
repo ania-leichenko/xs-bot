@@ -2,6 +2,7 @@ export {
   ApiPath,
   MastersApiPath,
   TenantsApiPath,
+  WorkersApiPath,
   ControllerHook,
 } from './api/api';
 export { AppEnvironment, ENV, LogLevel } from './app/app';

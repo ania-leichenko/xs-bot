@@ -10,4 +10,5 @@ export {
   type TenantResponseDto,
   type TenantDto,
 } from './tenant/tenant';
+export { type EAMWorkerDto } from './worker/worker';
 export { type TokenPayload } from './token/token';

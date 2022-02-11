@@ -1,14 +1,26 @@
-import { worker as masterRep } from '~/data/repositories/repositories';
+import { worker as workerRep } from '~/data/repositories/repositories';
+import { EAMWorkerDto } from '~/common/types/types';
 
 type Constructor = {
-  masterRepository: typeof masterRep;
+  workerRepository: typeof workerRep;
 };
 
 class Worker {
-  #masterRepository: typeof masterRep;
+  #workerRepository: typeof workerRep;
 
-  constructor({ masterRepository }: Constructor) {
-    this.#masterRepository = masterRepository;
+  constructor({ workerRepository }: Constructor) {
+    this.#workerRepository = workerRepository;
+  }
+
+  async getAll(): Promise<EAMWorkerDto[]> {
+    const workers = await this.#workerRepository.getAll();
+
+    return workers.map((m) => ({
+      id: m.id,
+      name: m.name,
+      createdAt: m.createdAt,
+      tenantId: m.tenantId,
+    }));
   }
 }
 
