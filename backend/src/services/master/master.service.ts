@@ -51,7 +51,8 @@ class Master {
 
     return {
       id: master.id,
-      email: master.id,
+      email: master.email,
+      tenantId: master.tenantId,
     };
   }
 
@@ -63,11 +64,11 @@ class Master {
       user: {
         email,
         id,
+        tenantId,
       },
       token: this.#tokenService.create({
         userId: id,
       }),
-      tenantId,
     };
   }
 

@@ -19,7 +19,7 @@ class TenantApi {
 
   public getTenant(payload: TenantRequestDto): Promise<TenantResponseDto> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.TENANTS, payload.id),
+      joinItems(this.#apiPrefix, ApiPath.TENANTS, '/', payload.id),
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,

@@ -8,7 +8,7 @@ import styles from './header.module.scss';
 
 type Props = {
   img?: string;
-  name?: string;
+  name: string;
   onLogOut?: React.MouseEventHandler<HTMLDivElement>;
 };
 
@@ -26,9 +26,7 @@ const Header: React.FC<Props> = ({ img, name, onLogOut }) => {
         <div className={styles.menu}>
           <div className={styles.profile}>
             <img src={img ?? profile} alt="profile" />
-            <span className={styles.profileName}>
-              {name ?? 'Binary studio'}
-            </span>
+            <span className={styles.profileName}>{name}</span>
           </div>
           <div className={styles.dropdownMenu} onClick={handleOnVisible}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
