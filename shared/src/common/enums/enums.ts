@@ -4,6 +4,6 @@ export { ContentType } from './file/file';
 export { HttpCode, HttpHeader, HttpMethod } from './http/http';
 export {
   EAMMasterValidationMessage,
-  EAMMasterSignUpValidationRule,
+  EAMMasterValidationRule,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
