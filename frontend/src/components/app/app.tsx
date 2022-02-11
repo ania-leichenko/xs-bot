@@ -5,12 +5,17 @@ import { auth as authActions } from 'store/actions';
 import { AppRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
+import { storage } from 'services/services';
+import { StorageKey } from 'common/enums/enums';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
+  const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
 
   useEffect(() => {
-    dispatch(authActions.loadCurrentUser());
+    if (hasToken) {
+      dispatch(authActions.loadCurrentUser());
+    }
   }, [dispatch]);
 
   return (
