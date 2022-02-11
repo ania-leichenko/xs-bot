@@ -1,4 +1,4 @@
 export {
-  type GroupResponseDto,
-  type GroupCreateRequestDto,
+  type EAMGroupResponseDto,
+  type EAMGroupCreateRequestDto,
 } from 'bws-shared/common/types/types';

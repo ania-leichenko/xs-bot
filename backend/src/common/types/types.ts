@@ -6,8 +6,8 @@ export {
   type MasterDto,
 } from './master/master';
 export {
-  type GroupResponseDto,
-  type GroupCreateRequestDto,
+  type EAMGroupResponseDto,
+  type EAMGroupCreateRequestDto,
 } from './group/group';
 export { type TenantResponseDto } from './tenant/tenant';
 export { type TokenPayload } from './token/token';

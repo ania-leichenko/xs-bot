@@ -1,5 +1,6 @@
 import { Group as GroupM } from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
+import { TableName } from '~/common/enums/db/table-name.enum';
 
 type Constructor = {
   GroupModel: typeof GroupM;
@@ -12,9 +13,37 @@ class Group {
     this.#GroupModel = GroupModel;
   }
 
-  async getAll(): Promise<GroupEntity[]> {
-    const groups = await this.#GroupModel.query();
-    return groups.map(Group.modelToEntity);
+  async getByNameAndTenant(
+    name: string,
+    tenantId: string,
+  ): Promise<GroupEntity | null> {
+    const group = await this.#GroupModel
+      .query()
+      .select()
+      .where({ name })
+      .andWhere({ tenantId })
+      .first();
+
+    if (!group) {
+      return null;
+    }
+
+    return Group.modelToEntity(group);
+  }
+
+  async getUsersOfGroup(
+    name: string,
+    tenantId: string,
+  ): Promise<{ name: string }[] | null> {
+    return this.#GroupModel
+      .query()
+      .select(`${TableName.GROUPS}`)
+      .join(`${TableName.USERS_GROUPS}`, 'group_id', `${TableName.GROUPS}.id`)
+      .join(`${TableName.WORKERS}`, 'id', `${TableName.USERS_GROUPS}.user_id`)
+      .select(`${TableName.GROUPS}.name`)
+      .where({ name: name })
+      .andWhere({ tenant_id: tenantId })
+      .select(`${TableName.WORKERS}.name`);
   }
 
   public static modelToEntity(model: GroupM): GroupEntity {

@@ -1,6 +1,6 @@
 type EAMGroupCreateRequestDto = {
-  groupName: string;
-  masterId: string;
+  name: string;
+  tenantId: string;
 };
 
 export { type EAMGroupCreateRequestDto };

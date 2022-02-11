@@ -1,4 +1,3 @@
-import { GroupResponseDto } from '~/common/types/types';
 import { group as groupRep } from '~/data/repositories/repositories';
 
 type Constructor = {
@@ -10,17 +9,6 @@ class Group {
 
   constructor({ groupRepository }: Constructor) {
     this.#groupRepository = groupRepository;
-  }
-
-  async getAll(): Promise<GroupResponseDto[]> {
-    const groups = await this.#groupRepository.getAll();
-
-    return groups.map((g) => ({
-      id: g.id,
-      name: g.name,
-      createdAt: g.createdAt,
-      tenantId: g.tenantId,
-    }));
   }
 }
 
