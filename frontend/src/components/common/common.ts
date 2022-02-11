@@ -1,5 +1,6 @@
 export { Routes, Route } from 'react-router-dom';
 export { ErrorMessage } from '@hookform/error-message';
+export { Navigate } from 'react-router-dom';
 export { Button } from './button/button';
 export { Checkbox } from './checkbox/checkbox';
 export { Select } from './select/select';
@@ -9,3 +10,4 @@ export { Table } from './table/table';
 export { PrivateRoute } from './private-route/private-route';
 export { Toaster } from './toaster/toaster';
 export { PasswordInput } from './input-password/input-password';
+export { Header } from './header/header';
