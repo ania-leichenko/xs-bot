@@ -16,7 +16,8 @@ const Auth: FC = () => {
     user: auth.user,
   }));
 
-  if (user) {
+  const hasUser = Boolean(user);
+  if (hasUser) {
     return <Navigate to={AppRoute.ROOT} />;
   }
 

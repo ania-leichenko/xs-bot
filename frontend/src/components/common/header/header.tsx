@@ -1,21 +1,20 @@
 import logo from 'assets/img/logo.svg';
 import profile from 'assets/img/profile.svg';
 import menu from 'assets/img/menu.svg';
+import { FC } from 'react';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useState } from 'react';
 import styles from './header.module.scss';
+import { useAppSelector } from 'hooks/hooks';
 
-type Props = {
-  img?: string;
-  name: string;
-  onLogOut?: React.MouseEventHandler<HTMLDivElement>;
-};
-
-const Header: React.FC<Props> = ({ img, name, onLogOut }) => {
+const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
+  const { tenant } = useAppSelector(({ app }) => ({
+    tenant: app.tenant,
+  }));
 
-  const handleOnVisible = (): void => setVisible(!isVisible);
+  const handleVisibleChange = (): void => setVisible(!isVisible);
 
   return (
     <header className={styles.header}>
@@ -25,16 +24,14 @@ const Header: React.FC<Props> = ({ img, name, onLogOut }) => {
         </Link>
         <div className={styles.menu}>
           <div className={styles.profile}>
-            <img src={img ?? profile} alt="profile" />
-            <span className={styles.profileName}>{name}</span>
+            <img src={profile} alt="profile" />
+            <span className={styles.profileName}>{tenant?.name}</span>
           </div>
-          <div className={styles.dropdownMenu} onClick={handleOnVisible}>
+          <div className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
             {isVisible && (
               <div className={styles.dropdownContent}>
-                <div className={styles.dropdownItem} onClick={onLogOut}>
-                  Log Out
-                </div>
+                <div className={styles.dropdownItem}>Log Out</div>
               </div>
             )}
           </div>

@@ -14,7 +14,8 @@ const PrivateRoute: React.FC<Props> = ({
     user: auth.user,
   }));
 
-  if (!user) {
+  const hasUser = Boolean(user);
+  if (!hasUser) {
     return <Navigate to={redirectTo} />;
   }
 

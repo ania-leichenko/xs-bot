@@ -2,11 +2,11 @@ import { FC, useEffect } from 'react';
 import { Header } from 'components/common/common';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { app as appActions } from 'store/actions';
+import { DataStatus } from 'common/enums/enums';
 
 const Dashboard: FC = () => {
-  const { user, tenant, tenantStatus } = useAppSelector(({ app, auth }) => ({
+  const { user, tenantStatus } = useAppSelector(({ app, auth }) => ({
     user: auth.user,
-    tenant: app.tenant,
     tenantStatus: app.dataStatus,
   }));
 
@@ -21,8 +21,8 @@ const Dashboard: FC = () => {
 
   return (
     <div>
-      {tenantStatus === 'fulfilled' ? (
-        <Header name={tenant?.name ?? 'Binary studio'} />
+      {tenantStatus === DataStatus.FULFILLED ? (
+        <Header />
       ) : (
         <div>Loading...</div>
       )}
