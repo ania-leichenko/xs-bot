@@ -5,9 +5,9 @@ const styles: StylesConfig = {
   option: (provided: CSSObject, state: OptionProps): CSSObject => {
     return {
       ...provided,
-      backgroundColor: state.isSelected ? '#ff9c00' : '',
+      backgroundColor: state.isSelected ? 'var(--color-orange)' : '',
       '&:hover': {
-        backgroundColor: '#ff9c00',
+        backgroundColor: 'var(--color-orange)',
       },
     };
   },
@@ -15,16 +15,16 @@ const styles: StylesConfig = {
     return {
       ...provided,
       minHeight: '45px',
-      background: '#393939',
+      background: 'var(--color-boltgun)',
       border:
         state.menuIsOpen || state.hasValue
-          ? '2px solid #ff9c00'
-          : '2px solid #8F8F8F',
+          ? '2px solid var(--color-orange)'
+          : '2px solid var(--color-gray)',
       borderRadius: '50px',
       cursor: 'pointer',
       boxShadow: 'null',
       '&:hover': {
-        borderColor: state.isFocused ? '#ff9c00' : '',
+        borderColor: state.isFocused ? 'var(--color-orange)' : '',
       },
     };
   },
@@ -32,7 +32,7 @@ const styles: StylesConfig = {
     return {
       ...provided,
       color: '#ffffff',
-      background: '#393939',
+      background: 'var(--color-boltgun)',
       cursor: 'pointer',
       '&:hover': {
         color: 'white',
