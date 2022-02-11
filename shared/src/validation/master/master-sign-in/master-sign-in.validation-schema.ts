@@ -8,7 +8,7 @@ const masterSignIn = Joi.object({
     .trim()
     .required()
     .messages({
-      'string.email': MasterValidationMessage.EMAIL_WRONG,
+      'string.email': MasterValidationMessage.EMAIL_NOT_VALID,
       'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
     }),
   [getNameOf<MasterSignInRequestDto>('password')]: Joi.string()
