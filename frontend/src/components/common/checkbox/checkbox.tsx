@@ -15,18 +15,16 @@ const Checkbox: React.FC<Props> = ({
   isDisabled = false,
 }) => {
   return (
-    <>
-      <label className={style.label}>
-        <input
-          className={style.checkbox}
-          type="checkbox"
-          onChange={onChange}
-          disabled={isDisabled}
-          checked={isChecked}
-        />
-        <span className={style.span}>{label}</span>
-      </label>
-    </>
+    <label className={style.label}>
+      <input
+        className={style.checkbox}
+        type="checkbox"
+        onChange={onChange}
+        disabled={isDisabled}
+        checked={isChecked}
+      />
+      <span className={style.span}>{label}</span>
+    </label>
   );
 };
 

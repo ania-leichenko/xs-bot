@@ -3,7 +3,7 @@ import ReactSelect, { ActionMeta } from 'react-select';
 import { styles as selectStyles } from './styles';
 import styles from './styles.module.scss';
 
-type SelectOption = {
+type OptionType = {
   id?: string;
   value: string;
   label: string;
@@ -11,7 +11,7 @@ type SelectOption = {
 
 type Props = {
   label: string;
-  options: SelectOption[];
+  options: OptionType[];
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
