@@ -1,12 +1,10 @@
 import { masterSignIn as masterSignInValidationSchema } from 'validation-schemas/validation-schemas';
-import { ButtonType, InputType } from 'common/enums/enums';
+import { ButtonType, InputType, AppRoute } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { MasterSignInRequestDto } from 'common/types/types';
-import { Button, Input, PasswordInput } from 'components/common/common';
+import { Button, Input, PasswordInput, Link } from 'components/common/common';
 import { DEFAULT_LOGIN_PAYLOAD } from './common/constants';
-import { Link } from 'components/common/common';
-import { AppRoute } from 'common/enums/enums';
 import styles from './sign-in-form.module.scss';
 
 type Props = {
