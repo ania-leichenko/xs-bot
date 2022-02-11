@@ -9,7 +9,7 @@ import { useLocation, useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { SignInForm, SignUpForm } from './components/components';
 import styles from './auth.module.scss';
 import logo from 'assets/img/logo.svg';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'components/common/common';
 
 const Auth: FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
