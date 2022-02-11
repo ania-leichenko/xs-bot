@@ -1,11 +1,11 @@
 import logo from 'assets/img/logo.svg';
 import profile from 'assets/img/profile.svg';
 import menu from 'assets/img/menu.svg';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import styles from './header.module.scss';
-import { useAppSelector } from 'hooks/hooks';
+import { useState, useAppSelector } from 'hooks/hooks';
 
 const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);

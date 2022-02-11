@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import ReactSelect, { ActionMeta } from 'react-select';
 import { styles as selectStyles } from './styles';
-import styles from './styles.module.scss';
+import styles from './select.module.scss';
 
 type OptionType = {
   id?: string;
