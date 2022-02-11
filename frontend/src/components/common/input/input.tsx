@@ -37,8 +37,7 @@ const Input: FC<Props> = ({
         type={type}
         placeholder={placeholder}
         className={getValidClasses(
-          styles.input,
-          errors[name] && styles.inputError,
+          Object.keys(errors).length === 0 ? styles.input : styles.inputError,
         )}
       />
       <span className={styles.error}>

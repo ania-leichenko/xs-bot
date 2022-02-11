@@ -24,6 +24,10 @@ body {
   text-rendering: optimizeSpeed;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 img {
   display: block;
   max-width: 100%;
