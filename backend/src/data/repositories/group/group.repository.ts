@@ -13,7 +13,7 @@ class Group {
     this.#GroupModel = GroupModel;
   }
 
-  async getByNameAndTenant(
+  async getGroupByNameAndTenant(
     name: string,
     tenantId: string,
   ): Promise<GroupEntity | null> {
@@ -30,7 +30,7 @@ class Group {
 
     return Group.modelToEntity(group);
   }
-
+  //
   async getUsersOfGroup(
     name: string,
     tenantId: string,
@@ -44,6 +44,17 @@ class Group {
       .where({ name: name })
       .andWhere({ tenant_id: tenantId })
       .select(`${TableName.WORKERS}.name`);
+  }
+
+  async create(group: GroupEntity): Promise<GroupM> {
+    const { id, name, tenantId } = group;
+
+    return this.#GroupModel.query().insert({
+      id,
+      name,
+      createdAt: group.createdAt.toISOString(),
+      tenantId,
+    });
   }
 
   public static modelToEntity(model: GroupM): GroupEntity {
