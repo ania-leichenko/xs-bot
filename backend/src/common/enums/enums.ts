@@ -1,6 +1,7 @@
 export {
   ApiPath,
   MastersApiPath,
+  TenantsApiPath,
   GroupsApiPath,
   ControllerHook,
 } from './api/api';

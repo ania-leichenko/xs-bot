@@ -1,17 +1,20 @@
 import { FC } from 'react';
+import { Routes, Route, PrivateRoute, Toaster } from 'components/common/common';
 import { useAppDispatch, useEffect } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { Routes, Route, PrivateRoute } from 'components/common/common';
-import { AppRoute } from 'common/enums/enums';
+import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
-import { Toaster } from 'components/common/common';
+import { storage } from 'services/services';
 
 const App: FC = () => {
   const dispatch = useAppDispatch();
+  const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
 
   useEffect(() => {
-    dispatch(authActions.loadCurrentUser());
+    if (hasToken) {
+      dispatch(authActions.loadCurrentUser());
+    }
   }, [dispatch]);
 
   return (
