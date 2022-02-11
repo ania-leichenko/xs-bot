@@ -1,5 +1,3 @@
-@import "src/assets/css/styles";
-
 .btn {
   width: 100%;
   min-height: 45px;
@@ -7,14 +5,14 @@
   color: white;
   font-weight: 800;
   font-size: 16px;
-  border: 2px solid $orange;
+  border: 2px solid var(--color-orange);
   border-radius: 50px;
 }
 
 .btnStyle--filled {
-  background-color: $orange;
+  background-color: var(--color-orange);
 }
 
 .btnStyle--outlined {
-  background-color: $boltgun;
+  background-color: var(--color-boltgun);
 }

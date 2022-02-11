@@ -30,7 +30,7 @@ const Input: React.FC<Props> = ({
 
   return (
     <label className={styles.inputLabel}>
-      <span>{label}</span>
+      <span className={styles.span}>{label}</span>
       <input
         {...field}
         type={type}

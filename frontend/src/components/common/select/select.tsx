@@ -1,6 +1,6 @@
-import React from 'react';
+import { FC } from 'react';
 import ReactSelect, { ActionMeta } from 'react-select';
-import { selectStyling } from './selectStyling';
+import { styles as selectStyles } from './styles';
 import styles from './styles.module.scss';
 
 type SelectOption = {
@@ -15,12 +15,12 @@ type Props = {
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
-const Select: React.FC<Props> = ({ label, options, onChange }) => {
+const Select: FC<Props> = ({ label, options, onChange }) => {
   return (
     <div className={styles.reactSelectContainer}>
       <span>{label}</span>
       <ReactSelect
-        styles={selectStyling}
+        styles={selectStyles}
         onChange={onChange}
         options={options}
       />

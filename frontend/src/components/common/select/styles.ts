@@ -1,7 +1,7 @@
 import { CSSObject } from '@emotion/react';
 import { ControlProps, OptionProps, StylesConfig } from 'react-select';
 
-export const selectStyling: StylesConfig = {
+const styles: StylesConfig = {
   option: (provided: CSSObject, state: OptionProps): CSSObject => {
     return {
       ...provided,
@@ -46,3 +46,5 @@ export const selectStyling: StylesConfig = {
     };
   },
 };
+
+export { styles };
