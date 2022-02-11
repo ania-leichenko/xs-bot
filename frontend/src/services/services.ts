@@ -4,7 +4,7 @@ import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { TenantApi } from './tenant-api/tenant-api.service';
 import { Storage } from './storage/storage.service';
-import { Notification } from './notifications/notification.service';
+import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
 
 const storage = new Storage({
