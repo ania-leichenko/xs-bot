@@ -26,14 +26,14 @@ const Header: FC = () => {
             <img src={profile} alt="profile" />
             <span className={styles.profileName}>{tenant?.name}</span>
           </div>
-          <div className={styles.dropdownMenu} onClick={handleVisibleChange}>
+          <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
-            {isVisible && (
-              <div className={styles.dropdownContent}>
-                <div className={styles.dropdownItem}>Log Out</div>
-              </div>
-            )}
-          </div>
+          </button>
+          {isVisible && (
+            <div className={styles.dropdownContent}>
+              <div className={styles.dropdownItem}>Log Out</div>
+            </div>
+          )}
         </div>
       </div>
     </header>
