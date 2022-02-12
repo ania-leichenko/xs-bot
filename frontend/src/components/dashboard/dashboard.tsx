@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { app as appActions } from 'store/actions';
 import { DataStatus } from 'common/enums/enums';
 import { ServicesList } from './components/components';
+import { Loader } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const Dashboard: FC = () => {
@@ -22,11 +23,9 @@ const Dashboard: FC = () => {
 
   const isLoading = tenantStatus !== DataStatus.FULFILLED;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={styles.wrapper}>
       <ServicesList />
     </div>
