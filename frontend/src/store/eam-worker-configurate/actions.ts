@@ -5,7 +5,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { getRandomId } from 'bws-shared';
+import { getRandomId } from 'helpers/helpers';
 
 const EAMCreateWorker = createAsyncThunk<
   EAMCreateWorkerResponseDto,

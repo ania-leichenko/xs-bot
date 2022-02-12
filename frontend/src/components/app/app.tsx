@@ -35,7 +35,12 @@ const App: FC = () => {
         <Route path={AppRoute.EAM} element={<Eam />} />
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
-          element={<EamCreateWorker />}
+          element={
+            <PrivateRoute>
+              <Dashboard />
+              <EamCreateWorker />
+            </PrivateRoute>
+          }
         />
       </Routes>
       <Toaster />

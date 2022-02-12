@@ -22,31 +22,33 @@ const EamCreateWorker: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>EAM - Entity Access Management</h2>
-      <div className={styles.addUserHeader}>Add User</div>
-      <form onSubmit={handleSubmit(hanldeFormSubmit)}>
-        <div className={styles.title}>Set user details</div>
-        <Input
-          type={InputType.TEXT}
-          label="User Name*"
-          placeholder=""
-          name={getNameOf<EAMCreateWorkerRequestDto>('name')}
-          control={control}
-          errors={errors}
-        />
+    <div className={styles.backFon}>
+      <div className={styles.container}>
+        <h2>EAM - Entity Access Management</h2>
+        <div className={styles.addUserHeader}>Add User</div>
+        <form onSubmit={handleSubmit(hanldeFormSubmit)}>
+          <div className={styles.title}>Set user details</div>
+          <Input
+            type={InputType.TEXT}
+            label="User Name*"
+            placeholder=""
+            name={getNameOf<EAMCreateWorkerRequestDto>('name')}
+            control={control}
+            errors={errors}
+          />
 
-        <div className={styles.title}>Add user to group </div>
+          <div className={styles.title}>Add user to group </div>
 
-        <div className={styles.buttons}>
-          <div className={styles.button}>
-            <Button type={ButtonType.SUBMIT} label="Cancel" />
+          <div className={styles.buttons}>
+            <div className={styles.button}>
+              <Button type={ButtonType.SUBMIT} label="Cancel" />
+            </div>
+            <div className={styles.button}>
+              <Button type={ButtonType.SUBMIT} label="Create" />
+            </div>
           </div>
-          <div className={styles.button}>
-            <Button type={ButtonType.SUBMIT} label="Create" />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
