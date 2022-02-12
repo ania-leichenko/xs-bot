@@ -1,38 +1,49 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
-import { MasterSignUpRequestDto } from '~/common/types/types';
+import { EAMMasterSignUpRequestDto } from '~/common/types/types';
 import {
-  MasterValidationMessage,
-  MasterSignUpValidationRule,
+  EAMMasterValidationMessage,
+  EAMMasterValidationRule,
 } from '~/common/enums/enums';
 
-const masterSignUp = Joi.object({
-  [getNameOf<MasterSignUpRequestDto>('email')]: Joi.string()
+const eamMasterSignUp = Joi.object({
+  [getNameOf<EAMMasterSignUpRequestDto>('email')]: Joi.string()
     .trim()
-    .email({ tlds: { allow: false } })
+    .ruleset.email({ tlds: { allow: false } })
+    .regex(EAMMasterValidationRule.EMAIL_LOCAL_PART_FIRST_CHARTER)
+    .regex(EAMMasterValidationRule.EMAIL_LOCAL_PART_LAST_CHARTER)
+    .rule({ message: EAMMasterValidationMessage.EMAIL_NOT_VALID })
+    .regex(EAMMasterValidationRule.EMAIL_LENGTH)
     .required()
     .messages({
-      'string.email': MasterValidationMessage.EMAIL_WRONG,
-      'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
+      'string.empty': EAMMasterValidationMessage.EMAIL_REQUIRE,
+      'string.pattern.base': EAMMasterValidationMessage.EMAIL_LENGTH,
     }),
-  [getNameOf<MasterSignUpRequestDto>('name')]: Joi.string()
+  [getNameOf<EAMMasterSignUpRequestDto>('name')]: Joi.string()
     .trim()
-    .min(MasterSignUpValidationRule.NAME_MIN_LENGTH)
-    .regex(MasterSignUpValidationRule.NAME_FIRST_CHARTER)
+    .ruleset.min(EAMMasterValidationRule.NAME_MIN_LENGTH)
+    .max(EAMMasterValidationRule.NAME_MAX_LENGTH)
+    .rule({ message: EAMMasterValidationMessage.NAME_LENGTH })
+    .ruleset.regex(EAMMasterValidationRule.NAME_FIRST_CHARTER)
+    .regex(EAMMasterValidationRule.NAME_LAST_CHARTER)
+    .rule({ message: EAMMasterValidationMessage.NAME_FIRST_AND_LAST_CHARTER })
+    .regex(EAMMasterValidationRule.NAME_PATTERN)
     .required()
     .messages({
-      'string.empty': MasterValidationMessage.NAME_REQUIRE,
-      'string.min': MasterValidationMessage.NAME_MIN_LENGTH,
-      'string.pattern.base': MasterValidationMessage.NAME_FIRST_CHARTER,
+      'string.empty': EAMMasterValidationMessage.NAME_REQUIRE,
+      'string.pattern.base': EAMMasterValidationMessage.NAME_PATTERN,
     }),
-  [getNameOf<MasterSignUpRequestDto>('password')]: Joi.string()
+  [getNameOf<EAMMasterSignUpRequestDto>('password')]: Joi.string()
     .trim()
-    .min(MasterSignUpValidationRule.PASSWORD_MIN_LENGTH)
+    .ruleset.min(EAMMasterValidationRule.PASSWORD_MIN_LENGTH)
+    .max(EAMMasterValidationRule.PASSWORD_MAX_LENGTH)
+    .rule({ message: EAMMasterValidationMessage.PASSWORD_LENGTH })
+    .regex(EAMMasterValidationRule.PASSWORD_PATTERN)
     .required()
     .messages({
-      'string.empty': MasterValidationMessage.PASSWORD_REQUIRE,
-      'string.min': MasterValidationMessage.PASSWORD_MIN_LENGTH,
+      'string.empty': EAMMasterValidationMessage.PASSWORD_REQUIRE,
+      'string.pattern.base': EAMMasterValidationMessage.PASSWORD_PATTERN,
     }),
 });
 
-export { masterSignUp };
+export { eamMasterSignUp };
