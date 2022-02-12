@@ -3,8 +3,10 @@ import {
   master as masterRepository,
   tenant as tenantRepository,
   worker as workerRepository,
+  group as groupRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
+import { Group } from '~/services/group/group.service';
 import { Encrypt } from './encrypt/encrypt.service';
 import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
@@ -33,4 +35,8 @@ const worker = new Worker({
   masterService: master,
 });
 
-export { master, encrypt, token, tenant, worker };
+const group = new Group({
+  groupRepository,
+});
+
+export { master, group, token, encrypt, tenant, worker };
