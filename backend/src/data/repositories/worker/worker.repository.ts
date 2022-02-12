@@ -1,20 +1,22 @@
-import { Worker as WorkerM } from '~/data/models/models';
+import {
+  Worker as WorkerM,
+  UsersGroups as UsersGroupsM,
+} from '~/data/models/models';
 import { Worker as WorkerEntity } from '~/services/worker/worker.entity';
+import { getRandomId } from '~/helpers/helpers';
 
 type Constructor = {
   WorkerModel: typeof WorkerM;
+  UsersGroupsModel: typeof UsersGroupsM;
 };
 
 class Worker {
   #WorkerModel: typeof WorkerM;
+  #UsersGroupsModel: typeof UsersGroupsM;
 
-  constructor({ WorkerModel }: Constructor) {
+  constructor({ WorkerModel, UsersGroupsModel }: Constructor) {
     this.#WorkerModel = WorkerModel;
-  }
-
-  public async getAll(): Promise<Array<WorkerEntity>> {
-    const workers: WorkerM[] = await this.#WorkerModel.query().select('*');
-    return workers.map((worker) => Worker.modelToEntity(worker));
+    this.#UsersGroupsModel = UsersGroupsModel;
   }
 
   public async getByName(name: string): Promise<WorkerEntity | null> {
@@ -27,14 +29,15 @@ class Worker {
     if (!worker) {
       return null;
     }
+    const groupIds: string[] = [];
 
-    return Worker.modelToEntity(worker);
+    return Worker.modelToEntity(worker, groupIds);
   }
 
   public async create(worker: WorkerEntity): Promise<WorkerM> {
-    const { id, name, passwordHash, passwordSalt, tenantId } = worker;
+    const { id, name, passwordHash, passwordSalt, tenantId, groupIds } = worker;
 
-    return this.#WorkerModel.query().insert({
+    const newWorker = await this.#WorkerModel.query().insert({
       id,
       name,
       passwordHash,
@@ -42,9 +45,23 @@ class Worker {
       createdAt: worker.createdAt.toISOString(),
       tenantId,
     });
+
+    groupIds.map(async (groupId) => {
+      await this.#UsersGroupsModel.query().insert({
+        id: getRandomId(),
+        userId: id,
+        groupId: groupId,
+        createdAt: worker.createdAt.toISOString(),
+      });
+    });
+
+    return newWorker;
   }
 
-  public static modelToEntity(model: WorkerM): WorkerEntity {
+  public static modelToEntity(
+    model: WorkerM,
+    groupIds: string[],
+  ): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
 
     return WorkerEntity.initialize({
@@ -53,6 +70,7 @@ class Worker {
       passwordHash,
       passwordSalt,
       tenantId,
+      groupIds,
       createdAt: new Date(model.createdAt),
     });
   }

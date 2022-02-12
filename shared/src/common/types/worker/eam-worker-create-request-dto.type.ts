@@ -1,7 +1,7 @@
 type EAMWorkerCreateRequestDto = {
-  // group: string; will be added
   name: string;
   password: string;
+  groupIds: string[];
   token: string;
 };
 

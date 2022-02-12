@@ -38,14 +38,11 @@ class Worker {
     this.#masterService = masterService;
   }
 
-  public async getAll(): Promise<Array<EAMWorkerResponseDto>> {
-    return await this.#workerRepository.getAll();
-  }
-
   public async create({
     name,
     password,
     token,
+    groupIds,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerResponseDto> {
     const workerByName = await this.#workerRepository.getByName(name);
 
@@ -78,6 +75,7 @@ class Worker {
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
       tenantId: master.tenantId,
+      groupIds,
     });
 
     await this.#workerRepository.create(worker);
