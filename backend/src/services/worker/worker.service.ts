@@ -1,7 +1,7 @@
 import { worker as workerRep } from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
-  EAMWorkerResponseDto,
+  EAMWorkerCreateResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
@@ -43,7 +43,7 @@ class Worker {
     password,
     token,
     groupIds,
-  }: EAMWorkerCreateRequestDto): Promise<EAMWorkerResponseDto> {
+  }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
     const workerByName = await this.#workerRepository.getByName(name);
 
     if (workerByName) {
@@ -78,9 +78,7 @@ class Worker {
       groupIds,
     });
 
-    await this.#workerRepository.create(worker);
-
-    return worker;
+    return await this.#workerRepository.create(worker);
   }
 }
 

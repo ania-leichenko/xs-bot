@@ -29,12 +29,11 @@ class Worker {
     if (!worker) {
       return null;
     }
-    const groupIds: string[] = [];
 
-    return Worker.modelToEntity(worker, groupIds);
+    return Worker.modelToEntity(worker);
   }
 
-  public async create(worker: WorkerEntity): Promise<WorkerM> {
+  public async create(worker: WorkerEntity): Promise<WorkerEntity> {
     const { id, name, passwordHash, passwordSalt, tenantId, groupIds } = worker;
 
     const newWorker = await this.#WorkerModel.query().insert({
@@ -55,14 +54,13 @@ class Worker {
       });
     });
 
-    return newWorker;
+    return Worker.modelToEntity(newWorker);
   }
 
-  public static modelToEntity(
-    model: WorkerM,
-    groupIds: string[],
-  ): WorkerEntity {
+  public static modelToEntity(model: WorkerM): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
+
+    const groupIds: string[] = []; // how get group ids?
 
     return WorkerEntity.initialize({
       id,

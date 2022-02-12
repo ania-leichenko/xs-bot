@@ -6,7 +6,7 @@ export {
   type EAMMasterByIdResponseDto,
 } from './master/master';
 export {
-  type EAMWorkerResponseDto,
+  type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
 } from './worker/worker';
 export {

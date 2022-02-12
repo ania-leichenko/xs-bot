@@ -10,7 +10,7 @@ export {
   type EAMGroupCreateRequestDto,
 } from './eam-group/eam-group';
 export {
-  type EAMWorkerResponseDto,
+  type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
 } from './worker/worker';
 export {
