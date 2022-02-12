@@ -1,19 +1,19 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
-import { MasterSignInRequestDto } from '~/common/types/types';
-import { MasterValidationMessage } from '~/common/enums/enums';
+import { EAMMasterSignInRequestDto } from '~/common/types/types';
+import { EAMMasterValidationMessage } from '~/common/enums/enums';
 
-const masterSignIn = Joi.object({
-  [getNameOf<MasterSignInRequestDto>('email')]: Joi.string()
+const eamMasterSignIn = Joi.object({
+  [getNameOf<EAMMasterSignInRequestDto>('email')]: Joi.string()
     .trim()
     .required()
     .messages({
-      'string.email': MasterValidationMessage.EMAIL_WRONG,
-      'string.empty': MasterValidationMessage.EMAIL_REQUIRE,
+      'string.email': EAMMasterValidationMessage.EMAIL_NOT_VALID,
+      'string.empty': EAMMasterValidationMessage.EMAIL_REQUIRE,
     }),
-  [getNameOf<MasterSignInRequestDto>('password')]: Joi.string()
+  [getNameOf<EAMMasterSignInRequestDto>('password')]: Joi.string()
     .trim()
     .required(),
 });
 
-export { masterSignIn };
+export { eamMasterSignIn };
