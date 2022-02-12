@@ -3,6 +3,7 @@ import { group as groupServ, worker as workerServ } from '~/services/services';
 import { HttpCode, HttpMethod, EAMApiPath } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
+  EAMGroupGetRequestDto,
   EAMWorkerCreateRequestDto,
 } from '~/common/types/types';
 
@@ -48,6 +49,18 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const group = await groupService.create(req.body);
       return rep.send(group).status(HttpCode.CREATED);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${EAMApiPath.GROUPS}/`,
+    async handler(
+      req: FastifyRequest<{ Querystring: EAMGroupGetRequestDto }>,
+      rep,
+    ) {
+      const groups = await groupService.getGroupsByTenant(req.query);
+      return rep.send(groups).status(HttpCode.OK);
     },
   });
 };
