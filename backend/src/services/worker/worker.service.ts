@@ -15,12 +15,12 @@ class Worker {
   async getAll(): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll();
 
-    return workers.map((m) => ({
+    const items = workers.map((m) => ({
       id: m.id,
       name: m.name,
-      createdAt: m.createdAt,
-      tenantId: m.tenantId,
     }));
+
+    return { items };
   }
 }
 
