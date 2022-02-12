@@ -12,8 +12,9 @@ class Worker {
     this.#WorkerModel = WorkerModel;
   }
 
-  public async getAll(): Promise<Array<WorkerM>> {
-    return this.#WorkerModel.query().select('*');
+  public async getAll(): Promise<Array<WorkerEntity>> {
+    const workers: WorkerM[] = await this.#WorkerModel.query().select('*');
+    return workers.map((worker) => Worker.modelToEntity(worker));
   }
 
   public async getByName(name: string): Promise<WorkerEntity | null> {
