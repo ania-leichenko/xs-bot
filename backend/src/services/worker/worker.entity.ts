@@ -5,30 +5,34 @@ class Worker {
   public name: string;
   public passwordHash: string;
   public passwordSalt: string;
-  public createdAt: Date;
   public tenantId: string;
+  public groupIds: string[];
+  public createdAt: Date;
 
   private constructor({
     id,
     name,
     passwordHash,
     passwordSalt,
-    createdAt,
     tenantId,
+    groupIds,
+    createdAt,
   }: {
     id: string;
     name: string;
     passwordHash: string;
     passwordSalt: string;
-    createdAt: Date;
     tenantId: string;
+    groupIds: string[];
+    createdAt: Date;
   }) {
     this.id = id;
     this.name = name;
     this.passwordHash = passwordHash;
     this.passwordSalt = passwordSalt;
-    this.createdAt = createdAt;
     this.tenantId = tenantId;
+    this.groupIds = groupIds;
+    this.createdAt = createdAt;
   }
 
   public static initialize({
@@ -36,35 +40,39 @@ class Worker {
     name,
     passwordHash,
     passwordSalt,
-    createdAt,
     tenantId,
+    groupIds,
+    createdAt,
   }: {
     id: string;
     name: string;
     passwordHash: string;
     passwordSalt: string;
-    createdAt: Date;
     tenantId: string;
+    groupIds: string[];
+    createdAt: Date;
   }): Worker {
     return new Worker({
       id,
       name,
       passwordHash,
       passwordSalt,
-      createdAt,
       tenantId,
+      groupIds,
+      createdAt,
     });
   }
-
   public static createNew({
     name,
     passwordHash,
     passwordSalt,
+    groupIds,
     tenantId,
   }: {
     name: string;
     passwordHash: string;
     passwordSalt: string;
+    groupIds: string[];
     tenantId: string;
   }): Worker {
     return new Worker({
@@ -72,8 +80,9 @@ class Worker {
       name,
       passwordHash,
       passwordSalt,
-      createdAt: new Date(),
       tenantId,
+      groupIds,
+      createdAt: new Date(),
     });
   }
 }

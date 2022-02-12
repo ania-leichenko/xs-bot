@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
-import { master, token, tenant, worker, group } from '~/services/services';
+import { master, token, tenant, group, worker } from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';

@@ -6,6 +6,10 @@ export {
   type EAMMasterByIdResponseDto,
 } from './master/master';
 export {
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateRequestDto,
+} from './worker/worker';
+export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
 } from './group/group';

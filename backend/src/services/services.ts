@@ -30,6 +30,9 @@ const master = new Master({
 
 const worker = new Worker({
   workerRepository,
+  encryptService: encrypt,
+  tokenService: token,
+  masterService: master,
 });
 
 const group = new Group({
