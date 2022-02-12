@@ -4,7 +4,7 @@ export {
   type EAMMasterSignInRequestDto,
   type EAMMasterSignInResponseDto,
   type EAMMasterByIdResponseDto,
-} from './master/master';
+} from './eam-master/eam-master';
 export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
@@ -14,6 +14,6 @@ export {
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
-} from './tenant/tenant';
+} from './eam-tenant/eam-tenant';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
