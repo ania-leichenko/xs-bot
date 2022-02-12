@@ -1,5 +1,5 @@
 import { worker as workerRep } from '~/data/repositories/repositories';
-import { EAMWorkerDto } from '~/common/types/types';
+import { EAMWorkerGetAllResponseDto } from '~/common/types/types';
 
 type Constructor = {
   workerRepository: typeof workerRep;
@@ -12,7 +12,7 @@ class Worker {
     this.#workerRepository = workerRepository;
   }
 
-  async getAll(): Promise<EAMWorkerDto[]> {
+  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll();
 
     return workers.map((m) => ({

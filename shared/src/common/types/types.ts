@@ -9,7 +9,10 @@ export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
 } from './eam-group/eam-group';
-export { type EAMWorkerDto } from './eam-worker/eam-worker';
+export {
+  type EAMWorkerGetAllItemResponseDto,
+  type EAMWorkerGetAllResponseDto,
+} from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,
