@@ -8,17 +8,18 @@ import {
 } from 'components/common/common';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { AppRoute, DataStatus, StorageKey } from 'common/enums/enums';
+import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
 
 const App: FC = () => {
-  const { userState } = useAppSelector(({ auth }) => ({
-    userState: auth.dataStatus,
+  const { user } = useAppSelector(({ auth }) => ({
+    user: auth.user,
   }));
   const dispatch = useAppDispatch();
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
+  const hasUser = Boolean(user);
 
   useEffect(() => {
     if (hasToken) {
@@ -26,7 +27,7 @@ const App: FC = () => {
     }
   }, [dispatch]);
 
-  if (userState === DataStatus.PENDING) {
+  if (!hasUser && hasToken) {
     return <Loader />;
   }
 
