@@ -1,9 +1,10 @@
 import { group as groupRep } from '~/data/repositories/repositories';
 import {
   EAMGroupCreateRequestDto,
-  EAMGroupResponseDto,
+  EAMGroupCreateResponseDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
+import { InvalidGroupNameError } from '~/exceptions/exceptions';
 
 type Constructor = {
   groupRepository: typeof groupRep;
@@ -19,13 +20,13 @@ class Group {
   public async create({
     name,
     tenantId,
-  }: EAMGroupCreateRequestDto): Promise<EAMGroupResponseDto> {
+  }: EAMGroupCreateRequestDto): Promise<EAMGroupCreateResponseDto> {
     const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
       name,
       tenantId,
     );
     if (groupByName) {
-      // throw new error
+      throw new InvalidGroupNameError();
     }
 
     const group = GroupEntity.createNew({ name, tenantId });

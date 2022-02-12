@@ -1,10 +1,8 @@
-type EAMGroupResponseDto = {
+type EAMGroupCreateResponseDto = {
   id: string;
   name: string;
   createdAt: Date;
   tenantId: string;
-  // users: string[];
-  // permissions: string[];
 };
 
-export { type EAMGroupResponseDto };
+export { type EAMGroupCreateResponseDto };
