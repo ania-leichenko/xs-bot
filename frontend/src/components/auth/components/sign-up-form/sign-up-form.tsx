@@ -1,7 +1,12 @@
 import { FC } from 'react';
 import { eamMasterSignUp as masterSignUpValidationSchema } from 'validation-schemas/validation-schemas';
-import { AppRoute, ButtonType, InputType } from 'common/enums/enums';
-import { useAppForm } from 'hooks/hooks';
+import {
+  AppRoute,
+  ButtonStyle,
+  ButtonType,
+  InputType,
+} from 'common/enums/enums';
+import { useAppForm, useState } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { EAMMasterSignUpRequestDto } from 'common/types/types';
 import { Button, Input, Link, PasswordInput } from 'components/common/common';
@@ -18,7 +23,10 @@ const SignUpForm: FC<Props> = ({ onSubmit }) => {
       defaultValues: DEFAULT_REGISTER_PAYLOAD,
       validationSchema: masterSignUpValidationSchema,
     });
-
+  const [isClicked, setIsClicked] = useState(false);
+  const clickHandler = (): void => {
+    setIsClicked(!isClicked);
+  };
   return (
     <>
       <h1 className={styles.title}>Sign Up</h1>
@@ -52,7 +60,12 @@ const SignUpForm: FC<Props> = ({ onSubmit }) => {
             errors={errors}
           />
         </div>
-        <Button type={ButtonType.SUBMIT} label="Sign Up" />
+        <Button
+          type={ButtonType.SUBMIT}
+          label="Sign Up"
+          onClick={clickHandler}
+          btnStyle={isClicked ? ButtonStyle.OUTLINED : ButtonStyle.FILLED}
+        />
       </form>
     </>
   );
