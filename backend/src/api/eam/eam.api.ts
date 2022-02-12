@@ -19,7 +19,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.POST,
-    url: EAMApiPath.WORKER,
+    url: EAMApiPath.WORKERS,
     async handler(
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,

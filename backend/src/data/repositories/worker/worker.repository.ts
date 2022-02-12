@@ -10,6 +10,10 @@ type Constructor = {
   UsersGroupsModel: typeof UsersGroupsM;
 };
 
+type UsersGroups = {
+  groupId: string;
+};
+
 class Worker {
   #WorkerModel: typeof WorkerM;
   #UsersGroupsModel: typeof UsersGroupsM;
@@ -30,7 +34,14 @@ class Worker {
       return null;
     }
 
-    return Worker.modelToEntity(worker);
+    const groups: UsersGroups[] = await this.#UsersGroupsModel
+      .query()
+      .select('group_id')
+      .where({ userId: worker.id });
+
+    const groupIds: string[] = groups.map((group) => group.groupId);
+
+    return Worker.modelToEntity(worker, groupIds);
   }
 
   public async create(worker: WorkerEntity): Promise<WorkerEntity> {
@@ -45,22 +56,23 @@ class Worker {
       tenantId,
     });
 
-    groupIds.map(async (groupId) => {
-      await this.#UsersGroupsModel.query().insert({
+    await this.#UsersGroupsModel.query().insert(
+      groupIds.map((groupId) => ({
         id: getRandomId(),
         userId: id,
         groupId: groupId,
         createdAt: worker.createdAt.toISOString(),
-      });
-    });
+      })),
+    );
 
-    return Worker.modelToEntity(newWorker);
+    return Worker.modelToEntity(newWorker, groupIds);
   }
 
-  public static modelToEntity(model: WorkerM): WorkerEntity {
+  public static modelToEntity(
+    model: WorkerM,
+    groupIds: string[],
+  ): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
-
-    const groupIds: string[] = []; // how get group ids?
 
     return WorkerEntity.initialize({
       id,

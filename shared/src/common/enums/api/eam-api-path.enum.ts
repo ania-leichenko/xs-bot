@@ -1,6 +1,6 @@
 enum EAMApiPath {
   ROOT = '/',
-  WORKER = '/worker',
+  WORKERS = '/workers',
   GROUPS = '/groups',
 }
 
