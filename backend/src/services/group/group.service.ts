@@ -31,9 +31,7 @@ class Group {
 
     const group = GroupEntity.createNew({ name, tenantId });
 
-    await this.#groupRepository.create(group);
-
-    return group;
+    return this.#groupRepository.create(group);
   }
 }
 

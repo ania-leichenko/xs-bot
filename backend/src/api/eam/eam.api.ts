@@ -1,6 +1,6 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { group as groupServ } from '~/services/services';
-import { HttpCode, HttpMethod, GroupsApiPath } from '~/common/enums/enums';
+import { HttpCode, HttpMethod, EAMApiPath } from '~/common/enums/enums';
 import { EAMGroupCreateRequestDto } from '~/common/types/types';
 
 type Options = {
@@ -9,12 +9,12 @@ type Options = {
   };
 };
 
-const initGroupApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
+const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { group: groupService } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
-    url: GroupsApiPath.ROOT,
+    url: EAMApiPath.GROUPS,
     async handler(
       req: FastifyRequest<{ Body: EAMGroupCreateRequestDto }>,
       rep,
@@ -25,4 +25,4 @@ const initGroupApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   });
 };
 
-export { initGroupApi };
+export { initEamApi };

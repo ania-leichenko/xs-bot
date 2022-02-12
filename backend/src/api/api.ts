@@ -5,7 +5,7 @@ import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';
 import { WHITE_ROUTES } from '~/common/constants/constants';
-import { initGroupApi } from '~/api/groups/groups.api';
+import { initEamApi } from '~/api/eam/eam.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(authorizationPlugin, {
@@ -21,7 +21,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
     },
     prefix: ApiPath.MASTERS,
   });
-  fastify.register(initGroupApi, {
+  fastify.register(initEamApi, {
     services: {
       group,
     },

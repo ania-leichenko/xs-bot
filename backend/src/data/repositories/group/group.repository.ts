@@ -30,15 +30,17 @@ class Group {
     return Group.modelToEntity(group);
   }
 
-  async create(group: GroupEntity): Promise<GroupM> {
-    const { id, name, tenantId } = group;
+  async create(group: GroupEntity): Promise<GroupEntity> {
+    const { id, name, tenantId, createdAt } = group;
 
-    return this.#GroupModel.query().insert({
+    const created = await this.#GroupModel.query().insert({
       id,
       name,
-      createdAt: group.createdAt.toISOString(),
+      createdAt: createdAt.toISOString(),
       tenantId,
     });
+
+    return Group.modelToEntity(created);
   }
 
   public static modelToEntity(model: GroupM): GroupEntity {
