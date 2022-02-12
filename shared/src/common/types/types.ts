@@ -10,6 +10,10 @@ export {
   type EAMGroupCreateRequestDto,
 } from './eam-group/eam-group';
 export {
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateRequestDto,
+} from './worker/worker';
+export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
