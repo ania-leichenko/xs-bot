@@ -4,7 +4,6 @@ import {
   HttpHeader,
   HttpMethod,
   StorageKey,
-  CustomExceptionName,
 } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
 import { Storage } from '../storage/storage.service';
@@ -66,7 +65,6 @@ class Http {
       throw new HttpError({
         status: response.status,
         message: parsedException?.message,
-        name: CustomExceptionName.ERROR,
       });
     }
     return response;
