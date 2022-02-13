@@ -1,1 +1,5 @@
-export { HttpHeader, HttpMethod } from 'bws-shared/common/enums/enums';
+export {
+  HttpHeader,
+  HttpMethod,
+  CustomExceptionName,
+} from 'bws-shared/common/enums/enums';
