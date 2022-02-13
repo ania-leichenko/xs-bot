@@ -19,8 +19,5 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './tenant/tenant';
-export {
-  type EAMWorkerGetAllItemResponseDto,
-  type EAMWorkerGetAllResponseDto,
-} from './worker/worker';
+export { type EAMWorkerGetAllItemResponseDto } from './worker/worker';
 export { type TokenPayload } from './token/token';

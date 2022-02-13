@@ -2,7 +2,7 @@ import { worker as workerRep } from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
-  EAMWorkerGetAllResponseDto,
+  EAMWorkerGetAllItemResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
@@ -82,15 +82,13 @@ class Worker {
     return await this.#workerRepository.create(worker);
   }
 
-  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
+  async getAll(): Promise<EAMWorkerGetAllItemResponseDto[]> {
     const workers = await this.#workerRepository.getAll();
 
-    const items = workers.map((m) => ({
+    return workers.map((m) => ({
       id: m.id,
       name: m.name,
     }));
-
-    return { items };
   }
 }
 
