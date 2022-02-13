@@ -1,6 +1,6 @@
-import { HttpCode } from '~/common/enums/enums';
+import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 
-const DEFAULT_MESSAGE = 'User already exists';
+const DEFAULT_MESSAGE = ExceptionMessage.USER_EXISTS;
 
 class InvalidCredentialsError extends Error {
   status: HttpCode;

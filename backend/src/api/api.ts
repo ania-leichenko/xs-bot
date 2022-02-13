@@ -5,7 +5,7 @@ import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';
 import { WHITE_ROUTES } from '~/common/constants/constants';
-import { initEamApi } from '~/api/eam/eam.api';
+import { initEamApi } from './eam/eam.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(authorizationPlugin, {

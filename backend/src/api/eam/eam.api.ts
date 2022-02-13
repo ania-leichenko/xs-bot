@@ -50,6 +50,15 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       return rep.send(group).status(HttpCode.CREATED);
     },
   });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: EAMApiPath.WORKERS,
+    async handler(req, rep) {
+      const workers = await workerService.getAll();
+      return rep.send(workers).status(HttpCode.OK);
+    },
+  });
 };
 
 export { initEamApi };

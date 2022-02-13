@@ -1,7 +1,7 @@
 enum EAMApiPath {
   ROOT = '/',
-  WORKERS = '/workers',
   GROUPS = '/groups',
+  WORKERS = '/workers',
 }
 
 export { EAMApiPath };
