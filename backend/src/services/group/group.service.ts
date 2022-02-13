@@ -2,8 +2,8 @@ import { group as groupRep } from '~/data/repositories/repositories';
 import {
   EAMGroupCreateRequestDto,
   EAMGroupCreateResponseDto,
-  EAMGroupGetRequestDto,
-  EAMGroupGetResponseDto,
+  EAMGroupGetByTenantRequestParamsDto,
+  EAMGroupGetByTenantResponseDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import { InvalidGroupNameError } from '~/exceptions/exceptions';
@@ -20,8 +20,8 @@ class Group {
   }
 
   public getGroupsByTenant(
-    filter: EAMGroupGetRequestDto,
-  ): Promise<EAMGroupGetResponseDto[] | []> {
+    filter: EAMGroupGetByTenantRequestParamsDto,
+  ): Promise<EAMGroupGetByTenantResponseDto[]> {
     return this.#groupRepository.getGroupsByTenant(filter);
   }
 

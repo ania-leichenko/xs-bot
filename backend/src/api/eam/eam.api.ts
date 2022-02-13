@@ -3,7 +3,7 @@ import { group as groupServ, worker as workerServ } from '~/services/services';
 import { HttpCode, HttpMethod, EAMApiPath } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
-  EAMGroupGetRequestDto,
+  EAMGroupGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
 } from '~/common/types/types';
 
@@ -54,9 +54,9 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.GET,
-    url: `${EAMApiPath.GROUPS}/`,
+    url: EAMApiPath.GROUPS,
     async handler(
-      req: FastifyRequest<{ Querystring: EAMGroupGetRequestDto }>,
+      req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
       rep,
     ) {
       const groups = await groupService.getGroupsByTenant(req.query);

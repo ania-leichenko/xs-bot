@@ -1,17 +1,16 @@
 import { Model, RelationMappings } from 'objection';
+import { join } from 'path';
 import { TableName } from '~/common/enums/enums';
 import { AbstractModel } from '../abstract/abstract.model';
-import {
-  Worker as WorkerModel,
-  Permission as PermissionModel,
-} from '~/data/models/models';
+import { Worker as WorkerModel } from '../worker/worker.model';
 import { GroupTableField } from './group-table-field.enum';
+import { EAMGroupGetByTenantItemResponseDto } from '~/common/types/types';
 
 class Group extends AbstractModel {
   [GroupTableField.NAME]: string;
   [GroupTableField.TENANT_ID]: string;
-  users: { id: string; name: string }[] | [];
-  permissions: { id: string; name: string }[];
+  [GroupTableField.USERS]: EAMGroupGetByTenantItemResponseDto[];
+  [GroupTableField.PERMISSIONS]: EAMGroupGetByTenantItemResponseDto[];
 
   static get tableName(): string {
     return TableName.GROUPS;
@@ -21,7 +20,7 @@ class Group extends AbstractModel {
     return {
       users: {
         relation: Model.ManyToManyRelation,
-        modelClass: WorkerModel,
+        modelClass: join(__dirname, '../worker/worker.model'),
         filter: (query): void => {
           const { ref } = WorkerModel;
           query.select(ref('id'), ref('name'));
@@ -37,7 +36,7 @@ class Group extends AbstractModel {
       },
       permissions: {
         relation: Model.ManyToManyRelation,
-        modelClass: PermissionModel,
+        modelClass: join(__dirname, '../permission/permission.model'),
         join: {
           from: `${TableName.GROUPS}.id`,
           through: {

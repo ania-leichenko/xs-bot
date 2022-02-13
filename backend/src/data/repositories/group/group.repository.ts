@@ -1,8 +1,8 @@
 import { Group as GroupM } from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
-  EAMGroupGetRequestDto,
-  EAMGroupGetResponseDto,
+  EAMGroupGetByTenantRequestParamsDto,
+  EAMGroupGetByTenantResponseDto,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -17,19 +17,17 @@ class Group {
   }
 
   async getGroupsByTenant(
-    filter: EAMGroupGetRequestDto,
-  ): Promise<EAMGroupGetResponseDto[] | []> {
+    filter: EAMGroupGetByTenantRequestParamsDto,
+  ): Promise<EAMGroupGetByTenantResponseDto[]> {
     const { from: offset, count: limit, tenantId } = filter;
 
-    const groups = await this.#GroupModel
+    return this.#GroupModel
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
       .withGraphFetched('[users, permissions]')
       .offset(offset)
       .limit(limit);
-
-    return groups;
   }
 
   async getGroupByNameAndTenant(

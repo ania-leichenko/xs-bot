@@ -3,7 +3,6 @@
     "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "isolatedModules": true,
-    "strict": true,
-    "strictNullChecks": false
+    "strict": true
   }
 }

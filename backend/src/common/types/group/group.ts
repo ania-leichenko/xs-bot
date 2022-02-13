@@ -1,6 +1,7 @@
 export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
-  type EAMGroupGetRequestDto,
-  type EAMGroupGetResponseDto,
+  type EAMGroupGetByTenantRequestParamsDto,
+  type EAMGroupGetByTenantResponseDto,
+  type EAMGroupGetByTenantItemResponseDto,
 } from 'bws-shared/common/types/types';
