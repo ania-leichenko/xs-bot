@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useEffect,
+  useState,
+} from 'hooks/hooks';
 import { app as appActions } from 'store/actions';
 import { DataStatus } from 'common/enums/enums';
 import { ServicesList } from './components/components';
@@ -14,6 +19,12 @@ const Dashboard: FC = () => {
   }));
 
   const dispatch = useAppDispatch();
+
+  const [isOpenFormCreate, setIsOpenFormCreate] = useState(false);
+
+  const openHandler = (): void => {
+    setIsOpenFormCreate(!isOpenFormCreate);
+  };
 
   useEffect(() => {
     if (!user) {
@@ -31,8 +42,8 @@ const Dashboard: FC = () => {
   return (
     <div className={styles.wrapper}>
       <ServicesList />
-      <Button label={'add group'} />
-      <CreateGroupForm />
+      <Button label={'add group'} onClick={openHandler} />
+      <CreateGroupForm isOpen={isOpenFormCreate} openHandler={openHandler} />
     </div>
   );
 };

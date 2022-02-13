@@ -9,7 +9,12 @@ import styles from './create-group-form.module.scss';
 import { ButtonStyle } from 'common/enums/ui/button-style.enum';
 import { getNameOf } from 'helpers/helpers';
 
-const CreateGroupForm: FC<unknown> = () => {
+type Props = {
+  isOpen: boolean;
+  openHandler: () => void;
+};
+
+const CreateGroupForm: FC<Props> = ({ isOpen, openHandler }) => {
   const { control, errors, handleSubmit } =
     useAppForm<EAMMasterSignUpRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
@@ -22,7 +27,7 @@ const CreateGroupForm: FC<unknown> = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
+    <div className={isOpen ? styles.formWrapper : styles.formWrapperHidden}>
       <form onSubmit={handleSubmit(handleCreateGroup)}>
         <div>
           <Input
@@ -35,6 +40,7 @@ const CreateGroupForm: FC<unknown> = () => {
         <div className={styles.btnWrapper}>
           <Button type={ButtonType.SUBMIT} label={'Create'} />
           <Button
+            onClick={openHandler}
             type={ButtonType.BUTTON}
             label={'Cancel'}
             btnStyle={ButtonStyle.OUTLINED}
