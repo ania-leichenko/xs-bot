@@ -1,1 +1,1 @@
-export { type EAMWorkerGetAllItemResponseDto } from './eam-worker-get-all-item-response-dto.type';
+export { type EAMWorkerResponseDto } from './eam-worker-response-dto.type';

@@ -8,6 +8,7 @@ export {
 export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
+  type EAMWorkerResponseDto,
 } from './worker/worker';
 export {
   type EAMGroupCreateResponseDto,
@@ -19,5 +20,4 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './tenant/tenant';
-export { type EAMWorkerGetAllItemResponseDto } from './worker/worker';
 export { type TokenPayload } from './token/token';
