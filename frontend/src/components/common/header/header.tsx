@@ -6,7 +6,7 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useState, useAppSelector } from 'hooks/hooks';
 import styles from './header.module.scss';
-import { logOut } from 'store/auth/actions';
+import { auth as authActions } from 'store/actions';
 import { useDispatch } from 'react-redux';
 
 const Header: FC = () => {
@@ -18,7 +18,7 @@ const Header: FC = () => {
 
   const handleVisibleChange = (): void => setVisible(!isVisible);
   const handleLogout = (): void => {
-    dispatch(logOut());
+    dispatch(authActions.logOut());
   };
 
   return (
