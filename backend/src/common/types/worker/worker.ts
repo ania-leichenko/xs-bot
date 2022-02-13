@@ -1,5 +1,6 @@
 export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
-  type EAMWorkerResponseDto,
+  type EAMWorkerGetAllItemResponseDto,
+  type EAMWorkerGetAllResponseDto,
 } from 'bws-shared/common/types/types';
