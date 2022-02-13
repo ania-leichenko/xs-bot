@@ -1,5 +1,5 @@
 enum CustomExceptionName {
-  HTTP_ERROR = 'HttpError',
+  HTTP_ERROR = 'Error',
 }
 
 export { CustomExceptionName };
