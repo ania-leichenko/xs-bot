@@ -6,14 +6,20 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useState, useAppSelector } from 'hooks/hooks';
 import styles from './header.module.scss';
+import { logOut } from 'store/auth/actions';
+import { useDispatch } from 'react-redux';
 
 const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const { tenant } = useAppSelector(({ app }) => ({
     tenant: app.tenant,
   }));
 
   const handleVisibleChange = (): void => setVisible(!isVisible);
+  const handleLogout = (): void => {
+    dispatch(logOut());
+  };
 
   return (
     <header className={styles.header}>
@@ -28,12 +34,14 @@ const Header: FC = () => {
           </div>
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
+            {isVisible && (
+              <div className={styles.dropdownContent}>
+                <div className={styles.dropdownItem} onClick={handleLogout}>
+                  Log Out
+                </div>
+              </div>
+            )}
           </button>
-          {isVisible && (
-            <div className={styles.dropdownContent}>
-              <button className={styles.dropdownItem}>Log Out</button>
-            </div>
-          )}
         </div>
       </div>
     </header>
