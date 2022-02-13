@@ -1,13 +1,13 @@
 import * as Joi from 'joi';
 import { getNameOf } from '~/helpers/helpers';
-import { EAMCreateWorkerRequestDto } from '~/common/types/types';
+import { EAMWorkerCreateRequestDto } from '~/common/types/types';
 import {
   EAMWorkerValidationMessage,
   EAMWorkerValidationRule,
 } from '~/common/enums/enums';
 
-const EAMCreateWorker = Joi.object({
-  [getNameOf<EAMCreateWorkerRequestDto>('name')]: Joi.string()
+const EamWorkerCreate = Joi.object({
+  [getNameOf<EAMWorkerCreateRequestDto>('name')]: Joi.string()
     .trim()
     .min(EAMWorkerValidationRule.NAME_MIN_LENGTH)
     .max(EAMWorkerValidationRule.NAME_MAX_LENGTH)
@@ -20,4 +20,4 @@ const EAMCreateWorker = Joi.object({
     }),
 });
 
-export { EAMCreateWorker };
+export { EamWorkerCreate };

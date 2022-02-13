@@ -16,6 +16,7 @@ export {
 export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateFormDto,
 } from './worker/worker';
 export {
   type EAMTenantCreateRequestDto,
@@ -25,8 +26,3 @@ export {
 } from './eam-tenant/eam-tenant';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
-export {
-  type EAMCreateWorkerRequestDto,
-  type EAMCreateWorkerResponseDto,
-  type EAMCreateWorkerFormDto,
-} from './worker/worker';
