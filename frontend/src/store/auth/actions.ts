@@ -6,7 +6,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { StorageKey } from 'common/enums/enums';
+import { StorageKey, AppRoute } from 'common/enums/enums';
 
 const signUp = createAsyncThunk<
   EAMMasterByIdResponseDto,
@@ -39,5 +39,13 @@ const loadCurrentUser = createAsyncThunk<
   const { user } = await authApi.getCurrentUser();
   return user;
 });
+const logOut = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+  ActionType.LOG_OUT,
+  async (payload, { extra }) => {
+    const { storage, navigation } = extra;
+    storage.removeItem(StorageKey.TOKEN);
+    navigation.push(AppRoute.SIGN_IN);
+  },
+);
 
-export { signUp, signIn, loadCurrentUser };
+export { signUp, signIn, loadCurrentUser, logOut };
