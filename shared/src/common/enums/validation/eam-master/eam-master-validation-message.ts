@@ -13,7 +13,9 @@ const EAMMasterValidationMessage = {
   PASSWORD_REQUIRE: 'Password is required',
   PASSWORD_LENGTH: `Password must have a minimum of ${EAMMasterValidationRule.PASSWORD_MIN_LENGTH} characters
     and a maximum of ${EAMMasterValidationRule.PASSWORD_MAX_LENGTH} characters`,
-  PASSWORD_PATTERN: 'Spaces are not allowed in a password',
+  PASSWORD_SPACE: 'Spaces are not allowed in a password',
+  PASSWORD_PATTERN:
+    'Password can contain latin letters, digits and special characters',
 } as const;
 
 export { EAMMasterValidationMessage };
