@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { app as appActions } from 'store/actions';
 import { DataStatus } from 'common/enums/enums';
 import { ServicesList } from './components/components';
+import { services } from './common/services';
 import styles from './styles.module.scss';
 
 const Dashboard: FC = () => {
@@ -28,7 +29,7 @@ const Dashboard: FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <ServicesList />
+      <ServicesList services={services} />
     </div>
   );
 };
