@@ -1,6 +1,6 @@
-import { AbstractModel } from '~/data/models/abstract/abstract.model';
-import { WorkerTableField } from '~/data/models/worker/worker-table-field.enum';
-import { TableName } from '~/common/enums/db/table-name.enum';
+import { TableName } from '~/common/enums/enums';
+import { AbstractModel } from '../abstract/abstract.model';
+import { WorkerTableField } from './worker-table-field.enum';
 
 class Worker extends AbstractModel {
   [WorkerTableField.NAME]: string;

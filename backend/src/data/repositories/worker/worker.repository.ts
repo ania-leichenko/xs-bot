@@ -23,6 +23,17 @@ class Worker {
     this.#UsersGroupsModel = UsersGroupsModel;
   }
 
+  async getAll(): Promise<WorkerEntity[]> {
+    const workers = await this.#WorkerModel.query();
+    const groups: UsersGroups[] = await this.#UsersGroupsModel.query();
+    const list = workers.map((worker) => {
+      const groupIds: string[] = groups.map((group) => group.groupId);
+      return Worker.modelToEntity(worker, groupIds);
+    });
+
+    return list;
+  }
+
   public async getByName(name: string): Promise<WorkerEntity | null> {
     const worker = await this.#WorkerModel
       .query()
