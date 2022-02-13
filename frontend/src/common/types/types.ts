@@ -25,7 +25,7 @@ export {
   type EAMTenantByIdResponseDto,
 } from './tenant/tenant';
 export {
-  type EAMCreateWorkerRequestDto,
-  type EAMCreateWorkerResponseDto,
-  type EAMCreateWorkerFormDto,
+  type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateFormDto,
 } from './worker/worker';

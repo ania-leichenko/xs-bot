@@ -1,1 +1,1 @@
-export { EAMCreateWorker } from 'bws-shared/validation/worker/worker';
+export { EamWorkerCreate } from 'bws-shared/validation/validation-schemas';

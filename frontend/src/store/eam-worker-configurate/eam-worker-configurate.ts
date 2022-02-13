@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { EAMCreateWorker } from './actions';
+import { EamWorkerCreate } from './actions';
 
 type State = {
   groups: [];
@@ -10,7 +10,7 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(EAMCreateWorker.fulfilled, () => {
+  builder.addCase(EamWorkerCreate.fulfilled, () => {
     return;
   });
 });

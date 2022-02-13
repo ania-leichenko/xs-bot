@@ -1,5 +1,5 @@
 export {
-  type EAMCreateWorkerRequestDto,
-  type EAMCreateWorkerResponseDto,
-  type EAMCreateWorkerFormDto,
+  type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateFormDto,
 } from 'bws-shared/common/types/types';

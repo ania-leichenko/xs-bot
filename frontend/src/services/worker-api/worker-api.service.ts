@@ -1,7 +1,7 @@
 import { ContentType, HttpMethod } from 'common/enums/enums';
 import {
-  EAMCreateWorkerRequestDto,
-  EAMCreateWorkerResponseDto,
+  EAMWorkerCreateRequestDto,
+  EAMWorkerCreateResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -21,8 +21,8 @@ class WorkerApi {
   }
 
   public createWorker(
-    payload: EAMCreateWorkerRequestDto,
-  ): Promise<EAMCreateWorkerResponseDto> {
+    payload: EAMWorkerCreateRequestDto,
+  ): Promise<EAMWorkerCreateResponseDto> {
     return this.#http.load(joinItems(this.#apiPrefix, '/'), {
       method: HttpMethod.POST,
       contentType: ContentType.JSON,

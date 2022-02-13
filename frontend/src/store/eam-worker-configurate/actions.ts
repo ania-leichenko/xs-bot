@@ -1,27 +1,26 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  EAMCreateWorkerRequestDto,
-  EAMCreateWorkerResponseDto,
+  EAMWorkerCreateRequestDto,
+  EAMWorkerCreateResponseDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
 
-const EAMCreateWorker = createAsyncThunk<
-  EAMCreateWorkerResponseDto,
-  EAMCreateWorkerRequestDto,
+const EamWorkerCreate = createAsyncThunk<
+  EAMWorkerCreateResponseDto,
+  EAMWorkerCreateRequestDto,
   AsyncThunkConfig
 >(
   ActionType.CREATE_WORKER,
-  async (payload: EAMCreateWorkerRequestDto, { extra }) => {
+  async (payload: EAMWorkerCreateRequestDto, { extra }) => {
     const { workerApi } = extra;
-    const res: EAMCreateWorkerResponseDto = await workerApi.createWorker({
+    const worker: EAMWorkerCreateResponseDto = await workerApi.createWorker({
       ...payload,
       password: getRandomId(),
     });
-
-    return res;
+    return worker;
   },
 );
 
-export { EAMCreateWorker };
+export { EamWorkerCreate };

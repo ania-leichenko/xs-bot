@@ -2,23 +2,23 @@ import { InputType, ButtonType } from 'common/enums/enums';
 import { useAppForm, useAppDispatch } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { Input, Button } from 'components/common/common';
-import { EAMCreateWorkerRequestDto } from 'common/types/types';
-import { EAMCreateWorker as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
+import { EAMWorkerCreateRequestDto } from 'common/types/types';
+import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './eam-create-worker.module.scss';
 import { worker as workerActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
 
-const EamCreateWorker: React.FC = () => {
+const EamWorkerCreate: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { control, errors, handleSubmit } =
-    useAppForm<EAMCreateWorkerRequestDto>({
+    useAppForm<EAMWorkerCreateRequestDto>({
       defaultValues: DEFAULT_PAYLOAD,
       validationSchema: CreateWorkerValidationSchema,
     });
 
-  const hanldeFormSubmit = (payload: EAMCreateWorkerRequestDto): void => {
-    dispatch(workerActions.EAMCreateWorker(payload));
+  const hanldeFormSubmit = (payload: EAMWorkerCreateRequestDto): void => {
+    dispatch(workerActions.EamWorkerCreate(payload));
   };
 
   return (
@@ -32,7 +32,7 @@ const EamCreateWorker: React.FC = () => {
             type={InputType.TEXT}
             label="User Name*"
             placeholder=""
-            name={getNameOf<EAMCreateWorkerRequestDto>('name')}
+            name={getNameOf<EAMWorkerCreateRequestDto>('name')}
             control={control}
             errors={errors}
           />
@@ -53,4 +53,4 @@ const EamCreateWorker: React.FC = () => {
   );
 };
 
-export { EamCreateWorker };
+export { EamWorkerCreate };

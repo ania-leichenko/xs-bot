@@ -1,6 +1,6 @@
-import { EAMCreateWorkerFormDto } from 'common/types/types';
+import { EAMWorkerCreateFormDto } from 'common/types/types';
 
-const DEFAULT_PAYLOAD: EAMCreateWorkerFormDto = {
+const DEFAULT_PAYLOAD: EAMWorkerCreateFormDto = {
   name: '',
 };
 
