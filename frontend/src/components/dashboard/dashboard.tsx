@@ -4,6 +4,8 @@ import { app as appActions } from 'store/actions';
 import { DataStatus } from 'common/enums/enums';
 import { ServicesList } from './components/components';
 import styles from './styles.module.scss';
+import { Button } from '../common/button/button';
+import { CreateGroupForm } from './components/create-group-form/create-group-form';
 
 const Dashboard: FC = () => {
   const { user, tenantStatus } = useAppSelector(({ app, auth }) => ({
@@ -29,6 +31,8 @@ const Dashboard: FC = () => {
   return (
     <div className={styles.wrapper}>
       <ServicesList />
+      <Button label={'add group'} />
+      <CreateGroupForm />
     </div>
   );
 };
