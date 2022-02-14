@@ -28,17 +28,17 @@ const EamWorkerCreate: React.FC = () => {
         <div className={styles.addUserHeader}>Add User</div>
         <form onSubmit={handleSubmit(hanldeFormSubmit)}>
           <div className={styles.title}>Set user details</div>
-          <Input
-            type={InputType.TEXT}
-            label="User Name*"
-            placeholder=""
-            name={getNameOf<EAMWorkerCreateRequestDto>('name')}
-            control={control}
-            errors={errors}
-          />
-
+          <div className={styles.inputWrapper}>
+            <Input
+              type={InputType.TEXT}
+              label="User Name*"
+              placeholder=""
+              name={getNameOf<EAMWorkerCreateRequestDto>('name')}
+              control={control}
+              errors={errors}
+            />
+          </div>
           <div className={styles.title}>Add user to group </div>
-
           <div className={styles.buttons}>
             <div className={styles.button}>
               <Button type={ButtonType.SUBMIT} label="Cancel" />

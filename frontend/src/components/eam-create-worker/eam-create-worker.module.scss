@@ -18,6 +18,24 @@
   border-bottom: 3px solid #d6d3d3;
 }
 
+.inputWrapper {
+  justify-content: center;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.inputWrapper label {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputWrapper span {
+  display: inline-block;
+  width: 300px;
+  margin: 0 16px;
+}
+
 .buttons {
   display: flex;
   justify-content: flex-end;
