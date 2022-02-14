@@ -18,9 +18,13 @@ const Button: FC<Props> = ({
   onClick,
   type = ButtonType.BUTTON,
   btnStyle = ButtonStyle.FILLED,
-}) =>
-  to ? (
-    <Link className={styles.pseudoBtn} to={to!}>
+}) => {
+  const isLink = Boolean(to);
+  return isLink ? (
+    <Link
+      className={getValidClasses(styles.btn, styles[`btnStyle${btnStyle}`])}
+      to={to as AppRoute}
+    >
       {label}
     </Link>
   ) : (
@@ -32,5 +36,6 @@ const Button: FC<Props> = ({
       {label}
     </button>
   );
+};
 
 export { Button };

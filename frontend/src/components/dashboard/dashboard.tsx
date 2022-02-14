@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { app as appActions } from 'store/actions';
 import { DataStatus } from 'common/enums/enums';
 import { ServicesList } from './components/components';
-import { SERVICE_MENU_ITEMS } from './constants/services';
+import { SERVICE_MENU_ITEMS } from './constants/constans';
 import styles from './styles.module.scss';
 
 const Dashboard: FC = () => {

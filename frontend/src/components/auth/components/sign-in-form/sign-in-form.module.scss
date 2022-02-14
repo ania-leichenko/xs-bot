@@ -13,6 +13,20 @@
   font-style: normal;
 }
 
+.link,
+.link:visited {
+  color: var(--color-orange);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--color-text);
+}
+
+.link:active {
+  color: var(--color-orange);
+}
+
 .signInForm,
 .signInFormContent {
   display: flex;

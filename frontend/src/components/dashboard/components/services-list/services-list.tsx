@@ -3,11 +3,11 @@ import { ServicesItem } from '../services-item/services-item';
 import styles from './styles.module.scss';
 import { ServiceMenuItem } from 'common/types/ui/service-menu';
 
-interface props {
-  services: readonly ServiceMenuItem[];
-}
+type Props = {
+  services: ServiceMenuItem[];
+};
 
-const ServicesList: FC<props> = ({ services }) => (
+const ServicesList: FC<Props> = ({ services }) => (
   <ul className={styles.cardsContainer}>
     {services.map((element) => (
       <li key={element.title} className={styles.itemCard}>
