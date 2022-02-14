@@ -1,45 +1,47 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Button, Input } from 'components/common/common';
-import { useAppForm } from 'hooks/hooks';
+import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
-import { eamMasterSignUp as validationSchema } from 'validation-schemas/validation-schemas';
-import { EAMMasterSignUpRequestDto } from 'common/types/types';
-import { ButtonType } from '../../../../common/enums/ui/button-type.enum';
-import styles from './create-group-form.module.scss';
-import { ButtonStyle } from 'common/enums/ui/button-style.enum';
+import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
+import { groups as groupsAction } from 'store/actions';
+import styles from './create-group-form.module.scss';
+import { EAMGroupCreateRequestDto } from 'common/types/types';
 
 const CreateGroupForm: FC = () => {
   const { control, errors, handleSubmit } =
-    useAppForm<EAMMasterSignUpRequestDto>({
+    useAppForm<EAMGroupCreateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
-      validationSchema: validationSchema,
     });
 
-  const handleCreateGroup = (): void => {
-    /* eslint no-console: "off" */
-    console.log('g');
+  const dispatch = useAppDispatch();
+
+  const onSubmit = (payload: EAMGroupCreateRequestDto): void => {
+    dispatch(groupsAction.create(payload));
   };
 
   return (
     <div className={styles.formWrapper}>
-      <form onSubmit={handleSubmit(handleCreateGroup)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
+            type={InputType.TEXT}
+            placeholder={'Enter name group'}
             label={'name group'}
-            name={getNameOf<EAMMasterSignUpRequestDto>('name')}
+            name={getNameOf<EAMGroupCreateRequestDto>('name')}
             control={control}
             errors={errors}
           />
         </div>
         <div className={styles.btnWrapper}>
-          <Button type={ButtonType.SUBMIT} label={'Create'} />
           <Button
             type={ButtonType.BUTTON}
             label={'Cancel'}
             btnStyle={ButtonStyle.OUTLINED}
           />
         </div>
+
+        <Button type={ButtonType.SUBMIT} label={'Create'} />
       </form>
     </div>
   );

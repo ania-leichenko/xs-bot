@@ -12,7 +12,14 @@ const create = createAsyncThunk<
   AsyncThunkConfig
 >(ActionType.CREATE, async (registerPayload, { extra }) => {
   const { groupApi } = extra;
-  return await groupApi.create(registerPayload);
+
+  const tenantId = 'd94b2c68-289d-467c-914f-ababcdc8fcaa';
+
+  const request: EAMGroupCreateRequestDto = {
+    name: registerPayload.name,
+    tenantId,
+  };
+  return await groupApi.create(request);
 });
 
 export { create };
