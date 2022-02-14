@@ -1,6 +1,7 @@
-import { stringify } from 'query-string';
+const getQueryString = (params: Record<string, unknown>): string => {
+  const urlParams = new URLSearchParams(params as Record<string, string>);
 
-const getQueryString = (params: Record<string, unknown>): string =>
-  `?${stringify(params)}`;
+  return `?${urlParams.toString()}`;
+};
 
 export { getQueryString };
