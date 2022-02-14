@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ServicesItem } from '../services-item/services-item';
+import { ServiceMenuItem } from 'common/types/types';
 import styles from './styles.module.scss';
-import { ServiceMenuItem } from 'common/types/ui/service-menu';
 
 type Props = {
   services: ServiceMenuItem[];

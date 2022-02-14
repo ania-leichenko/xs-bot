@@ -24,3 +24,4 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './tenant/tenant';
+export { type ServiceMenuItem } from './ui/ui';

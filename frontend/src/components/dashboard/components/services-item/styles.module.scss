@@ -1,4 +1,5 @@
 .cardContent {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,4 +26,10 @@
   font-size: 22px;
   font-style: normal;
   line-height: 27px;
+}
+
+.link::before {
+  position: absolute;
+  inset: 0;
+  content: "";
 }
