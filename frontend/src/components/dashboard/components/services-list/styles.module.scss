@@ -1,0 +1,22 @@
+.cardsContainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  grid-gap: 30px;
+  padding-top: 200px;
+  list-style: none;
+}
+
+.itemCard {
+  width: auto;
+  min-width: 284px;
+  height: auto;
+  background: var(--color-background);
+  border: 3px solid var(--color-border-gray);
+  border-radius: 14px;
+}
+
+.itemCard:hover {
+  border: 3px solid var(--color-orange);
+  transition-duration: 300ms;
+}
