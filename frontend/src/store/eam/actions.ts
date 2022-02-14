@@ -7,7 +7,7 @@ import {
 import { ActionType } from './common';
 
 const loadGroups = createAsyncThunk<
-  EAMGroupGetByTenantResponseDto[],
+  EAMGroupGetByTenantResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   AsyncThunkConfig
 >(ActionType.LOAD_GROUPS, async (filter, { extra }) => {

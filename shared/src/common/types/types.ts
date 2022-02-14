@@ -10,7 +10,8 @@ export {
   type EAMGroupCreateRequestDto,
   type EAMGroupGetByTenantRequestParamsDto,
   type EAMGroupGetByTenantResponseDto,
-  type EAMGroupGetByTenantItemResponseDto,
+  type EAMGroupGetByTenantResponseItemDto,
+  type EAMGroupGetByTenantItem,
 } from './eam-group/eam-group';
 export {
   type EAMWorkerGetAllItemResponseDto,

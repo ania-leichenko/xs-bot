@@ -7,13 +7,13 @@ import {
   Permission as PermissionModel,
 } from '~/data/models/models';
 import { GroupTableField } from './group-table-field.enum';
-import { EAMGroupGetByTenantItemResponseDto } from '~/common/types/types';
+import { EAMGroupGetByTenantItem } from '~/common/types/types';
 
 class Group extends AbstractModel {
   [GroupTableField.NAME]: string;
   [GroupTableField.TENANT_ID]: string;
-  [GroupTableField.USERS]: EAMGroupGetByTenantItemResponseDto[];
-  [GroupTableField.PERMISSIONS]: EAMGroupGetByTenantItemResponseDto[];
+  [GroupTableField.USERS]: EAMGroupGetByTenantItem[];
+  [GroupTableField.PERMISSIONS]: EAMGroupGetByTenantItem[];
 
   static get tableName(): string {
     return TableName.GROUPS;

@@ -19,10 +19,11 @@ class Group {
     this.#groupRepository = groupRepository;
   }
 
-  public getGroupsByTenant(
+  public async getGroupsByTenant(
     filter: EAMGroupGetByTenantRequestParamsDto,
-  ): Promise<EAMGroupGetByTenantResponseDto[]> {
-    return this.#groupRepository.getGroupsByTenant(filter);
+  ): Promise<EAMGroupGetByTenantResponseDto> {
+    const groups = await this.#groupRepository.getGroupsByTenant(filter);
+    return { items: groups };
   }
 
   public async create({

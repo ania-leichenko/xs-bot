@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { loadGroups } from './actions';
-import { EAMGroupGetByTenantResponseDto } from 'common/types/types';
+import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
 
 type State = {
   dataStatus: DataStatus;
   groupsDataStatus: DataStatus;
-  groups: EAMGroupGetByTenantResponseDto[];
+  groups: EAMGroupGetByTenantResponseItemDto[];
 };
 
 const initialState: State = {
@@ -21,7 +21,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadGroups.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.groups = action.payload;
+    state.groups = action.payload.items;
   });
   builder.addCase(loadGroups.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

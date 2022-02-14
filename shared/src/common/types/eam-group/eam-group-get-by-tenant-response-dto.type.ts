@@ -1,11 +1,7 @@
-import { EAMGroupGetByTenantItemResponseDto } from './eam-group-get-by-tenant-item-response-dto.type';
+import { EAMGroupGetByTenantResponseItemDto } from './eam-group-get-by-tenant-response-item-dto.type';
 
 type EAMGroupGetByTenantResponseDto = {
-  id: string;
-  name: string;
-  createdAt: string;
-  users: EAMGroupGetByTenantItemResponseDto[];
-  permissions: EAMGroupGetByTenantItemResponseDto[];
+  items: EAMGroupGetByTenantResponseItemDto[];
 };
 
 export { type EAMGroupGetByTenantResponseDto };

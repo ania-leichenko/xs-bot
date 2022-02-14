@@ -27,7 +27,7 @@ class EAMApi {
 
   public loadGroups(
     params: EAMGroupGetByTenantRequestParamsDto,
-  ): Promise<EAMGroupGetByTenantResponseDto[]> {
+  ): Promise<EAMGroupGetByTenantResponseDto> {
     return this.#http.load(
       joinItems(
         this.#apiPrefix,
