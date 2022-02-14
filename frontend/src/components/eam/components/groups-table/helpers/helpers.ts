@@ -1,2 +1,2 @@
-export { getRows } from './getRows.helper';
-export { getColumns } from './getColumns.helper';
+export { getRows } from './get-rows.helper';
+export { getColumns } from './get-columns.helper';
