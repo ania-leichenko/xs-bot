@@ -10,9 +10,11 @@ const getTenant = createAsyncThunk<
   EAMTenantByIdResponseDto,
   EAMTenantByIdRequestParamsDto,
   AsyncThunkConfig
->(ActionType.GET_TENANT, async (registerPayload, { extra }) => {
+>(ActionType.GET_TENANT, async (payload, { extra }) => {
   const { tenantApi } = extra;
-  const tenant = await tenantApi.getTenant(registerPayload);
+
+  const tenant = await tenantApi.getTenant(payload);
+
   return tenant;
 });
 

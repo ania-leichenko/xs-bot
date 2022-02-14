@@ -23,7 +23,9 @@ const SignUpForm: FC<Props> = ({ onSubmit }) => {
       <h1 className={styles.title}>Sign Up</h1>
       <div className={styles.subtitle}>
         <span>Already have an account? </span>
-        <Link to={AppRoute.SIGN_IN}>Sign In</Link>
+        <Link className={styles.link} to={AppRoute.SIGN_IN}>
+          Sign In
+        </Link>
       </div>
       <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.signUpFormContent}>

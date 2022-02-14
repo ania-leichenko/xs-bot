@@ -7,7 +7,7 @@ import {
   Loader,
 } from 'components/common/common';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
-import { auth as authActions } from 'store/actions';
+import { auth as authActions, app as appActions } from 'store/actions';
 import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
@@ -27,6 +27,13 @@ const App: FC = () => {
       dispatch(authActions.loadCurrentUser());
     }
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    dispatch(appActions.getTenant({ id: user.tenantId }));
+  }, [user, dispatch]);
 
   if (!hasUser && hasToken) {
     return <Loader />;
