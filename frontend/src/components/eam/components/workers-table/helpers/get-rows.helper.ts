@@ -1,25 +1,26 @@
-// import { WorkersTableAccessor } from 'common/enums/enums';
+import { WorkersTableAccessor } from 'common/enums/enums';
 import { EAMWorkerGetAllResponseDto } from 'common/types/types';
 
-// type Row = {
-//   [WorkersTableAccessor.USER_NAME]: string;
-//   [WorkersTableAccessor.GROUPS]: number;
-//   [WorkersTableAccessor.CREATION_TIME]: string;
-// };
+type Row = {
+  [WorkersTableAccessor.USER_NAME]: string;
+  [WorkersTableAccessor.GROUPS]: string[];
+  [WorkersTableAccessor.CREATION_TIME]: Date;
+};
 
-const getRows = (
-  workers: EAMWorkerGetAllResponseDto | null,
-): EAMWorkerGetAllResponseDto | null => {
-  return workers;
-  // return groups.map((item) => {
-  // const { name, groups, createdAt } = item;
+const getRows = (workers: EAMWorkerGetAllResponseDto | null): Row[] => {
+  if (!workers) {
+    return [];
+  }
 
-  //   return {
-  //     [WorkersTableAccessor.USER_NAME]: name,
-  //     [WorkersTableAccessor.GROUPS]: groups,
-  //     [WorkersTableAccessor.CREATION_TIME]: createdAt,
-  //   };
-  // });
+  return workers.items.map((item) => {
+    const { name, groupIds, createdAt } = item;
+
+    return {
+      [WorkersTableAccessor.USER_NAME]: name,
+      [WorkersTableAccessor.GROUPS]: groupIds,
+      [WorkersTableAccessor.CREATION_TIME]: createdAt,
+    };
+  });
 };
 
 export { getRows };

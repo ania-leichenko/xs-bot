@@ -89,6 +89,8 @@ class Worker {
       items: workers.map((m) => ({
         id: m.id,
         name: m.name,
+        createdAt: m.createdAt,
+        groupIds: m.groupIds,
       })),
     };
   }

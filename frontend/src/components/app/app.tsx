@@ -48,7 +48,10 @@ const App: FC = () => {
           path={AppRoute.ROOT}
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
-        <Route path={AppRoute.EAM} element={<Eam />} />
+        <Route
+          path={AppRoute.EAM}
+          element={<AuthorizedRoute component={<Eam />} />}
+        />
       </Routes>
       <Toaster />
     </>

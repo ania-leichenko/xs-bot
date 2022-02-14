@@ -20,7 +20,7 @@ class WorkerApi {
 
   public getAllWorkers(): Promise<EAMWorkerGetAllResponseDto> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.EAM, '/', EAMApiPath.WORKERS),
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,

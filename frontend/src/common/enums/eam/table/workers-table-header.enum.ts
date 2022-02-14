@@ -1,8 +1,8 @@
 enum WorkersTableHeader {
-  USER_NAME = 'userName',
-  GROUPS = 'groups',
-  CREATION_TIME = 'createdAt',
-  ACTIONS = 'actions',
+  USER_NAME = 'User Name',
+  GROUPS = 'Groups',
+  CREATION_TIME = 'Created At',
+  ACTIONS = 'Actions',
 }
 
 export { WorkersTableHeader };
