@@ -1,12 +1,12 @@
 .formWrapper {
   position: absolute;
-  top: 25%;
+  top: 15%;
   left: calc(50% - 400px);
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 800px;
-  padding: 120px 100px;
+  padding: 70px 100px;
   font-style: normal;
   background: var(--color-boltgun);
   border-radius: 20px;
@@ -19,5 +19,32 @@
 }
 
 .btnWrapper {
+  position: absolute;
+  right: 10%;
+  bottom: 0;
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 50%;
+}
+
+.btnWrapper button {
+  width: 45%;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.inputContainer input {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+.warning {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: #ff9c00;
 }

@@ -1,0 +1,13 @@
+.worker_list ul {
+  max-height: 400px;
+  overflow-y: auto;
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-orange);
+}
