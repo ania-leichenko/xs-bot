@@ -14,3 +14,5 @@ export { Header } from './header/header';
 export { AuthorizedRoute } from './authorized-route/authorized-route';
 export { Loader } from './loader/loader';
 export { SectionLine } from './section-line/section-line';
+export { SearchInput } from './input-search/input-search';
+export { SectionLineVertical } from './section-line-vertical/section-line-vertical';

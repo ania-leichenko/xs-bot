@@ -1,11 +1,11 @@
-.workerName {
+.permissionName {
   width: 90%;
   overflow: hidden;
   color: var(--color-orange);
   text-overflow: ellipsis;
 }
 
-.worker {
+.permission {
   position: relative;
   display: flex;
   justify-content: space-around;
@@ -17,19 +17,15 @@
 }
 
 .item2 {
-  width: 44%;
+  width: 60%;
 }
 
 .item3 {
-  width: 17%;
+  width: 20%;
 }
 
 .item4 {
-  width: 17%;
-}
-
-.item5 {
-  width: 17%;
+  width: 20%;
 }
 
 .title {

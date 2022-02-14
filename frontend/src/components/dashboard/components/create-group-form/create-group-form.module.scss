@@ -1,31 +1,73 @@
-.formWrapper {
+.wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("/assets/img/decorate.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+
+.eamLogo {
   position: absolute;
-  top: 15%;
-  left: calc(50% - 400px);
+  top: 115px;
+  left: 45px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 380px;
+}
+
+.imgWrapper {
+  width: 60px;
+}
+
+.logoText {
+  margin: 0;
+  padding: 0;
+  color: var(--color-white);
+}
+
+.container {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 800px;
-  padding: 70px 100px;
+  max-width: 870px;
+  margin-top: 105px;
+  margin-bottom: 120px;
+  padding: 40px 90px;
   font-style: normal;
   background: var(--color-boltgun);
   border-radius: 20px;
 }
 
 .title {
+  margin: 0;
+  padding: 0;
   color: var(--color-white);
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.titleTwo {
+  margin-top: 35px;
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .btnWrapper {
-  position: absolute;
-  right: 10%;
-  bottom: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  float: right;
   width: 50%;
+  margin-top: 30px;
 }
 
 .btnWrapper button {
@@ -34,17 +76,37 @@
 
 .inputContainer {
   display: flex;
+  margin-top: 20px;
 }
 
 .inputContainer input {
   display: flex;
   align-items: center;
-  max-width: 100%;
+  max-width: 55%;
+  margin-top: 5px;
 }
 
-.warning {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  color: #ff9c00;
+.workerListWrapper {
+  margin-bottom: 20px;
+}
+
+.titleThree {
+  margin-top: 15px;
+  margin-bottom: 0;
+  padding: 0;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.workerListWrapper input {
+  margin-top: 15px;
+}
+
+.groupPermissionWrapper {
+  margin-top: 35px;
+}
+
+.groupPermissionWrapper input {
+  margin-top: 15px;
 }
