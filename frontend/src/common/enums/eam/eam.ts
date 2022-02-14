@@ -1,1 +1,1 @@
-export { GroupsTableHeaders, GroupsTableAccessors } from './table/table';
+export { GroupsTableHeader, GroupsTableAccessor } from './table/table';

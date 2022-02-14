@@ -10,7 +10,6 @@ import {
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
-import { getQueryString } from './helpers/helpers';
 
 type Constructor = {
   http: Http;
@@ -35,10 +34,10 @@ class EAMApi {
         ApiPath.EAM,
         EAMApiPath.GROUPS,
         GroupsApiPath.ROOT,
-        getQueryString(params),
       ),
       {
         method: HttpMethod.GET,
+        params,
       },
     );
   }

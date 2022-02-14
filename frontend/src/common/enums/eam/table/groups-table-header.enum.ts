@@ -1,4 +1,4 @@
-enum GroupsTableHeaders {
+enum GroupsTableHeader {
   GROUP_NAME = 'Group name',
   USERS = 'Users',
   PERMISSIONS = 'Permissions',
@@ -6,4 +6,4 @@ enum GroupsTableHeaders {
   ACTIONS = 'Actions',
 }
 
-export { GroupsTableHeaders };
+export { GroupsTableHeader };

@@ -1,4 +1,4 @@
-enum GroupsTableAccessors {
+enum GroupsTableAccessor {
   GROUP_NAME = 'name',
   USERS = 'usersCount',
   PERMISSIONS = 'permissions',
@@ -6,4 +6,4 @@ enum GroupsTableAccessors {
   ACTIONS = 'actions',
 }
 
-export { GroupsTableAccessors };
+export { GroupsTableAccessor };

@@ -1,2 +1,2 @@
-export { GroupsTableHeaders } from './groups-table-headers.enum';
-export { GroupsTableAccessors } from './groups-table-accessors.enum';
+export { GroupsTableHeader } from './groups-table-header.enum';
+export { GroupsTableAccessor } from './groups-table-accessor.enum';
