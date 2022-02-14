@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Link } from 'components/common/common';
+import { Button } from 'components/common/common';
 import styles from './styles.module.scss';
 import { ServiceMenuItem } from 'common/types/ui/service-menu';
 
@@ -12,12 +12,9 @@ const ServicesItem: FC<props> = ({ service }) => (
     <div className={styles.imgWrapper}>
       <img src={service.img} alt={service.title} />
     </div>
-    <span className={styles.cardTitle}>{service.title}</span>
-    <div className={styles.buttonContainer}>
-      <Link to={service.route}>
-        <Button label={'Start'} />
-      </Link>
-    </div>
+    <h3 className={styles.cardTitle}>{service.title}</h3>
+    <Button to={service.route} label={'Start'} />
   </article>
 );
+
 export { ServicesItem };

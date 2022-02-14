@@ -11,22 +11,18 @@
   width: 100%;
   max-width: 250px;
   min-height: 200px;
-  margin: 14px 14px 20px;
+  margin: 14px 14px 0;
   background: var(--color-substrate-gray);
   border-radius: 10px;
 }
 
 .cardTitle {
   max-width: 160px;
-  margin-bottom: 4px;
+  margin-top: 20px;
+  margin-bottom: 14px;
   color: var(--color-white);
   font-weight: 600;
   font-size: 22px;
   font-style: normal;
   line-height: 27px;
-}
-
-.buttonContainer {
-  width: 160px;
-  margin-bottom: 15px;
 }

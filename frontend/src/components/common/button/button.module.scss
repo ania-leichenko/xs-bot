@@ -10,8 +10,32 @@
   transition-duration: 0.4s;
 }
 
+.pseudoBtn {
+  display: block;
+  width: 100%;
+  max-width: 160px;
+  min-height: 45px;
+  margin-bottom: 25px;
+  padding-top: 8px;
+  color: var(--color-white);
+  font-weight: 800;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color: var(--color-orange);
+  border: 2px solid var(--color-orange);
+  border-radius: 50px;
+  transition-duration: 0.4s;
+}
+
 .btn:hover {
   color: var(--color-orange);
+  cursor: pointer;
+}
+
+.pseudoBtn:hover {
+  color: var(--color-orange);
+  background-color: var(--color-background);
   cursor: pointer;
 }
 

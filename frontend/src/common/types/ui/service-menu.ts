@@ -1,9 +1,9 @@
-import { AppRoute } from '../../enums/app/app-route.enum';
+import { AppRoute } from 'common/enums/app/app-route.enum';
 
 type ServiceMenuItem = {
-  readonly title: string;
-  readonly img: string;
-  readonly route: AppRoute;
+  title: string;
+  img: string;
+  route: AppRoute;
 };
 
 export { type ServiceMenuItem };

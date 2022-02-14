@@ -1,9 +1,6 @@
-import eam from 'assets/img/eam.svg';
-import bs from 'assets/img/binary-storage.svg';
-import sc from 'assets/img/server-computing.svg';
-import slc from 'assets/img/sl-computing.svg';
 import { AppRoute } from 'common/enums/app/app-route.enum';
 import { ServiceMenuItem } from 'common/types/ui/service-menu';
+import { bs, eam, sc, slc } from './constans';
 
 const SERVICE_MENU_ITEMS: readonly ServiceMenuItem[] = [
   {
