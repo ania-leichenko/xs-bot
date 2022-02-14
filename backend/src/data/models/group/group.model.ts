@@ -2,7 +2,10 @@ import { Model, RelationMappings } from 'objection';
 import { join } from 'path';
 import { TableName } from '~/common/enums/enums';
 import { AbstractModel } from '../abstract/abstract.model';
-import { Worker as WorkerModel } from '../worker/worker.model';
+import {
+  Worker as WorkerModel,
+  Permission as PermissionModel,
+} from '~/data/models/models';
 import { GroupTableField } from './group-table-field.enum';
 import { EAMGroupGetByTenantItemResponseDto } from '~/common/types/types';
 
@@ -37,6 +40,10 @@ class Group extends AbstractModel {
       permissions: {
         relation: Model.ManyToManyRelation,
         modelClass: join(__dirname, '../permission/permission.model'),
+        filter: (query): void => {
+          const { ref } = PermissionModel;
+          query.select(ref('id'), ref('name'));
+        },
         join: {
           from: `${TableName.GROUPS}.id`,
           through: {

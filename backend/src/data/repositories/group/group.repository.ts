@@ -26,6 +26,7 @@ class Group {
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
       .withGraphFetched('[users, permissions]')
+      .orderBy('createdAt', 'desc')
       .offset(offset)
       .limit(limit);
   }

@@ -1,4 +1,9 @@
-import { ApiPath, EAMApiPath, HttpMethod } from 'common/enums/enums';
+import {
+  ApiPath,
+  EAMApiPath,
+  GroupsApiPath,
+  HttpMethod,
+} from 'common/enums/enums';
 import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
@@ -29,6 +34,7 @@ class EAMApi {
         this.#apiPrefix,
         ApiPath.EAM,
         EAMApiPath.GROUPS,
+        GroupsApiPath.ROOT,
         getQueryString(params),
       ),
       {

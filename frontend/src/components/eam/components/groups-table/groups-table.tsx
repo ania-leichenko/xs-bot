@@ -1,50 +1,57 @@
 import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
-import { Table } from '../../../common/common';
+import { Table } from 'components/common/common';
+import { GroupsTableHeaders, GroupsTableAccessors } from 'common/enums/enums';
 
 const GroupsTable: FC = () => {
   const { groups } = useAppSelector(({ eam }) => ({
     groups: eam.groups,
   }));
-  const transformGroups: unknown[] = [];
-  groups.forEach((item) => {
-    const { permissions, users } = item;
-    const usersCount = users.length;
-    const permissionsSt = permissions.map((item) => item.name).join(', ');
 
-    transformGroups.push({
-      ...item,
-      usersCount,
-      permissions: permissionsSt,
+  const data = useMemo(() => {
+    const rows: unknown[] = [];
+
+    groups.forEach((item) => {
+      const { name, users, permissions, createdAt } = item;
+      const permissionsContent = permissions
+        .map((item) => item.name)
+        .join(', ');
+      rows.push({
+        [GroupsTableAccessors.GROUP_NAME]: name,
+        [GroupsTableAccessors.USERS]: users.length,
+        [GroupsTableAccessors.PERMISSIONS]: permissionsContent,
+        [GroupsTableAccessors.CREATION_TIME]: createdAt,
+      });
     });
-  });
+
+    return rows;
+  }, [groups]);
+
   const columns = useMemo(
     () => [
       {
-        Header: 'Group name',
-        accessor: 'name',
+        Header: GroupsTableHeaders.GROUP_NAME,
+        accessor: GroupsTableAccessors.GROUP_NAME,
       },
       {
-        Header: 'Users',
-        accessor: 'usersCount',
+        Header: GroupsTableHeaders.USERS,
+        accessor: GroupsTableAccessors.USERS,
       },
       {
-        Header: 'Permissions',
-        accessor: 'permissions',
+        Header: GroupsTableHeaders.PERMISSIONS,
+        accessor: GroupsTableAccessors.PERMISSIONS,
       },
       {
-        Header: 'Creation time',
-        accessor: 'createdAt',
+        Header: GroupsTableHeaders.CREATION_TIME,
+        accessor: GroupsTableAccessors.CREATION_TIME,
       },
       {
-        Header: 'Actions',
-        accessor: 'actions',
+        Header: GroupsTableHeaders.ACTIONS,
+        accessor: GroupsTableAccessors.ACTIONS,
       },
     ],
     [],
   );
-
-  const data = useMemo(() => transformGroups, [groups]);
 
   return <Table columns={columns} data={data} title={'Groups'} />;
 };
