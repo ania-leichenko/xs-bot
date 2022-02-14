@@ -1,5 +1,5 @@
 enum ActionType {
-  GET_TENANT = 'app/get-tenant',
+  LOAD_GROUPS = 'eam/load-groups',
 }
 
 export { ActionType };

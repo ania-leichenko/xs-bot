@@ -54,7 +54,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.GET,
-    url: EAMApiPath.GROUPS,
+    url: `${EAMApiPath.GROUPS}/`,
     async handler(
       req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
       rep,
