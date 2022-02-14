@@ -18,6 +18,7 @@ const EamWorkerCreate = createAsyncThunk<
     const worker: EAMWorkerCreateResponseDto = await workerApi.createWorker({
       ...payload,
       password: getRandomId(),
+      groupIds: [],
     });
     return worker;
   },
