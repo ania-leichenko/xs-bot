@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Input } from 'components/common/common';
+import { Button, Input, SectionLine } from 'components/common/common';
 import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
@@ -22,6 +22,8 @@ const CreateGroupForm: FC = () => {
 
   return (
     <div className={styles.formWrapper}>
+      <h1 className={styles.title}>Creation group form</h1>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Input
@@ -33,15 +35,29 @@ const CreateGroupForm: FC = () => {
             errors={errors}
           />
         </div>
+        <SectionLine />
+        <div>
+          {/*user list should be like this? */}
+          <ul>
+            <li>
+              <input type={'checkbox'} />
+              <h4>#user1</h4>
+            </li>
+            <li>
+              <input type={'checkbox'} />
+              <h4>#user2</h4>
+            </li>
+          </ul>
+        </div>
+        <SectionLine />
         <div className={styles.btnWrapper}>
           <Button
             type={ButtonType.BUTTON}
-            label={'Cancel'}
+            label="Cancel"
             btnStyle={ButtonStyle.OUTLINED}
           />
+          <Button type={ButtonType.SUBMIT} label="Create" />
         </div>
-
-        <Button type={ButtonType.SUBMIT} label={'Create'} />
       </form>
     </div>
   );

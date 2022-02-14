@@ -13,3 +13,4 @@ export { PasswordInput } from './input-password/input-password';
 export { Header } from './header/header';
 export { AuthorizedRoute } from './authorized-route/authorized-route';
 export { Loader } from './loader/loader';
+export { SectionLine } from './section-line/section-line';

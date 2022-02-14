@@ -1,6 +1,6 @@
 import {
   ApiPath,
-  MastersApiPath,
+  EAMApiPath,
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
@@ -29,7 +29,7 @@ class GroupApi {
     payload: EAMGroupCreateRequestDto,
   ): Promise<EAMGroupCreateResponseDto> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.EAM, MastersApiPath.GROUP_CREATE),
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.GROUPS),
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
