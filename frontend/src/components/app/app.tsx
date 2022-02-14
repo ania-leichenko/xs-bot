@@ -8,10 +8,11 @@ import {
 } from 'components/common/common';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { auth as authActions } from 'store/actions';
-import { AppRoute, StorageKey } from 'common/enums/enums';
+import { AppRoute, StorageKey, EamRoute } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
+import { CreateGroupForm } from '../dashboard/components/create-group-form/create-group-form';
 
 const App: FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -39,6 +40,10 @@ const App: FC = () => {
         <Route
           path={AppRoute.ROOT}
           element={<AuthorizedRoute component={<Dashboard />} />}
+        />
+        <Route
+          path={EamRoute.CREATE_GROUP}
+          element={<AuthorizedRoute component={<CreateGroupForm />} />}
         />
       </Routes>
       <Toaster />

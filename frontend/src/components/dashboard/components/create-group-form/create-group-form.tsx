@@ -23,19 +23,18 @@ const CreateGroupForm: FC = () => {
 
   return (
     <div className={styles.formWrapper}>
-      <h1 className={styles.title}>Creation group form</h1>
+      <h1 className={styles.title}>Create user group</h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputContainer}>
           <Input
             type={InputType.TEXT}
-            placeholder={'Enter name group'}
-            label={'Name group'}
+            placeholder="Enter a meaningful name to identify this group"
+            label="User group name"
             name={getNameOf<EAMGroupCreateRequestDto>('name')}
             control={control}
             errors={errors}
           />
-          <span className={styles.warning}></span>
         </div>
         <SectionLine />
         <WorkerList />
