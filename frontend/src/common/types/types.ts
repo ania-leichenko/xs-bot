@@ -24,3 +24,4 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './tenant/tenant';
+export { type EAMWorkerGetAllResponseDto } from './worker/worker';
