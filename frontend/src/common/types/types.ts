@@ -28,3 +28,4 @@ export {
   type EAMGroupCreateRequestDto,
   type EAMGroupCreateResponseDto,
 } from './eam/eam';
+export { type ServiceMenuItem } from './ui/ui';

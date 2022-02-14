@@ -10,6 +10,7 @@ type Props = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
   btnStyle?: ButtonStyle;
+  className?: string;
 };
 
 const Button: FC<Props> = ({
@@ -18,21 +19,21 @@ const Button: FC<Props> = ({
   onClick,
   type = ButtonType.BUTTON,
   btnStyle = ButtonStyle.FILLED,
+  className,
 }) => {
   const isLink = Boolean(to);
+  const fullClassName = getValidClasses(
+    styles.btn,
+    styles[`btnStyle${btnStyle}`],
+    className,
+  );
+
   return isLink ? (
-    <Link
-      className={getValidClasses(styles.btn, styles[`btnStyle${btnStyle}`])}
-      to={to as AppRoute}
-    >
+    <Link className={fullClassName} to={to as AppRoute}>
       {label}
     </Link>
   ) : (
-    <button
-      onClick={onClick}
-      type={type}
-      className={getValidClasses(styles.btn, styles[`btnStyle${btnStyle}`])}
-    >
+    <button onClick={onClick} type={type} className={fullClassName}>
       {label}
     </button>
   );

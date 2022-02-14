@@ -2,8 +2,8 @@ import eam from 'assets/img/eam.svg';
 import bs from 'assets/img/binary-storage.svg';
 import sc from 'assets/img/server-computing.svg';
 import slc from 'assets/img/sl-computing.svg';
-import { ServiceMenuItem } from '../../../common/types/ui/service-menu';
-import { AppRoute } from '../../../common/enums/app/app-route.enum';
+import { ServiceMenuItem } from 'common/types/types';
+import { AppRoute } from 'common/enums/enums';
 
 const SERVICE_MENU_ITEMS: ServiceMenuItem[] = [
   {
