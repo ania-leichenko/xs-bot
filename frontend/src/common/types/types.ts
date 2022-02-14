@@ -30,3 +30,4 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
   type EAMGroupGetByTenantItem,
 } from './group/group';
+export { type ServiceMenuItem } from './ui/ui';

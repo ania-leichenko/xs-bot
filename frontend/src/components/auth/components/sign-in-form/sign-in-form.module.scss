@@ -13,6 +13,15 @@
   font-style: normal;
 }
 
+.link {
+  color: var(--color-orange);
+  text-decoration: none;
+}
+
+.link:active {
+  color: var(--color-orange);
+}
+
 .signInForm,
 .signInFormContent {
   display: flex;
