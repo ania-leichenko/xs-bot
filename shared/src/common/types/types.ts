@@ -13,6 +13,10 @@ export {
   type EAMGroupGetByTenantItemResponseDto,
 } from './eam-group/eam-group';
 export {
+  type EAMWorkerGetAllItemResponseDto,
+  type EAMWorkerGetAllResponseDto,
+} from './eam-worker/eam-worker';
+export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
 } from './worker/worker';

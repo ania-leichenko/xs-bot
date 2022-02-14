@@ -39,4 +39,4 @@ const group = new Group({
   groupRepository,
 });
 
-export { master, group, token, encrypt, tenant, worker };
+export { master, encrypt, token, tenant, worker, group };

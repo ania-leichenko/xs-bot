@@ -6,7 +6,7 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { StorageKey } from 'common/enums/enums';
+import { StorageKey, AppRoute } from 'common/enums/enums';
 
 const signUp = createAsyncThunk<
   EAMMasterByIdResponseDto,
@@ -26,7 +26,9 @@ const signIn = createAsyncThunk<
 >(ActionType.SIGN_IN, async (registerPayload, { extra }) => {
   const { authApi, storage } = extra;
   const { user, token } = await authApi.signIn(registerPayload);
+
   storage.setItem(StorageKey.TOKEN, token);
+
   return user;
 });
 
@@ -34,10 +36,21 @@ const loadCurrentUser = createAsyncThunk<
   EAMMasterByIdResponseDto,
   void,
   AsyncThunkConfig
->(ActionType.LOAD_CURRENT_USER, async (payload, { extra }) => {
+>(ActionType.LOAD_CURRENT_USER, async (_payload, { extra }) => {
   const { authApi } = extra;
   const { user } = await authApi.getCurrentUser();
+
   return user;
 });
 
-export { signUp, signIn, loadCurrentUser };
+const logOut = createAsyncThunk<void, void, AsyncThunkConfig>(
+  ActionType.LOG_OUT,
+  async (_payload, { extra }) => {
+    const { storage, navigation } = extra;
+
+    storage.removeItem(StorageKey.TOKEN);
+    navigation.push(AppRoute.SIGN_IN);
+  },
+);
+
+export { signUp, signIn, loadCurrentUser, logOut };

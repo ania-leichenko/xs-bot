@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { signUp, loadCurrentUser, signIn } from './actions';
+import { signUp, loadCurrentUser, signIn, logOut } from './actions';
 import { EAMMasterByIdResponseDto } from 'common/types/types';
 
 type State = {
@@ -37,6 +37,10 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadCurrentUser.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.user = action.payload;
+  });
+  builder.addCase(logOut.fulfilled, (state) => {
+    state.dataStatus = DataStatus.IDLE;
+    state.user = null;
   });
 });
 
