@@ -8,15 +8,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 250px;
-  height: 200px;
+  width: 100%;
+  max-width: 250px;
+  min-height: 200px;
   margin: 14px 14px 20px;
   background: var(--color-substrate-gray);
   border-radius: 10px;
 }
 
 .cardTitle {
-  width: 160px;
+  max-width: 160px;
   margin-bottom: 4px;
   color: var(--color-white);
   font-weight: 600;
@@ -27,5 +28,5 @@
 
 .buttonContainer {
   width: 160px;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
