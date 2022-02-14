@@ -29,7 +29,7 @@ const Header: FC = () => {
         <div className={styles.menu}>
           <div className={styles.profile}>
             <span className={styles.profileName}>
-              {user?.email} @ {tenant?.name}
+              {user?.email ?? '-'} @ {tenant?.name ?? '-'}
             </span>
           </div>
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
