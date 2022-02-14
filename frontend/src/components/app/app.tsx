@@ -39,12 +39,9 @@ const App: FC = () => {
         <Route path={AppRoute.SIGN_UP} element={<Auth />} />
         <Route
           path={AppRoute.ROOT}
-          element={<AuthorizedRoute component={<Eam />} />}
-        />
-        <Route
-          path={AppRoute.ROOT}
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
+        <Route path={AppRoute.EAM} element={<Eam />} />
       </Routes>
       <Toaster />
     </>
