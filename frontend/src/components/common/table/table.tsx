@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTable, Column } from 'react-table';
 
-import styles from './table.module.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   columns: Column[];
