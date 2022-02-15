@@ -16,6 +16,7 @@ export {
 export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateFormDto,
 } from './worker/worker';
 export {
   type EAMTenantCreateRequestDto,
