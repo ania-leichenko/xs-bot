@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Button } from 'components/common/common';
 import { ServiceMenuItem } from 'common/types/types';
 import styles from './styles.module.scss';
-import { ButtonStyle } from '../../../../common/enums/ui/button-style.enum';
+import { ButtonColor } from 'common/enums/enums';
 
 type Props = {
   service: ServiceMenuItem;
@@ -15,7 +15,7 @@ const ServicesItem: FC<Props> = ({ service }) => (
     </div>
     <h3 className={styles.cardTitle}>{service.title}</h3>
     <Button
-      btnStyle={ButtonStyle.GRAY}
+      btnColor={ButtonColor.GRAY}
       className={styles.link}
       to={service.route}
       label="Start"
