@@ -43,8 +43,10 @@ const EAM: FC = () => {
       <div className={styles.link}>
         <Link to={AppRoute.EAM_CREATE_WORKER}>Add User</Link>
       </div>
-      <WorkersTable />
-      <GroupsTable />
+      <div className={styles.tables}>
+        <WorkersTable />
+        <GroupsTable />
+      </div>
     </div>
   );
 };
