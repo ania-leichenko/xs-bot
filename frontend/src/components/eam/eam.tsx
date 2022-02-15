@@ -3,8 +3,8 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { eam as eamActions } from 'store/actions';
-import { GroupsTable } from './components/groups-table/groups-table';
-import styles from './eam.module.scss';
+import { GroupsTable } from './components/components';
+import styles from './styles.module.scss';
 
 const EAM: FC = () => {
   const dispatch = useAppDispatch();
@@ -32,10 +32,10 @@ const EAM: FC = () => {
         EAM - <br />
         Entity Access Management
       </h2>
+      <GroupsTable />
       <div className={styles.link}>
         <Link to={AppRoute.EAM_CREATE_WORKER}>Add User</Link>
       </div>
-      <GroupsTable />
     </div>
   );
 };
