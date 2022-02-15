@@ -1,39 +1,55 @@
 .container {
-  width: 1200px;
-  margin: 0 auto;
-  margin-top: 100px;
-  color: white;
+  padding: 0 40px;
+  color: var(--color-white);
+}
+
+.rootTitle {
+  display: flex;
+  align-items: center;
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 52px;
+  height: 52px;
+  margin-right: 16px;
+  overflow: hidden;
+  background-color: var(--color-boltgun);
+  border-radius: 100%;
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+  padding: 8px;
+}
+
+.wrapper {
+  width: 600px;
+  margin-left: auto;
+  padding: 16px 24px;
+  background: var(--color-boltgun);
+  border-radius: 16px;
 }
 
 .addUserHeader {
   margin-bottom: 16px;
-  color: lightgrey;
+  color: var(--color-text);
   font-size: 30px;
 }
 
-.title {
+.titles {
   margin-top: 4px;
   margin-bottom: 16px;
   font-size: 18px;
-  border-bottom: 3px solid #d6d3d3;
+  border-bottom: 3px solid var(--color-background);
 }
 
 .inputWrapper {
-  justify-content: center;
-  width: 800px;
-  margin: 0 auto;
-}
-
-.inputWrapper label {
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-.inputWrapper span {
-  display: inline-block;
   width: 300px;
-  margin: 0 16px;
+  margin: 0 auto;
 }
 
 .buttons {
