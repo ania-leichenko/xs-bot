@@ -3,17 +3,18 @@ import {
   EAMWorkerGetAllResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
 
 const getWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
-  void,
+  EAMWorkerGetByTenantRequestParamsDto,
   AsyncThunkConfig
->(ActionType.GET_WORKERS, async (_payload, { extra }) => {
+>(ActionType.GET_WORKERS, async (payload, { extra }) => {
   const { eamApi } = extra;
-  const workers = await eamApi.getAllWorkers();
+  const workers = await eamApi.getAllWorkers(payload);
 
   return workers;
 });

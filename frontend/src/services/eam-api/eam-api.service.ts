@@ -4,12 +4,12 @@ import {
   GroupsApiPath,
   WorkersApiPath,
   HttpMethod,
-  ContentType,
 } from 'common/enums/enums';
 import {
   EAMWorkerGetAllResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -45,7 +45,9 @@ class EAMApi {
     );
   }
 
-  public getAllWorkers(): Promise<EAMWorkerGetAllResponseDto> {
+  public getAllWorkers(
+    params: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<EAMWorkerGetAllResponseDto> {
     return this.#http.load(
       joinItems(
         this.#apiPrefix,
@@ -55,7 +57,7 @@ class EAMApi {
       ),
       {
         method: HttpMethod.GET,
-        contentType: ContentType.JSON,
+        params,
       },
     );
   }

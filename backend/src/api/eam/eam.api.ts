@@ -61,8 +61,11 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.WORKERS}${WorkersApiPath.ROOT}`,
-    async handler(req, rep) {
-      const workers = await workerService.getAll();
+    async handler(
+      req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
+      rep,
+    ) {
+      const workers = await workerService.getAll(req.query);
       return rep.send(workers).status(HttpCode.OK);
     },
   });

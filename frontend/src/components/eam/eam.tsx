@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { WorkersTable } from './components/workers-table/workers-table';
+import { WorkersTable } from './components/components';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
@@ -20,6 +20,12 @@ const EAM: FC = () => {
     }
 
     dispatch(
+      eamActions.getWorkers({
+        tenantId: tenantId as string,
+      }),
+    );
+
+    dispatch(
       eamActions.loadGroups({
         tenantId: tenantId as string,
         from: 0,
@@ -28,21 +34,17 @@ const EAM: FC = () => {
     );
   }, [dispatch, tenantId]);
 
-  useEffect(() => {
-    dispatch(eamActions.getWorkers());
-  }, [dispatch]);
-
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
         EAM - <br />
         Entity Access Management
       </h2>
-      <GroupsTable />
       <div className={styles.link}>
         <Link to={AppRoute.EAM_CREATE_WORKER}>Add User</Link>
       </div>
       <WorkersTable />
+      <GroupsTable />
     </div>
   );
 };
