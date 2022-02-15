@@ -8,16 +8,18 @@ export {
 export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
+  type EAMGroupGetByTenantRequestParamsDto,
+  type EAMGroupGetByTenantResponseDto,
+  type EAMGroupGetByTenantResponseItemDto,
+  type EAMGroupRelatedItem,
 } from './eam-group/eam-group';
 export {
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
-} from './eam-worker/eam-worker';
-export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateFormDto,
-} from './worker/worker';
+} from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,

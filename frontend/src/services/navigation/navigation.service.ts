@@ -12,7 +12,11 @@ class Navigation {
     this.#history = history;
   }
 
-  public push(path: AppRoute | string): void {
+  public get instance(): History {
+    return this.#history;
+  }
+
+  public push(path: AppRoute): void {
     this.#history.push(path);
   }
 }

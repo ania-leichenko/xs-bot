@@ -1,1 +1,6 @@
-export { UsersTableAccessor, UsersTableHeader } from './table/table';
+export {
+  UsersTableAccessor,
+  UsersTableHeader,
+  GroupsTableHeader,
+  GroupsTableAccessor,
+} from './table/table';
