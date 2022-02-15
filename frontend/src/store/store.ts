@@ -3,18 +3,22 @@ import { rootReducer } from './root-reducer';
 import {
   authApi,
   tenantApi,
+  eamApi,
   navigation,
   storage,
   workerApi,
+  notification,
 } from 'services/services';
 import { handleError } from './middlewares/middlewares';
 
 const extraArgument = {
   authApi,
   tenantApi,
+  eamApi,
   navigation,
   storage,
   workerApi,
+  notification,
 };
 
 const store = configureStore({

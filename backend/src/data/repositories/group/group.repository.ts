@@ -1,5 +1,9 @@
 import { Group as GroupM } from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
+import {
+  EAMGroupGetByTenantRequestParamsDto,
+  EAMGroupGetByTenantResponseItemDto,
+} from '~/common/types/types';
 
 type Constructor = {
   GroupModel: typeof GroupM;
@@ -10,6 +14,20 @@ class Group {
 
   constructor({ GroupModel }: Constructor) {
     this.#GroupModel = GroupModel;
+  }
+
+  async getGroupsByTenant(
+    filter: EAMGroupGetByTenantRequestParamsDto,
+  ): Promise<EAMGroupGetByTenantResponseItemDto[]> {
+    const { from: offset, count: limit, tenantId } = filter;
+    return this.#GroupModel
+      .query()
+      .select('id', 'name', 'createdAt')
+      .where({ tenantId })
+      .withGraphFetched('[users, permissions]')
+      .orderBy('createdAt', 'desc')
+      .offset(offset)
+      .limit(limit);
   }
 
   async getGroupByNameAndTenant(
@@ -36,7 +54,7 @@ class Group {
     const created = await this.#GroupModel.query().insert({
       id,
       name,
-      createdAt: createdAt.toISOString(),
+      createdAt: createdAt,
       tenantId,
     });
 
@@ -47,7 +65,7 @@ class Group {
     return GroupEntity.initialize({
       id: model.id,
       name: model.name,
-      createdAt: new Date(model.createdAt),
+      createdAt: model.createdAt,
       tenantId: model.tenantId,
     });
   }

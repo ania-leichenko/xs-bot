@@ -1,5 +1,5 @@
 enum ActionType {
-  GET_TENANT = 'tenant/:id',
+  GET_TENANT = 'app/get-tenant',
 }
 
 export { ActionType };

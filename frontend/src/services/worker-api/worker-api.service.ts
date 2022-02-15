@@ -1,6 +1,13 @@
-import { EAMApiPath } from 'bws-shared';
-import { ApiPath, ContentType, HttpMethod } from 'common/enums/enums';
-import { EAMWorkerGetAllResponseDto } from 'common/types/types';
+import {
+  ContentType,
+  HttpMethod,
+  EAMApiPath,
+  ApiPath,
+} from 'common/enums/enums';
+import {
+  EAMWorkerCreateRequestDto,
+  EAMWorkerCreateResponseDto,
+} from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
 
@@ -18,12 +25,15 @@ class WorkerApi {
     this.#apiPrefix = apiPrefix;
   }
 
-  public getAllWorkers(): Promise<EAMWorkerGetAllResponseDto> {
+  public createWorker(
+    payload: EAMWorkerCreateRequestDto,
+  ): Promise<EAMWorkerCreateResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),
       {
-        method: HttpMethod.GET,
+        method: HttpMethod.POST,
         contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }
