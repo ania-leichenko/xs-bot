@@ -12,12 +12,10 @@ export {
 export {
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
-} from './eam-worker/eam-worker';
-export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateFormDto,
-} from './worker/worker';
+} from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,

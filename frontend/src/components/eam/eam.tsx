@@ -3,7 +3,7 @@ import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import styles from './eam.module.scss';
 
-const Eam: FC = () => {
+const EAM: FC = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -17,4 +17,4 @@ const Eam: FC = () => {
   );
 };
 
-export { Eam };
+export { EAM };

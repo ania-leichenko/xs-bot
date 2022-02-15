@@ -6,6 +6,7 @@ import {
 } from 'common/types/types';
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
+import { AppRoute } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
   EAMWorkerCreateResponseDto,
@@ -14,12 +15,18 @@ const workerCreate = createAsyncThunk<
 >(
   ActionType.CREATE_WORKER,
   async (payload: EAMWorkerCreateRequestDto, { extra }) => {
-    const { workerApi } = extra;
-    const worker: EAMWorkerCreateResponseDto = await workerApi.createWorker({
+    const { workerApi, navigation, notification } = extra;
+
+    const worker = await workerApi.createWorker({
       ...payload,
       password: getRandomId(),
       groupIds: [],
     });
+
+    navigation.push(AppRoute.EAM);
+
+    notification.success('Success!', 'User has been successfully created');
+
     return worker;
   },
 );

@@ -4,21 +4,21 @@ export {
   type EAMMasterSignInRequestDto,
   type EAMMasterSignInResponseDto,
   type EAMMasterByIdResponseDto,
-} from './master/master';
+} from './eam-master/eam-master';
 export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
-} from './worker/worker';
+} from './eam-worker/eam-worker';
 export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
-} from './group/group';
+} from './eam-group/eam-group';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
-} from './tenant/tenant';
+} from './eam-tenant/eam-tenant';
 export { type TokenPayload } from './token/token';

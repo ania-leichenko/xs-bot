@@ -10,10 +10,10 @@ import { Input, Button } from 'components/common/common';
 import { EAMWorkerCreateRequestDto } from 'common/types/types';
 import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './eam-create-worker.module.scss';
-import { workerConfigurate as workerConfigurateActions } from 'store/actions';
+import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
 
-const EamWorkerCreate: React.FC = () => {
+const EAMWorkerCreate: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { control, errors, handleSubmit } =
@@ -23,7 +23,7 @@ const EamWorkerCreate: React.FC = () => {
     });
 
   const handleFormSubmit = (payload: EAMWorkerCreateRequestDto): void => {
-    dispatch(workerConfigurateActions.workerCreate(payload));
+    dispatch(EAMWorkerConfigurateActions.workerCreate(payload));
   };
 
   return (
@@ -33,7 +33,7 @@ const EamWorkerCreate: React.FC = () => {
         Entity Access Management
       </h2>
       <section className={styles.formWrapper}>
-        <h2 className={styles.addUserHeader}>Add Worker</h2>
+        <h3 className={styles.addUserHeader}>Add Worker</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
@@ -71,4 +71,4 @@ const EamWorkerCreate: React.FC = () => {
   );
 };
 
-export { EamWorkerCreate };
+export { EAMWorkerCreate };

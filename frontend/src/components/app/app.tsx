@@ -12,8 +12,8 @@ import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
-import { Eam } from 'components/eam/eam';
-import { EamWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
+import { EAM } from 'components/eam/eam';
+import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
 
 const App: FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -51,11 +51,11 @@ const App: FC = () => {
         />
         <Route
           path={AppRoute.EAM}
-          element={<AuthorizedRoute component={<Eam />} />}
+          element={<AuthorizedRoute component={<EAM />} />}
         />
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
-          element={<AuthorizedRoute component={<EamWorkerCreate />} />}
+          element={<AuthorizedRoute component={<EAMWorkerCreate />} />}
         />
       </Routes>
       <Toaster />
