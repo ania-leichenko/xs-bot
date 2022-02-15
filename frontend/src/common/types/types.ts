@@ -28,6 +28,5 @@ export {
   type EAMGroupGetByTenantRequestParamsDto,
   type EAMGroupGetByTenantResponseDto,
   type EAMGroupGetByTenantResponseItemDto,
-  type EAMGroupGetByTenantItem,
 } from './group/group';
 export { type ServiceMenuItem } from './ui/ui';

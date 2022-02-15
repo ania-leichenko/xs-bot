@@ -1,7 +1,7 @@
 type EAMGroupCreateResponseDto = {
   id: string;
   name: string;
-  createdAt: Date;
+  createdAt: string;
   tenantId: string;
 };
 

@@ -27,7 +27,7 @@ class Group {
       .offset(offset)
       .limit(limit);
 
-    return groups.map(Group.modelToEntity);
+    return groups;
   }
 
   async getGroupByNameAndTenant(
@@ -54,7 +54,7 @@ class Group {
     const created = await this.#GroupModel.query().insert({
       id,
       name,
-      createdAt: createdAt.toISOString(),
+      createdAt: createdAt,
       tenantId,
     });
 
@@ -65,7 +65,7 @@ class Group {
     return GroupEntity.initialize({
       id: model.id,
       name: model.name,
-      createdAt: new Date(model.createdAt),
+      createdAt: model.createdAt,
       tenantId: model.tenantId,
       users: model.users,
       permissions: model.permissions,

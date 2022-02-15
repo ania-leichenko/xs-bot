@@ -1,17 +1,13 @@
 import { getRandomId } from '~/helpers/helpers';
-
-type Item = {
-  id: string;
-  name: string;
-};
+import { EAMGroupRelatedItem } from '~/common/types/types';
 
 class Group {
   public id: string;
   public name: string;
-  public createdAt: Date;
+  public createdAt: string;
   public tenantId: string;
-  public users?: Item[];
-  public permissions?: Item[];
+  public users?: EAMGroupRelatedItem[];
+  public permissions?: EAMGroupRelatedItem[];
 
   private constructor({
     id,
@@ -23,10 +19,10 @@ class Group {
   }: {
     id: string;
     name: string;
-    createdAt: Date;
+    createdAt: string;
     tenantId: string;
-    users?: Item[];
-    permissions?: Item[];
+    users?: EAMGroupRelatedItem[];
+    permissions?: EAMGroupRelatedItem[];
   }) {
     this.id = id;
     this.name = name;
@@ -46,10 +42,10 @@ class Group {
   }: {
     id: string;
     name: string;
-    createdAt: Date;
+    createdAt: string;
     tenantId: string;
-    users?: Item[];
-    permissions?: Item[];
+    users: EAMGroupRelatedItem[];
+    permissions: EAMGroupRelatedItem[];
   }): Group {
     return new Group({
       id,
@@ -71,7 +67,7 @@ class Group {
     return new Group({
       id: getRandomId(),
       name,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       tenantId,
     });
   }
