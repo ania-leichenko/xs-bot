@@ -25,6 +25,11 @@ export {
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
 export {
+  type EAMGroupGetByTenantRequestParamsDto,
+  type EAMGroupGetByTenantResponseDto,
+  type EAMGroupGetByTenantResponseItemDto,
+} from './eam-group/eam-group';
+export {
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateFormDto,
