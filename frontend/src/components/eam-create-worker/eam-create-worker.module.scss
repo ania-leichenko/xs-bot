@@ -1,22 +1,31 @@
-.container {
-  padding: 0 40px;
+.wrapper {
+  flex-grow: 1;
+  padding: 35px 40px;
+  background-image: url("/assets/img/decorate.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin: 0 0 40px;
   color: var(--color-white);
+  font-size: 28px;
+  line-height: 32px;
 }
 
-.rootTitle {
-  display: flex;
-  align-items: center;
-}
-
-.circle {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 52px;
-  height: 52px;
-  margin-right: 16px;
-  overflow: hidden;
+.title::before {
+  content: "";
+  width: 66px;
+  height: 66px;
+  margin: 0 15px 0 0;
   background-color: var(--color-boltgun);
+  background-image: url("../../assets/img/eam.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 40px;
   border-radius: 100%;
 }
 
@@ -26,37 +35,47 @@
   padding: 8px;
 }
 
-.wrapper {
-  width: 600px;
-  margin-left: auto;
-  padding: 16px 24px;
+.formWrapper {
+  max-width: 875px;
+  margin: 0 auto;
+  padding: 40px 75px;
   background: var(--color-boltgun);
   border-radius: 16px;
 }
 
 .addUserHeader {
-  margin-bottom: 16px;
+  margin: 0 0 15px;
   color: var(--color-text);
   font-size: 30px;
 }
 
-.titles {
-  margin-top: 4px;
-  margin-bottom: 16px;
-  font-size: 18px;
+.inputGroups {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inputGroup:not(:last-child) {
+  margin: 0 0 20px;
   border-bottom: 3px solid var(--color-background);
 }
 
+.inputGroupTitle {
+  margin: 0 0 16px;
+  color: var(--color-white);
+  font-size: 14px;
+}
+
 .inputWrapper {
-  width: 300px;
-  margin: 0 auto;
+  max-width: 50%;
 }
 
 .buttons {
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 .button {
-  margin-left: 8px;
+  min-width: 200px;
 }
