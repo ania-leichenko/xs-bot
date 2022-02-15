@@ -28,6 +28,12 @@
   background-color: var(--color-boltgun);
 }
 
+.btnStyleGray {
+  color: var(--color-text-gray);
+  background-color: var(--color-boltgun);
+  border-color: var(--color-boltgun);
+}
+
 .btnStyleOutlined:hover {
   color: var(--color-white);
   background-color: var(--color-orange);
@@ -35,4 +41,10 @@
 
 .btnStyleFilled:hover {
   background-color: var(--color-boltgun);
+}
+
+.btnStyleGray:hover {
+  color: var(--color-text-light);
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
 }
