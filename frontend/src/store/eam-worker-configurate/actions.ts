@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
+  EAMWorkerGetAllResponseDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
@@ -31,4 +32,13 @@ const workerCreate = createAsyncThunk<
   },
 );
 
-export { workerCreate };
+const getWorkers = createAsyncThunk<
+  EAMWorkerGetAllResponseDto,
+  void,
+  AsyncThunkConfig
+>(ActionType.GET_WORKERS, async (_payload, { extra }) => {
+  const { workerApi } = extra;
+  return await workerApi.getAll();
+});
+
+export { workerCreate, getWorkers };

@@ -1,12 +1,13 @@
 import {
-  ContentType,
-  HttpMethod,
-  EAMApiPath,
   ApiPath,
+  ContentType,
+  EAMApiPath,
+  HttpMethod,
 } from 'common/enums/enums';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
+  EAMWorkerGetAllResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -34,6 +35,14 @@ class WorkerApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+  public getAll(): Promise<EAMWorkerGetAllResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),
+      {
+        method: HttpMethod.GET,
       },
     );
   }

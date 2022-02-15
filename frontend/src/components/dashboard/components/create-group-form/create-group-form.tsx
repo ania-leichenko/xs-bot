@@ -1,10 +1,18 @@
 import React, { FC, useMemo } from 'react';
 import { Button, Input, SectionLine, Table } from 'components/common/common';
-import { useAppDispatch, useAppForm } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppForm,
+  useEffect,
+  useAppSelector,
+} from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
-import { groups as groupsAction } from 'store/actions';
+import {
+  groups as groupsAction,
+  EAMWorkerConfigurate as workerAction,
+} from 'store/actions';
 import styles from './create-group-form.module.scss';
 import { EAMGroupCreateRequestDto } from 'common/types/types';
 import eam from 'assets/img/eam.svg';
@@ -18,29 +26,20 @@ const CreateGroupForm: FC = () => {
 
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(workerAction.getWorkers());
+  }, []);
+
   const onSubmit = (payload: EAMGroupCreateRequestDto): void => {
     dispatch(groupsAction.create(payload));
   };
 
+  const { workers } = useAppSelector(
+    ({ EAMWorkerConfigurate }) => EAMWorkerConfigurate,
+  );
+
   const columns = useMemo(() => getColumns(), []);
 
-  const workers = [
-    {
-      id: 'a',
-      name: 'username1',
-      tenantId: 'tenantId1',
-    },
-    {
-      id: 'b',
-      name: 'username1',
-      tenantId: 'tenantId31',
-    },
-    {
-      id: 'c',
-      name: 'username1',
-      tenantId: 'tenantId21',
-    },
-  ];
   const data = useMemo(() => getRows(workers), [workers]);
 
   return (
@@ -78,7 +77,6 @@ const CreateGroupForm: FC = () => {
             <h6 className={styles.titleThree}>
               Add users to the group - Optional
             </h6>
-
             <Table title={''} columns={columns} data={data} />
           </div>
 

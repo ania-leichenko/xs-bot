@@ -36,6 +36,7 @@ export {
 export {
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateResponseDto,
+  type EAMWorkerGetAllResponseDto,
   type EAMWorkerCreateFormDto,
 } from './eam-worker/eam-worker';
 export { type ServiceMenuItem } from './ui/ui';

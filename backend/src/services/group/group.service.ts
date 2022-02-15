@@ -29,6 +29,7 @@ class Group {
   public async create({
     name,
     tenantId,
+    workers,
   }: EAMGroupCreateRequestDto): Promise<EAMGroupCreateResponseDto> {
     const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
       name,
@@ -40,7 +41,12 @@ class Group {
 
     const group = GroupEntity.createNew({ name, tenantId });
 
-    return this.#groupRepository.create(group);
+    const newGroup = await this.#groupRepository.create(group);
+    if (workers) {
+      await this.#groupRepository.addWorkersToGroup(workers, group);
+    }
+
+    return newGroup;
   }
 }
 

@@ -89,6 +89,7 @@ class Worker {
       items: workers.map((m) => ({
         id: m.id,
         name: m.name,
+        tenantId: m.tenantId,
       })),
     };
   }

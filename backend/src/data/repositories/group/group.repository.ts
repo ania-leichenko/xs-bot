@@ -1,19 +1,26 @@
-import { Group as GroupM } from '~/data/models/models';
+import {
+  Group as GroupM,
+  UsersGroups as UsersGroupsM,
+} from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseItemDto,
 } from '~/common/types/types';
+import { getRandomId } from '~/helpers/helpers';
 
 type Constructor = {
   GroupModel: typeof GroupM;
+  UsersGroupsModel: typeof UsersGroupsM;
 };
 
 class Group {
   #GroupModel: typeof GroupM;
+  #UsersGroupsModel: typeof UsersGroupsM;
 
-  constructor({ GroupModel }: Constructor) {
+  constructor({ GroupModel, UsersGroupsModel }: Constructor) {
     this.#GroupModel = GroupModel;
+    this.#UsersGroupsModel = UsersGroupsModel;
   }
 
   async getGroupsByTenant(
@@ -59,6 +66,20 @@ class Group {
     });
 
     return Group.modelToEntity(created);
+  }
+
+  public async addWorkersToGroup(
+    workerIds: string[],
+    group: GroupEntity,
+  ): Promise<void> {
+    await this.#UsersGroupsModel.query().insert(
+      workerIds.map((workerId) => ({
+        id: getRandomId(),
+        userId: workerId,
+        groupId: group.id,
+        createdAt: group.createdAt,
+      })),
+    );
   }
 
   public static modelToEntity(model: GroupM): GroupEntity {
