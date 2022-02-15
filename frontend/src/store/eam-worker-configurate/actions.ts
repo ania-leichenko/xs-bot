@@ -7,7 +7,7 @@ import {
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
 
-const EamWorkerCreate = createAsyncThunk<
+const workerCreate = createAsyncThunk<
   EAMWorkerCreateResponseDto,
   EAMWorkerCreateRequestDto,
   AsyncThunkConfig
@@ -24,4 +24,4 @@ const EamWorkerCreate = createAsyncThunk<
   },
 );
 
-export { EamWorkerCreate };
+export { workerCreate };

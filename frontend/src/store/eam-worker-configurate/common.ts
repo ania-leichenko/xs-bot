@@ -1,5 +1,5 @@
 enum ActionType {
-  CREATE_WORKER = 'eam-create-worker/eam-create-worker',
+  CREATE_WORKER = 'eam-configurate-worker/create-worker',
 }
 
 export { ActionType };

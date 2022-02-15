@@ -10,7 +10,7 @@ import { Input, Button } from 'components/common/common';
 import { EAMWorkerCreateRequestDto } from 'common/types/types';
 import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './eam-create-worker.module.scss';
-import { worker as workerActions } from 'store/actions';
+import { workerConfigurate as workerConfigurateActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
 
 const EamWorkerCreate: React.FC = () => {
@@ -23,7 +23,7 @@ const EamWorkerCreate: React.FC = () => {
     });
 
   const handleFormSubmit = (payload: EAMWorkerCreateRequestDto): void => {
-    dispatch(workerActions.EamWorkerCreate(payload));
+    dispatch(workerConfigurateActions.workerCreate(payload));
   };
 
   return (
