@@ -3,7 +3,7 @@ import { getRandomId } from '~/helpers/helpers';
 class Group {
   public id: string;
   public name: string;
-  public createdAt: Date;
+  public createdAt: string;
   public tenantId: string;
 
   private constructor({
@@ -14,7 +14,7 @@ class Group {
   }: {
     id: string;
     name: string;
-    createdAt: Date;
+    createdAt: string;
     tenantId: string;
   }) {
     this.id = id;
@@ -31,7 +31,7 @@ class Group {
   }: {
     id: string;
     name: string;
-    createdAt: Date;
+    createdAt: string;
     tenantId: string;
   }): Group {
     return new Group({
@@ -52,7 +52,7 @@ class Group {
     return new Group({
       id: getRandomId(),
       name,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
       tenantId,
     });
   }

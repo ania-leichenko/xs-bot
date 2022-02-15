@@ -3,6 +3,7 @@ import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { TenantApi } from './tenant-api/tenant-api.service';
+import { EAMApi } from './eam-api/eam-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
@@ -26,6 +27,11 @@ const tenantApi = new TenantApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const eamApi = new EAMApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const navigation = new Navigation({
   history: createBrowserHistory(),
 });
@@ -35,4 +41,12 @@ const workerApi = new WorkerApi({
   apiPrefix: ENV.API_PATH,
 });
 
-export { authApi, tenantApi, storage, navigation, notification, workerApi };
+export {
+  authApi,
+  tenantApi,
+  storage,
+  navigation,
+  notification,
+  workerApi,
+  eamApi,
+};
