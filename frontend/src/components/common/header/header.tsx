@@ -1,19 +1,24 @@
-import logo from 'assets/img/logo.svg';
-import profile from 'assets/img/profile.svg';
-import menu from 'assets/img/menu.svg';
 import { FC } from 'react';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
-import { useState, useAppSelector } from 'hooks/hooks';
+import { useState, useAppSelector, useAppDispatch } from 'hooks/hooks';
+import { auth as authActions } from 'store/actions';
+import logo from 'assets/img/logo.svg';
+import menu from 'assets/img/menu.svg';
 import styles from './header.module.scss';
 
 const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
-  const { tenant } = useAppSelector(({ app }) => ({
+  const dispatch = useAppDispatch();
+  const { user, tenant } = useAppSelector(({ app, auth }) => ({
+    user: auth.user,
     tenant: app.tenant,
   }));
 
   const handleVisibleChange = (): void => setVisible(!isVisible);
+  const handleLogout = (): void => {
+    dispatch(authActions.logOut());
+  };
 
   return (
     <header className={styles.header}>
@@ -23,17 +28,20 @@ const Header: FC = () => {
         </Link>
         <div className={styles.menu}>
           <div className={styles.profile}>
-            <img src={profile} alt="profile" />
-            <span className={styles.profileName}>{tenant?.name}</span>
+            <span className={styles.profileName}>
+              {user?.email ?? '-'} @ {tenant?.name ?? '-'}
+            </span>
           </div>
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
+            {isVisible && (
+              <div className={styles.dropdownContent}>
+                <div className={styles.dropdownItem} onClick={handleLogout}>
+                  Log Out
+                </div>
+              </div>
+            )}
           </button>
-          {isVisible && (
-            <div className={styles.dropdownContent}>
-              <button className={styles.dropdownItem}>Log Out</button>
-            </div>
-          )}
         </div>
       </div>
     </header>

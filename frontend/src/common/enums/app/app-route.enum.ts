@@ -4,6 +4,9 @@ enum AppRoute {
   SIGN_UP = '/sign-up',
   EAM = '/eam',
   EAM_CREATE_WORKER = '/eam/create-worker',
+  BS = '/bs',
+  SC = '/sc',
+  SLC = '/slc',
 }
 
 export { AppRoute };

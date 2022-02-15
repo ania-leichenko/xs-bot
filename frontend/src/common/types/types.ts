@@ -29,3 +29,4 @@ export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateFormDto,
 } from './worker/worker';
+export { type ServiceMenuItem } from './ui/ui';
