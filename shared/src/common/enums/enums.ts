@@ -9,3 +9,4 @@ export {
   EAMMasterValidationRule,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
+export { UserRole } from './roles/roles';

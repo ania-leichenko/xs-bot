@@ -10,7 +10,7 @@ import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage } from '~/common/enums/enums';
+import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
@@ -70,6 +70,7 @@ class Master {
       },
       token: this.#tokenService.create({
         userId: id,
+        userRole: UserRole.master,
       }),
     };
   }
