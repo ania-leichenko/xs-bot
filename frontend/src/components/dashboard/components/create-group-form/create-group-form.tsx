@@ -1,10 +1,5 @@
-import { FC } from 'react';
-import {
-  Button,
-  Input,
-  SectionLine,
-  SearchInput,
-} from 'components/common/common';
+import React, { FC, useMemo } from 'react';
+import { Button, Input, SectionLine, Table } from 'components/common/common';
 import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
@@ -12,9 +7,8 @@ import { getNameOf } from 'helpers/helpers';
 import { groups as groupsAction } from 'store/actions';
 import styles from './create-group-form.module.scss';
 import { EAMGroupCreateRequestDto } from 'common/types/types';
-import { WorkerList } from './components/workers-list/worker-list';
-import { PermissionList } from './components/permission-list/permission-list';
 import eam from 'assets/img/eam.svg';
+import { getRows, getColumns } from './helpers/helpers';
 
 const CreateGroupForm: FC = () => {
   const { control, errors, handleSubmit } =
@@ -27,6 +21,27 @@ const CreateGroupForm: FC = () => {
   const onSubmit = (payload: EAMGroupCreateRequestDto): void => {
     dispatch(groupsAction.create(payload));
   };
+
+  const columns = useMemo(() => getColumns(), []);
+
+  const workers = [
+    {
+      id: 'a',
+      name: 'username1',
+      tenantId: 'tenantId1',
+    },
+    {
+      id: 'b',
+      name: 'username1',
+      tenantId: 'tenantId31',
+    },
+    {
+      id: 'c',
+      name: 'username1',
+      tenantId: 'tenantId21',
+    },
+  ];
+  const data = useMemo(() => getRows(workers), [workers]);
 
   return (
     <div className={styles.wrapper}>
@@ -63,26 +78,8 @@ const CreateGroupForm: FC = () => {
             <h6 className={styles.titleThree}>
               Add users to the group - Optional
             </h6>
-            <SearchInput
-              placeholder={'Search'}
-              control={control}
-              errors={errors}
-            />
-            <WorkerList />
-          </div>
 
-          <SectionLine />
-
-          <div className={styles.groupPermissionWrapper}>
-            <h6 className={styles.titleThree}>Attach permission policies</h6>
-            <SearchInput
-              placeholder={
-                'Filter policies by property or police name' + 'and press enter'
-              }
-              control={control}
-              errors={errors}
-            />
-            <PermissionList />
+            <Table title={''} columns={columns} data={data} />
           </div>
 
           <SectionLine />

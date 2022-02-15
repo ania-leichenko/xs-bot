@@ -28,4 +28,9 @@ export {
   type EAMGroupCreateRequestDto,
   type EAMGroupCreateResponseDto,
 } from './eam/eam';
+export {
+  type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateFormDto,
+} from './worker/worker';
 export { type ServiceMenuItem } from './ui/ui';

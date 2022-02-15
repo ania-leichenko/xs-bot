@@ -8,11 +8,13 @@ import {
 } from 'components/common/common';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { auth as authActions, app as appActions } from 'store/actions';
-import { AppRoute, StorageKey, EamRoute } from 'common/enums/enums';
+import { AppRoute, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
 import { CreateGroupForm } from '../dashboard/components/create-group-form/create-group-form';
+import { Eam } from 'components/eam/eam';
+import { EamWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
 
 const App: FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -49,8 +51,16 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
         <Route
-          path={EamRoute.CREATE_GROUP}
+          path={AppRoute.EAM_CREATE_GROUP}
           element={<AuthorizedRoute component={<CreateGroupForm />} />}
+        />
+        <Route
+          path={AppRoute.EAM}
+          element={<AuthorizedRoute component={<Eam />} />}
+        />
+        <Route
+          path={AppRoute.EAM_CREATE_WORKER}
+          element={<AuthorizedRoute component={<EamWorkerCreate />} />}
         />
       </Routes>
       <Toaster />
