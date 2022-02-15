@@ -15,6 +15,8 @@ export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateFormDto,
+  type EAMWorkerSignInRequestDto,
+  type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,

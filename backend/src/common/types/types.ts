@@ -10,6 +10,8 @@ export {
   type EAMWorkerCreateRequestDto,
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
+  type EAMWorkerSignInRequestDto,
+  type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
 export {
   type EAMGroupCreateResponseDto,

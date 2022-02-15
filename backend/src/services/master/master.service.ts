@@ -3,7 +3,6 @@ import {
   EAMMasterSignUpResponseDto,
   EAMMasterSignInRequestDto,
   EAMMasterSignInResponseDto,
-  TokenPayload,
   EAMMasterByIdResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
@@ -76,9 +75,8 @@ class Master {
   }
 
   public async getCurrentUser(
-    token: string,
+    userId: string,
   ): Promise<EAMMasterSignUpResponseDto> {
-    const { userId } = this.#tokenService.decode<TokenPayload>(token);
     return this.login(userId);
   }
 
