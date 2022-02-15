@@ -10,24 +10,37 @@
   background-size: cover;
 }
 
-.eamLogo {
+.title {
   position: absolute;
-  top: 115px;
-  left: 45px;
+  top: 100px;
+  left: 40px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  width: 380px;
+  margin: 0 0 40px;
+  color: var(--color-white);
+  font-size: 28px;
+  line-height: 32px;
 }
 
-.imgWrapper {
-  width: 60px;
+.title::before {
+  content: "";
+  width: 66px;
+  height: 66px;
+  margin: 0 15px 0 0;
+  background-color: var(--color-boltgun);
+  background-image: url("../../assets/img/eam.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 40px;
+  border-radius: 100%;
 }
 
-.logoText {
+.form_title {
   margin: 0;
   padding: 0;
   color: var(--color-white);
+  font-size: 28px;
+  line-height: 32px;
 }
 
 .container {
@@ -42,14 +55,6 @@
   font-style: normal;
   background: var(--color-boltgun);
   border-radius: 20px;
-}
-
-.title {
-  margin: 0;
-  padding: 0;
-  color: var(--color-white);
-  font-weight: 700;
-  font-size: 20px;
 }
 
 .titleTwo {

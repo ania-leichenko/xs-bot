@@ -6,12 +6,7 @@ import {
 import { Checkbox } from 'components/common/common';
 import { useState } from 'hooks/hooks';
 import { storage } from 'services/services';
-
-type Column = {
-  Header: string;
-  accessor: string;
-  Cell?: typeof checkboxHandler;
-};
+import { Column } from 'react-table';
 
 const selected_workers = new Set();
 

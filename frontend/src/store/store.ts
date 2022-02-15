@@ -7,7 +7,6 @@ import {
   navigation,
   storage,
   workerApi,
-  groupApi,
   notification,
 } from 'services/services';
 import { handleError } from './middlewares/middlewares';
@@ -18,7 +17,6 @@ const extraArgument = {
   eamApi,
   navigation,
   storage,
-  groupApi,
   workerApi,
   notification,
 };

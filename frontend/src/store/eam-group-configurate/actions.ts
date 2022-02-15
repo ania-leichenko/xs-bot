@@ -12,9 +12,9 @@ const create = createAsyncThunk<
   EAMGroupCreateRequestDto,
   AsyncThunkConfig
 >(ActionType.CREATE, async (registerPayload, { getState, extra }) => {
-  const { groupApi, storage } = extra;
+  const { eamApi, storage } = extra;
 
-  const workers = JSON.parse(
+  const workersIDs = JSON.parse(
     storage.getItem(StorageKey.SELECTED_WORKERS) || '[]',
   );
 
@@ -24,9 +24,9 @@ const create = createAsyncThunk<
   const request: EAMGroupCreateRequestDto = {
     name: registerPayload.name,
     tenantId: tenant?.id ?? '',
-    workers: workers,
+    workers: workersIDs ?? [],
   };
-  return await groupApi.create(request);
+  return await eamApi.createGroup(request);
 });
 
 export { create };

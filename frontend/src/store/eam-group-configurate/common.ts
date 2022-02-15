@@ -1,5 +1,5 @@
 enum ActionType {
-  CREATE = 'group/create',
+  CREATE = 'eam-group-configurate/create',
 }
 
 export { ActionType };

@@ -14,7 +14,6 @@ export {
   type EAMGroupRelatedItem,
 } from './eam-group/eam-group';
 export {
-  type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,

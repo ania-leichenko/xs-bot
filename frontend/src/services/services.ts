@@ -3,7 +3,6 @@ import { ENV } from 'common/enums/enums';
 import { Http } from './http/http.service';
 import { AuthApi } from './auth-api/auth-api.service';
 import { TenantApi } from './tenant-api/tenant-api.service';
-import { GroupApi } from './group-api/group-api.service';
 import { EAMApi } from './eam-api/eam-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
@@ -24,11 +23,6 @@ const authApi = new AuthApi({
 });
 
 const tenantApi = new TenantApi({
-  http,
-  apiPrefix: ENV.API_PATH,
-});
-
-const groupApi = new GroupApi({
   http,
   apiPrefix: ENV.API_PATH,
 });
@@ -55,5 +49,4 @@ export {
   notification,
   workerApi,
   eamApi,
-  groupApi,
 };

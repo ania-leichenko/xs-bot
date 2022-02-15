@@ -9,8 +9,8 @@ import { Worker as WorkerEntity } from './worker.entity';
 import { HttpCode } from '~/common/enums/http/http';
 import {
   encrypt as encryptServ,
-  token as tokenServ,
   master as masterServ,
+  token as tokenServ,
 } from '~/services/services';
 import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
 
@@ -82,16 +82,15 @@ class Worker {
     return await this.#workerRepository.create(worker);
   }
 
-  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
+  async getAll(): Promise<EAMWorkerGetAllResponseDto[]> {
     const workers = await this.#workerRepository.getAll();
-
-    return {
-      items: workers.map((m) => ({
-        id: m.id,
-        name: m.name,
-        tenantId: m.tenantId,
-      })),
-    };
+    return workers.map((worker) => {
+      return {
+        id: worker.id,
+        name: worker.name,
+        tenantId: worker.tenantId,
+      };
+    });
   }
 }
 

@@ -1,7 +1,7 @@
-import { EAMWorkerGetAllItemResponseDto } from './eam-worker-get-all-item-response-dto.type';
-
 type EAMWorkerGetAllResponseDto = {
-  items: EAMWorkerGetAllItemResponseDto[];
+  id: string;
+  name: string;
+  tenantId: string;
 };
 
 export { type EAMWorkerGetAllResponseDto };

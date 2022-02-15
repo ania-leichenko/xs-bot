@@ -1,10 +1,13 @@
 import {
   ApiPath,
+  ContentType,
   EAMApiPath,
   GroupsApiPath,
   HttpMethod,
 } from 'common/enums/enums';
 import {
+  EAMGroupCreateRequestDto,
+  EAMGroupCreateResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
 } from 'common/types/types';
@@ -38,6 +41,18 @@ class EAMApi {
       {
         method: HttpMethod.GET,
         params,
+      },
+    );
+  }
+  public createGroup(
+    payload: EAMGroupCreateRequestDto,
+  ): Promise<EAMGroupCreateResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.GROUPS),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }

@@ -1,15 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { getWorkers, workerCreate } from './actions';
-import { EAMWorkerGetAllResponseDto } from 'common/types/types';
 
 type State = {
   groups: [];
-  workers: EAMWorkerGetAllResponseDto | null;
+  workers: [];
 };
 
 const initialState: State = {
   groups: [],
-  workers: null,
+  workers: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {

@@ -4,7 +4,7 @@ enum AppRoute {
   SIGN_UP = '/sign-up',
   EAM = '/eam',
   EAM_CREATE_WORKER = '/eam/create-worker',
-  EAM_CREATE_GROUP = '/eam/create-group',
+  EAM_CONFIGURATE_GROUP = '/eam/configurate-group',
   BS = '/bs',
   SC = '/sc',
   SLC = '/slc',

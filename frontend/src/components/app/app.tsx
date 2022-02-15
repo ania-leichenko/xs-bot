@@ -14,7 +14,7 @@ import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
 import { EAM } from 'components/eam/eam';
 import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
-import { CreateGroupForm } from '../dashboard/components/create-group-form/create-group-form';
+import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
 
 const App: FC = () => {
   const { user } = useAppSelector(({ auth }) => ({
@@ -51,8 +51,8 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
         <Route
-          path={AppRoute.EAM_CREATE_GROUP}
-          element={<AuthorizedRoute component={<CreateGroupForm />} />}
+          path={AppRoute.EAM_CONFIGURATE_GROUP}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
         />
         <Route
           path={AppRoute.EAM}
