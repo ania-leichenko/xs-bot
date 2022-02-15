@@ -1,16 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { getWorkers } from './actions';
-import { EAMWorkerGetAllResponseDto } from 'common/types/types';
+import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
 
 type State = {
   dataStatus: DataStatus;
-  workers: EAMWorkerGetAllResponseDto | null;
+  workers: EAMWorkerGetAllItemResponseDto[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
-  workers: null,
+  workers: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -19,7 +19,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(getWorkers.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.workers = action.payload;
+    state.workers = action.payload.items;
   });
   builder.addCase(getWorkers.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

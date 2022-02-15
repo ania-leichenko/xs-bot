@@ -1,7 +1,7 @@
 type EAMWorkerGetAllItemResponseDto = {
   id: string;
   name: string;
-  createdAt: Date;
+  createdAt: string;
   groupIds: string[];
 };
 

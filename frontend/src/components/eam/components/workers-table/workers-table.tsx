@@ -12,7 +12,7 @@ const WorkersTable: FC = () => {
 
   const columns = useMemo(() => getColumns(), []);
 
-  return <Table columns={columns} data={data} title={'Users'} />;
+  return <Table columns={columns} data={data} title="Users" />;
 };
 
 export { WorkersTable };

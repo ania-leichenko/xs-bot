@@ -4,14 +4,10 @@ import { EAMWorkerGetAllResponseDto } from 'common/types/types';
 type Row = {
   [WorkersTableAccessor.USER_NAME]: string;
   [WorkersTableAccessor.GROUPS]: string[];
-  [WorkersTableAccessor.CREATION_TIME]: Date;
+  [WorkersTableAccessor.CREATION_TIME]: string;
 };
 
-const getRows = (workers: EAMWorkerGetAllResponseDto | null): Row[] => {
-  if (!workers) {
-    return [];
-  }
-
+const getRows = (workers: EAMWorkerGetAllResponseDto): Row[] => {
   return workers.items.map((item) => {
     const { name, groupIds, createdAt } = item;
 

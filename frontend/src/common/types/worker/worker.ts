@@ -1,1 +1,4 @@
-export { type EAMWorkerGetAllResponseDto } from 'bws-shared/common/types/types';
+export {
+  type EAMWorkerGetAllResponseDto,
+  type EAMWorkerGetAllItemResponseDto,
+} from 'bws-shared/common/types/types';
