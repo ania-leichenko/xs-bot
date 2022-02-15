@@ -36,6 +36,9 @@ const EAM: FC = () => {
       <div className={styles.link}>
         <Link to={AppRoute.EAM_CREATE_WORKER}>Add User</Link>
       </div>
+      <div className={styles.link}>
+        <Link to={AppRoute.EAM_CONFIGURATE_GROUP}>Add Group</Link>
+      </div>
     </div>
   );
 };
