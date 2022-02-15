@@ -13,5 +13,7 @@ export {
   EAMWorkerValidationRule,
   EAMMasterValidationMessage,
   EAMMasterValidationRule,
+  EAMGroupValidationRule,
+  EAMGroupValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
