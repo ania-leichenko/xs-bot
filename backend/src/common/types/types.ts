@@ -16,6 +16,10 @@ export {
 export {
   type EAMGroupCreateResponseDto,
   type EAMGroupCreateRequestDto,
+  type EAMGroupGetByTenantRequestParamsDto,
+  type EAMGroupGetByTenantResponseDto,
+  type EAMGroupGetByTenantResponseItemDto,
+  type EAMGroupRelatedItem,
 } from './eam-group/eam-group';
 export {
   type EAMTenantCreateRequestDto,

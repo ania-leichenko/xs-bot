@@ -7,6 +7,7 @@ import {
 } from 'common/enums/enums';
 import { HttpOptions } from 'common/types/types';
 import { Storage } from '../storage/storage.service';
+import { getQueryString } from 'helpers/helpers';
 
 type Constructor = {
   storage: Storage;
@@ -28,10 +29,11 @@ class Http {
       payload = null,
       contentType,
       hasAuth = true,
+      params,
     } = options;
     const headers = this.getHeaders(contentType, hasAuth);
 
-    return fetch(url, {
+    return fetch(this.getUrl(url, params), {
       method,
       headers,
       body: payload,
@@ -68,6 +70,10 @@ class Http {
       });
     }
     return response;
+  }
+
+  private getUrl(url: string, query?: Record<string, unknown>): string {
+    return `${url}${query ? getQueryString(query) : ''}`;
   }
 
   private parseJSON<T>(response: Response): Promise<T> {

@@ -3,6 +3,7 @@ import { rootReducer } from './root-reducer';
 import {
   authApi,
   tenantApi,
+  eamApi,
   navigation,
   storage,
   workerApi,
@@ -13,6 +14,7 @@ import { handleError } from './middlewares/middlewares';
 const extraArgument = {
   authApi,
   tenantApi,
+  eamApi,
   navigation,
   storage,
   workerApi,
