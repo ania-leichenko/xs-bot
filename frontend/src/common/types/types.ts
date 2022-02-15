@@ -17,16 +17,21 @@ export {
   type EAMMasterSignUpRequestDto,
   type EAMMasterSignInRequestDto,
   type EAMMasterByIdResponseDto,
-} from './master/master';
+} from './eam-master/eam-master';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
-} from './tenant/tenant';
+} from './eam-tenant/eam-tenant';
 export {
   type EAMGroupGetByTenantRequestParamsDto,
   type EAMGroupGetByTenantResponseDto,
   type EAMGroupGetByTenantResponseItemDto,
-} from './group/group';
+} from './eam-group/eam-group';
+export {
+  type EAMWorkerCreateRequestDto,
+  type EAMWorkerCreateResponseDto,
+  type EAMWorkerCreateFormDto,
+} from './eam-worker/eam-worker';
 export { type ServiceMenuItem } from './ui/ui';

@@ -7,6 +7,7 @@ import { EAMApi } from './eam-api/eam-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
+import { WorkerApi } from './worker-api/worker-api.service';
 
 const storage = new Storage({
   storage: window.localStorage,
@@ -35,4 +36,17 @@ const navigation = new Navigation({
   history: createBrowserHistory(),
 });
 
-export { authApi, tenantApi, storage, navigation, notification, eamApi };
+const workerApi = new WorkerApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
+export {
+  authApi,
+  tenantApi,
+  storage,
+  navigation,
+  notification,
+  workerApi,
+  eamApi,
+};

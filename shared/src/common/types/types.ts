@@ -16,11 +16,10 @@ export {
 export {
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerGetAllResponseDto,
-} from './eam-worker/eam-worker';
-export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
-} from './worker/worker';
+  type EAMWorkerCreateFormDto,
+} from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,
   type EAMTenantCreateResponseDto,
