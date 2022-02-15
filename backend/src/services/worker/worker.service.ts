@@ -59,7 +59,7 @@ class Worker {
       },
       token: this.#tokenService.create({
         userId: id,
-        userRole: UserRole.worker,
+        userRole: UserRole.WORKER,
       }),
     };
   }

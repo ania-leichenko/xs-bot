@@ -1,4 +1,5 @@
 import { UserRole } from 'bws-shared';
+import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 import {
   EAMMasterSignInRequestDto,
   EAMMasterSignInResponseDto,
@@ -6,6 +7,7 @@ import {
   EAMWorkerSignInResponseDto,
   TokenPayload,
 } from '~/common/types/types';
+import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import {
   master as masterServ,
   worker as workerServ,
@@ -47,12 +49,18 @@ class Auth {
     const { userId, userRole } = this.#tokenService.decode<TokenPayload>(token);
 
     switch (userRole) {
-      case UserRole.master:
+      case UserRole.MASTER: {
         return this.#masterService.getCurrentUser(userId);
-      case UserRole.worker:
+      }
+      case UserRole.WORKER: {
         return this.#workerService.getCurrentUser(userId);
-      default:
-        return null;
+      }
+      default: {
+        throw new InvalidCredentialsError({
+          status: HttpCode.BAD_REQUEST,
+          message: ExceptionMessage.INVALID_TOKEN,
+        });
+      }
     }
   }
 }

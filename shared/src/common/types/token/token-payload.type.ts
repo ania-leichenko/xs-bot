@@ -1,6 +1,8 @@
+import { UserRole } from '~/common/enums/enums';
+
 type TokenPayload = {
   userId: string;
-  userRole: string;
+  userRole: UserRole;
 };
 
 export { type TokenPayload };

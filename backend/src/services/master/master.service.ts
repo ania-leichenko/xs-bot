@@ -69,7 +69,7 @@ class Master {
       },
       token: this.#tokenService.create({
         userId: id,
-        userRole: UserRole.master,
+        userRole: UserRole.MASTER,
       }),
     };
   }
