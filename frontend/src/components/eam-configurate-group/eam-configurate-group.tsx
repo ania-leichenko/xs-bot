@@ -36,6 +36,8 @@ const EAMConfigurateGroup: FC = () => {
   useEffect(() => {
     dispatch(
       eamActions.getWorkers({
+        from: 0,
+        count: 0,
         tenantId: tenantId as string,
       }),
     );
