@@ -12,7 +12,7 @@ import {
   SignInWorkerForm,
   SignUpForm,
 } from './components/components';
-import styles from './auth.module.scss';
+import styles from './styles.module.scss';
 import logo from 'assets/img/logo.svg';
 import { Navigate } from 'components/common/common';
 

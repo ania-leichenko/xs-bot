@@ -9,7 +9,7 @@ import {
   EAMMasterByIdResponseDto,
   EAMWorkerByIdResponseDto,
 } from 'common/types/types';
-import styles from './header.module.scss';
+import styles from './styles.module.scss';
 
 const Header: FC = () => {
   const [isVisible, setVisible] = useState<boolean>(false);

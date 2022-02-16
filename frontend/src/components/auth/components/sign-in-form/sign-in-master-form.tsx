@@ -6,7 +6,7 @@ import { getNameOf } from 'helpers/helpers';
 import { EAMMasterSignInRequestDto } from 'common/types/types';
 import { Button, Input, Link, PasswordInput } from 'components/common/common';
 import { DEFAULT_MASTER_LOGIN_PAYLOAD } from './common/constants';
-import styles from './sign-in-form.module.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   onSubmit: (payload: EAMMasterSignInRequestDto) => void;
