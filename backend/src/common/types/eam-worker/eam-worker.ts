@@ -7,4 +7,5 @@ export {
   type EAMWorkerGetByTenantRequestParamsDto,
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
+  type EAMWorkerByIdResponseDto,
 } from 'bws-shared/common/types/types';
