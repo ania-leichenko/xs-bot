@@ -3,13 +3,16 @@ import {
   ContentType,
   EAMApiPath,
   GroupsApiPath,
+  WorkersApiPath,
   HttpMethod,
 } from 'common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
   EAMGroupCreateResponseDto,
+  EAMWorkerGetAllResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -44,6 +47,7 @@ class EAMApi {
       },
     );
   }
+
   public createGroup(
     payload: EAMGroupCreateRequestDto,
   ): Promise<EAMGroupCreateResponseDto> {
@@ -53,6 +57,23 @@ class EAMApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getAllWorkers(
+    params: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<EAMWorkerGetAllResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.WORKERS,
+        WorkersApiPath.ROOT,
+      ),
+      {
+        method: HttpMethod.GET,
+        params,
       },
     );
   }

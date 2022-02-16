@@ -3,4 +3,6 @@ export {
   UsersTableHeader,
   GroupsTableHeader,
   GroupsTableAccessor,
+  WorkersTableHeader,
+  WorkersTableAccessor,
 } from './table/table';

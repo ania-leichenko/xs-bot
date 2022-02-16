@@ -1,16 +1,13 @@
 import { UsersTableAccessor } from 'common/enums/enums';
-import {
-  EAMWorkerGetAllResponseDto,
-  EAMWorkerGetAllItemResponseDto,
-} from 'common/types/types';
+import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
 
 type Row = {
   [UsersTableAccessor.USERNAME]: string;
   [UsersTableAccessor.TENANT_ID]: string;
 };
 
-const getRows = ({ items }: EAMWorkerGetAllResponseDto): Row[] => {
-  return items.map((item: EAMWorkerGetAllItemResponseDto) => {
+const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
+  return workers.map((item: EAMWorkerGetAllItemResponseDto) => {
     const { id, name, tenantId } = item;
 
     return {

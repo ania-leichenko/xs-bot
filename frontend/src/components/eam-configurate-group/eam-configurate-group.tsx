@@ -9,7 +9,11 @@ import {
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
-import { EAMGroupConfigurate as groupsAction } from 'store/actions';
+import {
+  EAMGroupConfigurate as groupsAction,
+  eam as eamActions,
+} from 'store/actions';
+
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 import { getRows, getColumns } from './helpers/helpers';
@@ -20,19 +24,25 @@ const EAMConfigurateGroup: FC = () => {
       defaultValues: DEFAULT_GROUP_PAYLOAD,
     });
 
+  const { id: tenantId } = useAppSelector(({ app }) => ({
+    id: app.tenant?.id,
+  }));
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(groupsAction.getWorkers());
-  }, []);
+    dispatch(
+      eamActions.getWorkers({
+        tenantId: tenantId as string,
+      }),
+    );
+  }, [dispatch, tenantId]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     dispatch(groupsAction.create(payload));
   };
 
-  const { workers } = useAppSelector(
-    ({ EAMGroupConfigurate }) => EAMGroupConfigurate,
-  );
+  const { workers } = useAppSelector(({ eam }) => eam);
 
   const columns = useMemo(() => getColumns(), []);
 

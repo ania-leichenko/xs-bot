@@ -4,6 +4,7 @@ export {
   TenantsApiPath,
   EAMApiPath,
   GroupsApiPath,
+  WorkersApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
@@ -13,5 +14,7 @@ export {
   EAMWorkerValidationRule,
   EAMMasterValidationMessage,
   EAMMasterValidationRule,
+  EAMGroupValidationRule,
+  EAMGroupValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
