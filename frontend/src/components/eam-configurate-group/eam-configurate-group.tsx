@@ -10,10 +10,7 @@ import {
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
-import {
-  EAMGroupConfigurate as groupsAction,
-  eam as eamActions,
-} from 'store/actions';
+import { EAMGroupConfigurate as groupsAction } from 'store/actions';
 
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
@@ -24,20 +21,30 @@ const EAMConfigurateGroup: FC = () => {
     useAppForm<EAMGroupConfigurateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
     });
-
-  const [selected_workers] = useState(new Set<string>([]));
-
   const { id: tenantId } = useAppSelector(({ app }) => ({
     id: app.tenant?.id,
   }));
+  const { workers } = useAppSelector(
+    ({ EAMGroupConfigurate }) => EAMGroupConfigurate,
+  );
 
   const dispatch = useAppDispatch();
 
+  const [selectedWorkers, setSelectedWorkers] = useState(new Set<string>([]));
+
+  const addWorkerId = (id: string): void => {
+    setSelectedWorkers((_previousState) => new Set([...selectedWorkers, id]));
+  };
+
+  const removeWorkersId = (id: string): void => {
+    setSelectedWorkers((prev) => new Set([...prev].filter((x) => x !== id)));
+  };
+
   useEffect(() => {
     dispatch(
-      eamActions.getWorkers({
+      groupsAction.getWorkers({
         from: 0,
-        count: 0,
+        count: 10,
         tenantId: tenantId as string,
       }),
     );
@@ -46,14 +53,12 @@ const EAMConfigurateGroup: FC = () => {
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
       name: payload.name,
-      workers: Array.from(selected_workers),
+      workersIds: Array.from(selectedWorkers),
     };
     dispatch(groupsAction.create(newPayload));
   };
 
-  const { workers } = useAppSelector(({ eam }) => eam);
-
-  const columns = useMemo(() => getColumns(selected_workers), []);
+  const columns = useMemo(() => getColumns(addWorkerId, removeWorkersId), []);
 
   const data = useMemo(() => getRows(workers), [workers]);
 

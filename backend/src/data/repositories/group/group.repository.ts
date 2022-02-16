@@ -52,11 +52,11 @@ class Group {
       return null;
     }
 
-    return Group.modelToEntity(group);
+    return Group.modelToEntity(group, ['']);
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
-    const { id, name, tenantId, createdAt } = group;
+    const { id, name, tenantId, createdAt, workersIds } = group;
 
     const created = await this.#GroupModel.query().insert({
       id,
@@ -64,30 +64,28 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
-
-    return Group.modelToEntity(created);
-  }
-
-  public async addWorkersToGroup(
-    workerIds: string[],
-    group: GroupEntity,
-  ): Promise<void> {
     await this.#UsersGroupsModel.query().insert(
-      workerIds.map((workerId) => ({
+      workersIds.map((workerId) => ({
         id: getRandomId(),
         userId: workerId,
-        groupId: group.id,
-        createdAt: group.createdAt,
+        groupId: id,
+        createdAt: createdAt,
       })),
     );
+
+    return Group.modelToEntity(created, workersIds);
   }
 
-  public static modelToEntity(model: GroupM): GroupEntity {
+  public static modelToEntity(
+    model: GroupM,
+    workersIds: string[],
+  ): GroupEntity {
     return GroupEntity.initialize({
       id: model.id,
       name: model.name,
       createdAt: model.createdAt,
       tenantId: model.tenantId,
+      workersIds: workersIds,
     });
   }
 }

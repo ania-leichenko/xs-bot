@@ -1,9 +1,6 @@
 .wrapper {
-  display: flex;
   flex-grow: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 35px 40px;
   background-image: url("/assets/img/decorate.svg");
   background-repeat: no-repeat;
   background-position: 0 0;
@@ -11,9 +8,6 @@
 }
 
 .title {
-  position: absolute;
-  top: 100px;
-  left: 40px;
   display: flex;
   align-items: center;
   margin: 0 0 40px;
@@ -49,8 +43,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 870px;
-  margin-top: 105px;
-  margin-bottom: 120px;
+  margin: 0 25% 50px;
   padding: 40px 90px;
   font-style: normal;
   background: var(--color-boltgun);

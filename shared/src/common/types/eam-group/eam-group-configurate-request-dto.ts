@@ -1,6 +1,6 @@
 type EAMGroupConfigurateRequestDto = {
   name: string;
-  workers: string[];
+  workersIds: string[];
 };
 
 export { type EAMGroupConfigurateRequestDto };

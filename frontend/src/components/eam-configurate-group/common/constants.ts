@@ -2,7 +2,7 @@ import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 
 const DEFAULT_GROUP_PAYLOAD: EAMGroupConfigurateRequestDto = {
   name: '',
-  workers: [],
+  workersIds: [],
 };
 
 export { DEFAULT_GROUP_PAYLOAD };

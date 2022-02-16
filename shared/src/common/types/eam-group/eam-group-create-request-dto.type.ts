@@ -1,7 +1,7 @@
 type EAMGroupCreateRequestDto = {
   name: string;
   tenantId: string;
-  workers: string[];
+  workersIds: string[];
 };
 
 export { type EAMGroupCreateRequestDto };

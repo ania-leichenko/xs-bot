@@ -21,7 +21,7 @@ const eamGroupCreate = Joi.object({
   [getNameOf<EAMGroupCreateRequestDto>('tenantId')]: Joi.string()
     .trim()
     .required(),
-  [getNameOf<EAMGroupCreateRequestDto>('workers')]: Joi.array().required(),
+  [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array().required(),
 });
 
 export { eamGroupCreate };
