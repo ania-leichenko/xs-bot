@@ -7,6 +7,8 @@ const ExceptionMessage = {
   PASSWORDS_NOT_MATCH: 'Passwords do not match.',
   USER_EXISTS: 'Account with this email already exists.',
   UNAUTHORIZED_USER: 'Unauthorized user.',
+  WORKER_NAME:
+    'Account with that name does not exist. Try again or create a new account.',
 };
 
 export { ExceptionMessage };

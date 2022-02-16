@@ -63,6 +63,27 @@ class Worker {
     return Worker.modelToEntity(worker, groupIds);
   }
 
+  async getById(id: string): Promise<WorkerEntity | null> {
+    const worker = await this.#WorkerModel
+      .query()
+      .select()
+      .where({ id })
+      .first();
+
+    if (!worker) {
+      return null;
+    }
+
+    const groups: UsersGroups[] = await this.#UsersGroupsModel
+      .query()
+      .select('group_id')
+      .where({ userId: id });
+
+    const groupIds: string[] = groups.map((group) => group.groupId);
+
+    return Worker.modelToEntity(worker, groupIds);
+  }
+
   public async create(worker: WorkerEntity): Promise<WorkerEntity> {
     const { id, name, passwordHash, passwordSalt, tenantId, groupIds } = worker;
 

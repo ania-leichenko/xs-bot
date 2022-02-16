@@ -3,14 +3,13 @@ import {
   EAMMasterSignUpResponseDto,
   EAMMasterSignInRequestDto,
   EAMMasterSignInResponseDto,
-  TokenPayload,
   EAMMasterByIdResponseDto,
 } from '~/common/types/types';
 import { master as masterRep } from '~/data/repositories/repositories';
 import { Master as MasterEntity } from './master.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage } from '~/common/enums/enums';
+import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import {
   token as tokenServ,
   encrypt as encryptServ,
@@ -70,14 +69,14 @@ class Master {
       },
       token: this.#tokenService.create({
         userId: id,
+        userRole: UserRole.MASTER,
       }),
     };
   }
 
-  public async getCurrentUser(
-    token: string,
+  public async getUserById(
+    userId: string,
   ): Promise<EAMMasterSignUpResponseDto> {
-    const { userId } = this.#tokenService.decode<TokenPayload>(token);
     return this.login(userId);
   }
 

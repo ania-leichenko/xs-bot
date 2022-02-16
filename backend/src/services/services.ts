@@ -11,6 +11,7 @@ import { Encrypt } from './encrypt/encrypt.service';
 import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
 import { Worker } from './worker/worker.service';
+import { Auth } from './auth/auth.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -33,10 +34,17 @@ const worker = new Worker({
   encryptService: encrypt,
   tokenService: token,
   masterService: master,
+  tenantService: tenant,
 });
 
 const group = new Group({
   groupRepository,
 });
 
-export { master, encrypt, token, tenant, worker, group };
+const auth = new Auth({
+  masterService: master,
+  workerService: worker,
+  tokenService: token,
+});
+
+export { master, encrypt, token, tenant, worker, group, auth };

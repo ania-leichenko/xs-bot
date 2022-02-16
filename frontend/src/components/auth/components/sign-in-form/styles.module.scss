@@ -13,6 +13,22 @@
   font-style: normal;
 }
 
+.button {
+  padding: 0;
+  color: var(--color-orange);
+  font-weight: 500;
+  font-size: 12px;
+  font-style: normal;
+  text-align: left;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
 .link {
   color: var(--color-orange);
   text-decoration: none;

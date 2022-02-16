@@ -1,5 +1,6 @@
 export {
   ApiPath,
+  AuthApiPath,
   MastersApiPath,
   TenantsApiPath,
   EAMApiPath,
@@ -12,3 +13,4 @@ export { TableName } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export { ExceptionMessage } from './exception/exception';
 export { Permission } from './permissions/permissions';
+export { UserRole } from './roles/roles';
