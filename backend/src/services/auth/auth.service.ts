@@ -45,21 +45,25 @@ class Auth {
   public async getCurrentUser(
     token: string,
   ): Promise<null | EAMMasterSignInResponseDto | EAMWorkerSignInResponseDto> {
-    const { userId, userRole } = this.#tokenService.decode<TokenPayload>(token);
-
-    switch (userRole) {
-      case UserRole.MASTER: {
-        return this.#masterService.getUserById(userId);
+    try {
+      const { userId, userRole } =
+        this.#tokenService.decode<TokenPayload>(token);
+      switch (userRole) {
+        case UserRole.MASTER: {
+          return this.#masterService.getUserById(userId);
+        }
+        case UserRole.WORKER: {
+          return this.#workerService.getUserById(userId);
+        }
+        default: {
+          throw new Error();
+        }
       }
-      case UserRole.WORKER: {
-        return this.#workerService.getUserById(userId);
-      }
-      default: {
-        throw new InvalidCredentialsError({
-          status: HttpCode.BAD_REQUEST,
-          message: ExceptionMessage.INVALID_TOKEN,
-        });
-      }
+    } catch {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.INVALID_TOKEN,
+      });
     }
   }
 }

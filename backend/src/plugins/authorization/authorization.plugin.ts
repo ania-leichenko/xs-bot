@@ -1,30 +1,19 @@
 import fp from 'fastify-plugin';
 import { FastifyPluginAsync } from 'fastify';
-import {
-  ControllerHook,
-  ExceptionMessage,
-  UserRole,
-} from '~/common/enums/enums';
-import { TokenPayload } from '~/common/types/types';
+import { ControllerHook, ExceptionMessage } from '~/common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import {
-  master as masterServ,
-  worker as workerServ,
-  token as tokenServ,
-} from '~/services/services';
+import { auth as authServ } from '~/services/services';
 
 type Options = {
   whiteRoutes: string[];
   services: {
-    master: typeof masterServ;
-    worker: typeof workerServ;
-    token: typeof tokenServ;
+    auth: typeof authServ;
   };
 };
 
 const authorization: FastifyPluginAsync<Options> = fp(async (fastify, opts) => {
   const { whiteRoutes, services } = opts;
-  const { master, worker, token: tokenService } = services;
+  const { auth } = services;
 
   fastify.addHook(ControllerHook.ON_REQUEST, async (request) => {
     const isWhiteRoute = whiteRoutes.some(
@@ -34,25 +23,14 @@ const authorization: FastifyPluginAsync<Options> = fp(async (fastify, opts) => {
       return;
     }
 
-    try {
-      const [, token] = request.headers?.authorization?.split(' ') ?? [];
-      const { userId, userRole } = tokenService.decode<TokenPayload>(token);
-
-      const authorizedUser =
-        userRole === UserRole.MASTER
-          ? await master.getMasterById(userId)
-          : await worker.getWorkerById(userId);
-
-      if (!authorizedUser) {
-        throw new InvalidCredentialsError({
-          message: ExceptionMessage.INVALID_TOKEN,
-        });
-      }
-    } catch {
+    const [, token] = request.headers?.authorization?.split(' ') ?? [];
+    if (typeof token !== 'string') {
       throw new InvalidCredentialsError({
         message: ExceptionMessage.UNAUTHORIZED_USER,
       });
     }
+
+    await auth.getCurrentUser(token);
   });
 });
 
