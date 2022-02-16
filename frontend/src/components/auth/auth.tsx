@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
   EAMMasterSignUpRequestDto,
   EAMMasterSignInRequestDto,
@@ -6,7 +6,12 @@ import {
 } from 'common/types/types';
 import { auth as authActions } from 'store/actions';
 import { AppRoute, UserRole } from 'common/enums/enums';
-import { useLocation, useAppDispatch, useAppSelector } from 'hooks/hooks';
+import {
+  useLocation,
+  useAppDispatch,
+  useAppSelector,
+  useState,
+} from 'hooks/hooks';
 import {
   SignInMasterForm,
   SignInWorkerForm,
