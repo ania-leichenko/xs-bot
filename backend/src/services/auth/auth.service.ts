@@ -1,5 +1,4 @@
-import { UserRole } from 'bws-shared';
-import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
+import { ExceptionMessage, HttpCode, UserRole } from '~/common/enums/enums';
 import {
   EAMMasterSignInRequestDto,
   EAMMasterSignInResponseDto,
