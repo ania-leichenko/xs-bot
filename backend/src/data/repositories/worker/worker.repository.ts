@@ -30,14 +30,16 @@ class Worker {
   public async getAll(
     param: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllItemResponseDto[]> {
-    const { tenantId } = param;
+    const { from: offset, count: limit, tenantId } = param;
 
     const workers = await this.#WorkerModel
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
       .withGraphFetched('[groups]')
-      .orderBy('createdAt', 'desc');
+      .orderBy('createdAt', 'desc')
+      .offset(offset)
+      .limit(limit);
 
     return workers;
   }
