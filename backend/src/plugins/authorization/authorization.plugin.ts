@@ -1,3 +1,4 @@
+import fp from 'fastify-plugin';
 import { FastifyPluginAsync } from 'fastify';
 import { ControllerHook, ExceptionMessage } from '~/common/enums/enums';
 import { TokenPayload } from '~/common/types/types';
@@ -12,7 +13,7 @@ type Options = {
   };
 };
 
-const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
+const authorization: FastifyPluginAsync<Options> = fp(async (fastify, opts) => {
   const { whiteRoutes, services } = opts;
   const { master, token: tokenService } = services;
 
@@ -24,17 +25,22 @@ const authorization: FastifyPluginAsync<Options> = async (fastify, opts) => {
       return;
     }
 
-    const [, token] = request.headers?.authorization?.split(' ') ?? [];
-    const { userId } = tokenService.decode<TokenPayload>(token);
+    try {
+      const [, token] = request.headers?.authorization?.split(' ') ?? [];
+      const { userId } = tokenService.decode<TokenPayload>(token);
 
-    const authorizedUser = await master.getMasterById(userId);
-    if (!authorizedUser) {
+      const authorizedUser = await master.getMasterById(userId);
+      if (!authorizedUser) {
+        throw new InvalidCredentialsError({
+          message: ExceptionMessage.INVALID_TOKEN,
+        });
+      }
+    } catch {
       throw new InvalidCredentialsError({
-        message: ExceptionMessage.INVALID_TOKEN,
+        message: ExceptionMessage.UNAUTHORIZED_USER,
       });
     }
-
-    fastify.decorateRequest('user', authorizedUser);
   });
-};
+});
+
 export { authorization };
