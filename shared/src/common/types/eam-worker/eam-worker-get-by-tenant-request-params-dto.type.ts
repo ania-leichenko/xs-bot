@@ -1,4 +1,6 @@
 type EAMWorkerGetByTenantRequestParamsDto = {
+  from: number;
+  count: number;
   tenantId: string;
 };
 
