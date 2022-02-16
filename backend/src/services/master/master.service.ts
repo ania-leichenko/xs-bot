@@ -74,7 +74,7 @@ class Master {
     };
   }
 
-  public async getCurrentUser(
+  public async getUserById(
     userId: string,
   ): Promise<EAMMasterSignUpResponseDto> {
     return this.login(userId);

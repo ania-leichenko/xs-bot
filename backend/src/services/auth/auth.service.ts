@@ -49,10 +49,10 @@ class Auth {
 
     switch (userRole) {
       case UserRole.MASTER: {
-        return this.#masterService.getCurrentUser(userId);
+        return this.#masterService.getUserById(userId);
       }
       case UserRole.WORKER: {
-        return this.#workerService.getCurrentUser(userId);
+        return this.#workerService.getUserById(userId);
       }
       default: {
         throw new InvalidCredentialsError({

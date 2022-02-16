@@ -64,7 +64,7 @@ class Worker {
     };
   }
 
-  public async getCurrentUser(
+  public async getUserById(
     userId: string,
   ): Promise<EAMWorkerSignInResponseDto> {
     return this.login(userId);
