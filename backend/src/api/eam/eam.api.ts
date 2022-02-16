@@ -13,6 +13,8 @@ import {
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
 } from '~/common/types/types';
+import { eamGroupCreate as groupCreateValidationSchema } from '~/validation-schemas/validation-schemas';
+import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
 type Options = {
   services: {
@@ -50,6 +52,18 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: EAMApiPath.GROUPS,
+    schema: {
+      body: groupCreateValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof groupCreateValidationSchema>) {
+      return (
+        data: EAMGroupCreateRequestDto,
+      ): ReturnType<typeof groupCreateValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
     async handler(
       req: FastifyRequest<{ Body: EAMGroupCreateRequestDto }>,
       rep,

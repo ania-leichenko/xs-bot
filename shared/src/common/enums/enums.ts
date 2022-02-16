@@ -1,5 +1,6 @@
 export {
   ApiPath,
+  AuthApiPath,
   MastersApiPath,
   TenantsApiPath,
   EAMApiPath,
@@ -14,5 +15,8 @@ export {
   EAMWorkerValidationRule,
   EAMMasterValidationMessage,
   EAMMasterValidationRule,
+  EAMGroupValidationRule,
+  EAMGroupValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
+export { UserRole } from './roles/roles';
