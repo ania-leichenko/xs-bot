@@ -1,8 +1,2 @@
-import { EAMMasterSignInRequestDto } from 'common/types/types';
-
-const DEFAULT_LOGIN_PAYLOAD: EAMMasterSignInRequestDto = {
-  email: '',
-  password: '',
-};
-
-export { DEFAULT_LOGIN_PAYLOAD };
+export { DEFAULT_MASTER_LOGIN_PAYLOAD } from './master-payload';
+export { DEFAULT_WORKER_LOGIN_PAYLOAD } from './worker-payload';
