@@ -3,8 +3,12 @@ import { getFormattedISODate } from '~/helpers/helpers';
 import { TableName } from '~/common/enums/enums';
 
 const TABLE_NAME = TableName.OPERATION_SYSTEMS;
+
 async function up(knex: Knex): Promise<void> {
   const dateNowISO = getFormattedISODate(new Date());
+
+  await knex.raw('CREATE SCHEMA IF NOT EXISTS server_computing;');
+
   return knex.schema.createTable(TABLE_NAME, (table) => {
     table
       .uuid('id')
