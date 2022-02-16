@@ -19,6 +19,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(authorizationPlugin, {
     services: {
       master,
+      worker,
       token,
     },
     whiteRoutes: WHITE_ROUTES,

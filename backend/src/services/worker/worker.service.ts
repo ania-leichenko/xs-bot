@@ -6,6 +6,7 @@ import {
   EAMWorkerSignInResponseDto,
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
+  EAMWorkerByIdResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
@@ -46,6 +47,21 @@ class Worker {
     this.#tokenService = tokenService;
     this.#masterService = masterService;
     this.#tenantService = tenantService;
+  }
+
+  public async getWorkerById(
+    id: string,
+  ): Promise<EAMWorkerByIdResponseDto | null> {
+    const worker = await this.#workerRepository.getById(id);
+    if (!worker) {
+      return null;
+    }
+
+    return {
+      id: worker.id,
+      name: worker.name,
+      tenantId: worker.tenantId,
+    };
   }
 
   public async login(id: string): Promise<EAMWorkerSignInResponseDto> {
