@@ -1,15 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   EAMGroupCreateResponseDto,
+  EAMGroupConfigurateRequestDto,
   EAMGroupCreateRequestDto,
   AsyncThunkConfig,
+  EAMWorkerGetAllResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { StorageKey } from 'common/enums/enums';
 
 const create = createAsyncThunk<
   EAMGroupCreateResponseDto,
-  EAMGroupCreateRequestDto,
+  EAMGroupConfigurateRequestDto,
   AsyncThunkConfig
 >(ActionType.CREATE, async (registerPayload, { getState, extra }) => {
   const { eamApi, storage } = extra;
@@ -26,7 +28,19 @@ const create = createAsyncThunk<
     tenantId: tenant?.id ?? '',
     workers: workersIDs ?? [],
   };
-  return await eamApi.createGroup(request);
+
+  /* eslint no-console: ["error", { allow: ["log", "error"] }] */
+  console.log(request);
+  return eamApi.createGroup(request);
 });
 
-export { create };
+const getWorkers = createAsyncThunk<
+  EAMWorkerGetAllResponseDto,
+  void,
+  AsyncThunkConfig
+>(ActionType.GET_WORKERS, async (_payload, { extra }) => {
+  const { workerApi } = extra;
+  return workerApi.getAll();
+});
+
+export { create, getWorkers };

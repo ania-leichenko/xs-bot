@@ -1,16 +1,14 @@
-import {
-  UsersTableHeader,
-  UsersTableAccessor,
-  StorageKey,
-} from 'common/enums/enums';
 import { Checkbox } from 'components/common/common';
 import { useState } from 'hooks/hooks';
 import { storage } from 'services/services';
-import { Column } from 'react-table';
-
+import { CellProps } from 'react-table';
 const selected_workers = new Set();
+import { StorageKey } from 'common/enums/enums';
 
-const checkboxHandler = ({ row }: unknown): JSX.Element => {
+const SelectRowCell = ({
+  row,
+}: CellProps<Record<string, string>>): JSX.Element => {
+  // how do it without storage?
   const [isChecked, setIsChecked] = useState(false);
   if (isChecked) {
     selected_workers.add(row.original.id);
@@ -40,22 +38,4 @@ const checkboxHandler = ({ row }: unknown): JSX.Element => {
   );
 };
 
-const getColumns = (): Column[] => {
-  return [
-    {
-      Header: '',
-      accessor: 'check',
-      Cell: checkboxHandler,
-    },
-    {
-      Header: UsersTableHeader.USERNAME,
-      accessor: UsersTableAccessor.USERNAME,
-    },
-    {
-      Header: UsersTableHeader.TENANT_ID,
-      accessor: UsersTableAccessor.TENANT_ID,
-    },
-  ];
-};
-
-export { getColumns };
+export { SelectRowCell };

@@ -1,8 +1,7 @@
-import { EAMGroupCreateRequestDto } from 'common/types/types';
+import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 
-const DEFAULT_GROUP_PAYLOAD: EAMGroupCreateRequestDto = {
+const DEFAULT_GROUP_PAYLOAD: EAMGroupConfigurateRequestDto = {
   name: '',
-  tenantId: '',
   workers: [],
 };
 

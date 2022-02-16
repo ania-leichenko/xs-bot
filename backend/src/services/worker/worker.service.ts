@@ -82,15 +82,15 @@ class Worker {
     return await this.#workerRepository.create(worker);
   }
 
-  async getAll(): Promise<EAMWorkerGetAllResponseDto[]> {
+  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll();
-    return workers.map((worker) => {
-      return {
+    return {
+      items: workers.map((worker) => ({
         id: worker.id,
         name: worker.name,
         tenantId: worker.tenantId,
-      };
-    });
+      })),
+    };
   }
 }
 

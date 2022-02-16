@@ -32,11 +32,13 @@ export {
 export {
   type EAMGroupCreateRequestDto,
   type EAMGroupCreateResponseDto,
+  type EAMGroupConfigurateRequestDto,
 } from './eam/eam';
 export {
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerGetAllResponseDto,
+  type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerCreateFormDto,
 } from './eam-worker/eam-worker';
 export { type ServiceMenuItem } from './ui/ui';
