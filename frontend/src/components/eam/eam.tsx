@@ -22,6 +22,8 @@ const EAM: FC = () => {
     dispatch(
       eamActions.getWorkers({
         tenantId: tenantId as string,
+        from: 0,
+        count: 5,
       }),
     );
 

@@ -10,6 +10,7 @@ import {
 import {
   EAMGroupCreateRequestDto,
   EAMGroupGetByTenantRequestParamsDto,
+  EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
 } from '~/common/types/types';
 
@@ -62,7 +63,9 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.GET,
     url: `${EAMApiPath.WORKERS}${WorkersApiPath.ROOT}`,
     async handler(
-      req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
+      req: FastifyRequest<{
+        Querystring: EAMWorkerGetByTenantRequestParamsDto;
+      }>,
       rep,
     ) {
       const workers = await workerService.getAll(req.query);
