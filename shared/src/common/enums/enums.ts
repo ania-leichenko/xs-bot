@@ -4,6 +4,7 @@ export {
   TenantsApiPath,
   EAMApiPath,
   GroupsApiPath,
+  WorkersApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';

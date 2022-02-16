@@ -3,6 +3,7 @@ import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
   EAMWorkerGetAllResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
@@ -82,15 +83,12 @@ class Worker {
     return await this.#workerRepository.create(worker);
   }
 
-  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
-    const workers = await this.#workerRepository.getAll();
+  async getAll(
+    param: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<EAMWorkerGetAllResponseDto> {
+    const workers = await this.#workerRepository.getAll(param);
 
-    return {
-      items: workers.map((m) => ({
-        id: m.id,
-        name: m.name,
-      })),
-    };
+    return { items: workers };
   }
 }
 

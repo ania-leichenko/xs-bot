@@ -5,6 +5,7 @@ import {
   HttpMethod,
   EAMApiPath,
   GroupsApiPath,
+  WorkersApiPath,
 } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
@@ -59,9 +60,12 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.GET,
-    url: EAMApiPath.WORKERS,
-    async handler(req, rep) {
-      const workers = await workerService.getAll();
+    url: `${EAMApiPath.WORKERS}${WorkersApiPath.ROOT}`,
+    async handler(
+      req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
+      rep,
+    ) {
+      const workers = await workerService.getAll(req.query);
       return rep.send(workers).status(HttpCode.OK);
     },
   });
