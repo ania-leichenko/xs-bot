@@ -24,6 +24,9 @@ const Header: FC = () => {
     dispatch(authActions.logOut());
   };
 
+  const email = (user as EAMMasterByIdResponseDto)?.email;
+  const name = (user as EAMWorkerByIdResponseDto)?.name;
+
   return (
     <header className={styles.header}>
       <div className={styles.headerContainer}>
@@ -33,10 +36,7 @@ const Header: FC = () => {
         <div className={styles.menu}>
           <div className={styles.profile}>
             <span className={styles.profileName}>
-              {(user as EAMMasterByIdResponseDto)?.email ??
-                (user as EAMWorkerByIdResponseDto)?.name ??
-                '-'}{' '}
-              @ {tenant?.name ?? '-'}
+              {email ?? name ?? '-'} @ {tenant?.name ?? '-'}
             </span>
           </div>
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
