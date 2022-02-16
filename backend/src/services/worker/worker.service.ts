@@ -5,6 +5,7 @@ import {
   EAMWorkerSignInRequestDto,
   EAMWorkerSignInResponseDto,
   EAMWorkerGetAllResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
@@ -152,15 +153,12 @@ class Worker {
     return this.login(worker.id);
   }
 
-  async getAll(): Promise<EAMWorkerGetAllResponseDto> {
-    const workers = await this.#workerRepository.getAll();
+  async getAll(
+    param: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<EAMWorkerGetAllResponseDto> {
+    const workers = await this.#workerRepository.getAll(param);
 
-    return {
-      items: workers.map((w) => ({
-        id: w.id,
-        name: w.name,
-      })),
-    };
+    return { items: workers };
   }
 }
 

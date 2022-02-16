@@ -4,6 +4,10 @@ import {
 } from '~/data/models/models';
 import { Worker as WorkerEntity } from '~/services/worker/worker.entity';
 import { getRandomId } from '~/helpers/helpers';
+import {
+  EAMWorkerGetAllItemResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
+} from '~/common/types/types';
 
 type Constructor = {
   WorkerModel: typeof WorkerM;
@@ -23,15 +27,19 @@ class Worker {
     this.#UsersGroupsModel = UsersGroupsModel;
   }
 
-  async getAll(): Promise<WorkerEntity[]> {
-    const workers = await this.#WorkerModel.query();
-    const groups: UsersGroups[] = await this.#UsersGroupsModel.query();
-    const list = workers.map((worker) => {
-      const groupIds: string[] = groups.map((group) => group.groupId);
-      return Worker.modelToEntity(worker, groupIds);
-    });
+  public async getAll(
+    param: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<EAMWorkerGetAllItemResponseDto[]> {
+    const { tenantId } = param;
 
-    return list;
+    const workers = await this.#WorkerModel
+      .query()
+      .select('id', 'name', 'createdAt')
+      .where({ tenantId })
+      .withGraphFetched('[groups]')
+      .orderBy('createdAt', 'desc');
+
+    return workers;
   }
 
   public async getByName(name: string): Promise<WorkerEntity | null> {

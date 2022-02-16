@@ -19,6 +19,8 @@ export {
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateFormDto,
+  type EAMWorkerGetByTenantRequestParamsDto,
+  type EAMWorkerGroupsItem,
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
