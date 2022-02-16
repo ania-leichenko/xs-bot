@@ -1,5 +1,5 @@
 enum WorkersTableHeader {
-  USER_NAME = 'User Name',
+  WORKER_NAME = 'Worker Name',
   GROUPS = 'Groups',
   CREATION_TIME = 'Created At',
   ACTIONS = 'Actions',

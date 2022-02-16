@@ -30,14 +30,16 @@ class Worker {
   public async getAll(
     param: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllItemResponseDto[]> {
-    const { tenantId } = param;
+    const { from: offset, count: limit, tenantId } = param;
 
     const workers = await this.#WorkerModel
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
       .withGraphFetched('[groups]')
-      .orderBy('createdAt', 'desc');
+      .orderBy('createdAt', 'desc')
+      .offset(offset)
+      .limit(limit);
 
     return workers;
   }
@@ -57,6 +59,27 @@ class Worker {
       .query()
       .select('group_id')
       .where({ userId: worker.id });
+
+    const groupIds: string[] = groups.map((group) => group.groupId);
+
+    return Worker.modelToEntity(worker, groupIds);
+  }
+
+  async getById(id: string): Promise<WorkerEntity | null> {
+    const worker = await this.#WorkerModel
+      .query()
+      .select()
+      .where({ id })
+      .first();
+
+    if (!worker) {
+      return null;
+    }
+
+    const groups: UsersGroups[] = await this.#UsersGroupsModel
+      .query()
+      .select('group_id')
+      .where({ userId: id });
 
     const groupIds: string[] = groups.map((group) => group.groupId);
 
