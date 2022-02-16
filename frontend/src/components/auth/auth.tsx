@@ -45,7 +45,6 @@ const Auth: FC = () => {
     payload: EAMWorkerSignInRequestDto,
   ): void => {
     dispatch(authActions.signInWorker(payload));
-    Object.keys(payload);
   };
 
   const handleSignUpSubmit = (payload: EAMMasterSignUpRequestDto): void => {
