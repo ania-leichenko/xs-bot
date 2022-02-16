@@ -12,12 +12,13 @@
 
 .tableHat {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
-  vertical-align: center;
 }
 
 .tableTitle {
+  margin: 0;
   color: var(--color-white);
   font-weight: bold;
   font-size: 20px;

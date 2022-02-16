@@ -8,8 +8,8 @@ type Column = {
 const getColumns = (): Column[] => {
   return [
     {
-      Header: WorkersTableHeader.USER_NAME,
-      accessor: WorkersTableAccessor.USER_NAME,
+      Header: WorkersTableHeader.WORKER_NAME,
+      accessor: WorkersTableAccessor.WORKER_NAME,
     },
     {
       Header: WorkersTableHeader.GROUPS,

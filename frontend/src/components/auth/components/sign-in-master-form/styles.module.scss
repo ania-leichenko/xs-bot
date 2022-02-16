@@ -14,6 +14,7 @@
 }
 
 .button {
+  margin: 0 0 10px;
   padding: 0;
   color: var(--color-orange);
   font-weight: 500;
@@ -23,9 +24,6 @@
   text-decoration: none;
   background-color: transparent;
   border: none;
-}
-
-.button:hover {
   cursor: pointer;
 }
 

@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { AppRoute, ButtonType, InputType, UserRole } from 'common/enums/enums';
+import { ButtonType, InputType, UserRole } from 'common/enums/enums';
 import { useAppForm } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { EAMWorkerSignInRequestDto } from 'common/types/types';
-import { Button, Input, Link, PasswordInput } from 'components/common/common';
+import { Button, Input, PasswordInput } from 'components/common/common';
 import { DEFAULT_WORKER_LOGIN_PAYLOAD } from './common/constants';
 import styles from './styles.module.scss';
 
@@ -24,17 +24,11 @@ const SignInWorkerForm: FC<Props> = ({ onSubmit, onChangeForm }) => {
 
   return (
     <>
-      <h1 className={styles.title}>Sign In as worker</h1>
+      <h1 className={styles.title}>Sign In as Worker</h1>
       <div>
         <button className={styles.button} onClick={handleOnChangeForm}>
           Sign In as master
         </button>
-      </div>
-      <div className={styles.subtitle}>
-        <span>Need to create a new account? </span>
-        <Link className={styles.link} to={AppRoute.SIGN_UP}>
-          Sign Up
-        </Link>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -48,8 +42,8 @@ const SignInWorkerForm: FC<Props> = ({ onSubmit, onChangeForm }) => {
           />
           <Input
             type={InputType.TEXT}
-            label="IAM user name"
-            placeholder="Enter your IAM user name"
+            label="Worker name"
+            placeholder="Enter your Worker name"
             name={getNameOf<EAMWorkerSignInRequestDto>('workerName')}
             control={control}
             errors={errors}
