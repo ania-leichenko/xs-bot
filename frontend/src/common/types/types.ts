@@ -41,5 +41,8 @@ export {
   type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerCreateFormDto,
   type EAMWorkerGetByTenantRequestParamsDto,
+  type EAMWorkerByIdResponseDto,
+  type EAMWorkerSignInRequestDto,
+  type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
 export { type ServiceMenuItem } from './ui/ui';

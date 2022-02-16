@@ -3,7 +3,7 @@ import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/table/table';
 import { getRows, getColumns } from './helpers/helpers';
 
-const WorkersTable: FC = () => {
+const WorkersTable: FC = ({ children }) => {
   const { workers } = useAppSelector(({ eam }) => ({
     workers: eam.workers,
   }));
@@ -12,7 +12,11 @@ const WorkersTable: FC = () => {
 
   const columns = useMemo(() => getColumns(), []);
 
-  return <Table columns={columns} data={data} title="Users" />;
+  return (
+    <Table columns={columns} data={data} title="Workers">
+      {children}
+    </Table>
+  );
 };
 
 export { WorkersTable };

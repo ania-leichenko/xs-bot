@@ -9,7 +9,7 @@ type Props = {
   title: string;
 };
 
-const Table: FC<Props> = ({ columns, data, title }) => {
+const Table: FC<Props> = ({ columns, data, title, children }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns: columns as Column<Record<string, string>>[],
@@ -18,9 +18,10 @@ const Table: FC<Props> = ({ columns, data, title }) => {
 
   return (
     <div className={styles.tableWrapper}>
-      <div className={styles.tableHat}>
-        <div className={styles.tableTitle}>{title}</div>
-      </div>
+      <header className={styles.tableHat}>
+        <h3 className={styles.tableTitle}>{title}</h3>
+        {children}
+      </header>
       <table {...getTableProps()} className={styles.clientSideTable}>
         <thead>
           {headerGroups.map((headerGroup) => (

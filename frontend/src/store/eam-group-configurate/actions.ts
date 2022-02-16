@@ -6,18 +6,13 @@ import {
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { StorageKey } from 'common/enums/enums';
 
 const create = createAsyncThunk<
   EAMGroupCreateResponseDto,
   EAMGroupConfigurateRequestDto,
   AsyncThunkConfig
 >(ActionType.CREATE, async (registerPayload, { getState, extra }) => {
-  const { eamApi, storage } = extra;
-
-  const workersIDs = JSON.parse(
-    storage.getItem(StorageKey.SELECTED_WORKERS) || '[]',
-  );
+  const { eamApi } = extra;
 
   const { app } = getState();
   const { tenant } = app;
@@ -25,7 +20,7 @@ const create = createAsyncThunk<
   const request: EAMGroupCreateRequestDto = {
     name: registerPayload.name,
     tenantId: tenant?.id ?? '',
-    workers: workersIDs ?? [],
+    workers: registerPayload.workers ?? [],
   };
 
   return eamApi.createGroup(request);

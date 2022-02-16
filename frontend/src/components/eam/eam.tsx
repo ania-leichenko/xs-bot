@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link } from 'components/common/common';
+import { Button } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { eam as eamActions } from 'store/actions';
@@ -39,16 +39,22 @@ const EAM: FC = () => {
         EAM - <br />
         Entity Access Management
       </h2>
-      <div className={styles.link}>
-        <Link to={AppRoute.EAM_CREATE_WORKER}>Add User</Link>
-      </div>
-      <div className={styles.link}>
-        <Link to={AppRoute.EAM_CONFIGURATE_GROUP}>Add Group</Link>
-      </div>
       <div className={styles.tableWrapper}>
-        <WorkersTable />
+        <WorkersTable>
+          <Button
+            className={styles.addWorkerBtn}
+            to={AppRoute.EAM_CREATE_WORKER}
+            label="Add Worker"
+          />
+        </WorkersTable>
       </div>
-      <GroupsTable />
+      <GroupsTable>
+        <Button
+          className={styles.addGroupBtn}
+          to={AppRoute.EAM_CONFIGURATE_GROUP}
+          label="Add Group"
+        />
+      </GroupsTable>
     </div>
   );
 };

@@ -1,5 +1,6 @@
 export {
   ApiPath,
+  AuthApiPath,
   MastersApiPath,
   TenantsApiPath,
   EAMApiPath,
@@ -18,3 +19,4 @@ export {
   WorkersTableHeader,
   WorkersTableAccessor,
 } from './eam/eam';
+export { UserRole } from './roles/roles';

@@ -5,6 +5,7 @@ import {
   useAppForm,
   useEffect,
   useAppSelector,
+  useState,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
@@ -24,6 +25,8 @@ const EAMConfigurateGroup: FC = () => {
       defaultValues: DEFAULT_GROUP_PAYLOAD,
     });
 
+  const [selected_workers] = useState(new Set<string>([]));
+
   const { id: tenantId } = useAppSelector(({ app }) => ({
     id: app.tenant?.id,
   }));
@@ -39,12 +42,16 @@ const EAMConfigurateGroup: FC = () => {
   }, [dispatch, tenantId]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
-    dispatch(groupsAction.create(payload));
+    const newPayload: EAMGroupConfigurateRequestDto = {
+      name: payload.name,
+      workers: Array.from(selected_workers),
+    };
+    dispatch(groupsAction.create(newPayload));
   };
 
   const { workers } = useAppSelector(({ eam }) => eam);
 
-  const columns = useMemo(() => getColumns(), []);
+  const columns = useMemo(() => getColumns(selected_workers), []);
 
   const data = useMemo(() => getRows(workers), [workers]);
 
