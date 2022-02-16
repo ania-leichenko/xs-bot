@@ -8,7 +8,7 @@ import {
 } from 'components/common/common';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { auth as authActions, app as appActions } from 'store/actions';
-import { AppRoute, StorageKey } from 'common/enums/enums';
+import { AppRoute, DataStatus, StorageKey } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
@@ -16,8 +16,9 @@ import { EAM } from 'components/eam/eam';
 import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
 
 const App: FC = () => {
-  const { user } = useAppSelector(({ auth }) => ({
+  const { user, authStatus } = useAppSelector(({ auth }) => ({
     user: auth.user,
+    authStatus: auth.dataStatus,
   }));
   const dispatch = useAppDispatch();
   const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
@@ -36,7 +37,7 @@ const App: FC = () => {
     dispatch(appActions.getTenant({ id: user.tenantId }));
   }, [user, dispatch]);
 
-  if (!hasUser && hasToken) {
+  if (!hasUser && hasToken && authStatus !== DataStatus.REJECTED) {
     return <Loader />;
   }
 

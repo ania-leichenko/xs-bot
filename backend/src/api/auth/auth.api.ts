@@ -2,11 +2,17 @@ import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { auth as authServ } from '~/services/services';
 import { eamMasterSignIn as masterSignInValidationSchema } from '~/validation-schemas/validation-schemas';
-import { HttpCode, HttpMethod, AuthApiPath } from '~/common/enums/enums';
+import {
+  HttpCode,
+  HttpMethod,
+  AuthApiPath,
+  ExceptionMessage,
+} from '~/common/enums/enums';
 import {
   EAMWorkerSignInRequestDto,
   EAMMasterSignInRequestDto,
 } from '~/common/types/types';
+import { InvalidCredentialsError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
@@ -23,9 +29,14 @@ const initAuthApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req, rep) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
 
-      return rep
-        .send(await authService.getCurrentUser(token))
-        .status(HttpCode.OK);
+      const user = await authService.getCurrentUser(token).catch(() => {
+        throw new InvalidCredentialsError({
+          status: HttpCode.BAD_REQUEST,
+          message: ExceptionMessage.INVALID_TOKEN,
+        });
+      });
+
+      return rep.send(user).status(HttpCode.OK);
     },
   });
   fastify.route({
