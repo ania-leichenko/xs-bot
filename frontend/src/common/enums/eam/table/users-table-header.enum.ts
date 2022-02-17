@@ -1,6 +1,7 @@
 enum UsersTableHeader {
-  USERNAME = 'Username',
-  TENANT_ID = 'Tenant ID',
+  USERNAME = 'Worker name',
+  GROUPS = 'Groups',
+  CREATION_TIME = 'Created at',
 }
 
 export { UsersTableHeader };

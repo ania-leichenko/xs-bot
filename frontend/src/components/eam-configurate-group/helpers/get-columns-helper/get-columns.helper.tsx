@@ -23,6 +23,14 @@ const getColumns = (
       Header: UsersTableHeader.USERNAME,
       accessor: UsersTableAccessor.USERNAME,
     },
+    {
+      Header: UsersTableHeader.GROUPS,
+      accessor: UsersTableAccessor.GROUPS,
+    },
+    {
+      Header: UsersTableHeader.CREATION_TIME,
+      accessor: UsersTableAccessor.CREATION_TIME,
+    },
   ];
 };
 
