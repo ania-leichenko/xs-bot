@@ -23,6 +23,9 @@ const EAMWorkerCreate: React.FC = () => {
     });
 
   const handleFormSubmit = (payload: EAMWorkerCreateRequestDto): void => {
+    if (payload.groupIds.length === 0) {
+      return;
+    }
     dispatch(EAMWorkerConfigurateActions.workerCreate(payload));
   };
 
