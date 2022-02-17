@@ -32,17 +32,16 @@ const EAMConfigurateGroup: FC = () => {
   const [selectedWorkers, setSelectedWorkers] = useState<string[]>([]);
 
   const handleAddWorkerId = (id: string): void => {
-    setSelectedWorkers((prev) => [...prev, id]);
+    setSelectedWorkers((prevState) => prevState.concat(id));
   };
 
   const handleRemoveWorkersId = (id: string): void => {
-    setSelectedWorkers((prevState) => {
-      const index = prevState.indexOf(id);
-      if (index !== -1) {
-        prevState.splice(index, 1);
-      }
-      return prevState;
-    });
+    setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
+  };
+
+  const handleIsCheckedId = (id: string): boolean => {
+    const index = selectedWorkers.indexOf(id);
+    return index >= 0;
   };
 
   useEffect(() => {
@@ -64,8 +63,9 @@ const EAMConfigurateGroup: FC = () => {
   };
 
   const columns = useMemo(
-    () => getColumns(handleAddWorkerId, handleRemoveWorkersId),
-    [],
+    () =>
+      getColumns(handleAddWorkerId, handleRemoveWorkersId, handleIsCheckedId),
+    [selectedWorkers],
   );
 
   const data = useMemo(() => getRows(workers), [workers]);

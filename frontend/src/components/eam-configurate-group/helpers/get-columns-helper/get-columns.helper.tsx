@@ -5,13 +5,19 @@ import { SelectRowCell } from './cells/cells';
 const getColumns = (
   handleAddWorkerId: (id: string) => void,
   handleRemoveWorkersId: (id: string) => void,
+  handleIsCheckedId: (id: string) => boolean,
 ): Column[] => {
   return [
     {
       Header: '',
       accessor: 'check',
       Cell: ({ row }): JSX.Element =>
-        SelectRowCell(row, handleAddWorkerId, handleRemoveWorkersId),
+        SelectRowCell(
+          row,
+          handleAddWorkerId,
+          handleRemoveWorkersId,
+          handleIsCheckedId,
+        ),
     },
     {
       Header: UsersTableHeader.USERNAME,

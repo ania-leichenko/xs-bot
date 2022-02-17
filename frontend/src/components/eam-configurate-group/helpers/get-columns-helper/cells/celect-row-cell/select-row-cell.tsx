@@ -1,28 +1,26 @@
 import { Checkbox } from 'components/common/common';
-import { useEffect, useState } from 'hooks/hooks';
 import { Row } from 'react-table';
 
 const SelectRowCell = (
   { original }: Row<Record<string, string>>,
   handleAddWorkerId: (id: string) => void,
   handleRemoveWorkersId: (id: string) => void,
+  handleIsCheckedId: (id: string) => boolean,
 ): JSX.Element => {
-  const [isChecked, setIsChecked] = useState(false);
-  useEffect(() => {
-    if (isChecked) {
+  const handleCheckbox = (): void => {
+    if (!handleIsCheckedId(original.id)) {
       handleAddWorkerId(original.id);
     } else {
       handleRemoveWorkersId(original.id);
     }
-  }, [isChecked]);
-
-  const handleCheckbox = (): void => {
-    setIsChecked(!isChecked);
   };
-
   return (
     <div>
-      <Checkbox label={''} isChecked={isChecked} onChange={handleCheckbox} />
+      <Checkbox
+        label={''}
+        isChecked={handleIsCheckedId(original.id)}
+        onChange={handleCheckbox}
+      />
     </div>
   );
 };
