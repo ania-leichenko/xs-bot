@@ -9,6 +9,7 @@ enum TableName {
   GROUPS_PERMISSIONS = 'entity_access_management.groups_permissions',
   SPACES = 'binary_storage.spaces',
   OBJECTS = 'binary_storage.objects',
+  FUNCTIONS = 'serverless_computing.functions',
   MIGRATIONS = 'migrations',
 }
 
