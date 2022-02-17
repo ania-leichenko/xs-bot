@@ -8,7 +8,7 @@ enum AppRoute {
   BS = '/bs',
   SC = '/sc',
   SLC = '/slc',
-  ALL = '*',
+  NOT_FOUND = '*',
 }
 
 export { AppRoute };

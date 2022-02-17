@@ -46,7 +46,6 @@ const App: FC = () => {
   return (
     <>
       <Routes>
-        <Route path={AppRoute.ALL} element={<NotFound />} />
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
         <Route path={AppRoute.SIGN_UP} element={<Auth />} />
         <Route
@@ -64,6 +63,10 @@ const App: FC = () => {
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
           element={<AuthorizedRoute component={<EAMWorkerCreate />} />}
+        />
+        <Route
+          path={AppRoute.NOT_FOUND}
+          element={<AuthorizedRoute component={<NotFound />} />}
         />
       </Routes>
       <Toaster />
