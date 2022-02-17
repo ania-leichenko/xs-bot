@@ -1,0 +1,110 @@
+.wrapper {
+  flex-grow: 1;
+  padding: 35px 40px;
+  background-image: url("/assets/img/decorate.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin: 0 0 40px;
+  color: var(--color-white);
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.title::before {
+  content: "";
+  width: 66px;
+  height: 66px;
+  margin: 0 15px 0 0;
+  background-color: var(--color-boltgun);
+  background-image: url("../../assets/img/eam.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 40px;
+  border-radius: 100%;
+}
+
+.form_title {
+  margin: 0;
+  padding: 0;
+  color: var(--color-white);
+  font-size: 28px;
+  line-height: 32px;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 870px;
+  margin: 0 25% 50px;
+  padding: 40px 90px;
+  font-style: normal;
+  background: var(--color-boltgun);
+  border-radius: 20px;
+}
+
+.titleTwo {
+  margin-top: 35px;
+  margin-bottom: 10px;
+  padding: 0;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  float: right;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.btnWrapper button {
+  width: 45%;
+}
+
+.inputContainer {
+  display: flex;
+  margin-top: 20px;
+}
+
+.inputContainer input {
+  display: flex;
+  align-items: center;
+  max-width: 55%;
+  margin-top: 5px;
+}
+
+.workerListWrapper {
+  margin-bottom: 20px;
+}
+
+.titleThree {
+  margin-top: 15px;
+  margin-bottom: 0;
+  padding: 0;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.workerListWrapper input {
+  margin-top: 15px;
+}
+
+.groupPermissionWrapper {
+  margin-top: 35px;
+}
+
+.groupPermissionWrapper input {
+  margin-top: 15px;
+}
