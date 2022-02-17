@@ -8,7 +8,12 @@ import {
   useState,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
-import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
+import {
+  AppRoute,
+  ButtonStyle,
+  ButtonType,
+  InputType,
+} from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './eam-configurate-group.module.scss';
@@ -75,40 +80,46 @@ const EAMConfigurateGroup: FC = () => {
         EAM - <br />
         Entity Access Management
       </h2>
-
-      <div className={styles.container}>
-        <h5 className={styles.form_title}>Create user group</h5>
+      <section className={styles.formWrapper}>
+        <h3 className={styles.formTitle}>Create Group</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <h6 className={styles.titleTwo}>Name the group</h6>
-
-          <div className={styles.inputContainer}>
-            <Input
-              type={InputType.TEXT}
-              placeholder="Enter a meaningful name to identify this group"
-              label="User group name"
-              name={getNameOf<EAMGroupConfigurateRequestDto>('name')}
-              control={control}
-              errors={errors}
-            />
-          </div>
-
-          <div className={styles.workerListWrapper}>
-            <h6 className={styles.titleThree}>
-              Add users to the group - Optional
-            </h6>
-            <Table title="Workers" columns={columns} data={data} />
-          </div>
-
-          <div className={styles.btnWrapper}>
-            <Button
-              type={ButtonType.BUTTON}
-              label="Cancel"
-              btnStyle={ButtonStyle.OUTLINED}
-            />
-            <Button type={ButtonType.SUBMIT} label="Create" />
+          <ul className={styles.inputGroups}>
+            <li className={styles.inputGroup}>
+              <h3 className={styles.inputGroupTitle}>Name the group</h3>
+              <div className={styles.inputWrapper}>
+                <Input
+                  type={InputType.TEXT}
+                  placeholder="Enter a name to identify this group"
+                  label="User group name"
+                  name={getNameOf<EAMGroupConfigurateRequestDto>('name')}
+                  control={control}
+                  errors={errors}
+                />
+              </div>
+            </li>
+            <li>
+              <h3 className={styles.inputGroupTitle}>Add workers to the</h3>
+              <Table className={styles.table} columns={columns} data={data} />
+            </li>
+          </ul>
+          <div className={styles.buttons}>
+            <div className={styles.button}>
+              <Button
+                to={AppRoute.EAM}
+                label="Cancel"
+                btnStyle={ButtonStyle.OUTLINED}
+              />
+            </div>
+            <div className={styles.button}>
+              <Button
+                className={styles.button}
+                type={ButtonType.SUBMIT}
+                label="Create"
+              />
+            </div>
           </div>
         </form>
-      </div>
+      </section>
     </div>
   );
 };

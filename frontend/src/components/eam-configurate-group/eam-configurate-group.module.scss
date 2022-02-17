@@ -29,82 +29,51 @@
   border-radius: 100%;
 }
 
-.form_title {
-  margin: 0;
-  padding: 0;
-  color: var(--color-white);
-  font-size: 28px;
-  line-height: 32px;
-}
-
-.container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 870px;
-  margin: 0 25% 50px;
-  padding: 40px 90px;
-  font-style: normal;
+.formWrapper {
+  max-width: 875px;
+  margin: 0 auto;
+  padding: 40px 75px;
   background: var(--color-boltgun);
-  border-radius: 20px;
+  border-radius: 16px;
 }
 
-.titleTwo {
-  margin-top: 35px;
-  margin-bottom: 10px;
-  padding: 0;
+.formTitle {
+  margin: 0 0 15px;
+  color: var(--color-text);
+  font-size: 30px;
+}
+
+.inputGroups {
+  margin: 0;
+  padding: 0 0 30px;
+  list-style: none;
+}
+
+.inputGroup:not(:last-child) {
+  margin: 0 0 20px;
+  border-bottom: 3px solid var(--color-background);
+}
+
+.inputGroupTitle {
+  margin: 0 0 16px;
   color: var(--color-white);
-  font-weight: 700;
-  font-size: 18px;
+  font-size: 14px;
 }
 
-.btnWrapper {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  float: right;
-  width: 50%;
-  margin-top: 30px;
+.inputWrapper {
+  max-width: 50%;
 }
 
-.btnWrapper button {
-  width: 45%;
-}
-
-.inputContainer {
-  display: flex;
-  margin-top: 20px;
-}
-
-.inputContainer input {
-  display: flex;
-  align-items: center;
-  max-width: 55%;
-  margin-top: 5px;
-}
-
-.workerListWrapper {
-  margin-bottom: 20px;
-}
-
-.titleThree {
-  margin-top: 15px;
-  margin-bottom: 0;
+.table {
   padding: 0;
-  color: var(--color-white);
-  font-weight: 700;
-  font-size: 18px;
 }
 
-.workerListWrapper input {
-  margin-top: 15px;
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
-.groupPermissionWrapper {
-  margin-top: 35px;
-}
-
-.groupPermissionWrapper input {
-  margin-top: 15px;
+.button {
+  min-width: 200px;
 }
