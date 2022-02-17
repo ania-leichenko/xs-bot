@@ -40,8 +40,7 @@ const EAMConfigurateGroup: FC = () => {
   };
 
   const handleIsCheckedId = (id: string): boolean => {
-    const index = selectedWorkers.indexOf(id);
-    return index >= 0;
+    return selectedWorkers.some((it) => it === id);
   };
 
   useEffect(() => {
