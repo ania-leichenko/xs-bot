@@ -7,6 +7,8 @@ enum TableName {
   GROUPS = 'entity_access_management.groups',
   USERS_GROUPS = 'entity_access_management.users_groups',
   GROUPS_PERMISSIONS = 'entity_access_management.groups_permissions',
+  SPACES = 'binary_storage.spaces',
+  OBJECTS = 'binary_storage.objects',
   MIGRATIONS = 'migrations',
 }
 
