@@ -15,6 +15,7 @@ import { storage } from 'services/services';
 import { EAM } from 'components/eam/eam';
 import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
 import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
+import { NotFound } from 'components/not-found-page/not-found-page';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
@@ -45,6 +46,7 @@ const App: FC = () => {
   return (
     <>
       <Routes>
+        <Route path={AppRoute.ALL} element={<NotFound />} />
         <Route path={AppRoute.SIGN_IN} element={<Auth />} />
         <Route path={AppRoute.SIGN_UP} element={<Auth />} />
         <Route
