@@ -3,15 +3,15 @@ import { Column } from 'react-table';
 import { SelectRowCell } from './cells/cells';
 
 const getColumns = (
-  addWorkerId: (id: string) => void,
-  removeWorkersId: (id: string) => void,
+  handleAddWorkerId: (id: string) => void,
+  handleRemoveWorkersId: (id: string) => void,
 ): Column[] => {
   return [
     {
       Header: '',
       accessor: 'check',
       Cell: ({ row }): JSX.Element =>
-        SelectRowCell(row, addWorkerId, removeWorkersId),
+        SelectRowCell(row, handleAddWorkerId, handleRemoveWorkersId),
     },
     {
       Header: UsersTableHeader.USERNAME,

@@ -22,7 +22,7 @@ const create = createAsyncThunk<
   const request: EAMGroupCreateRequestDto = {
     name: registerPayload.name,
     tenantId: tenant?.id ?? '',
-    workersIds: registerPayload.workersIds ?? [],
+    workersIds: registerPayload.workersIds,
   };
 
   return eamApi.createGroup(request);

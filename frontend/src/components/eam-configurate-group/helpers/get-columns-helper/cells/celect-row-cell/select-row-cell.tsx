@@ -4,15 +4,15 @@ import { Row } from 'react-table';
 
 const SelectRowCell = (
   { original }: Row<Record<string, string>>,
-  addWorkerId: (id: string) => void,
-  removeWorkersId: (id: string) => void,
+  handleAddWorkerId: (id: string) => void,
+  handleRemoveWorkersId: (id: string) => void,
 ): JSX.Element => {
   const [isChecked, setIsChecked] = useState(false);
   useEffect(() => {
     if (isChecked) {
-      addWorkerId(original.id);
+      handleAddWorkerId(original.id);
     } else {
-      removeWorkersId(original.id);
+      handleRemoveWorkersId(original.id);
     }
   }, [isChecked]);
 

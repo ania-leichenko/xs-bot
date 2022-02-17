@@ -10,8 +10,7 @@ import {
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import { ButtonStyle, ButtonType, InputType } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
-import { EAMGroupConfigurate as groupsAction } from 'store/actions';
-
+import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 import { getRows, getColumns } from './helpers/helpers';
@@ -21,28 +20,34 @@ const EAMConfigurateGroup: FC = () => {
     useAppForm<EAMGroupConfigurateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
     });
-  const { id: tenantId } = useAppSelector(({ app }) => ({
-    id: app.tenant?.id,
-  }));
-  const { workers } = useAppSelector(
-    ({ EAMGroupConfigurate }) => EAMGroupConfigurate,
+  const { tenantId, workers } = useAppSelector(
+    ({ app, EAMGroupConfigurate }) => ({
+      tenantId: app.tenant?.id,
+      workers: EAMGroupConfigurate.workers,
+    }),
   );
 
   const dispatch = useAppDispatch();
 
-  const [selectedWorkers, setSelectedWorkers] = useState(new Set<string>([]));
+  const [selectedWorkers, setSelectedWorkers] = useState<string[]>([]);
 
-  const addWorkerId = (id: string): void => {
-    setSelectedWorkers((_previousState) => new Set([...selectedWorkers, id]));
+  const handleAddWorkerId = (id: string): void => {
+    setSelectedWorkers((prev) => [...prev, id]);
   };
 
-  const removeWorkersId = (id: string): void => {
-    setSelectedWorkers((prev) => new Set([...prev].filter((x) => x !== id)));
+  const handleRemoveWorkersId = (id: string): void => {
+    setSelectedWorkers((prevState) => {
+      const index = prevState.indexOf(id);
+      if (index !== -1) {
+        prevState.splice(index, 1);
+      }
+      return prevState;
+    });
   };
 
   useEffect(() => {
     dispatch(
-      groupsAction.getWorkers({
+      EAMGroupConfigurateActions.getWorkers({
         from: 0,
         count: 10,
         tenantId: tenantId as string,
@@ -53,12 +58,15 @@ const EAMConfigurateGroup: FC = () => {
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
       name: payload.name,
-      workersIds: Array.from(selectedWorkers),
+      workersIds: selectedWorkers,
     };
-    dispatch(groupsAction.create(newPayload));
+    dispatch(EAMGroupConfigurateActions.create(newPayload));
   };
 
-  const columns = useMemo(() => getColumns(addWorkerId, removeWorkersId), []);
+  const columns = useMemo(
+    () => getColumns(handleAddWorkerId, handleRemoveWorkersId),
+    [],
+  );
 
   const data = useMemo(() => getRows(workers), [workers]);
 
