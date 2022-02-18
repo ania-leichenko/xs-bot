@@ -103,6 +103,7 @@ class Master {
       passwordHash,
       passwordSalt,
       tenantId: tenant.id,
+      permissionName,
     });
 
     const { id } = await this.#masterRepository.create(master);
