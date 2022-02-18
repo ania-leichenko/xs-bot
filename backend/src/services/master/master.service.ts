@@ -54,18 +54,19 @@ class Master {
       id: master.id,
       email: master.email,
       tenantId: master.tenantId,
+      permissions: master.permissions,
     };
   }
 
   public async login(id: string): Promise<EAMMasterSignUpResponseDto> {
-    const { email, tenantId } = (await this.#masterRepository.getById(
-      id,
-    )) as MasterEntity;
+    const { email, tenantId, permissions } =
+      (await this.#masterRepository.getById(id)) as MasterEntity;
     return {
       user: {
         email,
         id,
         tenantId,
+        permissions,
       },
       token: this.#tokenService.create({
         userId: id,
@@ -103,7 +104,6 @@ class Master {
       passwordHash,
       passwordSalt,
       tenantId: tenant.id,
-      permissionName,
     });
 
     const { id } = await this.#masterRepository.create(master);

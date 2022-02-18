@@ -48,7 +48,6 @@ class Master {
     }
 
     const permissions: Permission[] = await this.#PermissionModel.query();
-
     const permissionName: string[] = permissions.map(
       (permission) => permission.name,
     );
@@ -72,7 +71,7 @@ class Master {
 
   public static modelToEntity(
     model: MasterM,
-    permissionName: string[],
+    permissions: string[],
   ): MasterEntity {
     const { id, name, email, passwordHash, passwordSalt, tenantId } = model;
 
@@ -84,7 +83,7 @@ class Master {
       passwordSalt,
       createdAt: new Date(model.createdAt),
       tenantId,
-      permissionName,
+      permissions,
     });
   }
 }
