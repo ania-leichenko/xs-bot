@@ -134,7 +134,7 @@ You should use .env.example folder as a reference.
 
 4. Run database. You can either run it in docker using command `cd ./docker/bws && docker-compose -f docker-compose.services.yml up --build` or by installing postgres on your computer. Docker variant is preferred.
 
-5. Apply migrations and seeds: `cd backend && npm run migrate:dev && npm run seed:dev`
+5. Apply migrations and seeds: `cd backend && npm run migrate:dev`
 
 6. Run backend: `cd backend && npm run start:dev`
 
