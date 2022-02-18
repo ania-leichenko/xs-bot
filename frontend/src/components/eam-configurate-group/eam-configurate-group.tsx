@@ -43,7 +43,7 @@ const EAMConfigurateGroup: FC = () => {
     setSelectedWorkers((prevState) => prevState.concat(id));
   };
 
-  const handleRemoveWorkersId = (id: string): void => {
+  const handleRemoveWorkerId = (id: string): void => {
     setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
   };
 
@@ -75,7 +75,7 @@ const EAMConfigurateGroup: FC = () => {
 
   const columns = useMemo(
     () =>
-      getColumns(handleAddWorkerId, handleRemoveWorkersId, handleIsCheckedId),
+      getColumns(handleAddWorkerId, handleRemoveWorkerId, handleIsCheckedId),
     [selectedWorkers],
   );
 
