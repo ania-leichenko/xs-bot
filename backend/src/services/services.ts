@@ -4,6 +4,7 @@ import {
   tenant as tenantRepository,
   worker as workerRepository,
   group as groupRepository,
+  permission as permissionRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Group } from '~/services/group/group.service';
@@ -12,6 +13,7 @@ import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
 import { Worker } from './worker/worker.service';
 import { Auth } from './auth/auth.service';
+import { Permission } from './permission/permission.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -47,4 +49,8 @@ const auth = new Auth({
   tokenService: token,
 });
 
-export { master, encrypt, token, tenant, worker, group, auth };
+const permission = new Permission({
+  permissionRepository,
+});
+
+export { master, encrypt, token, tenant, worker, group, auth, permission };

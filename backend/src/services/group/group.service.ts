@@ -6,7 +6,10 @@ import {
   EAMGroupGetByTenantResponseDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
-import { InvalidGroupNameError } from '~/exceptions/exceptions';
+import {
+  InvalidGroupNameError,
+  PermissionSelectError,
+} from '~/exceptions/exceptions';
 
 type Constructor = {
   groupRepository: typeof groupRep;
@@ -30,6 +33,7 @@ class Group {
     name,
     tenantId,
     workersIds,
+    permissionIds,
   }: EAMGroupCreateRequestDto): Promise<EAMGroupCreateResponseDto> {
     const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
       name,
@@ -38,8 +42,16 @@ class Group {
     if (groupByName) {
       throw new InvalidGroupNameError();
     }
+    if (!permissionIds) {
+      throw new PermissionSelectError();
+    }
 
-    const group = GroupEntity.createNew({ name, tenantId, workersIds });
+    const group = GroupEntity.createNew({
+      name,
+      tenantId,
+      workersIds,
+      permissionIds,
+    });
 
     const newGroup = await this.#groupRepository.create(group);
 

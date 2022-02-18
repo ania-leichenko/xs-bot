@@ -22,6 +22,8 @@ const eamGroupCreate = Joi.object({
     .trim()
     .required(),
   [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array().required(),
+  [getNameOf<EAMGroupCreateRequestDto>('permissionIds')]:
+    Joi.array().required(),
 });
 
 export { eamGroupCreate };
