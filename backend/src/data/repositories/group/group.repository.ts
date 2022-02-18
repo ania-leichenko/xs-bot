@@ -1,19 +1,26 @@
-import { Group as GroupM } from '~/data/models/models';
+import {
+  Group as GroupM,
+  UsersGroups as UsersGroupsM,
+} from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseItemDto,
 } from '~/common/types/types';
+import { getRandomId } from '~/helpers/helpers';
 
 type Constructor = {
   GroupModel: typeof GroupM;
+  UsersGroupsModel: typeof UsersGroupsM;
 };
 
 class Group {
   #GroupModel: typeof GroupM;
+  #UsersGroupsModel: typeof UsersGroupsM;
 
-  constructor({ GroupModel }: Constructor) {
+  constructor({ GroupModel, UsersGroupsModel }: Constructor) {
     this.#GroupModel = GroupModel;
+    this.#UsersGroupsModel = UsersGroupsModel;
   }
 
   async getGroupsByTenant(
@@ -45,11 +52,11 @@ class Group {
       return null;
     }
 
-    return Group.modelToEntity(group);
+    return Group.modelToEntity(group, ['']);
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
-    const { id, name, tenantId, createdAt } = group;
+    const { id, name, tenantId, createdAt, workersIds } = group;
 
     const created = await this.#GroupModel.query().insert({
       id,
@@ -57,16 +64,28 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
+    await this.#UsersGroupsModel.query().insert(
+      workersIds.map((workerId) => ({
+        id: getRandomId(),
+        userId: workerId,
+        groupId: id,
+        createdAt: createdAt,
+      })),
+    );
 
-    return Group.modelToEntity(created);
+    return Group.modelToEntity(created, workersIds);
   }
 
-  public static modelToEntity(model: GroupM): GroupEntity {
+  public static modelToEntity(
+    model: GroupM,
+    workersIds: string[],
+  ): GroupEntity {
     return GroupEntity.initialize({
       id: model.id,
       name: model.name,
       createdAt: model.createdAt,
       tenantId: model.tenantId,
+      workersIds: workersIds,
     });
   }
 }

@@ -10,6 +10,9 @@ enum TableName {
   OPERATION_SYSTEMS = 'server_computing.operation_systems',
   KEY_PAIRS = 'server_computing.key_pairs',
   INSTANCES = 'server_computing.instances',
+  SPACES = 'binary_storage.spaces',
+  OBJECTS = 'binary_storage.objects',
+  FUNCTIONS = 'serverless_computing.functions',
   MIGRATIONS = 'migrations',
 }
 

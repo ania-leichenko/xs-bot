@@ -14,6 +14,8 @@ import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
 import { EAM } from 'components/eam/eam';
 import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
+import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
+import { NotFound } from 'components/not-found-page/not-found-page';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
@@ -51,12 +53,20 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
         <Route
+          path={AppRoute.EAM_CONFIGURATE_GROUP}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
+        />
+        <Route
           path={AppRoute.EAM}
           element={<AuthorizedRoute component={<EAM />} />}
         />
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
           element={<AuthorizedRoute component={<EAMWorkerCreate />} />}
+        />
+        <Route
+          path={AppRoute.NOT_FOUND}
+          element={<AuthorizedRoute component={<NotFound />} />}
         />
       </Routes>
       <Toaster />

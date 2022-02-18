@@ -33,7 +33,7 @@ const EAMWorkerCreate: React.FC = () => {
         Entity Access Management
       </h2>
       <section className={styles.formWrapper}>
-        <h3 className={styles.addUserHeader}>Add Worker</h3>
+        <h3 className={styles.formTitle}>Add Worker</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>

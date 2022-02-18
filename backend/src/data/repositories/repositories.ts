@@ -24,6 +24,7 @@ const worker = new Worker({
 
 const group = new Group({
   GroupModel,
+  UsersGroupsModel,
 });
 
 export { master, group, tenant, worker };

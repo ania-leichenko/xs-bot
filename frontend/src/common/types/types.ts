@@ -30,10 +30,15 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
 } from './eam-group/eam-group';
 export {
-  type EAMWorkerGetAllResponseDto,
-  type EAMWorkerGetAllItemResponseDto,
+  type EAMGroupCreateRequestDto,
+  type EAMGroupCreateResponseDto,
+  type EAMGroupConfigurateRequestDto,
+} from './eam/eam';
+export {
   type EAMWorkerCreateRequestDto,
   type EAMWorkerCreateResponseDto,
+  type EAMWorkerGetAllResponseDto,
+  type EAMWorkerGetAllItemResponseDto,
   type EAMWorkerCreateFormDto,
   type EAMWorkerGetByTenantRequestParamsDto,
   type EAMWorkerByIdResponseDto,

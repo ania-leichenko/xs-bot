@@ -45,7 +45,7 @@
 
 .inputGroups {
   margin: 0;
-  padding: 0;
+  padding: 0 0 30px;
   list-style: none;
 }
 
@@ -62,6 +62,10 @@
 
 .inputWrapper {
   max-width: 50%;
+}
+
+.table {
+  padding: 0;
 }
 
 .buttons {
