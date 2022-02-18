@@ -64,7 +64,8 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
-    if (workersIds.length !== 0) {
+    const hasWorkersIds = Boolean(workersIds.length);
+    if (hasWorkersIds) {
       await this.#UsersGroupsModel.query().insert(
         workersIds.map((workerId) => ({
           id: getRandomId(),

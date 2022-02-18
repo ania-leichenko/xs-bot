@@ -13,15 +13,11 @@ const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
 
     const groupsName = groups.map((item) => item.name).join(', ');
 
-    const reDate = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/;
-    const el = reDate.exec(createdAt);
-    const date = `${el![1]}/${el![2]}/${el![3]} ${el![4]}:${el![5]}`;
-
     return {
       [UsersTableAccessor.ID]: id,
       [UsersTableAccessor.USERNAME]: name,
       [UsersTableAccessor.GROUPS]: groupsName,
-      [UsersTableAccessor.CREATION_TIME]: date,
+      [UsersTableAccessor.CREATION_TIME]: createdAt,
     };
   });
 };
