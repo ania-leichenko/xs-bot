@@ -4,7 +4,6 @@ export {
   type EAMMasterSignInRequestDto,
   type EAMMasterSignInResponseDto,
   type EAMMasterByIdResponseDto,
-  type EAMMasterPermissionsItem,
 } from './eam-master/eam-master';
 export {
   type EAMGroupCreateResponseDto,
