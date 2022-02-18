@@ -14,17 +14,14 @@ async function up(knex: Knex): Promise<void> {
       .primary({ constraintName: 'instances_pkey' });
     table.string('name').notNullable();
     table.dateTime('created_at').notNullable().defaultTo(dateNowISO);
-    table.text('ssh_pem_file_content').notNullable();
+    table.uuid('key_pairs_id').references('id').inTable(TableName.KEY_PAIRS);
     table.string('username').notNullable();
     table.string('hostname').notNullable();
     table
       .uuid('operation_system_id')
       .references('id')
       .inTable(TableName.OPERATION_SYSTEMS);
-    table
-      .uuid('created_by')
-      .references('id')
-      .inTable(TableName.OPERATION_SYSTEMS);
+    table.uuid('created_by').references('id').inTable(TableName.WORKERS);
     table.string('aws_instance_id').notNullable();
   });
 }
