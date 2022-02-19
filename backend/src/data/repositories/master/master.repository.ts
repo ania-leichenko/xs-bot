@@ -30,7 +30,13 @@ class Master {
       return null;
     }
 
-    return Master.modelToEntity(master, []);
+    const permissions: EAMMasterPermissionsItem[] =
+      await this.#PermissionModel.query();
+    const permissionName: string[] = permissions.map(
+      (permission) => permission.name,
+    );
+
+    return Master.modelToEntity(master, permissionName);
   }
 
   async getById(id: string): Promise<MasterEntity | null> {
