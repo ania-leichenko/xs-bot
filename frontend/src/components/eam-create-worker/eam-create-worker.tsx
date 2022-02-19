@@ -103,9 +103,14 @@ const EAMWorkerCreate: FC = () => {
             </li>
             <li>
               <h3 className={styles.inputGroupTitle}>Add user to group </h3>
+              <Table
+                className={styles.table}
+                title="Workers"
+                columns={columns}
+                data={data}
+              />
             </li>
           </ul>
-          <Table title="Workers" columns={columns} data={data} />
           <div className={styles.buttons}>
             <div className={styles.button}>
               <Button
