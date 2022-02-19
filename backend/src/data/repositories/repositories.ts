@@ -7,6 +7,7 @@ import {
   Space as SpaceModel,
   Permission as PermissionModel,
   GroupsPermissions as GroupsPermissionsModel,
+  Function as FunctionModel,
 } from '~/data/models/models';
 import { Master } from './master/master.repository';
 import { Tenant } from './tenant/tenant.repository';
@@ -14,6 +15,7 @@ import { Worker } from './worker/worker.repository';
 import { Group } from './group/group.repository';
 import { Space } from './space/space.repository';
 import { Permission } from './permission/permission.repository';
+import { Function } from './function/function.repository';
 
 const master = new Master({
   MasterModel,
@@ -42,4 +44,8 @@ const space = new Space({
   SpaceModel,
 });
 
-export { master, group, tenant, worker, space, permission };
+const slc = new Function({
+  FunctionModel,
+});
+
+export { master, group, tenant, worker, space, permission, slc };
