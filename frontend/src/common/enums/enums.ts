@@ -18,5 +18,7 @@ export {
   UsersTableHeader,
   WorkersTableHeader,
   WorkersTableAccessor,
+  PermissionsTableAccessor,
+  PermissionsTableHeader,
 } from './eam/eam';
 export { UserRole } from './roles/roles';

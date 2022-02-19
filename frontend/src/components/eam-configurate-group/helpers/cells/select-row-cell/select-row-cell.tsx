@@ -3,15 +3,15 @@ import { Row } from 'react-table';
 
 const SelectRowCell = (
   { original }: Row<Record<string, string>>,
-  handleAddWorkerId: (id: string) => void,
-  handleRemoveWorkerId: (id: string) => void,
+  handleAddId: (id: string) => void,
+  handleRemoveId: (id: string) => void,
   handleIsCheckedId: (id: string) => boolean,
 ): JSX.Element => {
   const handleCheckbox = (): void => {
     if (!handleIsCheckedId(original.id)) {
-      handleAddWorkerId(original.id);
+      handleAddId(original.id);
     } else {
-      handleRemoveWorkerId(original.id);
+      handleRemoveId(original.id);
     }
   };
   return (

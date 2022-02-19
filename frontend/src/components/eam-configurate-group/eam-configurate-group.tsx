@@ -1,5 +1,5 @@
-import React, { FC, useMemo } from 'react';
-import { Button, Input, Table } from 'components/common/common';
+import React, { FC } from 'react';
+import { Button, Input } from 'components/common/common';
 import {
   useAppDispatch,
   useAppForm,
@@ -18,8 +18,8 @@ import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
-import { getRows, getColumns } from './helpers/helpers';
 import { eamGroupConfigurate as CreateGroupValidationSchema } from 'validation-schemas/validation-schemas';
+import { WorkersTable, PermissionsTable } from './components/components';
 
 const EAMConfigurateGroup: FC = () => {
   const { control, errors, handleSubmit } =
@@ -28,58 +28,56 @@ const EAMConfigurateGroup: FC = () => {
       validationSchema: CreateGroupValidationSchema,
     });
 
-  const { tenantId, workers } = useAppSelector(
-    ({ app, EAMGroupConfigurate }) => ({
-      tenantId: app.tenant?.id,
-      workers: EAMGroupConfigurate.workers,
-    }),
-  );
+  const { tenantId } = useAppSelector(({ app }) => ({
+    tenantId: app.tenant?.id,
+  }));
+  const [selectedWorkers, setSelectedWorkers] = useState<string[]>([]);
+  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
 
   const dispatch = useAppDispatch();
-
-  const [selectedWorkers, setSelectedWorkers] = useState<string[]>([]);
-
-  const handleAddWorkerId = (id: string): void => {
-    setSelectedWorkers((prevState) => prevState.concat(id));
-  };
-
-  const handleRemoveWorkerId = (id: string): void => {
-    setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
-  };
-
-  const handleIsCheckedId = (id: string): boolean => {
-    return selectedWorkers.some((it) => it === id);
-  };
 
   useEffect(() => {
     if (!tenantId) {
       return;
     }
-
     dispatch(
       EAMGroupConfigurateActions.getWorkers({
         from: 0,
-        count: 10,
+        count: 5,
         tenantId: tenantId as string,
       }),
     );
+    dispatch(EAMGroupConfigurateActions.getPermission());
   }, [dispatch, tenantId]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
       name: payload.name,
       workersIds: selectedWorkers,
+      permissionsIds: selectedPermissions,
     };
     dispatch(EAMGroupConfigurateActions.create(newPayload));
   };
 
-  const columns = useMemo(
-    () =>
-      getColumns(handleAddWorkerId, handleRemoveWorkerId, handleIsCheckedId),
-    [selectedWorkers],
-  );
+  const handleAddWorkerId = (id: string): void => {
+    setSelectedWorkers((prevState) => prevState.concat(id));
+  };
+  const handleRemoveWorkerId = (id: string): void => {
+    setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
+  };
+  const handleIsCheckedWorkerId = (id: string): boolean => {
+    return selectedWorkers.some((it) => it === id);
+  };
 
-  const data = useMemo(() => getRows(workers), [workers]);
+  const handleAddPermissionId = (id: string): void => {
+    setSelectedPermissions((prevState) => prevState.concat(id));
+  };
+  const handleRemovePermissionId = (id: string): void => {
+    setSelectedPermissions((prevState) => prevState.filter((it) => it !== id));
+  };
+  const handleIsCheckedPermissionId = (id: string): boolean => {
+    return selectedPermissions.some((it) => it === id);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -105,10 +103,20 @@ const EAMConfigurateGroup: FC = () => {
               </div>
             </li>
             <li>
-              <h3 className={styles.inputGroupTitle}>
-                Add workers to the Group - Optional
-              </h3>
-              <Table className={styles.table} columns={columns} data={data} />
+              <WorkersTable
+                selectedWorkers={selectedWorkers}
+                handleIsCheckedId={handleIsCheckedWorkerId}
+                handleRemoveWorkerId={handleRemoveWorkerId}
+                handleAddWorkerId={handleAddWorkerId}
+              />
+            </li>
+            <li>
+              <PermissionsTable
+                selectedPermissions={selectedPermissions}
+                handleIsCheckedPermissionId={handleIsCheckedPermissionId}
+                handleRemovePermissionId={handleRemovePermissionId}
+                handleAddPermissionId={handleAddPermissionId}
+              />
             </li>
           </ul>
           <div className={styles.buttons}>

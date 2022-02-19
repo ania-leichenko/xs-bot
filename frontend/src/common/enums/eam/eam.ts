@@ -5,4 +5,6 @@ export {
   GroupsTableAccessor,
   WorkersTableHeader,
   WorkersTableAccessor,
+  PermissionsTableAccessor,
+  PermissionsTableHeader,
 } from './table/table';

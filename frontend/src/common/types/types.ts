@@ -45,4 +45,8 @@ export {
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
+export {
+  type EAMPermissionGetAllResponseDto,
+  type EAMPermissionGetAllItemResponseDto,
+} from './eam-permission/eam-permission';
 export { type ServiceMenuItem } from './ui/ui';
