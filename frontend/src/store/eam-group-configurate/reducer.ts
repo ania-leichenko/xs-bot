@@ -7,12 +7,14 @@ import {
 } from 'common/types/types';
 type State = {
   dataStatus: DataStatus;
+  permissionsDateStatus: DataStatus;
   workers: EAMWorkerGetAllItemResponseDto[];
   permissions: EAMPermissionGetAllItemResponseDto[];
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
+  permissionsDateStatus: DataStatus.IDLE,
   workers: [],
   permissions: [],
 };
@@ -26,7 +28,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.workers = action.payload.items;
   });
   builder.addCase(getPermission.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.permissionsDateStatus = DataStatus.FULFILLED;
     state.permissions = action.payload.items;
   });
 });

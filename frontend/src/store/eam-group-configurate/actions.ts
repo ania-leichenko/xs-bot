@@ -25,7 +25,7 @@ const create = createAsyncThunk<
     name: registerPayload.name,
     tenantId: tenant?.id ?? '',
     workersIds: registerPayload.workersIds,
-    permissionIds: registerPayload.permissionsIds,
+    permissionsIds: registerPayload.permissionsIds,
   };
 
   const group = await eamApi.createGroup(request);

@@ -1,11 +1,10 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Button, Input } from 'components/common/common';
 import {
   useAppDispatch,
   useAppForm,
   useEffect,
   useAppSelector,
-  useState,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import {
@@ -18,21 +17,20 @@ import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
-import { eamGroupConfigurate as CreateGroupValidationSchema } from 'validation-schemas/validation-schemas';
+import { eamGroupConfigurate } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
+import { useSelectedItems } from './hooks/hooks';
 
 const EAMConfigurateGroup: FC = () => {
   const { control, errors, handleSubmit } =
     useAppForm<EAMGroupConfigurateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
-      validationSchema: CreateGroupValidationSchema,
+      validationSchema: eamGroupConfigurate,
     });
 
   const { tenantId } = useAppSelector(({ app }) => ({
     tenantId: app.tenant?.id,
   }));
-  const [selectedWorkers, setSelectedWorkers] = useState<string[]>([]);
-  const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
 
   const dispatch = useAppDispatch();
 
@@ -50,33 +48,16 @@ const EAMConfigurateGroup: FC = () => {
     dispatch(EAMGroupConfigurateActions.getPermission());
   }, [dispatch, tenantId]);
 
+  const selectedWorkers = useSelectedItems();
+  const selectedPermissions = useSelectedItems();
+
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
       name: payload.name,
-      workersIds: selectedWorkers,
-      permissionsIds: selectedPermissions,
+      workersIds: selectedWorkers.selected,
+      permissionsIds: selectedPermissions.selected,
     };
     dispatch(EAMGroupConfigurateActions.create(newPayload));
-  };
-
-  const handleAddWorkerId = (id: string): void => {
-    setSelectedWorkers((prevState) => prevState.concat(id));
-  };
-  const handleRemoveWorkerId = (id: string): void => {
-    setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
-  };
-  const handleIsCheckedWorkerId = (id: string): boolean => {
-    return selectedWorkers.some((it) => it === id);
-  };
-
-  const handleAddPermissionId = (id: string): void => {
-    setSelectedPermissions((prevState) => prevState.concat(id));
-  };
-  const handleRemovePermissionId = (id: string): void => {
-    setSelectedPermissions((prevState) => prevState.filter((it) => it !== id));
-  };
-  const handleIsCheckedPermissionId = (id: string): boolean => {
-    return selectedPermissions.some((it) => it === id);
   };
 
   return (
@@ -104,18 +85,18 @@ const EAMConfigurateGroup: FC = () => {
             </li>
             <li>
               <WorkersTable
-                selectedWorkers={selectedWorkers}
-                handleIsCheckedId={handleIsCheckedWorkerId}
-                handleRemoveWorkerId={handleRemoveWorkerId}
-                handleAddWorkerId={handleAddWorkerId}
+                selectedWorkers={selectedWorkers.selected}
+                handleIsCheckedId={selectedWorkers.has}
+                handleRemoveWorkerId={selectedWorkers.remove}
+                handleAddWorkerId={selectedWorkers.push}
               />
             </li>
             <li>
               <PermissionsTable
-                selectedPermissions={selectedPermissions}
-                handleIsCheckedPermissionId={handleIsCheckedPermissionId}
-                handleRemovePermissionId={handleRemovePermissionId}
-                handleAddPermissionId={handleAddPermissionId}
+                selectedPermissions={selectedPermissions.selected}
+                handleIsCheckedPermissionId={selectedPermissions.has}
+                handleRemovePermissionId={selectedPermissions.remove}
+                handleAddPermissionId={selectedPermissions.push}
               />
             </li>
           </ul>

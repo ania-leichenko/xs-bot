@@ -19,7 +19,7 @@ const eamGroupConfigurate = Joi.object({
       'string.pattern.base': EAMGroupValidationMessage.NAME_REGEX,
     }),
   [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array(),
-  [getNameOf<EAMGroupCreateRequestDto>('permissionIds')]: Joi.array(),
+  [getNameOf<EAMGroupCreateRequestDto>('permissionsIds')]: Joi.array(),
 });
 
 export { eamGroupConfigurate };

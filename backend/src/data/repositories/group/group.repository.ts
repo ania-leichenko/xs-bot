@@ -64,7 +64,7 @@ class Group {
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
-    const { id, name, tenantId, createdAt, workersIds, permissionIds } = group;
+    const { id, name, tenantId, createdAt, workersIds, permissionsIds } = group;
 
     const created = await this.#GroupModel.query().insert({
       id,
@@ -85,7 +85,7 @@ class Group {
     }
 
     await this.#GroupsPermissionsModel.query().insert(
-      permissionIds.map((permissionId) => ({
+      permissionsIds.map((permissionId) => ({
         id: getRandomId(),
         groupId: id,
         permissionId: permissionId,
@@ -93,13 +93,13 @@ class Group {
       })),
     );
 
-    return Group.modelToEntity(created, workersIds, permissionIds);
+    return Group.modelToEntity(created, workersIds, permissionsIds);
   }
 
   public static modelToEntity(
     model: GroupM,
     workersIds: string[],
-    permissionIds: string[],
+    permissionsIds: string[],
   ): GroupEntity {
     return GroupEntity.initialize({
       id: model.id,
@@ -107,7 +107,7 @@ class Group {
       createdAt: model.createdAt,
       tenantId: model.tenantId,
       workersIds: workersIds,
-      permissionIds: permissionIds,
+      permissionsIds: permissionsIds,
     });
   }
 }
