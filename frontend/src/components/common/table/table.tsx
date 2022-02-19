@@ -1,15 +1,16 @@
 import { FC } from 'react';
 import { useTable, Column } from 'react-table';
-
+import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 type Props = {
   columns: Column[];
   data: unknown[];
-  title: string;
+  title?: string;
+  className?: string;
 };
 
-const Table: FC<Props> = ({ columns, data, title, children }) => {
+const Table: FC<Props> = ({ columns, data, title, children, className }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns: columns as Column<Record<string, string>>[],
@@ -17,11 +18,13 @@ const Table: FC<Props> = ({ columns, data, title, children }) => {
     });
 
   return (
-    <div className={styles.tableWrapper}>
-      <header className={styles.tableHat}>
-        <h3 className={styles.tableTitle}>{title}</h3>
-        {children}
-      </header>
+    <div className={getValidClasses(styles.tableWrapper, className)}>
+      {title && (
+        <header className={styles.tableHat}>
+          <h3 className={styles.tableTitle}>{title}</h3>
+          {children}
+        </header>
+      )}
       <table {...getTableProps()} className={styles.clientSideTable}>
         <thead>
           {headerGroups.map((headerGroup) => (

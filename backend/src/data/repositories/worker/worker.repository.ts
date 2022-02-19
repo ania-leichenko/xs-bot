@@ -98,15 +98,18 @@ class Worker {
       tenantId,
     });
 
-    await this.#UsersGroupsModel.query().insert(
-      groupIds.map((groupId) => ({
-        id: getRandomId(),
-        userId: id,
-        groupId: groupId,
-        createdAt: worker.createdAt.toISOString(),
-      })),
-    );
+    const hasGroupsIds = Boolean(groupIds.length);
 
+    if (hasGroupsIds) {
+      await this.#UsersGroupsModel.query().insert(
+        groupIds.map((groupId) => ({
+          id: getRandomId(),
+          userId: id,
+          groupId: groupId,
+          createdAt: worker.createdAt.toISOString(),
+        })),
+      );
+    }
     return Worker.modelToEntity(newWorker, groupIds);
   }
 

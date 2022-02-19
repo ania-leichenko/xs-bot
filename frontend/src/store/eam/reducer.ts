@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { getWorkers } from './actions';
-import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
-import { loadGroups } from './actions';
-import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
+import { getWorkers, loadGroups } from './actions';
+import {
+  EAMGroupGetByTenantResponseItemDto,
+  EAMWorkerGetAllItemResponseDto,
+} from 'common/types/types';
 
 type State = {
   dataStatus: DataStatus;

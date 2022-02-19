@@ -13,8 +13,8 @@ import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import {
   encrypt as encryptServ,
-  token as tokenServ,
   master as masterServ,
+  token as tokenServ,
   tenant as tenantServ,
 } from '~/services/services';
 import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
@@ -157,7 +157,6 @@ class Worker {
     param: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll(param);
-
     return { items: workers };
   }
 }
