@@ -20,6 +20,8 @@ export {
   EAMGroupValidationMessage,
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
+  SLCFunctionValidationMessage,
+  SLCFunctionValidationRule,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';

@@ -17,3 +17,7 @@ export {
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
 } from './bs-space/bs-space';
+export {
+  SLCFunctionValidationMessage,
+  SLCFunctionValidationRule,
+} from './slc-function/slc-function';
