@@ -31,7 +31,7 @@ class Space {
   }): Promise<SpaceEntity> {
     const user: TokenPayload = await tokenServ.decode(token);
 
-    if (user.userRole === UserRole.MASTER) {
+    if (user.userRole !== UserRole.WORKER) {
       throw new InvalidCredentialsError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_SPACE_CREATE,
