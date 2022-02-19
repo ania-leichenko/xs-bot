@@ -85,7 +85,7 @@ const EAMWorkerCreate: FC = () => {
         Entity Access Management
       </h2>
       <section className={styles.formWrapper}>
-        <h3 className={styles.formTitle}>Add Worker</h3>
+        <h3 className={styles.formTitle}>Create Worker</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
@@ -102,10 +102,10 @@ const EAMWorkerCreate: FC = () => {
               </div>
             </li>
             <li>
-              <h3 className={styles.inputGroupTitle}>Add user to group </h3>
+              <h3 className={styles.inputGroupTitle}>Add worker to group </h3>
               <Table
                 className={styles.table}
-                title="Workers"
+                title="Groups"
                 columns={columns}
                 data={data}
               />
