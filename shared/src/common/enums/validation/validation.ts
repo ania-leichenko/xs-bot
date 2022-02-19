@@ -12,3 +12,8 @@ export {
   EAMGroupValidationRule,
   EAMGroupValidationMessage,
 } from './eam-group/eam-group';
+
+export {
+  BSSpaceValidationRule,
+  BSSpaceValidationMessage,
+} from './bs-space/bs-space';

@@ -7,6 +7,9 @@ import {
   Instance as InstanceModel,
   KeyPair as KeyPairModel,
   OperationSystem as OperationSystemModel,
+  Space as SpaceModel,
+  Permission as PermissionModel,
+  GroupsPermissions as GroupsPermissionsModel,
 } from '~/data/models/models';
 import { Master } from './master/master.repository';
 import { Tenant } from './tenant/tenant.repository';
@@ -15,6 +18,8 @@ import { Group } from './group/group.repository';
 import { Instance } from './instance/instance.repository';
 import { KeyPair } from './key-pair/key-pair.repository';
 import { OperationSystem } from './operation-system/operation-system.repository';
+import { Space } from './space/space.repository';
+import { Permission } from './permission/permission.repository';
 
 const master = new Master({
   MasterModel,
@@ -32,6 +37,15 @@ const worker = new Worker({
 const group = new Group({
   GroupModel,
   UsersGroupsModel,
+  GroupsPermissionsModel,
+});
+
+const permission = new Permission({
+  PermissionModel,
+});
+
+const space = new Space({
+  SpaceModel,
 });
 
 const instance = new Instance({
@@ -46,4 +60,14 @@ const operationSystem = new OperationSystem({
   OperationSystemModel,
 });
 
-export { master, group, tenant, worker, instance, keyPair, operationSystem };
+export {
+  master,
+  group,
+  tenant,
+  worker,
+  space,
+  permission,
+  instance,
+  keyPair,
+  operationSystem,
+};

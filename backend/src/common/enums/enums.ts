@@ -8,6 +8,7 @@ export {
   WorkersApiPath,
   SCApiPath,
   ControllerHook,
+  BSApiPath,
 } from './api/api';
 export { AppEnvironment, ENV, LogLevel } from './app/app';
 export { TableName } from './db/db';

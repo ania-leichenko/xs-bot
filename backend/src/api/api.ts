@@ -7,9 +7,11 @@ import {
   worker,
   auth,
   instance,
+  space,
 } from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
+import { initBsApi } from '~/api/bs/bs.api';
 import { initAuthApi } from './auth/auth.api';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';
 import { WHITE_ROUTES } from '~/common/constants/constants';
@@ -53,6 +55,12 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       instance,
     },
     prefix: ApiPath.SC,
+  });
+  fastify.register(initBsApi, {
+    services: {
+      space,
+    },
+    prefix: ApiPath.BS,
   });
 };
 

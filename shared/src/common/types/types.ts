@@ -36,5 +36,10 @@ export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
 } from './sc-instance/sc-instance';
+export { type BSSpaceCreateRequestDto } from './bs-space/bs-space';
+export {
+  type EAMPermissionGetAllItemResponseDto,
+  type EAMPermissionGetAllResponseDto,
+} from './eam-permission/eam-permission';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

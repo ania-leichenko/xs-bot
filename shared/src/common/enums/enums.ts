@@ -7,6 +7,7 @@ export {
   GroupsApiPath,
   WorkersApiPath,
   SCApiPath,
+  BSApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
@@ -18,6 +19,8 @@ export {
   EAMMasterValidationRule,
   EAMGroupValidationRule,
   EAMGroupValidationMessage,
+  BSSpaceValidationRule,
+  BSSpaceValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';

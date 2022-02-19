@@ -9,6 +9,8 @@ import {
   keyPair as keyPairRepository,
   instance as instanceRepository,
   operationSystem as operationSystemRepository,
+  permission as permissionRepository,
+  space as spaceRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Group } from './group/group.service';
@@ -20,6 +22,9 @@ import { Auth } from './auth/auth.service';
 import { AWSEc2 } from './aws-ec2/aws-ec2.service';
 import { KeyPair } from './key-pair/key-pair.service';
 import { Instance } from './instance/instance.service';
+import { Space } from './space/space.service';
+import { S3 } from './aws/s3/s3.service';
+import { Permission } from './permission/permission.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -79,6 +84,24 @@ const instance = new Instance({
   awsEc2Service: awsEc2,
 });
 
+const permission = new Permission({
+  permissionRepository,
+});
+
+const s3 = new S3({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
+});
+
+const space = new Space({
+  spaceRepository,
+  tokenService: token,
+  s3Service: s3,
+});
+
 export {
   master,
   encrypt,
@@ -91,4 +114,7 @@ export {
   awsEc2,
   keyPair,
   instance,
+  space,
+  s3,
+  permission,
 };
