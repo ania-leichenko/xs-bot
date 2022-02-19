@@ -4,14 +4,14 @@ import { Row } from 'react-table';
 const SelectRowCell = (
   { original }: Row<Record<string, string>>,
   handleAddWorkerId: (id: string) => void,
-  handleRemoveWorkersId: (id: string) => void,
+  handleRemoveWorkerId: (id: string) => void,
   handleIsCheckedId: (id: string) => boolean,
 ): JSX.Element => {
   const handleCheckbox = (): void => {
     if (!handleIsCheckedId(original.id)) {
       handleAddWorkerId(original.id);
     } else {
-      handleRemoveWorkersId(original.id);
+      handleRemoveWorkerId(original.id);
     }
   };
   return (

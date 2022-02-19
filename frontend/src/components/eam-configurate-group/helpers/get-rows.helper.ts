@@ -3,15 +3,21 @@ import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
 
 type Row = {
   [UsersTableAccessor.USERNAME]: string;
+  [UsersTableAccessor.GROUPS]: string;
+  [UsersTableAccessor.CREATION_TIME]: string;
 };
 
 const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
   return workers.map((item: EAMWorkerGetAllItemResponseDto) => {
-    const { id, name } = item;
+    const { id, name, groups, createdAt } = item;
+
+    const groupsName = groups.map((item) => item.name).join(', ');
 
     return {
       [UsersTableAccessor.ID]: id,
       [UsersTableAccessor.USERNAME]: name,
+      [UsersTableAccessor.GROUPS]: groupsName,
+      [UsersTableAccessor.CREATION_TIME]: createdAt,
     };
   });
 };
