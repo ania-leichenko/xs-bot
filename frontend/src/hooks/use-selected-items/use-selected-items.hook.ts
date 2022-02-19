@@ -1,7 +1,7 @@
 import { useState } from 'hooks/hooks';
-import { useSelectedItemsType } from '../../common/types';
+import { UseSelectedItemsHook } from 'common/types/types';
 
-const useSelectedItems = (): useSelectedItemsType => {
+const useSelectedItems = (): UseSelectedItemsHook => {
   const [selected, setSelected] = useState<string[]>([]);
   const push = (id: string): void => {
     setSelected((prevState) => prevState.concat(id));

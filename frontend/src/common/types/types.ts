@@ -2,6 +2,7 @@ export {
   type RootState,
   type AppDispatch,
   type AsyncThunkConfig,
+  type UseSelectedItemsHook,
 } from './app/app';
 export {
   type FormControlErrors,

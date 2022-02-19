@@ -5,6 +5,7 @@ import {
   useAppForm,
   useEffect,
   useAppSelector,
+  useSelectedItems,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import {
@@ -19,7 +20,6 @@ import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 import { eamGroupConfigurate } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
-import { useSelectedItems } from './hooks/hooks';
 
 const EAMConfigurateGroup: FC = () => {
   const { control, errors, handleSubmit } =
