@@ -32,6 +32,9 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
-export { type EAMPermissionGetAllItemResponseDto } from './eam-permission/eam-permission';
+export {
+  type EAMPermissionGetAllItemResponseDto,
+  type EAMPermissionGetAllResponseDto,
+} from './eam-permission/eam-permission';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

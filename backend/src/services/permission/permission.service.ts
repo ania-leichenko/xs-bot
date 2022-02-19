@@ -1,5 +1,5 @@
 import { permission as permissionRep } from '~/data/repositories/repositories';
-import { EAMPermissionGetAllItemResponseDto } from '~/common/types/types';
+import { EAMPermissionGetAllResponseDto } from '~/common/types/types';
 
 type Constructor = {
   permissionRepository: typeof permissionRep;
@@ -12,8 +12,11 @@ class Permission {
     this.#permissionRepository = permissionRepository;
   }
 
-  async getAll(): Promise<EAMPermissionGetAllItemResponseDto[]> {
-    return this.#permissionRepository.getAll();
+  async getAll(): Promise<EAMPermissionGetAllResponseDto> {
+    const permissions = await this.#permissionRepository.getAll();
+    return {
+      items: permissions,
+    };
   }
 }
 
