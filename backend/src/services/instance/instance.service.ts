@@ -8,6 +8,7 @@ import {
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
 import { keyPair as KeyPairServ, ec2 as EC2Serv } from '~/services/services';
+import { INSTANCE_TYPE, USERNAME } from '~/common/constants/instance.constants';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;
@@ -47,35 +48,35 @@ class Instance {
     createdBy,
   }: SCInstanceCreateRequestDto): Promise<SCInstanceCreateResponseDto> {
     const keyPairsId = await this.#keyPairService.create();
-    const awsInstanceData = await this.#ec2Service.createInstance({
+    const { hostname, instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairsId,
       imageId: await this.getImageId(operationSystemId),
     });
 
-    const instanceData = InstanceEntity.createNew({
+    const instance = InstanceEntity.createNew({
       name,
       keyPairsId,
-      username: 'ec2-user',
-      hostname: awsInstanceData.hostname as string,
+      username: USERNAME,
+      hostname: hostname,
       operationSystemId,
       createdBy,
-      awsInstanceId: awsInstanceData.instanceId as string,
+      awsInstanceId: instanceId,
     });
 
     const {
       id,
       name: instanceName,
       createdAt,
-      hostname,
-    } = await this.#instanceRepository.create(instanceData);
+      hostname: instanceHostname,
+    } = await this.#instanceRepository.create(instance);
 
     return {
       instanceId: id,
-      instanceType: 'type',
+      instanceType: INSTANCE_TYPE,
       name: instanceName,
       createdAt,
-      publicDNS: hostname,
+      publicDNS: instanceHostname,
     };
   }
 }
