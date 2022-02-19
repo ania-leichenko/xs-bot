@@ -1,4 +1,5 @@
 import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
+import { ENV } from '~/common/enums/app/env.enum';
 import {
   master as masterRepository,
   tenant as tenantRepository,
@@ -6,7 +7,6 @@ import {
   group as groupRepository,
   space as spaceRepository,
 } from '~/data/repositories/repositories';
-import { s3 as s3Client } from '~/services/aws/s3/s3.client';
 import { Master } from './master/master.service';
 import { Group } from '~/services/group/group.service';
 import { Encrypt } from './encrypt/encrypt.service';
@@ -52,7 +52,11 @@ const auth = new Auth({
 });
 
 const s3 = new S3({
-  s3Client,
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
 });
 
 const space = new Space({

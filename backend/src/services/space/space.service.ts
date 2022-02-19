@@ -38,15 +38,11 @@ class Space {
       });
     }
 
-    return await s3Serv
-      .creteBucket({ name })
-      .then(() => {
-        const space = SpaceEntity.createNew({ name, createdBy: user.userId });
-        return this.#spaceRepository.create(space);
-      })
-      .catch((error) => {
-        return error;
-      });
+    await this.#s3Service.creteBucket({ name });
+
+    const space = SpaceEntity.createNew({ name, createdBy: user.userId });
+
+    return this.#spaceRepository.create(space);
   }
 }
 

@@ -1,15 +1,25 @@
-import { s3 as s3 } from '~/services/aws/s3/s3.client';
-import { CreateBucketCommand, CreateBucketOutput } from '@aws-sdk/client-s3';
+import {
+  CreateBucketCommand,
+  CreateBucketOutput,
+  S3Client,
+} from '@aws-sdk/client-s3';
 
 type Constructor = {
-  s3Client: typeof s3;
+  region: string;
+  credentials: {
+    accessKeyId: string;
+    secretAccessKey: string;
+  };
 };
 
 class S3 {
-  #s3Client: typeof s3;
+  #s3Client: S3Client;
 
-  constructor({ s3Client }: Constructor) {
-    this.#s3Client = s3Client;
+  constructor({ region, credentials }: Constructor) {
+    this.#s3Client = new S3Client({
+      region,
+      credentials,
+    });
   }
 
   public async creteBucket({
@@ -17,7 +27,7 @@ class S3 {
   }: {
     name: string;
   }): Promise<CreateBucketOutput> {
-    return s3.send(new CreateBucketCommand({ Bucket: name }));
+    return this.#s3Client.send(new CreateBucketCommand({ Bucket: name }));
   }
 }
 
