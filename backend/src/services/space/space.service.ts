@@ -1,8 +1,9 @@
 import { space as spaceRep } from '~/data/repositories/repositories';
 import { Space as SpaceEntity } from './space.entity';
 import { TokenPayload } from '~/common/types/types';
-import { UserRole } from '~/common/enums/enums';
+import { ExceptionMessage, HttpCode, UserRole } from '~/common/enums/enums';
 import { s3 as s3Serv, token as tokenServ } from '~/services/services';
+import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
 
 type Constructor = {
   spaceRepository: typeof spaceRep;
@@ -31,7 +32,10 @@ class Space {
     const user: TokenPayload = await tokenServ.decode(token);
 
     if (user.userRole === UserRole.MASTER) {
-      throw new Error('Master is not able to crete space');
+      throw new InvalidCredentialsError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_SPACE_CREATE,
+      });
     }
 
     return await s3Serv
