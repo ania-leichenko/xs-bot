@@ -1,8 +1,8 @@
 import { space as spaceRep } from '~/data/repositories/repositories';
+import { Space as SpaceEntity } from './space.entity';
 import { TokenPayload } from '~/common/types/types';
 import { UserRole } from '~/common/enums/enums';
-import { token as tokenServ, s3 as s3Serv } from '~/services/services';
-import { CreateBucketOutput } from '@aws-sdk/client-s3';
+import { s3 as s3Serv, token as tokenServ } from '~/services/services';
 
 type Constructor = {
   spaceRepository: typeof spaceRep;
@@ -27,14 +27,22 @@ class Space {
   }: {
     name: string;
     token: string;
-  }): Promise<CreateBucketOutput> {
+  }): Promise<SpaceEntity> {
     const user: TokenPayload = await tokenServ.decode(token);
 
     if (user.userRole === UserRole.MASTER) {
       throw new Error('Master is not able to crete space');
     }
 
-    return await s3Serv.creteBucket({ name });
+    return await s3Serv
+      .creteBucket({ name })
+      .then(() => {
+        const space = SpaceEntity.createNew({ name, createdBy: user.userId });
+        return this.#spaceRepository.create(space);
+      })
+      .catch((error) => {
+        return error;
+      });
   }
 }
 
