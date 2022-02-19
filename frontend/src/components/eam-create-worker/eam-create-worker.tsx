@@ -37,11 +37,11 @@ const EAMWorkerCreate: React.FC = () => {
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
-              <h3 className={styles.inputGroupTitle}>Set user details</h3>
+              <h3 className={styles.inputGroupTitle}>Worker name</h3>
               <div className={styles.inputWrapper}>
                 <Input
                   type={InputType.TEXT}
-                  label="User Name*"
+                  label=""
                   placeholder=""
                   name={getNameOf<EAMWorkerCreateRequestDto>('name')}
                   control={control}
