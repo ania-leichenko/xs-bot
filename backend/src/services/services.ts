@@ -7,6 +7,7 @@ import {
   group as groupRepository,
   permission as permissionRepository,
   space as spaceRepository,
+  slc as functionRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Group } from '~/services/group/group.service';
@@ -18,6 +19,7 @@ import { Auth } from './auth/auth.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
+import { Function } from './function/function.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -71,6 +73,11 @@ const space = new Space({
   s3Service: s3,
 });
 
+const slc = new Function({
+  functionRepository,
+  tokenService: token,
+});
+
 export {
   master,
   encrypt,
@@ -82,4 +89,5 @@ export {
   space,
   s3,
   permission,
+  slc,
 };
