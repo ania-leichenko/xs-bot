@@ -1,6 +1,6 @@
 import { keyPair as KeyPairRep } from '~/data/repositories/repositories';
 import { KeyPair as KeyPairEntity } from '../key-pair/key-pair.entity';
-import { awsEc2 as AWSEc2Serv } from '~/services/services';
+import { ec2 as AWSEc2Serv } from '~/services/services';
 import { getRandomId } from '~/helpers/helpers';
 
 type Constructor = {

@@ -1,4 +1,3 @@
-import { EC2Client } from '@aws-sdk/client-ec2';
 import { ENV } from '~/common/enums/enums';
 import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
 import {
@@ -19,7 +18,7 @@ import { Token } from './token/token.service';
 import { Tenant } from './tenant/tenant.service';
 import { Worker } from './worker/worker.service';
 import { Auth } from './auth/auth.service';
-import { AWSEc2 } from './aws-ec2/aws-ec2.service';
+import { EC2 } from './aws/ec2/ec2.service';
 import { KeyPair } from './key-pair/key-pair.service';
 import { Instance } from './instance/instance.service';
 import { Space } from './space/space.service';
@@ -60,28 +59,24 @@ const auth = new Auth({
   tokenService: token,
 });
 
-const ec2Client = new EC2Client({
+const ec2 = new EC2({
   region: ENV.AWS.REGION,
   credentials: {
-    accessKeyId: ENV.AWS.ACCESS_KEY as string,
-    secretAccessKey: ENV.AWS.SECRET_KEY as string,
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
   },
-});
-
-const awsEc2 = new AWSEc2({
-  ec2ClientService: ec2Client,
 });
 
 const keyPair = new KeyPair({
   keyPairRepository,
-  awsEc2Service: awsEc2,
+  awsEc2Service: ec2,
 });
 
 const instance = new Instance({
   instanceRepository,
   operationSystemRepository,
   keyPairService: keyPair,
-  awsEc2Service: awsEc2,
+  ec2Service: ec2,
 });
 
 const permission = new Permission({
@@ -110,8 +105,7 @@ export {
   worker,
   group,
   auth,
-  ec2Client,
-  awsEc2,
+  ec2,
   keyPair,
   instance,
   space,

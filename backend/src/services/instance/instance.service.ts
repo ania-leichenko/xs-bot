@@ -7,34 +7,31 @@ import {
   SCInstanceCreateResponseDto,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
-import {
-  keyPair as KeyPairServ,
-  awsEc2 as AWSEc2Serv,
-} from '~/services/services';
+import { keyPair as KeyPairServ, ec2 as EC2Serv } from '~/services/services';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;
   operationSystemRepository: typeof OperationSystemRep;
   keyPairService: typeof KeyPairServ;
-  awsEc2Service: typeof AWSEc2Serv;
+  ec2Service: typeof EC2Serv;
 };
 
 class Instance {
   #instanceRepository: typeof InstanceRep;
   #operationSystemRepository: typeof OperationSystemRep;
   #keyPairService: typeof KeyPairServ;
-  #awsEc2Service: typeof AWSEc2Serv;
+  #ec2Service: typeof EC2Serv;
 
   constructor({
     instanceRepository,
     operationSystemRepository,
     keyPairService,
-    awsEc2Service,
+    ec2Service,
   }: Constructor) {
     this.#instanceRepository = instanceRepository;
     this.#operationSystemRepository = operationSystemRepository;
     this.#keyPairService = keyPairService;
-    this.#awsEc2Service = awsEc2Service;
+    this.#ec2Service = ec2Service;
   }
 
   public async getImageId(operationSystemId: string): Promise<string> {
@@ -50,7 +47,7 @@ class Instance {
     createdBy,
   }: SCInstanceCreateRequestDto): Promise<SCInstanceCreateResponseDto> {
     const keyPairsId = await this.#keyPairService.create();
-    const awsInstanceData = await this.#awsEc2Service.createInstance({
+    const awsInstanceData = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairsId,
       imageId: await this.getImageId(operationSystemId),
