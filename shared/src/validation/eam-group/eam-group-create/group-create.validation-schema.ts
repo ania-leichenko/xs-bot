@@ -21,7 +21,13 @@ const eamGroupCreate = Joi.object({
   [getNameOf<EAMGroupCreateRequestDto>('tenantId')]: Joi.string()
     .trim()
     .required(),
-  [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array(),
+  [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array().required(),
+  [getNameOf<EAMGroupCreateRequestDto>('permissionIds')]: Joi.array()
+    .min(EAMGroupValidationRule.PERMISSION_SELECTED_MIN)
+    .required()
+    .messages({
+      'array.min': EAMGroupValidationMessage.PERMISSION_SELECTED_MIN,
+    }),
 });
 
 export { eamGroupCreate };

@@ -1,6 +1,7 @@
 import {
   Group as GroupM,
   UsersGroups as UsersGroupsM,
+  GroupsPermissions as GroupsPermissionsM,
 } from '~/data/models/models';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
@@ -12,15 +13,22 @@ import { getRandomId } from '~/helpers/helpers';
 type Constructor = {
   GroupModel: typeof GroupM;
   UsersGroupsModel: typeof UsersGroupsM;
+  GroupsPermissionsModel: typeof GroupsPermissionsM;
 };
 
 class Group {
   #GroupModel: typeof GroupM;
   #UsersGroupsModel: typeof UsersGroupsM;
+  #GroupsPermissionsModel: typeof GroupsPermissionsM;
 
-  constructor({ GroupModel, UsersGroupsModel }: Constructor) {
+  constructor({
+    GroupModel,
+    UsersGroupsModel,
+    GroupsPermissionsModel,
+  }: Constructor) {
     this.#GroupModel = GroupModel;
     this.#UsersGroupsModel = UsersGroupsModel;
+    this.#GroupsPermissionsModel = GroupsPermissionsModel;
   }
 
   async getGroupsByTenant(
@@ -52,11 +60,11 @@ class Group {
       return null;
     }
 
-    return Group.modelToEntity(group, ['']);
+    return Group.modelToEntity(group, [], []);
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
-    const { id, name, tenantId, createdAt, workersIds } = group;
+    const { id, name, tenantId, createdAt, workersIds, permissionIds } = group;
 
     const created = await this.#GroupModel.query().insert({
       id,
@@ -76,12 +84,22 @@ class Group {
       );
     }
 
-    return Group.modelToEntity(created, workersIds);
+    await this.#GroupsPermissionsModel.query().insert(
+      permissionIds.map((permissionId) => ({
+        id: getRandomId(),
+        groupId: id,
+        permissionId: permissionId,
+        createdAt: createdAt,
+      })),
+    );
+
+    return Group.modelToEntity(created, workersIds, permissionIds);
   }
 
   public static modelToEntity(
     model: GroupM,
     workersIds: string[],
+    permissionIds: string[],
   ): GroupEntity {
     return GroupEntity.initialize({
       id: model.id,
@@ -89,6 +107,7 @@ class Group {
       createdAt: model.createdAt,
       tenantId: model.tenantId,
       workersIds: workersIds,
+      permissionIds: permissionIds,
     });
   }
 }

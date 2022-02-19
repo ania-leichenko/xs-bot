@@ -5,6 +5,7 @@ import {
   tenant as tenantRepository,
   worker as workerRepository,
   group as groupRepository,
+  permission as permissionRepository,
   space as spaceRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
@@ -16,6 +17,7 @@ import { Worker } from './worker/worker.service';
 import { Auth } from './auth/auth.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
+import { Permission } from './permission/permission.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -51,6 +53,10 @@ const auth = new Auth({
   tokenService: token,
 });
 
+const permission = new Permission({
+  permissionRepository,
+});
+
 const s3 = new S3({
   region: ENV.AWS.REGION,
   credentials: {
@@ -65,4 +71,15 @@ const space = new Space({
   s3Service: s3,
 });
 
-export { master, encrypt, token, tenant, worker, group, auth, space, s3 };
+export {
+  master,
+  encrypt,
+  token,
+  tenant,
+  worker,
+  group,
+  auth,
+  space,
+  s3,
+  permission,
+};

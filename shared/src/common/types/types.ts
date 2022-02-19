@@ -33,5 +33,9 @@ export {
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
 export { type BSSpaceCreateRequestDto } from './bs-space/bs-space';
+export {
+  type EAMPermissionGetAllItemResponseDto,
+  type EAMPermissionGetAllResponseDto,
+} from './eam-permission/eam-permission';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
