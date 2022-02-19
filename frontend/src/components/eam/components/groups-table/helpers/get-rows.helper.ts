@@ -1,5 +1,6 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
+import { getFormattedDate } from 'helpers/helpers';
 
 type Row = {
   [GroupsTableAccessor.GROUP_NAME]: string;
@@ -17,7 +18,9 @@ const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.USERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: permissionsContent,
-      [GroupsTableAccessor.CREATION_TIME]: createdAt,
+      [GroupsTableAccessor.CREATION_TIME]: getFormattedDate(
+        new Date(createdAt),
+      ),
     };
   });
 };

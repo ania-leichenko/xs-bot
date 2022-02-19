@@ -1,5 +1,6 @@
 import { WorkersTableAccessor } from 'common/enums/enums';
 import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
+import { getFormattedDate } from 'helpers/helpers';
 
 type Row = {
   [WorkersTableAccessor.WORKER_NAME]: string;
@@ -16,7 +17,9 @@ const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
     return {
       [WorkersTableAccessor.WORKER_NAME]: name,
       [WorkersTableAccessor.GROUPS]: groupsName,
-      [WorkersTableAccessor.CREATION_TIME]: createdAt,
+      [WorkersTableAccessor.CREATION_TIME]: getFormattedDate(
+        new Date(createdAt),
+      ),
     };
   });
 };
