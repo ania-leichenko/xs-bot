@@ -6,3 +6,4 @@ export { EAMApiPath } from './eam-api-path.enum';
 export { GroupsApiPath } from './groups-api-path.enum';
 export { WorkersApiPath } from './workers-api-path.enum';
 export { BSApiPath } from './bs-api-path.enum';
+export { SLCApiPath } from './slc-api-path.enum';
