@@ -18,12 +18,6 @@ class S3 {
     name: string;
   }): Promise<CreateBucketOutput> {
     return s3.send(new CreateBucketCommand({ Bucket: name }));
-    // .then((data) => {
-    //   return data;
-    // })
-    // .catch((error) => {
-    //   return error;
-    // });
   }
 }
 
