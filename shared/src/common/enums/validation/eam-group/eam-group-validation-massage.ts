@@ -6,6 +6,8 @@ const EAMGroupValidationMessage = {
   NAME_MAX_LENGTH: `Group name must be less than  ${EAMGroupValidationRule.NAME_MAX_LENGTH} characters`,
   NAME_REGEX:
     'Group name must start and end with a letter (symbols "_", "." are not allowed)',
+  PERMISSION_SELECTED_MIN:
+    'User can not create a group without any permissions for it',
 } as const;
 
 export { EAMGroupValidationMessage };

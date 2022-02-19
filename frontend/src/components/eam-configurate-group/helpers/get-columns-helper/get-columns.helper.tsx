@@ -4,7 +4,7 @@ import { SelectRowCell } from './cells/cells';
 
 const getColumns = (
   handleAddWorkerId: (id: string) => void,
-  handleRemoveWorkersId: (id: string) => void,
+  handleRemoveWorkerId: (id: string) => void,
   handleIsCheckedId: (id: string) => boolean,
 ): Column[] => {
   return [
@@ -15,13 +15,21 @@ const getColumns = (
         SelectRowCell(
           row,
           handleAddWorkerId,
-          handleRemoveWorkersId,
+          handleRemoveWorkerId,
           handleIsCheckedId,
         ),
     },
     {
       Header: UsersTableHeader.USERNAME,
       accessor: UsersTableAccessor.USERNAME,
+    },
+    {
+      Header: UsersTableHeader.GROUPS,
+      accessor: UsersTableAccessor.GROUPS,
+    },
+    {
+      Header: UsersTableHeader.CREATION_TIME,
+      accessor: UsersTableAccessor.CREATION_TIME,
     },
   ];
 };

@@ -105,7 +105,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.GET,
-    url: `${EAMApiPath.GROUPS}${GroupsApiPath.PERMISSION}`,
+    url: `${EAMApiPath.PERMISSION}`,
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);

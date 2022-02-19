@@ -72,14 +72,17 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
-    await this.#UsersGroupsModel.query().insert(
-      workersIds.map((workerId) => ({
-        id: getRandomId(),
-        userId: workerId,
-        groupId: id,
-        createdAt: createdAt,
-      })),
-    );
+    const hasWorkersIds = Boolean(workersIds.length);
+    if (hasWorkersIds) {
+      await this.#UsersGroupsModel.query().insert(
+        workersIds.map((workerId) => ({
+          id: getRandomId(),
+          userId: workerId,
+          groupId: id,
+          createdAt: createdAt,
+        })),
+      );
+    }
 
     await this.#GroupsPermissionsModel.query().insert(
       permissionIds.map((permissionId) => ({

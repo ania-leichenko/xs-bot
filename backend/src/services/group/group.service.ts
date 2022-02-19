@@ -6,10 +6,7 @@ import {
   EAMGroupGetByTenantResponseDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
-import {
-  InvalidGroupNameError,
-  PermissionSelectError,
-} from '~/exceptions/exceptions';
+import { InvalidGroupNameError } from '~/exceptions/exceptions';
 
 type Constructor = {
   groupRepository: typeof groupRep;
@@ -41,9 +38,6 @@ class Group {
     );
     if (groupByName) {
       throw new InvalidGroupNameError();
-    }
-    if (!permissionIds) {
-      throw new PermissionSelectError();
     }
 
     const group = GroupEntity.createNew({

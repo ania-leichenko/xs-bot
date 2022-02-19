@@ -8,13 +8,14 @@ import {
   EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
 import { ActionType } from './common';
+import { AppRoute } from '../../common/enums/app/app-route.enum';
 
 const create = createAsyncThunk<
   EAMGroupCreateResponseDto,
   EAMGroupConfigurateRequestDto,
   AsyncThunkConfig
 >(ActionType.CREATE, async (registerPayload, { getState, extra }) => {
-  const { eamApi } = extra;
+  const { eamApi, navigation, notification } = extra;
 
   const { app } = getState();
   const { tenant } = app;
@@ -26,7 +27,12 @@ const create = createAsyncThunk<
     permissionIds: [], // will be fix on frontend branch
   };
 
-  return eamApi.createGroup(request);
+  const group = await eamApi.createGroup(request);
+
+  navigation.push(AppRoute.EAM);
+  notification.success('Success!', 'Group has been successfully created');
+
+  return group;
 });
 
 const getWorkers = createAsyncThunk<
