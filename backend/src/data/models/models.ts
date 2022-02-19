@@ -6,3 +6,4 @@ export { UsersGroups } from './users-groups/users-groups.model';
 export { Permission } from './permission/permission.model';
 export { Space } from './space/space.model';
 export { GroupsPermissions } from './groups-permissions/groups-permissions.model';
+export { Function } from './function/function.model';
