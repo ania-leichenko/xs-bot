@@ -1,5 +1,9 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
-import { group as groupServ, worker as workerServ } from '~/services/services';
+import {
+  group as groupServ,
+  worker as workerServ,
+  permission as permissionServ,
+} from '~/services/services';
 import {
   HttpCode,
   HttpMethod,
@@ -96,6 +100,15 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const groups = await groupService.getGroupsByTenant(req.query);
       return rep.send(groups).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${EAMApiPath.PERMISSION}`,
+    async handler(req, rep) {
+      const permission = await permissionServ.getAll();
+      return rep.send(permission).status(HttpCode.OK);
     },
   });
 };

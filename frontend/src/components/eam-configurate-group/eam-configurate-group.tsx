@@ -19,12 +19,15 @@ import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 import { getRows, getColumns } from './helpers/helpers';
+import { eamGroupConfigurate as CreateGroupValidationSchema } from 'validation-schemas/validation-schemas';
 
 const EAMConfigurateGroup: FC = () => {
   const { control, errors, handleSubmit } =
     useAppForm<EAMGroupConfigurateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
+      validationSchema: CreateGroupValidationSchema,
     });
+
   const { tenantId, workers } = useAppSelector(
     ({ app, EAMGroupConfigurate }) => ({
       tenantId: app.tenant?.id,
@@ -40,7 +43,7 @@ const EAMConfigurateGroup: FC = () => {
     setSelectedWorkers((prevState) => prevState.concat(id));
   };
 
-  const handleRemoveWorkersId = (id: string): void => {
+  const handleRemoveWorkerId = (id: string): void => {
     setSelectedWorkers((prevState) => prevState.filter((it) => it !== id));
   };
 
@@ -49,6 +52,10 @@ const EAMConfigurateGroup: FC = () => {
   };
 
   useEffect(() => {
+    if (!tenantId) {
+      return;
+    }
+
     dispatch(
       EAMGroupConfigurateActions.getWorkers({
         from: 0,
@@ -68,7 +75,7 @@ const EAMConfigurateGroup: FC = () => {
 
   const columns = useMemo(
     () =>
-      getColumns(handleAddWorkerId, handleRemoveWorkersId, handleIsCheckedId),
+      getColumns(handleAddWorkerId, handleRemoveWorkerId, handleIsCheckedId),
     [selectedWorkers],
   );
 
@@ -90,7 +97,7 @@ const EAMConfigurateGroup: FC = () => {
                 <Input
                   type={InputType.TEXT}
                   placeholder="Enter a name to identify this group"
-                  label="User group name"
+                  label=""
                   name={getNameOf<EAMGroupConfigurateRequestDto>('name')}
                   control={control}
                   errors={errors}
@@ -98,7 +105,9 @@ const EAMConfigurateGroup: FC = () => {
               </div>
             </li>
             <li>
-              <h3 className={styles.inputGroupTitle}>Add workers to the</h3>
+              <h3 className={styles.inputGroupTitle}>
+                Add workers to the Group - Optional
+              </h3>
               <Table className={styles.table} columns={columns} data={data} />
             </li>
           </ul>

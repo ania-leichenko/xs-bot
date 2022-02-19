@@ -1,8 +1,16 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
-import { master, tenant, group, worker, auth } from '~/services/services';
+import {
+  master,
+  tenant,
+  group,
+  worker,
+  auth,
+  space,
+} from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
+import { initBsApi } from '~/api/bs/bs.api';
 import { initAuthApi } from './auth/auth.api';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';
 import { WHITE_ROUTES } from '~/common/constants/constants';
@@ -39,6 +47,12 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       tenant,
     },
     prefix: ApiPath.TENANTS,
+  });
+  fastify.register(initBsApi, {
+    services: {
+      space,
+    },
+    prefix: ApiPath.BS,
   });
 };
 

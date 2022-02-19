@@ -5,3 +5,4 @@ export { TenantsApiPath } from './tenants-api-path.enum';
 export { EAMApiPath } from './eam-api-path.enum';
 export { GroupsApiPath } from './groups-api-path.enum';
 export { WorkersApiPath } from './workers-api-path.enum';
+export { BSApiPath } from './bs-api-path.enum';

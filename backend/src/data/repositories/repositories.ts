@@ -4,12 +4,17 @@ import {
   Worker as WorkerModel,
   Group as GroupModel,
   UsersGroups as UsersGroupsModel,
+  Space as SpaceModel,
   Permission as PermissionModel,
+  GroupsPermissions as GroupsPermissionsModel,
 } from '~/data/models/models';
 import { Master } from './master/master.repository';
 import { Tenant } from './tenant/tenant.repository';
 import { Worker } from './worker/worker.repository';
 import { Group } from './group/group.repository';
+import { Space } from './space/space.repository';
+import { Permission } from './permission/permission.repository';
+
 const master = new Master({
   MasterModel,
   PermissionModel,
@@ -27,6 +32,15 @@ const worker = new Worker({
 const group = new Group({
   GroupModel,
   UsersGroupsModel,
+  GroupsPermissionsModel,
 });
 
-export { master, group, tenant, worker };
+const permission = new Permission({
+  PermissionModel,
+});
+
+const space = new Space({
+  SpaceModel,
+});
+
+export { master, group, tenant, worker, space, permission };

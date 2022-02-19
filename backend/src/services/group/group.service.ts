@@ -30,6 +30,7 @@ class Group {
     name,
     tenantId,
     workersIds,
+    permissionIds,
   }: EAMGroupCreateRequestDto): Promise<EAMGroupCreateResponseDto> {
     const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
       name,
@@ -39,7 +40,12 @@ class Group {
       throw new InvalidGroupNameError();
     }
 
-    const group = GroupEntity.createNew({ name, tenantId, workersIds });
+    const group = GroupEntity.createNew({
+      name,
+      tenantId,
+      workersIds,
+      permissionIds,
+    });
 
     const newGroup = await this.#groupRepository.create(group);
 

@@ -1,7 +1,8 @@
 enum UsersTableAccessor {
   ID = 'id',
   USERNAME = 'username',
-  TENANT_ID = 'tenantID',
+  GROUPS = 'groups',
+  CREATION_TIME = 'createdAt',
 }
 
 export { UsersTableAccessor };
