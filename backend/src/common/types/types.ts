@@ -34,4 +34,5 @@ export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
 } from './eam-permission/eam-permission';
+export { type BSSpaceCreateRequestDto } from './bs-space/bs-space';
 export { type TokenPayload } from './token/token';

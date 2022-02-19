@@ -32,6 +32,7 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
+export { type BSSpaceCreateRequestDto } from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
