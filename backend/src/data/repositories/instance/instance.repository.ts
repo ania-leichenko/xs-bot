@@ -1,0 +1,67 @@
+import { Instance as InstanceM } from '~/data/models/models';
+import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
+
+type Constructor = {
+  InstanceModel: typeof InstanceM;
+};
+
+class Instance {
+  #InstanceModel: typeof InstanceM;
+
+  constructor({ InstanceModel }: Constructor) {
+    this.#InstanceModel = InstanceModel;
+  }
+
+  async create(instance: InstanceEntity): Promise<InstanceM> {
+    const {
+      id,
+      name,
+      createdAt,
+      keyPairsId,
+      username,
+      hostname,
+      operationSystemId,
+      createdBy,
+      awsInstanceId,
+    } = instance;
+    return this.#InstanceModel.query().insert({
+      id,
+      name,
+      createdAt,
+      keyPairsId,
+      username,
+      hostname,
+      operationSystemId,
+      createdBy,
+      awsInstanceId,
+    });
+  }
+
+  public static modelToEntity(model: InstanceM): InstanceEntity {
+    const {
+      id,
+      name,
+      createdAt,
+      keyPairsId,
+      username,
+      hostname,
+      operationSystemId,
+      createdBy,
+      awsInstanceId,
+    } = model;
+
+    return InstanceEntity.initialize({
+      id,
+      name,
+      createdAt,
+      keyPairsId,
+      username,
+      hostname,
+      operationSystemId,
+      createdBy,
+      awsInstanceId,
+    });
+  }
+}
+
+export { Instance };

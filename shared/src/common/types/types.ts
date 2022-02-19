@@ -32,5 +32,9 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
+export {
+  type SCInstanceCreateRequestDto,
+  type SCInstanceCreateResponseDto,
+} from './sc-instance/sc-instance';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

@@ -6,6 +6,7 @@ export {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  SCApiPath,
   ControllerHook,
 } from './api/api';
 export { AppEnvironment, ENV, LogLevel } from './app/app';
