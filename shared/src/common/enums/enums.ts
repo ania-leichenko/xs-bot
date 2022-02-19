@@ -18,6 +18,8 @@ export {
   EAMMasterValidationRule,
   EAMGroupValidationRule,
   EAMGroupValidationMessage,
+  BSSpaceValidationRule,
+  BSSpaceValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';
