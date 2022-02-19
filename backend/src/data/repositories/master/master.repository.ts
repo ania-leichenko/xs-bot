@@ -3,14 +3,11 @@ import {
   Permission as PermissionM,
 } from '~/data/models/models';
 import { Master as MasterEntity } from '~/services/master/master.entity';
+import { EAMMasterPermissionsItem } from '~/common/types/types';
 
 type Constructor = {
   MasterModel: typeof MasterM;
   PermissionModel: typeof PermissionM;
-};
-
-type Permission = {
-  name: string;
 };
 
 class Master {
@@ -33,7 +30,7 @@ class Master {
       return null;
     }
 
-    return Master.modelToEntity(master, ['']);
+    return Master.modelToEntity(master, []);
   }
 
   async getById(id: string): Promise<MasterEntity | null> {
@@ -47,7 +44,8 @@ class Master {
       return null;
     }
 
-    const permissions: Permission[] = await this.#PermissionModel.query();
+    const permissions: EAMMasterPermissionsItem[] =
+      await this.#PermissionModel.query();
     const permissionName: string[] = permissions.map(
       (permission) => permission.name,
     );
