@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { ActionType } from './common';
+import { AppRoute } from 'common/enums/enums';
 import {
   AsyncThunkConfig,
   BSSpaceCreateRequestDto,
   BSSpaceCreateResponseDto,
 } from 'common/types/types';
-import { AppRoute } from '../../common/enums/app/app-route.enum';
+import { ActionType } from './common';
 
 const createSpace = createAsyncThunk<
   BSSpaceCreateResponseDto,
@@ -16,9 +16,7 @@ const createSpace = createAsyncThunk<
   async (payload: BSSpaceCreateRequestDto, { extra }) => {
     const { bsApi, navigation, notification } = extra;
 
-    const space = await bsApi.createSpace({
-      ...payload,
-    });
+    const space = await bsApi.createSpace(payload);
 
     navigation.push(AppRoute.BS);
 

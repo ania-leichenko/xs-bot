@@ -1,7 +1,7 @@
+import { AppRoute } from 'common/enums/enums';
+import { Button } from 'components/common/common';
 import { FC } from 'react';
 import styles from './styles.module.scss';
-import { Button } from '../common/button/button';
-import { AppRoute } from '../../common/enums/app/app-route.enum';
 
 const BS: FC = () => {
   return (

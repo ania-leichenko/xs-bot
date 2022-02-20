@@ -1,18 +1,18 @@
-import { FC } from 'react';
-import styles from './bs-create-space.module.scss';
-import { Button } from '../common/button/button';
-import { AppRoute } from '../../common/enums/app/app-route.enum';
-import { ButtonStyle } from '../../common/enums/ui/button-style.enum';
-import { ButtonType } from '../../common/enums/ui/button-type.enum';
-import { bsSpaceCreate as CreateSpaceValidationSchema } from 'validation-schemas/validation-schemas';
-import { Input } from '../common/input/input';
-import { InputType } from '../../common/enums/ui/input-type.enum';
-import { BSSpace as BSSpaceActions } from 'store/actions';
-import { getNameOf } from '../../helpers/helpers';
+import {
+  AppRoute,
+  ButtonStyle,
+  ButtonType,
+  InputType,
+} from 'common/enums/enums';
 import { BSSpaceCreateRequestDto } from 'common/types/types';
-import { useAppForm } from '../../hooks/use-app-form/use-app-form.hook';
+import { Button, Input } from 'components/common/common';
+import { getNameOf } from 'helpers/helpers';
+import { useAppDispatch, useAppForm } from 'hooks/hooks';
+import { FC } from 'react';
+import { BSSpace as BSSpaceActions } from 'store/actions';
+import { bsSpaceCreate as CreateSpaceValidationSchema } from 'validation-schemas/validation-schemas';
+import styles from './bs-create-space.module.scss';
 import { DEFAULT_PAYLOAD } from './common/constants';
-import { useAppDispatch } from '../../hooks/use-app-dispatch/use-app-dispatch.hook';
 
 const BSCreateSpace: FC = () => {
   const dispatch = useAppDispatch();
@@ -25,11 +25,7 @@ const BSCreateSpace: FC = () => {
   );
 
   const handleFormSubmit = (payload: BSSpaceCreateRequestDto): void => {
-    dispatch(
-      BSSpaceActions.createSpace({
-        ...payload,
-      }),
-    );
+    dispatch(BSSpaceActions.createSpace(payload));
   };
 
   return (

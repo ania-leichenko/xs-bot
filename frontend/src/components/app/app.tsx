@@ -16,8 +16,8 @@ import { EAM } from 'components/eam/eam';
 import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
 import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
 import { NotFound } from 'components/not-found-page/not-found-page';
-import { BS } from '../bs/bs';
-import { BSCreateSpace } from '../bs-create-space/bs-create-space';
+import { BS } from 'components/bs/bs';
+import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
