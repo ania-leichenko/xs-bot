@@ -7,6 +7,8 @@ import {
 import {
   BSSpaceCreateRequestDto,
   BSSpaceCreateResponseDto,
+  BSSpaceGetRequestParamsDto,
+  BSSpaceGetResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -23,6 +25,18 @@ class BSApi {
   constructor({ http, apiPrefix }: Constructor) {
     this.#http = http;
     this.#apiPrefix = apiPrefix;
+  }
+
+  public loadSpaces(
+    params: BSSpaceGetRequestParamsDto,
+  ): Promise<BSSpaceGetResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES),
+      {
+        method: HttpMethod.GET,
+        params,
+      },
+    );
   }
 
   public createSpace(
