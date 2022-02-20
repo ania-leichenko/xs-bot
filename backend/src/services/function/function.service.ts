@@ -4,7 +4,7 @@ import {
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
 import { SLCFunction as SLCFunctionEntity } from './function.entity';
-import { InvalidCredentialsError } from '~/exceptions/exceptions';
+import { InvalidFunctionError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import { token as tokenServ } from '~/services/services';
@@ -38,7 +38,7 @@ class SLCFunction {
     const { userRole } = this.#tokenService.decode<TokenPayload>(token);
 
     if (userRole !== UserRole.WORKER) {
-      throw new InvalidCredentialsError({
+      throw new InvalidFunctionError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_FUNCTION_CREATE,
       });
@@ -50,10 +50,7 @@ class SLCFunction {
     );
 
     if (functionByName) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.BAD_REQUEST,
-        message: ExceptionMessage.FUNCTION_NAME_EXISTS,
-      });
+      throw new InvalidFunctionError();
     }
 
     const awsLambdaId = getRandomId();
