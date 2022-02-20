@@ -6,6 +6,7 @@ import {
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
   TokenPayload,
+  ScInstanceOperationSystemEntity,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
 import {
@@ -20,7 +21,6 @@ import {
   ExceptionMessage,
 } from '~/common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { ScInstanceOperationSystemEntity } from '~/common/types/types';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;

@@ -71,6 +71,26 @@ class Space {
 
     return this.#spaceRepository.create(space);
   }
+
+  public async delete({
+    name,
+    token,
+  }: {
+    name: string;
+    token: string;
+  }): Promise<void> {
+    const user: TokenPayload = await this.#tokenService.decode(token);
+
+    if (user.userRole !== UserRole.WORKER) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_SPACE_DELETE,
+      });
+    }
+    await this.#s3Service.deleteBucket({ name });
+
+    await this.#spaceRepository.delete({ name });
+  }
 }
 
 export { Space };

@@ -31,6 +31,10 @@ class Space {
     return Space.modelToEntity(created);
   }
 
+  async delete({ name }: { name: string }): Promise<number> {
+    return this.#SpaceModel.query().where({ name }).del();
+  }
+
   async getByTenantId(
     filter: BSSpaceGetFilter,
   ): Promise<BSSpaceGetResponseItemDto[]> {
