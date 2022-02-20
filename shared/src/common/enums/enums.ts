@@ -26,3 +26,4 @@ export {
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';
+export { DateFormat } from './date/date-format.enum';
