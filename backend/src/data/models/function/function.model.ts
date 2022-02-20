@@ -3,7 +3,7 @@ import { getFormattedISODate } from '~/helpers/helpers';
 import { AbstractModel } from '../abstract/abstract.model';
 import { FunctionTableField } from './function-table-field.enum';
 
-class Function extends AbstractModel {
+class SLCFunction extends AbstractModel {
   [FunctionTableField.NAME]: string;
   [FunctionTableField.SOURCE_CODE]: string;
   [FunctionTableField.CREATED_BY]: string;
@@ -21,4 +21,4 @@ class Function extends AbstractModel {
   }
 }
 
-export { Function };
+export { SLCFunction };

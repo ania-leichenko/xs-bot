@@ -7,7 +7,7 @@ import {
   worker,
   auth,
   space,
-  slc,
+  slcFunction,
 } from '~/services/services';
 import { WHITE_ROUTES } from '~/common/constants/constants';
 import { authorization as authorizationPlugin } from '~/plugins/plugins';
@@ -58,7 +58,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   });
   fastify.register(initSLCApi, {
     services: {
-      function: slc,
+      slcFunction,
     },
     prefix: ApiPath.SLC,
   });

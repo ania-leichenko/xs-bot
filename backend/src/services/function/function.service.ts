@@ -1,10 +1,9 @@
 import {
-  SLCFunctionCreateRequestDto,
   SLCFunctionCreateResponseDto,
   TokenPayload,
 } from '~/common/types/types';
-import { slc as functionRep } from '~/data/repositories/repositories';
-import { SLC as FunctionEntity } from './function.entity';
+import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
+import { SLCFunction as SLCFunctionEntity } from './function.entity';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
@@ -12,24 +11,28 @@ import { token as tokenServ } from '~/services/services';
 import { getRandomId } from '~/helpers/helpers';
 
 type Constructor = {
-  functionRepository: typeof functionRep;
+  slcFunctionRepository: typeof slcFunctionRep;
   tokenService: typeof tokenServ;
 };
 
-class Function {
-  #functionRepository: typeof functionRep;
+class SLCFunction {
+  #slcFunctionRepository: typeof slcFunctionRep;
   #tokenService: typeof tokenServ;
 
-  constructor({ functionRepository, tokenService }: Constructor) {
-    this.#functionRepository = functionRepository;
+  constructor({ slcFunctionRepository, tokenService }: Constructor) {
+    this.#slcFunctionRepository = slcFunctionRepository;
     this.#tokenService = tokenService;
   }
 
   public async create({
-    slc,
+    name,
+    sourceCode,
+    createdBy,
     token,
   }: {
-    slc: SLCFunctionCreateRequestDto;
+    name: string;
+    sourceCode: string;
+    createdBy: string;
     token: string;
   }): Promise<SLCFunctionCreateResponseDto> {
     const { userRole } = this.#tokenService.decode<TokenPayload>(token);
@@ -41,10 +44,11 @@ class Function {
       });
     }
 
-    const functionByName = await this.#functionRepository.getByName(
-      slc.createdBy,
-      slc.name,
+    const functionByName = await this.#slcFunctionRepository.getByName(
+      createdBy,
+      name,
     );
+
     if (functionByName) {
       throw new InvalidCredentialsError({
         status: HttpCode.BAD_REQUEST,
@@ -54,15 +58,17 @@ class Function {
 
     const awsLambdaId = getRandomId();
 
-    const newFunction = FunctionEntity.createNew({
-      ...slc,
+    const slcFunction = SLCFunctionEntity.createNew({
+      name,
+      sourceCode,
+      createdBy,
       awsLambdaId,
     });
 
-    const { name } = await this.#functionRepository.create(newFunction);
+    await this.#slcFunctionRepository.create(slcFunction);
 
-    return { name };
+    return { name: slcFunction.name };
   }
 }
 
-export { Function };
+export { SLCFunction };

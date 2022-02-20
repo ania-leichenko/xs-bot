@@ -1,36 +1,36 @@
-import { Function as FunctionM } from '~/data/models/models';
-import { SLC as FunctionEntity } from '~/services/function/function.entity';
+import { SLCFunction as SLCFunctionM } from '~/data/models/models';
+import { SLCFunction as SLCFunctionEntity } from '~/services/function/function.entity';
 
 type Constructor = {
-  FunctionModel: typeof FunctionM;
+  SLCFunctionModel: typeof SLCFunctionM;
 };
 
-class Function {
-  #FunctionModel: typeof FunctionM;
+class SLCFunction {
+  #SLCFunctionModel: typeof SLCFunctionM;
 
-  constructor({ FunctionModel }: Constructor) {
-    this.#FunctionModel = FunctionModel;
+  constructor({ SLCFunctionModel }: Constructor) {
+    this.#SLCFunctionModel = SLCFunctionModel;
   }
 
   async getByName(
     createdBy: string,
     name: string,
-  ): Promise<FunctionEntity | null> {
-    const slc = await this.#FunctionModel
+  ): Promise<SLCFunctionEntity | null> {
+    const slcFunction = await this.#SLCFunctionModel
       .query()
       .select()
       .where({ createdBy })
       .andWhere({ name })
       .first();
 
-    if (!slc) {
+    if (!slcFunction) {
       return null;
     }
 
-    return Function.modelToEntity(slc);
+    return SLCFunction.modelToEntity(slcFunction);
   }
 
-  async create(slc: FunctionEntity): Promise<FunctionEntity> {
+  async create(slcFunction: SLCFunctionEntity): Promise<SLCFunctionEntity> {
     const {
       id,
       name,
@@ -39,9 +39,9 @@ class Function {
       createdBy,
       awsLambdaId,
       updatedAt,
-    } = slc;
+    } = slcFunction;
 
-    return this.#FunctionModel.query().insert({
+    return this.#SLCFunctionModel.query().insert({
       id,
       name,
       createdAt,
@@ -52,7 +52,7 @@ class Function {
     });
   }
 
-  public static modelToEntity(model: FunctionM): FunctionEntity {
+  public static modelToEntity(model: SLCFunctionM): SLCFunctionEntity {
     const {
       id,
       name,
@@ -63,7 +63,7 @@ class Function {
       updatedAt,
     } = model;
 
-    return FunctionEntity.initialize({
+    return SLCFunctionEntity.initialize({
       id,
       name,
       createdAt,
@@ -75,4 +75,4 @@ class Function {
   }
 }
 
-export { Function };
+export { SLCFunction };

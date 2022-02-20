@@ -1,6 +1,6 @@
 import { getRandomId } from '~/helpers/helpers';
 
-class SLC {
+class SLCFunction {
   public id: string;
   public name: string;
   public createdAt: string;
@@ -51,8 +51,8 @@ class SLC {
     createdBy: string;
     awsLambdaId: string;
     updatedAt: string;
-  }): SLC {
-    return new SLC({
+  }): SLCFunction {
+    return new SLCFunction({
       id,
       name,
       createdAt,
@@ -73,10 +73,10 @@ class SLC {
     sourceCode: string;
     createdBy: string;
     awsLambdaId: string;
-  }): SLC {
+  }): SLCFunction {
     const date = new Date().toISOString();
 
-    return new SLC({
+    return new SLCFunction({
       id: getRandomId(),
       name,
       createdAt: date,
@@ -88,4 +88,4 @@ class SLC {
   }
 }
 
-export { SLC };
+export { SLCFunction };

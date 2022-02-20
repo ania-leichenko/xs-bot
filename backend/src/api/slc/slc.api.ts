@@ -1,18 +1,18 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { slc as functionServ } from '~/services/services';
+import { slcFunction as slcFunctionServ } from '~/services/services';
 import { slcFunctionCreate as slcFunctionCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, SLCApiPath } from '~/common/enums/enums';
 import { SLCFunctionCreateRequestDto } from '~/common/types/types';
 
 type Options = {
   services: {
-    function: typeof functionServ;
+    slcFunction: typeof slcFunctionServ;
   };
 };
 
 const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { function: functionService } = opts.services;
+  const { slcFunction: slcFunctionService } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -36,7 +36,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
 
       return rep
-        .send(await functionService.create({ slc: req.body, token }))
+        .send(await slcFunctionService.create({ ...req.body, token }))
         .status(HttpCode.CREATED);
     },
   });
