@@ -48,8 +48,8 @@ const EAMConfigurateGroup: FC = () => {
     dispatch(EAMGroupConfigurateActions.getPermission());
   }, [dispatch, tenantId]);
 
-  const selectedWorkers = useSelectedItems();
-  const selectedPermissions = useSelectedItems();
+  const selectedWorkers = useSelectedItems<string>([]);
+  const selectedPermissions = useSelectedItems<string>([]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {

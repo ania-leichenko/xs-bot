@@ -1,8 +1,8 @@
-type UseSelectedItemsHook = {
-  selected: string[];
-  push: (id: string) => void;
-  remove: (id: string) => void;
-  has: (id: string) => boolean;
+type UseSelectedItemsHook<T> = {
+  selected: T[];
+  push: (id: T) => void;
+  remove: (id: T) => void;
+  has: (id: T) => boolean;
 };
 
 export { type UseSelectedItemsHook };

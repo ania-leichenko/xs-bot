@@ -1,6 +1,6 @@
 import { UsersTableHeader, UsersTableAccessor } from 'common/enums/enums';
 import { Column } from 'react-table';
-import { SelectRowCell } from 'components/eam-configurate-group/helpers/helpers';
+import { SelectRowCell } from '../../../helpers/helpers';
 
 const getColumns = (
   handleAddId: (id: string) => void,
