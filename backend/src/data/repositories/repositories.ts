@@ -19,6 +19,7 @@ import { Function } from './function/function.repository';
 
 const master = new Master({
   MasterModel,
+  PermissionModel,
 });
 
 const tenant = new Tenant({

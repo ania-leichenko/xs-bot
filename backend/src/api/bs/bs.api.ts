@@ -16,7 +16,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.POST,
-    url: BSApiPath.ROOT,
+    url: BSApiPath.SPACES,
     schema: {
       body: bsSpaceCreateValidationSchema,
     },
