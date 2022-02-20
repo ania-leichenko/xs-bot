@@ -46,22 +46,24 @@ class Instance {
     name,
     operationSystemId,
     createdBy,
+    tenantId,
   }: SCInstanceCreateRequestDto): Promise<SCInstanceCreateResponseDto> {
-    const keyPairsId = await this.#keyPairService.create();
+    const keyPairId = await this.#keyPairService.create();
     const { hostname, instanceId } = await this.#ec2Service.createInstance({
       name,
-      keyName: keyPairsId,
+      keyName: keyPairId,
       imageId: await this.getImageId(operationSystemId),
     });
 
     const instance = InstanceEntity.createNew({
       name,
-      keyPairsId,
+      keyPairId,
       username: USERNAME,
       hostname: hostname,
       operationSystemId,
       createdBy,
       awsInstanceId: instanceId,
+      tenantId,
     });
 
     const {

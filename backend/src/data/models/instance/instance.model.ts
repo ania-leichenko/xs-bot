@@ -10,6 +10,7 @@ class Instance extends AbstractModel {
   [InstanceTableField.OPERATION_SYSTEM_ID]: string;
   [InstanceTableField.CREATED_BY]: string;
   [InstanceTableField.AWS_INSTANCE_ID]: string;
+  [InstanceTableField.TENANT_ID]: string;
 
   static get tableName(): string {
     return TableName.INSTANCES;

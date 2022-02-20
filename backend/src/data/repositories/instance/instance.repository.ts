@@ -17,7 +17,7 @@ class Instance {
       id,
       name,
       createdAt,
-      keyPairsId,
+      keyPairId,
       username,
       hostname,
       operationSystemId,
@@ -28,7 +28,7 @@ class Instance {
       id,
       name,
       createdAt,
-      keyPairsId,
+      keyPairId,
       username,
       hostname,
       operationSystemId,
@@ -42,24 +42,26 @@ class Instance {
       id,
       name,
       createdAt,
-      keyPairsId,
+      keyPairId,
       username,
       hostname,
       operationSystemId,
       createdBy,
       awsInstanceId,
+      tenantId,
     } = model;
 
     return InstanceEntity.initialize({
       id,
       name,
       createdAt,
-      keyPairsId,
+      keyPairId,
       username,
       hostname,
       operationSystemId,
       createdBy,
       awsInstanceId,
+      tenantId,
     });
   }
 }

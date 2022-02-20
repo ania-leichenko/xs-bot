@@ -70,7 +70,6 @@ const ec2 = new EC2({
 const keyPair = new KeyPair({
   keyPairRepository,
   ec2Service: ec2,
-  encryptService: encrypt,
 });
 
 const instance = new Instance({
