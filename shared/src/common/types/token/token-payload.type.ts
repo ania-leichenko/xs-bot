@@ -4,7 +4,6 @@ type TokenPayload = {
   userId: string;
   tenantId: string;
   userRole: UserRole;
-  tenantId: string;
 };
 
 export { type TokenPayload };
