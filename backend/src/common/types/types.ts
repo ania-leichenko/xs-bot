@@ -32,6 +32,11 @@ export {
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
 export {
+  type SCInstanceCreateRequestDto,
+  type SCInstanceCreateResponseDto,
+  type ScInstanceOperationSystemEntity,
+} from './sc-instance/sc-instance';
+export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
 } from './eam-permission/eam-permission';
