@@ -18,14 +18,14 @@ import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './eam-configurate-group.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
-import { eamGroupConfigurate } from 'validation-schemas/validation-schemas';
+import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
 
 const EAMConfigurateGroup: FC = () => {
   const { control, errors, handleSubmit } =
     useAppForm<EAMGroupConfigurateRequestDto>({
       defaultValues: DEFAULT_GROUP_PAYLOAD,
-      validationSchema: eamGroupConfigurate,
+      validationSchema: eamGroupConfigurateValidationSchema,
     });
 
   const { tenantId } = useAppSelector(({ app }) => ({
