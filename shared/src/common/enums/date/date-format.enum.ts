@@ -1,6 +1,5 @@
 enum DateFormat {
-  ISO = 'Iso',
-  DISTANCE = 'Distance',
+  DAY_MONTH_YEAR = 'dd/MM/yyyy',
 }
 
 export { DateFormat };

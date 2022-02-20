@@ -1,16 +1,8 @@
-import { formatDistance, formatISO } from 'date-fns';
-import { DateFormat } from '~/common/enums/date/date.enum';
+import { format } from 'date-fns';
+import { DateFormat } from '~/common/enums/enums';
 
-const getFormattedDate = (
-  date: Date,
-  format: DateFormat = DateFormat.ISO,
-): string => {
-  if (format !== DateFormat.DISTANCE) {
-    return formatDistance(date, new Date(), {
-      addSuffix: true,
-    });
-  }
-  return formatISO(date);
+const getFormattedDate = (date: Date, formatType: DateFormat): string => {
+  return format(date, formatType);
 };
 
 export { getFormattedDate };
