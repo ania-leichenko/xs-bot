@@ -25,6 +25,7 @@ import { Instance } from './instance/instance.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
+import { Lambda } from './aws/lambda/lambda.service';
 import { SLCFunction } from './function/function.service';
 
 const token = new Token();
@@ -100,9 +101,19 @@ const space = new Space({
   s3Service: s3,
 });
 
+const lambda = new Lambda({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
+  role: ENV.AWS.AWS_DEFAULT_LAMBDA_ROLE,
+});
+
 const slcFunction = new SLCFunction({
   slcFunctionRepository,
   tokenService: token,
+  lambdaService: lambda,
 });
 
 export {
@@ -119,5 +130,6 @@ export {
   space,
   s3,
   permission,
+  lambda,
   slcFunction,
 };
