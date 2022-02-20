@@ -90,19 +90,14 @@ class Instance {
       tenantId,
     });
 
-    const {
-      id,
-      name: instanceName,
-      createdAt,
-      hostname: instanceHostname,
-    } = await this.#instanceRepository.create(instance);
+    await this.#instanceRepository.create(instance);
 
     return {
-      instanceId: id,
+      instanceId: instance.id,
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
-      name: instanceName,
-      createdAt,
-      publicDNS: instanceHostname,
+      name: instance.name,
+      createdAt: instance.createdAt,
+      publicDNS: instance.hostname,
     };
   }
 }

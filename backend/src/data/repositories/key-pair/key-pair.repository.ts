@@ -26,7 +26,7 @@ class KeyPair {
     return KeyPair.modelToEntity(keyPair);
   }
 
-  async create(keyPair: KeyPairEntity): Promise<KeyPairM> {
+  async create(keyPair: KeyPairEntity): Promise<KeyPairEntity> {
     const { id, sshPemFileContent, createdAt } = keyPair;
     return this.#KeyPairModel.query().insert({
       id,
