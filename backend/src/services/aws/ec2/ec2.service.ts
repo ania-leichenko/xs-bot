@@ -5,11 +5,10 @@ import {
   CreateTagsCommand,
   DescribeInstancesCommand,
   waitUntilInstanceRunning,
+  Reservation,
+  Instance,
 } from '@aws-sdk/client-ec2';
-import {
-  INSTANCE_TYPE,
-  MAX_WAITING_TIME,
-} from '~/common/constants/instance.constants';
+import { InstanceDefaultParam } from '~/common/enums/enums';
 
 type Constructor = {
   region: string;
@@ -61,52 +60,52 @@ class EC2 {
     keyName,
     imageId,
   }: InstanceCredentials): Promise<InstanceData> {
-    const instanceParams = {
-      ImageId: imageId,
-      InstanceType: INSTANCE_TYPE,
-      MinCount: 1,
-      MaxCount: 1,
-      KeyName: keyName,
-    };
-
     const data = await this.#ec2Client.send(
-      new RunInstancesCommand(instanceParams),
+      new RunInstancesCommand({
+        ImageId: imageId,
+        InstanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
+        MinCount: 1,
+        MaxCount: 1,
+        KeyName: keyName,
+      }),
     );
 
-    const instanceId = data.Instances![0].InstanceId as string;
+    const [instance] = data.Instances as Instance[];
+    const { InstanceId: instanceId } = instance;
 
-    const tagParams = {
-      Resources: [instanceId],
-      Tags: [
-        {
-          Key: 'Name',
-          Value: name,
-        },
-      ],
-    };
-
-    await this.#ec2Client.send(new CreateTagsCommand(tagParams));
+    await this.#ec2Client.send(
+      new CreateTagsCommand({
+        Resources: [instanceId as string],
+        Tags: [
+          {
+            Key: 'Name',
+            Value: name,
+          },
+        ],
+      }),
+    );
 
     await waitUntilInstanceRunning(
       {
         client: this.#ec2Client,
-        maxWaitTime: MAX_WAITING_TIME,
+        maxWaitTime: InstanceDefaultParam.MAX_WAITING_TIME as number,
       },
       {
-        InstanceIds: [instanceId],
+        InstanceIds: [instanceId as string],
       },
     );
 
     const dataWithDNS = await this.#ec2Client.send(
-      new DescribeInstancesCommand({ InstanceIds: [instanceId] }),
+      new DescribeInstancesCommand({ InstanceIds: [instanceId as string] }),
     );
 
-    const publicDnsName = dataWithDNS.Reservations![0].Instances![0]
-      .PublicDnsName as string;
+    const [reservation] = dataWithDNS.Reservations as Reservation[];
+    const [instanceWithDNS] = reservation.Instances as Instance[];
+    const { PublicDnsName: publicDnsName } = instanceWithDNS;
 
     return {
-      instanceId,
-      hostname: publicDnsName,
+      instanceId: instanceId as string,
+      hostname: publicDnsName as string,
     };
   }
 }

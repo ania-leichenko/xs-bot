@@ -13,7 +13,7 @@ import {
   ec2 as EC2Serv,
   token as tokenServ,
 } from '~/services/services';
-import { INSTANCE_TYPE, USERNAME } from '~/common/constants/instance.constants';
+import { InstanceDefaultParam } from '~/common/enums/enums';
 import { UserRole } from '~/common/enums/roles/roles';
 import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
 import { HttpCode } from '~/common/enums/http/http';
@@ -63,7 +63,7 @@ class Instance {
     token: string;
   }): Promise<SCInstanceCreateResponseDto> {
     const { name, operationSystemId } = instanceCredentials;
-    const { userId, userRole, userTenantId }: TokenPayload =
+    const { userId, userRole, tenantId }: TokenPayload =
       await this.#tokenService.decode(token);
     if (userRole !== UserRole.WORKER) {
       throw new InvalidCredentialsError({
@@ -82,12 +82,12 @@ class Instance {
     const instance = InstanceEntity.createNew({
       name,
       keyPairId,
-      username: USERNAME,
+      username: InstanceDefaultParam.USERNAME as string,
       hostname: hostname,
       operationSystemId,
       createdBy: userId,
       awsInstanceId: instanceId,
-      tenantId: userTenantId,
+      tenantId,
     });
 
     const {
@@ -99,7 +99,7 @@ class Instance {
 
     return {
       instanceId: id,
-      instanceType: INSTANCE_TYPE,
+      instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: instanceName,
       createdAt,
       publicDNS: instanceHostname,

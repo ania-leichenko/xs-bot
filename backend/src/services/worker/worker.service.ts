@@ -61,7 +61,7 @@ class Worker {
       token: this.#tokenService.create({
         userId: id,
         userRole: UserRole.WORKER,
-        userTenantId: tenantId,
+        tenantId,
       }),
     };
   }

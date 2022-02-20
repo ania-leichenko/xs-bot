@@ -3,7 +3,7 @@ import { UserRole } from '~/common/enums/enums';
 type TokenPayload = {
   userId: string;
   userRole: UserRole;
-  userTenantId: string;
+  tenantId: string;
 };
 
 export { type TokenPayload };
