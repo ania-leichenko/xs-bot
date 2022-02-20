@@ -23,6 +23,7 @@ class Instance {
       operationSystemId,
       createdBy,
       awsInstanceId,
+      tenantId,
     } = instance;
     return this.#InstanceModel.query().insert({
       id,
@@ -34,6 +35,7 @@ class Instance {
       operationSystemId,
       createdBy,
       awsInstanceId,
+      tenantId,
     });
   }
 

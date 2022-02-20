@@ -33,7 +33,11 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: SCInstanceCreateRequestDto }>,
       rep,
     ) {
-      const instance = await instanceService.create(req.body);
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const instance = await instanceService.create({
+        instanceCredentials: req.body,
+        token,
+      });
       return rep.send(instance).status(HttpCode.CREATED);
     },
   });

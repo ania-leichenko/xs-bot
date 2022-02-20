@@ -10,6 +10,7 @@ const ExceptionMessage = {
   WORKER_NAME:
     'Account with that name does not exist. Try again or create a new account.',
   MASTER_SPACE_CREATE: 'Master is not able to crete space',
+  MASTER_INSTANCE_CREATE: 'Master is not able to crete instance',
 };
 
 export { ExceptionMessage };

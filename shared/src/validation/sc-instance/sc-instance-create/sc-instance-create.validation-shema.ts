@@ -19,6 +19,12 @@ const scInstanceCreate = Joi.object({
       'string.max': SCInstanceValidationMessage.NAME_LENGTH,
       'string.pattern.base': SCInstanceValidationMessage.NAME_PATTERN,
     }),
+  [getNameOf<SCInstanceCreateRequestDto>('operationSystemId')]: Joi.string()
+    .trim()
+    .required()
+    .messages({
+      'string.empty': SCInstanceValidationMessage.NAME_REQUIRE,
+    }),
 });
 
 export { scInstanceCreate };

@@ -77,6 +77,7 @@ const instance = new Instance({
   operationSystemRepository,
   keyPairService: keyPair,
   ec2Service: ec2,
+  tokenService: token,
 });
 
 const permission = new Permission({
