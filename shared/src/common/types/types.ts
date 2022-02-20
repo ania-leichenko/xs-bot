@@ -4,6 +4,7 @@ export {
   type EAMMasterSignInRequestDto,
   type EAMMasterSignInResponseDto,
   type EAMMasterByIdResponseDto,
+  type EAMMasterPermissionsItem,
 } from './eam-master/eam-master';
 export {
   type EAMGroupCreateResponseDto,
@@ -36,7 +37,11 @@ export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
 } from './sc-instance/sc-instance';
-export { type BSSpaceCreateRequestDto } from './bs-space/bs-space';
+export {
+  type BSSpaceCreateRequestDto,
+  type BSSpaceCreateResponseDto,
+  type BSSpaceCreateFormDto,
+} from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
