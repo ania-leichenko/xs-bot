@@ -54,8 +54,8 @@ const EAMConfigurateGroup: FC = () => {
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
       name: payload.name,
-      workersIds: selectedWorkers.selected,
-      permissionsIds: selectedPermissions.selected,
+      workersIds: selectedWorkers.selectedItems,
+      permissionsIds: selectedPermissions.selectedItems,
     };
     dispatch(EAMGroupConfigurateActions.create(newPayload));
   };
@@ -85,18 +85,18 @@ const EAMConfigurateGroup: FC = () => {
             </li>
             <li>
               <WorkersTable
-                selectedWorkers={selectedWorkers.selected}
-                handleIsCheckedId={selectedWorkers.has}
-                handleRemoveWorkerId={selectedWorkers.remove}
-                handleAddWorkerId={selectedWorkers.push}
+                selectedWorkers={selectedWorkers.selectedItems}
+                handleIsCheckedId={selectedWorkers.handleCheck}
+                handleRemoveWorkerId={selectedWorkers.handleRemove}
+                handleAddWorkerId={selectedWorkers.handleAdd}
               />
             </li>
             <li>
               <PermissionsTable
-                selectedPermissions={selectedPermissions.selected}
-                handleIsCheckedPermissionId={selectedPermissions.has}
-                handleRemovePermissionId={selectedPermissions.remove}
-                handleAddPermissionId={selectedPermissions.push}
+                selectedPermissions={selectedPermissions.selectedItems}
+                handleIsCheckedPermissionId={selectedPermissions.handleCheck}
+                handleRemovePermissionId={selectedPermissions.handleAdd}
+                handleAddPermissionId={selectedPermissions.handleAdd}
               />
             </li>
           </ul>
