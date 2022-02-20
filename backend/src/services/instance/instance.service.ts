@@ -20,6 +20,7 @@ import {
   ExceptionMessage,
 } from '~/common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
+import { ScInstanceOperationSystemEntity } from '~/common/types/types';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;
@@ -54,7 +55,8 @@ class Instance {
     const operationSystem = await this.#operationSystemRepository.getById(
       operationSystemId,
     );
-    return operationSystem!.awsGenerationName;
+    return (operationSystem as ScInstanceOperationSystemEntity)
+      .awsGenerationName;
   }
 
   public async create({

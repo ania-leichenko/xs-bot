@@ -1,4 +1,5 @@
 import { OperationSystem as OperationSystemM } from '~/data/models/models';
+import { ScInstanceOperationSystemEntity } from '~/common/types/types';
 
 type Constructor = {
   OperationSystemModel: typeof OperationSystemM;
@@ -11,12 +12,7 @@ class OperationSystem {
     this.#OperationSystemModel = OperationSystemModel;
   }
 
-  async getById(id: string): Promise<{
-    id: string;
-    name: string;
-    createdAt: string;
-    awsGenerationName: string;
-  } | null> {
+  async getById(id: string): Promise<ScInstanceOperationSystemEntity | null> {
     const operationSystem = await this.#OperationSystemModel
       .query()
       .select()

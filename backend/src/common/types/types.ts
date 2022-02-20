@@ -34,6 +34,7 @@ export {
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
+  type ScInstanceOperationSystemEntity,
 } from './sc-instance/sc-instance';
 export {
   type EAMPermissionGetAllItemResponseDto,
