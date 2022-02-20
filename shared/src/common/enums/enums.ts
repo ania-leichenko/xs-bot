@@ -6,6 +6,7 @@ export {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  SCApiPath,
   BSApiPath,
   SLCApiPath,
 } from './api/api';
@@ -21,6 +22,8 @@ export {
   EAMGroupValidationMessage,
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
+  SCInstanceValidationRule,
+  SCInstanceValidationMessage,
   SLCFunctionValidationMessage,
   SLCFunctionValidationRule,
 } from './validation/validation';

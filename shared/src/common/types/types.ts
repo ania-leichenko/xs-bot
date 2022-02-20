@@ -34,9 +34,17 @@ export {
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
 export {
+  type SCInstanceCreateRequestDto,
+  type SCInstanceCreateResponseDto,
+} from './sc-instance/sc-instance';
+export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,
   type BSSpaceCreateFormDto,
+  type BSSpaceGetRequestParamsDto,
+  type BSSpaceGetResponseDto,
+  type BSSpaceGetResponseItemDto,
+  type BSSpaceGetFilter,
 } from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,

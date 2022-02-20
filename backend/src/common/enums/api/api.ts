@@ -6,6 +6,7 @@ export {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  SCApiPath,
   BSApiPath,
   SLCApiPath,
 } from 'bws-shared/common/enums/enums';

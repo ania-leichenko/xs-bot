@@ -6,6 +6,7 @@ import {
   group,
   worker,
   auth,
+  instance,
   space,
   slcFunction,
 } from '~/services/services';
@@ -16,6 +17,7 @@ import { initTenantsApi } from './tenants/tenants.api';
 import { initBsApi } from '~/api/bs/bs.api';
 import { initAuthApi } from './auth/auth.api';
 import { initEamApi } from './eam/eam.api';
+import { initScApi } from './sc/sc.api';
 import { initSLCApi } from './slc/slc.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
@@ -49,6 +51,12 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       tenant,
     },
     prefix: ApiPath.TENANTS,
+  });
+  fastify.register(initScApi, {
+    services: {
+      instance,
+    },
+    prefix: ApiPath.SC,
   });
   fastify.register(initBsApi, {
     services: {

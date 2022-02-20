@@ -20,4 +20,5 @@ export {
   WorkersTableHeader,
   WorkersTableAccessor,
 } from './eam/eam';
+export { SpacesTableHeader, SpacesTableAccessor } from './bs/bs';
 export { UserRole } from './roles/roles';
