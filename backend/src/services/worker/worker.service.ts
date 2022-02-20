@@ -62,6 +62,7 @@ class Worker {
         userId: id,
         tenantId: tenantId,
         userRole: UserRole.WORKER,
+        tenantId,
       }),
     };
   }

@@ -72,6 +72,7 @@ class Master {
         userId: id,
         tenantId: tenantId,
         userRole: UserRole.MASTER,
+        tenantId,
       }),
     };
   }
