@@ -6,6 +6,7 @@ export {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  SCApiPath,
   BSApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
@@ -20,6 +21,9 @@ export {
   EAMGroupValidationMessage,
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
+  SCInstanceValidationRule,
+  SCInstanceValidationMessage,
 } from './validation/validation';
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';
+export { DateFormat } from './date/date-format.enum';

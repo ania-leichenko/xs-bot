@@ -16,7 +16,7 @@ import {
 } from 'common/enums/enums';
 import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
-import styles from './eam-configurate-group.module.scss';
+import styles from './styles.module.scss';
 import { EAMGroupConfigurateRequestDto } from 'common/types/types';
 import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
