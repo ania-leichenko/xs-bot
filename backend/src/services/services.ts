@@ -26,7 +26,7 @@ import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
 import { Lambda } from './aws/lambda/lambda.service';
-import { SLCFunction } from './function/function.service';
+import { SLCFunction } from './slc-function/slc-function.service';
 
 const token = new Token();
 const encrypt = new Encrypt({

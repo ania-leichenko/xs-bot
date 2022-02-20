@@ -1,5 +1,5 @@
 import { SLCFunction as SLCFunctionM } from '~/data/models/models';
-import { SLCFunction as SLCFunctionEntity } from '~/services/function/function.entity';
+import { SLCFunction as SLCFunctionEntity } from '~/services/slc-function/slc-function.entity';
 
 type Constructor = {
   SLCFunctionModel: typeof SLCFunctionM;

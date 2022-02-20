@@ -3,8 +3,8 @@ import {
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
-import { SLCFunction as SLCFunctionEntity } from './function.entity';
-import { InvalidFunctionError } from '~/exceptions/exceptions';
+import { SLCFunction as SLCFunctionEntity } from './slc-function.entity';
+import { InvalidSLCFunctionError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import { token as tokenServ, lambda as lambdaServ } from '~/services/services';
@@ -44,7 +44,7 @@ class SLCFunction {
     const { userRole } = this.#tokenService.decode<TokenPayload>(token);
 
     if (userRole !== UserRole.WORKER) {
-      throw new InvalidFunctionError({
+      throw new InvalidSLCFunctionError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_FUNCTION_CREATE,
       });
@@ -56,7 +56,7 @@ class SLCFunction {
     );
 
     if (functionByName) {
-      throw new InvalidFunctionError();
+      throw new InvalidSLCFunctionError();
     }
 
     const { FunctionArn } = await this.#lambdaService.creteFunction({
@@ -65,7 +65,7 @@ class SLCFunction {
     });
 
     if (!FunctionArn) {
-      throw new InvalidFunctionError({
+      throw new InvalidSLCFunctionError({
         status: HttpCode.INTERNAL_SERVER_ERROR,
         message: ExceptionMessage.FUNCTION_NOT_CREATED,
       });

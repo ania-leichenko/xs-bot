@@ -21,7 +21,7 @@ import { KeyPair } from './key-pair/key-pair.repository';
 import { OperationSystem } from './operation-system/operation-system.repository';
 import { Space } from './space/space.repository';
 import { Permission } from './permission/permission.repository';
-import { SLCFunction } from './function/function.repository';
+import { SLCFunction } from './slc-function/slc-function.repository';
 
 const master = new Master({
   MasterModel,

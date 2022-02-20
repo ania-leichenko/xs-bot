@@ -1,7 +1,7 @@
 import { TableName } from '~/common/enums/enums';
 import { getFormattedISODate } from '~/helpers/helpers';
 import { AbstractModel } from '../abstract/abstract.model';
-import { FunctionTableField } from './function-table-field.enum';
+import { FunctionTableField } from './slc-function-table-field.enum';
 
 class SLCFunction extends AbstractModel {
   [FunctionTableField.NAME]: string;
