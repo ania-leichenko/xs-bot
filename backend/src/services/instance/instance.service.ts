@@ -13,11 +13,13 @@ import {
   ec2 as EC2Serv,
   token as tokenServ,
 } from '~/services/services';
-import { InstanceDefaultParam } from '~/common/enums/enums';
-import { UserRole } from '~/common/enums/roles/roles';
-import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
-import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage } from '~/common/enums/exception/exception-message.enum';
+import {
+  InstanceDefaultParam,
+  UserRole,
+  HttpCode,
+  ExceptionMessage,
+} from '~/common/enums/enums';
+import { InvalidCredentialsError } from '~/exceptions/exceptions';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;

@@ -1,14 +1,7 @@
-import { OperationSystem as OperationSystemM } from '~/data/models/operation-system/operation-system.model';
+import { OperationSystem as OperationSystemM } from '~/data/models/models';
 
 type Constructor = {
   OperationSystemModel: typeof OperationSystemM;
-};
-
-type OperationSystemEntity = {
-  id: string;
-  name: string;
-  createdAt: string;
-  awsGenerationName: string;
 };
 
 class OperationSystem {
@@ -18,7 +11,12 @@ class OperationSystem {
     this.#OperationSystemModel = OperationSystemModel;
   }
 
-  async getById(id: string): Promise<OperationSystemEntity | null> {
+  async getById(id: string): Promise<{
+    id: string;
+    name: string;
+    createdAt: string;
+    awsGenerationName: string;
+  } | null> {
     const operationSystem = await this.#OperationSystemModel
       .query()
       .select()

@@ -18,22 +18,6 @@ type Constructor = {
   };
 };
 
-type KeyPair = {
-  name: string;
-  keyMaterial: string;
-};
-
-type InstanceCredentials = {
-  name: string;
-  keyName: string;
-  imageId: string;
-};
-
-type InstanceData = {
-  hostname: string;
-  instanceId: string;
-};
-
 class EC2 {
   #ec2Client: EC2Client;
 
@@ -44,7 +28,10 @@ class EC2 {
     });
   }
 
-  public async createKeyPair(name: string): Promise<KeyPair> {
+  public async createKeyPair(name: string): Promise<{
+    name: string;
+    keyMaterial: string;
+  }> {
     const key = await this.#ec2Client.send(
       new CreateKeyPairCommand({ KeyName: name }),
     );
@@ -59,7 +46,14 @@ class EC2 {
     name,
     keyName,
     imageId,
-  }: InstanceCredentials): Promise<InstanceData> {
+  }: {
+    name: string;
+    keyName: string;
+    imageId: string;
+  }): Promise<{
+    hostname: string;
+    instanceId: string;
+  }> {
     const data = await this.#ec2Client.send(
       new RunInstancesCommand({
         ImageId: imageId,
