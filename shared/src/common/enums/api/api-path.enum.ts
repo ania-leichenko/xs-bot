@@ -3,6 +3,7 @@ enum ApiPath {
   MASTERS = '/masters',
   TENANTS = '/tenants',
   EAM = '/eam',
+  BS = '/bs',
 }
 
 export { ApiPath };

@@ -4,6 +4,7 @@ export {
   type EAMMasterSignInRequestDto,
   type EAMMasterSignInResponseDto,
   type EAMMasterByIdResponseDto,
+  type EAMMasterPermissionsItem,
 } from './eam-master/eam-master';
 export {
   type EAMGroupCreateResponseDto,
@@ -32,6 +33,11 @@ export {
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
 } from './eam-tenant/eam-tenant';
+export {
+  type BSSpaceCreateRequestDto,
+  type BSSpaceCreateResponseDto,
+  type BSSpaceCreateFormDto,
+} from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,

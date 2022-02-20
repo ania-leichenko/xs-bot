@@ -50,4 +50,9 @@ export {
   type EAMPermissionGetAllResponseDto,
   type EAMPermissionGetAllItemResponseDto,
 } from './eam-permission/eam-permission';
+export {
+  type BSSpaceCreateRequestDto,
+  type BSSpaceCreateResponseDto,
+  type BSSpaceCreateFormDto,
+} from './bs-space/bs-space';
 export { type ServiceMenuItem } from './ui/ui';
