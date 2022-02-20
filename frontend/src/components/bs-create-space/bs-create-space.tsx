@@ -11,7 +11,7 @@ import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { FC } from 'react';
 import { BSSpace as BSSpaceActions } from 'store/actions';
 import { bsSpaceCreate as CreateSpaceValidationSchema } from 'validation-schemas/validation-schemas';
-import styles from './bs-create-space.module.scss';
+import styles from './styles.module.scss';
 import { DEFAULT_PAYLOAD } from './common/constants';
 
 const BSCreateSpace: FC = () => {
