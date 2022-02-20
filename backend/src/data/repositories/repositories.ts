@@ -17,6 +17,7 @@ import { Permission } from './permission/permission.repository';
 
 const master = new Master({
   MasterModel,
+  PermissionModel,
 });
 
 const tenant = new Tenant({
