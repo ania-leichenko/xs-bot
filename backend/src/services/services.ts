@@ -107,7 +107,7 @@ const lambda = new Lambda({
     accessKeyId: ENV.AWS.ACCESS_KEY,
     secretAccessKey: ENV.AWS.SECRET_KEY,
   },
-  role: ENV.AWS.AWS_DEFAULT_LAMBDA_ROLE,
+  role: ENV.AWS.LAMBDA_ROLE,
 });
 
 const slcFunction = new SLCFunction({

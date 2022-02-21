@@ -20,7 +20,7 @@ const {
   AWS_REGION,
   AWS_ACCESS_KEY,
   AWS_SECRET_KEY,
-  AWS_DEFAULT_LAMBDA_ROLE,
+  AWS_LAMBDA_ROLE,
 } = process.env;
 
 const ENV = {
@@ -48,7 +48,7 @@ const ENV = {
     REGION: AWS_REGION as string,
     ACCESS_KEY: AWS_ACCESS_KEY as string,
     SECRET_KEY: AWS_SECRET_KEY as string,
-    AWS_DEFAULT_LAMBDA_ROLE: AWS_DEFAULT_LAMBDA_ROLE as string,
+    LAMBDA_ROLE: AWS_LAMBDA_ROLE as string,
   },
   API: {
     V1_PREFIX: '/api/v1',
