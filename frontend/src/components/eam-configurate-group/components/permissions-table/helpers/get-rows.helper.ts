@@ -8,11 +8,12 @@ type Row = {
 
 const getRows = (permissions: EAMPermissionGetAllItemResponseDto[]): Row[] => {
   return permissions.map((item: EAMPermissionGetAllItemResponseDto) => {
-    const { id, name } = item;
+    const { id, name, createdAt } = item;
 
     return {
       [PermissionsTableAccessor.ID]: id,
       [PermissionsTableAccessor.PERMISSION_NAME]: name,
+      [PermissionsTableAccessor.CREATION_TIME]: createdAt,
     };
   });
 };
