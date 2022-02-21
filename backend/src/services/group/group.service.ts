@@ -30,7 +30,7 @@ class Group {
     name,
     tenantId,
     workersIds,
-    permissionIds,
+    permissionsIds,
   }: EAMGroupCreateRequestDto): Promise<EAMGroupCreateResponseDto> {
     const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
       name,
@@ -44,7 +44,7 @@ class Group {
       name,
       tenantId,
       workersIds,
-      permissionIds,
+      permissionsIds,
     });
 
     const newGroup = await this.#groupRepository.create(group);

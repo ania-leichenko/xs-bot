@@ -13,6 +13,7 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
+  EAMPermissionGetAllResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -74,6 +75,14 @@ class EAMApi {
       {
         method: HttpMethod.GET,
         params,
+      },
+    );
+  }
+  public getAllPermission(): Promise<EAMPermissionGetAllResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.PERMISSION),
+      {
+        method: HttpMethod.GET,
       },
     );
   }
