@@ -53,6 +53,6 @@ const ENV = {
   API: {
     V1_PREFIX: '/api/v1',
   },
-};
+} as const;
 
 export { ENV };
