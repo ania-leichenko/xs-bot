@@ -73,13 +73,14 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep,
     ) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const id = req.query.id;
 
       await spaceService.delete({
-        id: req.query.id,
+        id,
         token,
       });
 
-      return rep.send().status(HttpCode.OK);
+      return rep.send({ id: id }).status(HttpCode.OK);
     },
   });
 };
