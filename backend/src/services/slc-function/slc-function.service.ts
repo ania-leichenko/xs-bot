@@ -11,39 +11,49 @@ import {
   UserRole,
   LambdaDefaultParam,
 } from '~/common/enums/enums';
-import { token as tokenServ, lambda as lambdaServ } from '~/services/services';
+import {
+  worker as workerServ,
+  token as tokenServ,
+  lambda as lambdaServ,
+} from '~/services/services';
 
 type Constructor = {
   slcFunctionRepository: typeof slcFunctionRep;
+  workerService: typeof workerServ;
   tokenService: typeof tokenServ;
   lambdaService: typeof lambdaServ;
 };
 
 class SLCFunction {
   #slcFunctionRepository: typeof slcFunctionRep;
+  #workerService: typeof workerServ;
   #tokenService: typeof tokenServ;
   #lambdaService: typeof lambdaServ;
 
   constructor({
     slcFunctionRepository,
+    workerService,
     tokenService,
     lambdaService,
   }: Constructor) {
     this.#slcFunctionRepository = slcFunctionRepository;
+    this.#workerService = workerService;
     this.#tokenService = tokenService;
     this.#lambdaService = lambdaService;
   }
 
   public async create({
     name,
-    createdBy,
     token,
   }: {
     name: string;
-    createdBy: string;
     token: string;
   }): Promise<SLCFunctionCreateResponseDto> {
-    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
+    const {
+      userId: createdBy,
+      tenantId,
+      userRole,
+    } = this.#tokenService.decode<TokenPayload>(token);
 
     if (userRole !== UserRole.WORKER) {
       throw new InvalidSLCFunctionError({
@@ -52,10 +62,14 @@ class SLCFunction {
       });
     }
 
-    const functionByName = await this.#slcFunctionRepository.getByName(
-      createdBy,
-      name,
+    const workersIds = await this.#workerService.getWorkersIdsByTenant(
+      tenantId,
     );
+
+    const functionByName = await this.#slcFunctionRepository.getByName({
+      workersIds,
+      name,
+    });
 
     if (functionByName) {
       throw new InvalidSLCFunctionError();

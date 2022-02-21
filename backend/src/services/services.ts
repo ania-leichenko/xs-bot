@@ -112,6 +112,7 @@ const lambda = new Lambda({
 
 const slcFunction = new SLCFunction({
   slcFunctionRepository,
+  workerService: worker,
   tokenService: token,
   lambdaService: lambda,
 });

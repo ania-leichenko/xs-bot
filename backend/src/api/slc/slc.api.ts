@@ -36,7 +36,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
 
       return rep
-        .send(await slcFunctionService.create({ ...req.body, token }))
+        .send(await slcFunctionService.create({ name: req.body.name, token }))
         .status(HttpCode.CREATED);
     },
   });

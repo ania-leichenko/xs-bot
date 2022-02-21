@@ -21,8 +21,6 @@ const slcFunctionCreate = Joi.object({
       'string.empty': SLCFunctionValidationMessage.NAME_REQUIRE,
       'string.pattern.base': SLCFunctionValidationMessage.NAME_PATTERN,
     }),
-  [getNameOf<SLCFunctionCreateRequestDto>('sourceCode')]: Joi.string(),
-  [getNameOf<SLCFunctionCreateRequestDto>('createdBy')]: Joi.string(),
 });
 
 export { slcFunctionCreate };
