@@ -45,11 +45,11 @@ class Lambda {
 
     return this.#lambdaClient.send(
       new CreateFunctionCommand({
-        Architectures: [LambdaDefaultParam.ARCHITECTURE as string],
-        Handler: LambdaDefaultParam.HANDLER as string,
-        MemorySize: LambdaDefaultParam.MEMORY_SIZE as number,
-        Runtime: LambdaDefaultParam.RUNTIME as string,
-        Timeout: LambdaDefaultParam.TIMEOUT as number,
+        Architectures: [LambdaDefaultParam.ARCHITECTURE],
+        Handler: LambdaDefaultParam.HANDLER,
+        MemorySize: LambdaDefaultParam.MEMORY_SIZE,
+        Runtime: LambdaDefaultParam.RUNTIME,
+        Timeout: LambdaDefaultParam.TIMEOUT,
         Code: {
           'ZipFile': sendZipArchive,
         },

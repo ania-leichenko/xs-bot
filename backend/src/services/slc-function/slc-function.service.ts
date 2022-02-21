@@ -75,7 +75,7 @@ class SLCFunction {
       throw new SLCError();
     }
 
-    const sourceCode = LambdaDefaultParam.SOURCE_CODE as string;
+    const sourceCode = LambdaDefaultParam.SOURCE_CODE;
 
     const { FunctionArn } = await this.#lambdaService.creteFunction({
       name,
