@@ -2,10 +2,9 @@ import {
   LambdaClient,
   CreateFunctionCommand,
   CreateFunctionCommandOutput,
-  Architecture,
-  Runtime,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
+import { LambdaDefaultParam } from '~/common/enums/enums';
 
 type Constructor = {
   region: string;
@@ -37,20 +36,25 @@ class Lambda {
   }): Promise<CreateFunctionCommandOutput> {
     const zipArchive = new AdmZip();
 
-    zipArchive.addFile('index.js', Buffer.alloc(sourceCode.length, sourceCode));
+    zipArchive.addFile(
+      LambdaDefaultParam.ROOT_FILE,
+      Buffer.alloc(sourceCode.length, sourceCode),
+    );
 
     const sendZipArchive = zipArchive.toBuffer();
 
     return this.#lambdaClient.send(
       new CreateFunctionCommand({
-        Architectures: [Architecture.x86_64],
+        Architectures: [LambdaDefaultParam.ARCHITECTURE as string],
+        Handler: LambdaDefaultParam.HANDLER as string,
+        MemorySize: LambdaDefaultParam.MEMORY_SIZE as number,
+        Runtime: LambdaDefaultParam.RUNTIME as string,
+        Timeout: LambdaDefaultParam.TIMEOUT as number,
         Code: {
           'ZipFile': sendZipArchive,
         },
         FunctionName: name,
-        Runtime: Runtime.nodejs14x,
         Role: this.#role,
-        Handler: '.zip',
       }),
     );
   }

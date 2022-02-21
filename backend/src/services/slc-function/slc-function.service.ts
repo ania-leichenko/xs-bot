@@ -5,8 +5,12 @@ import {
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
 import { SLCFunction as SLCFunctionEntity } from './slc-function.entity';
 import { InvalidSLCFunctionError } from '~/exceptions/exceptions';
-import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage, UserRole } from '~/common/enums/enums';
+import {
+  HttpCode,
+  ExceptionMessage,
+  UserRole,
+  LambdaDefaultParam,
+} from '~/common/enums/enums';
 import { token as tokenServ, lambda as lambdaServ } from '~/services/services';
 
 type Constructor = {
@@ -32,12 +36,10 @@ class SLCFunction {
 
   public async create({
     name,
-    sourceCode,
     createdBy,
     token,
   }: {
     name: string;
-    sourceCode: string;
     createdBy: string;
     token: string;
   }): Promise<SLCFunctionCreateResponseDto> {
@@ -58,6 +60,8 @@ class SLCFunction {
     if (functionByName) {
       throw new InvalidSLCFunctionError();
     }
+
+    const sourceCode = LambdaDefaultParam.SOURCE_CODE as string;
 
     const { FunctionArn } = await this.#lambdaService.creteFunction({
       name,
