@@ -47,5 +47,6 @@ export {
   type BSSpaceGetResponseItemDto,
   type BSSpaceGetResponseDto,
   type BSSpaceGetFilter,
+  type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
 export { type TokenPayload } from './token/token';

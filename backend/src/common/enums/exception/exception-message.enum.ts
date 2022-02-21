@@ -1,5 +1,5 @@
 const ExceptionMessage = {
-  INVALID_CREDENTIALS:
+  INCORRECT_CREDENTIALS:
     'Your authentication information is incorrect. Please try again.',
   INCORRECT_EMAIL:
     'Account with that email does not exist. Try again or create a new account.',
@@ -10,6 +10,7 @@ const ExceptionMessage = {
   WORKER_NAME:
     'Account with that name does not exist. Try again or create a new account.',
   MASTER_SPACE_CREATE: 'Master is not able to create space',
+  MASTER_SPACE_DELETE: 'Master is not able to delete space',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
 };
 

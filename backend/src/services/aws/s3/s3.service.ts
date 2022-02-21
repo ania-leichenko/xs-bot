@@ -1,6 +1,8 @@
 import {
   CreateBucketCommand,
   CreateBucketOutput,
+  DeleteBucketCommand,
+  DeleteBucketCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
 
@@ -28,6 +30,14 @@ class S3 {
     name: string;
   }): Promise<CreateBucketOutput> {
     return this.#s3Client.send(new CreateBucketCommand({ Bucket: name }));
+  }
+
+  public async deleteBucket({
+    name,
+  }: {
+    name: string;
+  }): Promise<DeleteBucketCommandOutput> {
+    return this.#s3Client.send(new DeleteBucketCommand({ Bucket: name }));
   }
 }
 
