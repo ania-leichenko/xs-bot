@@ -8,7 +8,7 @@ import {
 } from '~/common/types/types';
 import { ExceptionMessage, HttpCode, UserRole } from '~/common/enums/enums';
 import { s3 as s3Serv, token as tokenServ } from '~/services/services';
-import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
+import { BsError } from '~/exceptions/exceptions';
 
 type Constructor = {
   spaceRepository: typeof spaceRep;
@@ -59,7 +59,7 @@ class Space {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
     if (user.userRole !== UserRole.WORKER) {
-      throw new InvalidCredentialsError({
+      throw new BsError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_SPACE_CREATE,
       });
@@ -73,23 +73,28 @@ class Space {
   }
 
   public async delete({
-    name,
+    id,
     token,
   }: {
-    name: string;
+    id: string;
     token: string;
   }): Promise<void> {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
     if (user.userRole !== UserRole.WORKER) {
-      throw new InvalidCredentialsError({
+      throw new BsError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_SPACE_DELETE,
       });
     }
+
+    const space = await this.#spaceRepository.getSpaceById({ id });
+
+    const { name } = space;
+
     await this.#s3Service.deleteBucket({ name });
 
-    await this.#spaceRepository.delete({ name });
+    await this.#spaceRepository.delete({ id });
   }
 }
 

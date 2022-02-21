@@ -31,8 +31,14 @@ class Space {
     return Space.modelToEntity(created);
   }
 
-  async delete({ name }: { name: string }): Promise<number> {
-    return this.#SpaceModel.query().where({ name }).del();
+  async delete({ id }: { id: string }): Promise<number> {
+    return this.#SpaceModel.query().where({ id }).del();
+  }
+
+  async getSpaceById({ id }: { id: string }): Promise<SpaceEntity> {
+    const space = await this.#SpaceModel.query().select().where({ id }).first();
+
+    return Space.modelToEntity(space as SpaceM);
   }
 
   async getByTenantId(
@@ -41,7 +47,11 @@ class Space {
     const { from: offset, count: limit, tenantId } = filter;
     return this.#SpaceModel
       .query()
-      .select(`${TableName.SPACES}.name`, `${TableName.SPACES}.createdAt`)
+      .select(
+        `${TableName.SPACES}.id`,
+        `${TableName.SPACES}.name`,
+        `${TableName.SPACES}.createdAt`,
+      )
       .join(TableName.WORKERS, 'createdBy', '=', `${TableName.WORKERS}.id`)
       .where({ tenantId })
       .orderBy('createdAt', 'desc')

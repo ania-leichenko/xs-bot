@@ -3,7 +3,7 @@ import { space as spaceServ } from '~/services/services';
 import { HttpCode, HttpMethod, BSApiPath } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
-  BsSpaceDeleteRequestDto,
+  BSSpaceDeleteParamsDto,
   BSSpaceGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
@@ -68,11 +68,14 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: BSApiPath.SPACES,
-    async handler(req: FastifyRequest<{ Body: BsSpaceDeleteRequestDto }>, rep) {
+    async handler(
+      req: FastifyRequest<{ Querystring: BSSpaceDeleteParamsDto }>,
+      rep,
+    ) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
 
       await spaceService.delete({
-        name: req.body.name,
+        id: req.query.id,
         token,
       });
 

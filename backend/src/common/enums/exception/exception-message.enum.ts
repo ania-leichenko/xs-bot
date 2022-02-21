@@ -1,5 +1,5 @@
 const ExceptionMessage = {
-  INVALID_CREDENTIALS:
+  INCORRECT_CREDENTIALS:
     'Your authentication information is incorrect. Please try again.',
   INCORRECT_EMAIL:
     'Account with that email does not exist. Try again or create a new account.',

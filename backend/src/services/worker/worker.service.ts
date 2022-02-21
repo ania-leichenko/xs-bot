@@ -134,7 +134,7 @@ class Worker {
     if (verifyWorkerDto.tenantName !== tenant?.name) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_CREDENTIALS,
       });
     }
 
@@ -147,7 +147,7 @@ class Worker {
     if (!isEqualPassword) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_CREDENTIALS,
       });
     }
 

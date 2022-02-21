@@ -45,7 +45,7 @@ export {
   type BSSpaceGetResponseDto,
   type BSSpaceGetResponseItemDto,
   type BSSpaceGetFilter,
-  type BsSpaceDeleteRequestDto,
+  type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,

@@ -1,5 +1,5 @@
-type BsSpaceDeleteRequestDto = {
-  name: string;
+type BSSpaceDeleteParamsDto = {
+  id: string;
 };
 
-export { type BsSpaceDeleteRequestDto };
+export { type BSSpaceDeleteParamsDto };
