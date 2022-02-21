@@ -2,7 +2,7 @@ import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 
 const DEFAULT_MESSAGE = ExceptionMessage.FUNCTION_NAME_EXISTS;
 
-class InvalidSLCFunctionError extends Error {
+class SLCError extends Error {
   status: HttpCode;
 
   constructor({
@@ -14,4 +14,4 @@ class InvalidSLCFunctionError extends Error {
   }
 }
 
-export { InvalidSLCFunctionError };
+export { SLCError };

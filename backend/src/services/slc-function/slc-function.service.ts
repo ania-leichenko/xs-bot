@@ -4,7 +4,7 @@ import {
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
 import { SLCFunction as SLCFunctionEntity } from './slc-function.entity';
-import { InvalidSLCFunctionError } from '~/exceptions/exceptions';
+import { SLCError } from '~/exceptions/exceptions';
 import {
   HttpCode,
   ExceptionMessage,
@@ -56,7 +56,7 @@ class SLCFunction {
     } = this.#tokenService.decode<TokenPayload>(token);
 
     if (userRole !== UserRole.WORKER) {
-      throw new InvalidSLCFunctionError({
+      throw new SLCError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_FUNCTION_CREATE,
       });
@@ -72,7 +72,7 @@ class SLCFunction {
     });
 
     if (functionByName) {
-      throw new InvalidSLCFunctionError();
+      throw new SLCError();
     }
 
     const sourceCode = LambdaDefaultParam.SOURCE_CODE as string;
@@ -83,7 +83,7 @@ class SLCFunction {
     });
 
     if (!FunctionArn) {
-      throw new InvalidSLCFunctionError({
+      throw new SLCError({
         status: HttpCode.INTERNAL_SERVER_ERROR,
         message: ExceptionMessage.FUNCTION_NOT_CREATED,
       });
