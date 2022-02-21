@@ -1,5 +1,6 @@
 import { PermissionsTableAccessor } from 'common/enums/enums';
 import { EAMPermissionGetAllItemResponseDto } from 'common/types/types';
+import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
   [PermissionsTableAccessor.ID]: string;
@@ -13,7 +14,9 @@ const getRows = (permissions: EAMPermissionGetAllItemResponseDto[]): Row[] => {
     return {
       [PermissionsTableAccessor.ID]: id,
       [PermissionsTableAccessor.PERMISSION_NAME]: name,
-      [PermissionsTableAccessor.CREATION_TIME]: createdAt,
+      [PermissionsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+        new Date(createdAt),
+      ),
     };
   });
 };
