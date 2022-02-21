@@ -2,6 +2,7 @@ export {
   type RootState,
   type AppDispatch,
   type AsyncThunkConfig,
+  type UseSelectedItemsHook,
 } from './app/app';
 export {
   type FormControlErrors,
@@ -45,6 +46,10 @@ export {
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
 } from './eam-worker/eam-worker';
+export {
+  type EAMPermissionGetAllResponseDto,
+  type EAMPermissionGetAllItemResponseDto,
+} from './eam-permission/eam-permission';
 export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,

@@ -6,7 +6,7 @@ class Group {
   public createdAt: string;
   public tenantId: string;
   public workersIds: string[];
-  public permissionIds: string[];
+  public permissionsIds: string[];
 
   private constructor({
     id,
@@ -14,21 +14,21 @@ class Group {
     createdAt,
     tenantId,
     workersIds,
-    permissionIds,
+    permissionsIds,
   }: {
     id: string;
     name: string;
     createdAt: string;
     tenantId: string;
     workersIds: string[];
-    permissionIds: string[];
+    permissionsIds: string[];
   }) {
     this.id = id;
     this.name = name;
     this.createdAt = createdAt;
     this.tenantId = tenantId;
     this.workersIds = workersIds;
-    this.permissionIds = permissionIds;
+    this.permissionsIds = permissionsIds;
   }
 
   public static initialize({
@@ -37,14 +37,14 @@ class Group {
     createdAt,
     tenantId,
     workersIds,
-    permissionIds,
+    permissionsIds,
   }: {
     id: string;
     name: string;
     createdAt: string;
     tenantId: string;
     workersIds: string[];
-    permissionIds: string[];
+    permissionsIds: string[];
   }): Group {
     return new Group({
       id,
@@ -52,7 +52,7 @@ class Group {
       createdAt,
       tenantId,
       workersIds,
-      permissionIds,
+      permissionsIds,
     });
   }
 
@@ -60,12 +60,12 @@ class Group {
     name,
     tenantId,
     workersIds,
-    permissionIds,
+    permissionsIds,
   }: {
     name: string;
     tenantId: string;
     workersIds: string[];
-    permissionIds: string[];
+    permissionsIds: string[];
   }): Group {
     return new Group({
       id: getRandomId(),
@@ -73,7 +73,7 @@ class Group {
       createdAt: new Date().toISOString(),
       tenantId,
       workersIds,
-      permissionIds,
+      permissionsIds,
     });
   }
 }

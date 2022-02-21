@@ -1,10 +1,10 @@
 import { UsersTableHeader, UsersTableAccessor } from 'common/enums/enums';
 import { Column } from 'react-table';
-import { SelectRowCell } from './cells/cells';
+import { SelectRowCell } from '../../../helpers/helpers';
 
 const getColumns = (
-  handleAddWorkerId: (id: string) => void,
-  handleRemoveWorkerId: (id: string) => void,
+  handleAddId: (id: string) => void,
+  handleRemoveId: (id: string) => void,
   handleIsCheckedId: (id: string) => boolean,
 ): Column[] => {
   return [
@@ -12,12 +12,7 @@ const getColumns = (
       Header: '',
       accessor: 'check',
       Cell: ({ row }): JSX.Element =>
-        SelectRowCell(
-          row,
-          handleAddWorkerId,
-          handleRemoveWorkerId,
-          handleIsCheckedId,
-        ),
+        SelectRowCell(row, handleAddId, handleRemoveId, handleIsCheckedId),
     },
     {
       Header: UsersTableHeader.USERNAME,
