@@ -11,8 +11,8 @@ class Notification {
 
   public success(title: string, message: string): void {
     toastr.success(title, message, {
-      className: styles.wrapper,
-      icon: <div className={styles.attention} />,
+      className: styles.successWrapper,
+      icon: <div className={styles.check} />,
     });
   }
 }

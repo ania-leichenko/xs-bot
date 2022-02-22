@@ -49,4 +49,8 @@ export {
   type BSSpaceGetFilter,
   type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
+export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateResponseDto,
+} from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';
