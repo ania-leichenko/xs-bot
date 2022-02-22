@@ -9,3 +9,4 @@ export { Instance } from './instance/instance.model';
 export { OperationSystem } from './operation-system/operation-system.model';
 export { Space } from './space/space.model';
 export { GroupsPermissions } from './groups-permissions/groups-permissions.model';
+export { SLCFunction } from './slc-function/slc-function.model';

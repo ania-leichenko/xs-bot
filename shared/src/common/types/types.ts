@@ -46,10 +46,18 @@ export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,
   type BSSpaceCreateFormDto,
+  type BSSpaceGetRequestParamsDto,
+  type BSSpaceGetResponseDto,
+  type BSSpaceGetResponseItemDto,
+  type BSSpaceGetFilter,
 } from './bs-space/bs-space';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
 } from './eam-permission/eam-permission';
+export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateResponseDto,
+} from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
