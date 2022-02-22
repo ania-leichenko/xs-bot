@@ -10,6 +10,7 @@ import {
   operationSystem as operationSystemRepository,
   permission as permissionRepository,
   space as spaceRepository,
+  slcFunction as slcFunctionRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Group } from './group/group.service';
@@ -20,10 +21,13 @@ import { Worker } from './worker/worker.service';
 import { Auth } from './auth/auth.service';
 import { EC2 } from './aws/ec2/ec2.service';
 import { KeyPair } from './key-pair/key-pair.service';
+import { OperationSystem } from './operation-system/operation-system.service';
 import { Instance } from './instance/instance.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
+import { Lambda } from './aws/lambda/lambda.service';
+import { SLCFunction } from './slc-function/slc-function.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -72,9 +76,13 @@ const keyPair = new KeyPair({
   ec2Service: ec2,
 });
 
+const operationSystem = new OperationSystem({
+  operationSystemRepository,
+});
+
 const instance = new Instance({
   instanceRepository,
-  operationSystemRepository,
+  operationSystemService: operationSystem,
   keyPairService: keyPair,
   ec2Service: ec2,
   tokenService: token,
@@ -98,6 +106,22 @@ const space = new Space({
   s3Service: s3,
 });
 
+const lambda = new Lambda({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
+  role: ENV.AWS.LAMBDA_ROLE,
+});
+
+const slcFunction = new SLCFunction({
+  slcFunctionRepository,
+  workerService: worker,
+  tokenService: token,
+  lambdaService: lambda,
+});
+
 export {
   master,
   encrypt,
@@ -108,8 +132,11 @@ export {
   auth,
   ec2,
   keyPair,
+  operationSystem,
   instance,
   space,
   s3,
   permission,
+  lambda,
+  slcFunction,
 };

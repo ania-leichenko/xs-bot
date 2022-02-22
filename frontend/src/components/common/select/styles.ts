@@ -16,10 +16,9 @@ const styles: StylesConfig = {
       ...provided,
       minHeight: '45px',
       background: 'var(--color-boltgun)',
-      border:
-        state.menuIsOpen || state.hasValue
-          ? '2px solid var(--color-orange)'
-          : '2px solid var(--color-gray)',
+      border: state.menuIsOpen
+        ? '2px solid var(--color-orange)'
+        : '2px solid var(--color-gray)',
       borderRadius: '50px',
       cursor: 'pointer',
       boxShadow: 'null',

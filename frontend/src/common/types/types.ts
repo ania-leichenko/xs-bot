@@ -59,4 +59,17 @@ export {
   type BSSpaceGetRequestParamsDto,
   type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
-export { type ServiceMenuItem } from './ui/ui';
+export {
+  type SCInstanceCreateRequestDto,
+  type SCInstanceCreateResponseDto,
+  type SCInstanceCreateFormDto,
+} from './sc-instance/sc-instance';
+export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateResponseDto,
+} from './slc-function/slc-function';
+export {
+  type SCOperationSystemGetAllResponseDto,
+  type SCOperationSystemGetAllItemResponseDto,
+} from './sc-operation-system/sc-operation-system';
+export { type ServiceMenuItem, type Option } from './ui/ui';

@@ -23,7 +23,7 @@ const scInstanceCreate = Joi.object({
     .trim()
     .required()
     .messages({
-      'string.empty': SCInstanceValidationMessage.NAME_REQUIRE,
+      'string.empty': SCInstanceValidationMessage.OPERATION_SYSTEM_REQUIRE,
     }),
 });
 

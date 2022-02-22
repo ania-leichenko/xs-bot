@@ -34,8 +34,8 @@ export {
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
-  type ScInstanceOperationSystemEntity,
 } from './sc-instance/sc-instance';
+export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
@@ -49,4 +49,8 @@ export {
   type BSSpaceGetFilter,
   type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
+export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateResponseDto,
+} from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';
