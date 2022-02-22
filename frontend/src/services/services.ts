@@ -5,6 +5,7 @@ import { AuthApi } from './auth-api/auth-api.service';
 import { TenantApi } from './tenant-api/tenant-api.service';
 import { EAMApi } from './eam-api/eam-api.service';
 import { BSApi } from './bs-api/bs-api.service';
+import { SCApi } from './sc-api/sc-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
@@ -38,6 +39,11 @@ const bsApi = new BSApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const scApi = new SCApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const navigation = new Navigation({
   history: createBrowserHistory(),
 });
@@ -56,4 +62,5 @@ export {
   workerApi,
   eamApi,
   bsApi,
+  scApi,
 };
