@@ -160,16 +160,6 @@ class Worker {
     const workers = await this.#workerRepository.getAll(param);
     return { items: workers };
   }
-
-  async getWorkersIdsByTenant(tenantId: string): Promise<string[]> {
-    const workers = await this.#workerRepository.getWorkersByTenant(tenantId);
-
-    const workersIds = workers.map((worker) => {
-      return worker.id;
-    });
-
-    return workersIds;
-  }
 }
 
 export { Worker };

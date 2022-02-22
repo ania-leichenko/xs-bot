@@ -62,16 +62,13 @@ class SLCFunction {
       });
     }
 
-    const workersIds = await this.#workerService.getWorkersIdsByTenant(
-      tenantId,
-    );
+    const functionByNameAndTenant =
+      await this.#slcFunctionRepository.getByNameAndTenant({
+        name,
+        tenantId,
+      });
 
-    const functionByName = await this.#slcFunctionRepository.getByName({
-      workersIds,
-      name,
-    });
-
-    if (functionByName) {
+    if (functionByNameAndTenant) {
       throw new SLCError();
     }
 

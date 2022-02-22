@@ -113,10 +113,6 @@ class Worker {
     return Worker.modelToEntity(newWorker, groupIds);
   }
 
-  public async getWorkersByTenant(tenantId: string): Promise<WorkerM[]> {
-    return this.#WorkerModel.query().select().where({ tenantId });
-  }
-
   public static modelToEntity(
     model: WorkerM,
     groupIds: string[],

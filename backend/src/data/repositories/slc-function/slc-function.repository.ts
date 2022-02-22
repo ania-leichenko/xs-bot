@@ -1,5 +1,5 @@
+import { TableName } from '~/common/enums/enums';
 import { SLCFunction as SLCFunctionM } from '~/data/models/models';
-import { FunctionTableField } from '~/data/models/slc-function/slc-function-table-field.enum';
 import { SLCFunction as SLCFunctionEntity } from '~/services/slc-function/slc-function.entity';
 
 type Constructor = {
@@ -13,18 +13,23 @@ class SLCFunction {
     this.#SLCFunctionModel = SLCFunctionModel;
   }
 
-  async getByName({
-    workersIds,
+  async getByNameAndTenant({
     name,
+    tenantId,
   }: {
-    workersIds: string[];
     name: string;
+    tenantId: string;
   }): Promise<SLCFunctionEntity | null> {
     const slcFunction = await this.#SLCFunctionModel
       .query()
-      .select()
-      .whereIn(FunctionTableField.CREATED_BY, workersIds)
-      .andWhere({ name })
+      .join(
+        TableName.WORKERS,
+        `${TableName.FUNCTIONS}.createdBy`,
+        `${TableName.WORKERS}.id`,
+      )
+      .select(`${TableName.FUNCTIONS}.name`)
+      .where({ tenantId })
+      .andWhere({ [`${TableName.FUNCTIONS}.name`]: name })
       .first();
 
     if (!slcFunction) {
