@@ -1,7 +1,7 @@
 enum BSApiPath {
   ROOT = '/',
   SPACES = '/spaces',
-  SPACE = '/spaces/:id',
+  SPACES_$ID = '/spaces/:id',
 }
 
 export { BSApiPath };
