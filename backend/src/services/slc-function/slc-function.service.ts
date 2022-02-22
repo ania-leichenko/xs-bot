@@ -1,5 +1,7 @@
 import {
   SLCFunctionCreateResponseDto,
+  SLCFunctionGetRequestParamsDto,
+  SLCFunctionGetResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
@@ -89,6 +91,29 @@ class SLCFunction {
     await this.#slcFunctionRepository.create(slcFunction);
 
     return { name: slcFunction.name };
+  }
+
+  public async getSLCFunctionsByTenant({
+    query,
+    token,
+  }: {
+    query: SLCFunctionGetRequestParamsDto;
+    token: string;
+  }): Promise<SLCFunctionGetResponseDto> {
+    const { from, count } = query;
+    const { tenantId } = await this.#tokenService.decode(token);
+
+    const filter = {
+      from,
+      count,
+      tenantId,
+    };
+
+    const slcFunctions = await this.#slcFunctionRepository.getAllByTenant(
+      filter,
+    );
+
+    return { items: slcFunctions };
   }
 }
 

@@ -51,5 +51,9 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
+  type SLCFunctionGetRequestParamsDto,
+  type SLCFunctionGetFilter,
+  type SLCFunctionGetResponseItemDto,
+  type SLCFunctionGetResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';
