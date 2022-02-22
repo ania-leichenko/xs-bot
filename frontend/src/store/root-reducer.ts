@@ -6,6 +6,7 @@ import { reducer as toastr } from 'react-redux-toastr';
 import { reducer as EAMGroupConfigurate } from './eam-group-configurate/reducer';
 import { reducer as EAMWorkerConfigurate } from './eam-worker-configurate/reducer';
 import { reducer as BSSpaceCreate } from './bs-space-create/reducer';
+import { reducer as SLCFunctionConfigurate } from './slc-configurate-function/reducer';
 
 const rootReducer = {
   app,
@@ -13,6 +14,7 @@ const rootReducer = {
   eam,
   bs,
   BSSpaceCreate,
+  SLCFunctionConfigurate,
   toastr,
   EAMGroupConfigurate,
   EAMWorkerConfigurate,
