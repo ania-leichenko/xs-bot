@@ -9,6 +9,7 @@ enum AppRoute {
   BS_CREATE_SPACE = '/bs/create-space',
   SC = '/sc',
   SLC = '/slc',
+  SLC_CONFIGURATE_FUNCTION = '/bs/configurate-function',
   NOT_FOUND = '*',
 }
 

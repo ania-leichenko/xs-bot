@@ -18,6 +18,7 @@ import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-config
 import { NotFound } from 'components/not-found-page/not-found-page';
 import { BS } from 'components/bs/bs';
 import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
+import { SLC } from 'components/slc/slc';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
@@ -73,6 +74,14 @@ const App: FC = () => {
         <Route
           path={AppRoute.BS_CREATE_SPACE}
           element={<AuthorizedRoute component={<BSCreateSpace />} />}
+        />
+        <Route
+          path={AppRoute.SLC}
+          element={<AuthorizedRoute component={<SLC />} />}
+        />
+        <Route
+          path={AppRoute.SLC_CONFIGURATE_FUNCTION}
+          element={<AuthorizedRoute component={<div>SLC</div>} />}
         />
         <Route
           path={AppRoute.NOT_FOUND}
