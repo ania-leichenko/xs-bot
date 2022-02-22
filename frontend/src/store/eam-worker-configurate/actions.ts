@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  EAMWorkerConfigurateRequestDto,
+  EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
   AsyncThunkConfig,
   EAMGroupGetByTenantRequestParamsDto,
@@ -12,11 +12,11 @@ import { AppRoute } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
   EAMWorkerCreateResponseDto,
-  EAMWorkerConfigurateRequestDto,
+  EAMWorkerCreateRequestDto,
   AsyncThunkConfig
 >(
   ActionType.CREATE_WORKER,
-  async (payload: EAMWorkerConfigurateRequestDto, { extra }) => {
+  async (payload: EAMWorkerCreateRequestDto, { extra }) => {
     const { workerApi, navigation, notification } = extra;
 
     const worker = await workerApi.createWorker({

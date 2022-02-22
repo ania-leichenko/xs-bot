@@ -77,20 +77,7 @@ class Worker {
     password,
     token,
     groupIds,
-    tenantId,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
-    const workerByName = await this.#workerRepository.getWorkerByNameAndTenant(
-      name,
-      tenantId,
-    );
-
-    if (workerByName) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.BAD_REQUEST,
-        message: `Worker with name ${name} exist`,
-      });
-    }
-
     const { userId } = this.#tokenService.decode<TokenPayload>(token);
 
     const master = await this.#masterService.getMasterById(userId);
@@ -108,14 +95,25 @@ class Worker {
       passwordSalt,
     );
 
+    const workerByName = await this.#workerRepository.getByName(
+      name,
+      master.tenantId,
+    );
+
+    if (workerByName) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: `Worker with name ${name} exist`,
+      });
+    }
+
     const worker = WorkerEntity.createNew({
       name,
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
-      tenantId,
+      tenantId: master.tenantId,
       groupIds,
     });
-
     if (worker.groupIds.length < 1) {
       throw new InvalidCredentialsError({
         status: HttpCode.BAD_REQUEST,
@@ -128,7 +126,7 @@ class Worker {
   public async verifyLoginCredentials(
     verifyWorkerDto: EAMWorkerSignInRequestDto,
   ): Promise<EAMWorkerSignInResponseDto> {
-    const worker = await this.#workerRepository.getWorkerByNameAndTenant(
+    const worker = await this.#workerRepository.getByName(
       verifyWorkerDto.workerName,
       verifyWorkerDto.tenantName,
     );

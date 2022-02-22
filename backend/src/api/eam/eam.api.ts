@@ -51,20 +51,17 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,
     ) {
-      //const [, token] = req.headers?.authorization?.split(' ') ?? [];
-      const worker = await workerService.create(req.body);
-      return rep.send(worker).status(HttpCode.CREATED);
-      // return rep
-      //   .send(
-      //     await workerService.create({
-      //       name: req.body.name,
-      //       password: req.body.password,
-      //       groupIds: req.body.groupIds,
-      //       token,
-      //       tenantId: req.body.tenantId,
-      //     }),
-      //   )
-      //   .status(HttpCode.CREATED);
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      return rep
+        .send(
+          await workerService.create({
+            name: req.body.name,
+            password: req.body.password,
+            groupIds: req.body.groupIds,
+            token,
+          }),
+        )
+        .status(HttpCode.CREATED);
     },
   });
 

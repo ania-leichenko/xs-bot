@@ -7,7 +7,7 @@ class Worker {
   public passwordSalt: string;
   public tenantId: string;
   public groupIds: string[];
-  public createdAt: string;
+  public createdAt: Date;
 
   private constructor({
     id,
@@ -24,7 +24,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    createdAt: string;
+    createdAt: Date;
   }) {
     this.id = id;
     this.name = name;
@@ -50,7 +50,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    createdAt: string;
+    createdAt: Date;
   }): Worker {
     return new Worker({
       id,
@@ -82,7 +82,7 @@ class Worker {
       passwordSalt,
       tenantId,
       groupIds,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
     });
   }
 }
