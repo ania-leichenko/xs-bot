@@ -58,4 +58,8 @@ export {
   type BSSpaceGetResponseDto,
   type BSSpaceGetRequestParamsDto,
 } from './bs-space/bs-space';
+export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateFormDto,
+} from './slc-function/slc-function';
 export { type ServiceMenuItem } from './ui/ui';
