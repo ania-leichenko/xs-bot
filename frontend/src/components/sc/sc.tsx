@@ -12,7 +12,7 @@ const SC: FC = () => {
       </h2>
       <Button
         className={styles.addInstanceBtn}
-        to={AppRoute.SC_CREATE_INSTANCE}
+        to={AppRoute.SC_CONFIGURATE_INSTANCE}
         label="Add Instance"
       />
     </div>

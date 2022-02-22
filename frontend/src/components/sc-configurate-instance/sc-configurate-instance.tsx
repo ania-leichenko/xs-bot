@@ -17,10 +17,10 @@ import {
 import { sc as scActions } from 'store/actions';
 import { scInstanceCreate as CreateInstanceValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_PAYLOAD } from './common/constants';
-import { transformOperationSystemName } from './helpers/helpers';
+import { getOperationSystemOptions } from './helpers/helpers';
 import styles from './styles.module.scss';
 
-const SCCreateInstance: FC = () => {
+const SCConfigurateInstance: FC = () => {
   const dispatch = useAppDispatch();
   const { operationSystems } = useAppSelector(({ sc }) => ({
     operationSystems: sc.operationSystems,
@@ -39,11 +39,6 @@ const SCCreateInstance: FC = () => {
   const handleFormSubmit = (payload: SCInstanceCreateRequestDto): void => {
     dispatch(scActions.createInstance(payload));
   };
-
-  const options = operationSystems.map(({ id, name }) => ({
-    value: id,
-    label: transformOperationSystemName(name),
-  }));
 
   return (
     <div className={styles.wrapper}>
@@ -71,7 +66,7 @@ const SCCreateInstance: FC = () => {
               <div className={styles.inputWrapper}>
                 <Select
                   label=""
-                  options={options}
+                  options={getOperationSystemOptions(operationSystems)}
                   name={getNameOf<SCInstanceCreateRequestDto>(
                     'operationSystemId',
                   )}
@@ -99,4 +94,4 @@ const SCCreateInstance: FC = () => {
   );
 };
 
-export { SCCreateInstance };
+export { SCConfigurateInstance };

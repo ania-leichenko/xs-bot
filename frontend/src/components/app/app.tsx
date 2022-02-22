@@ -19,7 +19,7 @@ import { NotFound } from 'components/not-found-page/not-found-page';
 import { BS } from 'components/bs/bs';
 import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
 import { SC } from 'components/sc/sc';
-import { SCCreateInstance } from '../sc-create-instance/sc-create-instance';
+import { SCConfigurateInstance } from 'components/sc-configurate-instance/sc-configurate-instance';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
@@ -81,8 +81,8 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<SC />} />}
         />
         <Route
-          path={AppRoute.SC_CREATE_INSTANCE}
-          element={<AuthorizedRoute component={<SCCreateInstance />} />}
+          path={AppRoute.SC_CONFIGURATE_INSTANCE}
+          element={<AuthorizedRoute component={<SCConfigurateInstance />} />}
         />
         <Route
           path={AppRoute.NOT_FOUND}
