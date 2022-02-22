@@ -24,19 +24,11 @@ class S3 {
     });
   }
 
-  public async creteBucket({
-    name,
-  }: {
-    name: string;
-  }): Promise<CreateBucketOutput> {
+  public async creteBucket(name: string): Promise<CreateBucketOutput> {
     return this.#s3Client.send(new CreateBucketCommand({ Bucket: name }));
   }
 
-  public async deleteBucket({
-    name,
-  }: {
-    name: string;
-  }): Promise<DeleteBucketCommandOutput> {
+  public async deleteBucket(name: string): Promise<DeleteBucketCommandOutput> {
     return this.#s3Client.send(new DeleteBucketCommand({ Bucket: name }));
   }
 }

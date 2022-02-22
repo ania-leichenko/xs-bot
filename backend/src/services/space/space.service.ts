@@ -65,7 +65,7 @@ class Space {
       });
     }
 
-    await this.#s3Service.creteBucket({ name });
+    await this.#s3Service.creteBucket(name);
 
     const space = SpaceEntity.createNew({ name, createdBy: user.userId });
 
@@ -88,13 +88,13 @@ class Space {
       });
     }
 
-    const space = await this.#spaceRepository.getSpaceById({ id });
+    const space = await this.#spaceRepository.getSpaceById(id);
 
     const { name } = space;
 
-    await this.#s3Service.deleteBucket({ name });
+    await this.#s3Service.deleteBucket(name);
 
-    await this.#spaceRepository.delete({ id });
+    await this.#spaceRepository.delete(id);
   }
 }
 

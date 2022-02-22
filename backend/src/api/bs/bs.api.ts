@@ -67,20 +67,20 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.DELETE,
-    url: BSApiPath.SPACES,
+    url: BSApiPath.SPACES_$ID,
     async handler(
-      req: FastifyRequest<{ Querystring: BSSpaceDeleteParamsDto }>,
+      req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
       rep,
     ) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
-      const id = req.query.id;
+      const { id } = req.params;
 
       await spaceService.delete({
         id,
         token,
       });
 
-      return rep.send({ id: id }).status(HttpCode.OK);
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 };
