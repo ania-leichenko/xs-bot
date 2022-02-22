@@ -1,5 +1,4 @@
 import { getRandomId } from '~/helpers/helpers';
-import { EAMPermissionGetAllItemResponseDto } from '~/common/types/types';
 
 class Worker {
   public id: string;
@@ -8,7 +7,7 @@ class Worker {
   public passwordSalt: string;
   public tenantId: string;
   public groupIds: string[];
-  public permissions: EAMPermissionGetAllItemResponseDto[] | null;
+  public permissions: string[] | null;
   public createdAt: Date;
 
   private constructor({
@@ -27,7 +26,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    permissions: EAMPermissionGetAllItemResponseDto[] | null;
+    permissions: string[] | null;
     createdAt: Date;
   }) {
     this.id = id;
@@ -56,7 +55,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    permissions: EAMPermissionGetAllItemResponseDto[] | null;
+    permissions: string[] | null;
     createdAt: Date;
   }): Worker {
     return new Worker({
@@ -82,7 +81,7 @@ class Worker {
     passwordHash: string;
     passwordSalt: string;
     groupIds: string[];
-    permissions: EAMPermissionGetAllItemResponseDto[] | null;
+    permissions: string[] | null;
     tenantId: string;
   }): Worker {
     return new Worker({

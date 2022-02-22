@@ -60,7 +60,7 @@ class Worker {
 
   public async getWorkerPermissions(
     workerId: string,
-  ): Promise<EAMPermissionGetAllItemResponseDto[] | null> {
+  ): Promise<string[] | null> {
     const groups = await this.#UsersGroupsModel
       .query()
       .select('groupId')
@@ -88,10 +88,10 @@ class Worker {
     const permissions: EAMPermissionGetAllItemResponseDto[] =
       await this.#PermissionModel
         .query()
-        .select('id', 'name', 'createdAt')
+        .select('name')
         .whereIn('id', Array.from(permissionIds));
 
-    return permissions;
+    return permissions.map((item) => item.name);
   }
 
   public async getByName(name: string): Promise<WorkerEntity | null> {
@@ -172,7 +172,7 @@ class Worker {
   public static modelToEntity(
     model: WorkerM,
     groupIds: string[],
-    permissions: EAMPermissionGetAllItemResponseDto[] | null,
+    permissions: string[] | null,
   ): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
 
