@@ -5,7 +5,7 @@ import {
   HttpMethod,
 } from 'common/enums/enums';
 import {
-  EAMWorkerCreateRequestDto,
+  EAMWorkerConfigurateRequestDto,
   EAMWorkerCreateResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
@@ -26,7 +26,7 @@ class WorkerApi {
   }
 
   public createWorker(
-    payload: EAMWorkerCreateRequestDto,
+    payload: EAMWorkerConfigurateRequestDto,
   ): Promise<EAMWorkerCreateResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),

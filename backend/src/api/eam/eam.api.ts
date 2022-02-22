@@ -18,6 +18,7 @@ import {
   EAMWorkerCreateRequestDto,
 } from '~/common/types/types';
 import { eamGroupCreate as groupCreateValidationSchema } from '~/validation-schemas/validation-schemas';
+import { eamWorkerCreateBackend as workerValidationSchema } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
 type Options = {
@@ -34,22 +35,36 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: EAMApiPath.WORKERS,
+    schema: {
+      body: workerValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof workerValidationSchema>) {
+      return (
+        data: EAMWorkerCreateRequestDto,
+      ): ReturnType<typeof workerValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
     async handler(
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
-      return rep
-        .send(
-          await workerService.create({
-            name: req.body.name,
-            password: req.body.password,
-            groupIds: req.body.groupIds,
-            token,
-          }),
-        )
-        .status(HttpCode.OK);
+      //const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const worker = await workerService.create(req.body);
+      return rep.send(worker).status(HttpCode.CREATED);
+      // return rep
+      //   .send(
+      //     await workerService.create({
+      //       name: req.body.name,
+      //       password: req.body.password,
+      //       groupIds: req.body.groupIds,
+      //       token,
+      //       tenantId: req.body.tenantId,
+      //     }),
+      //   )
+      //   .status(HttpCode.CREATED);
     },
   });
 

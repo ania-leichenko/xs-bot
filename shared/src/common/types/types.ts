@@ -20,6 +20,7 @@ export {
   type EAMWorkerGetAllResponseDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateRequestDto,
+  type EAMWorkerConfigurateRequestDto,
   type EAMWorkerCreateFormDto,
   type EAMWorkerGetByTenantRequestParamsDto,
   type EAMWorkerGroupsItem,

@@ -36,7 +36,7 @@ export {
   type EAMGroupConfigurateRequestDto,
 } from './eam/eam';
 export {
-  type EAMWorkerCreateRequestDto,
+  type EAMWorkerConfigurateRequestDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerGetAllResponseDto,
   type EAMWorkerGetAllItemResponseDto,

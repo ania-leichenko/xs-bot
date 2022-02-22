@@ -77,8 +77,12 @@ class Worker {
     password,
     token,
     groupIds,
+    tenantId,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
-    const workerByName = await this.#workerRepository.getByName(name);
+    const workerByName = await this.#workerRepository.getWorkerByNameAndTenant(
+      name,
+      tenantId,
+    );
 
     if (workerByName) {
       throw new InvalidCredentialsError({
@@ -108,18 +112,25 @@ class Worker {
       name,
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
-      tenantId: master.tenantId,
+      tenantId,
       groupIds,
     });
 
+    if (worker.groupIds.length < 1) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: 'Please select any group or create a new one first',
+      });
+    }
     return await this.#workerRepository.create(worker);
   }
 
   public async verifyLoginCredentials(
     verifyWorkerDto: EAMWorkerSignInRequestDto,
   ): Promise<EAMWorkerSignInResponseDto> {
-    const worker = await this.#workerRepository.getByName(
+    const worker = await this.#workerRepository.getWorkerByNameAndTenant(
       verifyWorkerDto.workerName,
+      verifyWorkerDto.tenantName,
     );
 
     if (!worker) {

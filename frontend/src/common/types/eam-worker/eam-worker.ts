@@ -1,5 +1,5 @@
 export {
-  type EAMWorkerCreateRequestDto,
+  type EAMWorkerConfigurateRequestDto,
   type EAMWorkerCreateResponseDto,
   type EAMWorkerCreateFormDto,
   type EAMWorkerGetAllResponseDto,

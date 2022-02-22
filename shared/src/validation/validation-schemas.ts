@@ -1,4 +1,7 @@
-export { EamWorkerCreate } from './eam-worker/worker';
+export {
+  EamWorkerCreate,
+  eamWorkerCreateBackend,
+} from './eam-worker/eam-worker';
 export { eamMasterSignUp, eamMasterSignIn } from './eam-master/eam-master';
 export { eamGroupCreate, eamGroupConfigurate } from './eam-group/eam-group';
 export { bsSpaceCreate } from './bs-space/bs-space';

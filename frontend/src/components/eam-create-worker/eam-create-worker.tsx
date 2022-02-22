@@ -14,7 +14,7 @@ import {
 } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { Input, Button, Table } from 'components/common/common';
-import { EAMWorkerCreateRequestDto } from 'common/types/types';
+import { EAMWorkerConfigurateRequestDto } from 'common/types/types';
 import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actions';
@@ -56,12 +56,12 @@ const EAMWorkerCreate: FC = () => {
   };
 
   const { control, errors, handleSubmit } =
-    useAppForm<EAMWorkerCreateRequestDto>({
+    useAppForm<EAMWorkerConfigurateRequestDto>({
       defaultValues: DEFAULT_PAYLOAD,
       validationSchema: CreateWorkerValidationSchema,
     });
 
-  const handleFormSubmit = (payload: EAMWorkerCreateRequestDto): void => {
+  const handleFormSubmit = (payload: EAMWorkerConfigurateRequestDto): void => {
     dispatch(
       EAMWorkerConfigurateActions.workerCreate({
         ...payload,
@@ -95,7 +95,7 @@ const EAMWorkerCreate: FC = () => {
                   type={InputType.TEXT}
                   label=""
                   placeholder=""
-                  name={getNameOf<EAMWorkerCreateRequestDto>('name')}
+                  name={getNameOf<EAMWorkerConfigurateRequestDto>('name')}
                   control={control}
                   errors={errors}
                 />

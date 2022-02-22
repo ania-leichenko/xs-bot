@@ -44,26 +44,26 @@ class Worker {
     return workers;
   }
 
-  public async getByName(name: string): Promise<WorkerEntity | null> {
-    const worker = await this.#WorkerModel
-      .query()
-      .select()
-      .where({ name })
-      .first();
+  // public async getByName(name: string): Promise<WorkerEntity | null> {
+  //   const worker = await this.#WorkerModel
+  //     .query()
+  //     .select()
+  //     .where({ name })
+  //     .first();
 
-    if (!worker) {
-      return null;
-    }
+  //   if (!worker) {
+  //     return null;
+  //   }
 
-    const groups: UsersGroups[] = await this.#UsersGroupsModel
-      .query()
-      .select('group_id')
-      .where({ userId: worker.id });
+  //   const groups: UsersGroups[] = await this.#UsersGroupsModel
+  //     .query()
+  //     .select('group_id')
+  //     .where({ userId: worker.id });
 
-    const groupIds: string[] = groups.map((group) => group.groupId);
+  //   const groupIds: string[] = groups.map((group) => group.groupId);
 
-    return Worker.modelToEntity(worker, groupIds);
-  }
+  //   return Worker.modelToEntity(worker, groupIds);
+  // }
 
   async getById(id: string): Promise<WorkerEntity | null> {
     const worker = await this.#WorkerModel
@@ -86,6 +86,28 @@ class Worker {
     return Worker.modelToEntity(worker, groupIds);
   }
 
+  async getWorkerByNameAndTenant(
+    name: string,
+    tenantId: string,
+  ): Promise<WorkerEntity | null> {
+    const worker = await this.#WorkerModel
+      .query()
+      .select()
+      .where({ name })
+      .andWhere({ tenantId })
+      .first();
+
+    if (!worker) {
+      return null;
+    }
+    const groups: UsersGroups[] = await this.#UsersGroupsModel
+      .query()
+      .select('group_id')
+      .where({ userId: worker.id });
+    const groupIds: string[] = groups.map((group) => group.groupId);
+    return Worker.modelToEntity(worker, groupIds);
+  }
+
   public async create(worker: WorkerEntity): Promise<WorkerEntity> {
     const { id, name, passwordHash, passwordSalt, tenantId, groupIds } = worker;
 
@@ -94,7 +116,7 @@ class Worker {
       name,
       passwordHash,
       passwordSalt,
-      createdAt: worker.createdAt.toISOString(),
+      createdAt: worker.createdAt,
       tenantId,
     });
 
@@ -106,7 +128,7 @@ class Worker {
           id: getRandomId(),
           userId: id,
           groupId: groupId,
-          createdAt: worker.createdAt.toISOString(),
+          createdAt: worker.createdAt,
         })),
       );
     }
@@ -126,7 +148,7 @@ class Worker {
       passwordSalt,
       tenantId,
       groupIds,
-      createdAt: new Date(model.createdAt),
+      createdAt: model.createdAt,
     });
   }
 }
