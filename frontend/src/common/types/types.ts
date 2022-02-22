@@ -66,7 +66,9 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
+  type SLCFunctionGetRequestParamsDto,
   type SLCFunctionGetResponseItemDto,
+  type SLCFunctionGetResponseDto,
 } from './slc-function/slc-function';
 export {
   type SCOperationSystemGetAllResponseDto,

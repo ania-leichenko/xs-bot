@@ -7,6 +7,8 @@ import {
 import {
   SLCFunctionCreateRequestDto,
   SLCFunctionCreateResponseDto,
+  SLCFunctionGetRequestParamsDto,
+  SLCFunctionGetResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -34,6 +36,18 @@ class SLCApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public loadFunctions(
+    params: SLCFunctionGetRequestParamsDto,
+  ): Promise<SLCFunctionGetResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.SLC, SLCApiPath.SLC_FUNCTIONS),
+      {
+        method: HttpMethod.GET,
+        params,
       },
     );
   }
