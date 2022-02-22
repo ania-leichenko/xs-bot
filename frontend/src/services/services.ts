@@ -6,6 +6,7 @@ import { TenantApi } from './tenant-api/tenant-api.service';
 import { EAMApi } from './eam-api/eam-api.service';
 import { BSApi } from './bs-api/bs-api.service';
 import { SCApi } from './sc-api/sc-api.service';
+import { SLCApi } from './slc-api/slc-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
@@ -44,6 +45,11 @@ const scApi = new SCApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const slcApi = new SLCApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const navigation = new Navigation({
   history: createBrowserHistory(),
 });
@@ -63,4 +69,5 @@ export {
   eamApi,
   bsApi,
   scApi,
+  slcApi,
 };

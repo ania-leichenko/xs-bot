@@ -8,4 +8,5 @@ export {
   WorkersApiPath,
   BSApiPath,
   SCApiPath,
+  SLCApiPath,
 } from 'bws-shared/common/enums/enums';

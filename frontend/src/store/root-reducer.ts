@@ -8,6 +8,7 @@ import { reducer as EAMWorkerConfigurate } from './eam-worker-configurate/reduce
 import { reducer as BSSpaceCreate } from './bs-space-create/reducer';
 import { reducer as SCConfigurateInstance } from './sc-configurate-instance/reducer';
 import { reducer as sc } from './sc/reducer';
+import { reducer as SLCFunctionConfigurate } from './slc-configurate-function/reducer';
 
 const rootReducer = {
   app,
@@ -17,6 +18,7 @@ const rootReducer = {
   SCConfigurateInstance,
   bs,
   BSSpaceCreate,
+  SLCFunctionConfigurate,
   toastr,
   EAMGroupConfigurate,
   EAMWorkerConfigurate,

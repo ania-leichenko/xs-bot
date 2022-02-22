@@ -20,6 +20,8 @@ import { BS } from 'components/bs/bs';
 import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
 import { SC } from 'components/sc/sc';
 import { SCConfigurateInstance } from 'components/sc-configurate-instance/sc-configurate-instance';
+import { SLC } from 'components/slc/slc';
+import { SLCConfigurateFunction } from 'components/slc-configurate-function/slc-configurate-function';
 
 const App: FC = () => {
   const { user, authStatus } = useAppSelector(({ auth }) => ({
@@ -83,6 +85,14 @@ const App: FC = () => {
         <Route
           path={AppRoute.SC_CONFIGURATE_INSTANCE}
           element={<AuthorizedRoute component={<SCConfigurateInstance />} />}
+        />
+        <Route
+          path={AppRoute.SLC}
+          element={<AuthorizedRoute component={<SLC />} />}
+        />
+        <Route
+          path={AppRoute.SLC_CONFIGURATE_FUNCTION}
+          element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
         />
         <Route
           path={AppRoute.NOT_FOUND}
