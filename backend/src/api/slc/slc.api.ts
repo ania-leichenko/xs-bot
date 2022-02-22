@@ -16,7 +16,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.POST,
-    url: SLCApiPath.ROOT,
+    url: SLCApiPath.SLC_FUNCTIONS,
     schema: {
       body: slcFunctionCreateValidationSchema,
     },

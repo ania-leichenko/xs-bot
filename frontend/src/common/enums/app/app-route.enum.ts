@@ -10,6 +10,7 @@ enum AppRoute {
   SC = '/sc',
   SC_CONFIGURATE_INSTANCE = '/sc/configurate-instance',
   SLC = '/slc',
+  SLC_CONFIGURATE_FUNCTION = '/bs/configurate-function',
   NOT_FOUND = '*',
 }
 

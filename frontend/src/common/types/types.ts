@@ -64,6 +64,10 @@ export {
   type SCInstanceCreateFormDto,
 } from './sc-instance/sc-instance';
 export {
+  type SLCFunctionCreateRequestDto,
+  type SLCFunctionCreateResponseDto,
+} from './slc-function/slc-function';
+export {
   type SCOperationSystemGetAllResponseDto,
   type SCOperationSystemGetAllItemResponseDto,
 } from './sc-operation-system/sc-operation-system';
