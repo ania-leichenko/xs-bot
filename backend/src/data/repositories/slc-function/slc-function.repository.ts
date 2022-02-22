@@ -44,15 +44,17 @@ class SLCFunction {
       updatedAt,
     } = slcFunction;
 
-    return this.#SLCFunctionModel.query().insert({
-      id,
-      name,
-      createdAt,
-      sourceCode,
-      createdBy,
-      awsLambdaId,
-      updatedAt,
-    });
+    return SLCFunction.modelToEntity(
+      await this.#SLCFunctionModel.query().insert({
+        id,
+        name,
+        createdAt,
+        sourceCode,
+        createdBy,
+        awsLambdaId,
+        updatedAt,
+      }),
+    );
   }
 
   async getAllByTenant(
