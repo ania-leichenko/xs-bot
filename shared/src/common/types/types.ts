@@ -36,7 +36,12 @@ export {
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
+  type SCInstanceCreateFormDto,
 } from './sc-instance/sc-instance';
+export {
+  type SCOperationSystemGetAllResponseDto,
+  type SCOperationSystemGetAllItemResponseDto,
+} from './sc-operation-system/sc-operation-system';
 export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,

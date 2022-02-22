@@ -5,14 +5,12 @@ type Constructor = {
   message?: string;
 };
 
-const DEFAULT_MESSAGE = ExceptionMessage.FUNCTION_NAME_EXISTS;
-
 class SLCError extends Error {
   status: HttpCode;
 
   constructor({
     status = HttpCode.BAD_REQUEST,
-    message = DEFAULT_MESSAGE,
+    message = ExceptionMessage.FUNCTION_NAME_EXISTS,
   }: Constructor = {}) {
     super(message);
     this.status = status;
