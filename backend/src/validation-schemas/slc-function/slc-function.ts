@@ -1,1 +1,1 @@
-export { slcFunctionCreate } from 'bws-shared/validation/slc-function/slc-function';
+export { slcFunctionCreate } from 'bws-shared/validation/validation-schemas';
