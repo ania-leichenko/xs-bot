@@ -18,3 +18,7 @@ export {
   SCInstanceValidationRule,
   SCInstanceValidationMessage,
 } from './sc-instance/sc-instance';
+export {
+  SLCFunctionValidationMessage,
+  SLCFunctionValidationRule,
+} from './slc-function/slc-function';

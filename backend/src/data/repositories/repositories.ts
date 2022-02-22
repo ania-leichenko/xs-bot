@@ -10,6 +10,7 @@ import {
   Space as SpaceModel,
   Permission as PermissionModel,
   GroupsPermissions as GroupsPermissionsModel,
+  SLCFunction as SLCFunctionModel,
 } from '~/data/models/models';
 import { Master } from './master/master.repository';
 import { Tenant } from './tenant/tenant.repository';
@@ -20,6 +21,7 @@ import { KeyPair } from './key-pair/key-pair.repository';
 import { OperationSystem } from './operation-system/operation-system.repository';
 import { Space } from './space/space.repository';
 import { Permission } from './permission/permission.repository';
+import { SLCFunction } from './slc-function/slc-function.repository';
 
 const master = new Master({
   MasterModel,
@@ -61,6 +63,10 @@ const operationSystem = new OperationSystem({
   OperationSystemModel,
 });
 
+const slcFunction = new SLCFunction({
+  SLCFunctionModel,
+});
+
 export {
   master,
   group,
@@ -71,4 +77,5 @@ export {
   instance,
   keyPair,
   operationSystem,
+  slcFunction,
 };

@@ -1,13 +1,13 @@
-import { HttpCode } from '~/common/enums/enums';
+import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 
 type Constructor = {
   status?: HttpCode;
   message?: string;
 };
 
-const DEFAULT_MESSAGE = 'Group with this name already exists';
+const DEFAULT_MESSAGE = ExceptionMessage.FUNCTION_NAME_EXISTS;
 
-class InvalidGroupNameError extends Error {
+class SLCError extends Error {
   status: HttpCode;
 
   constructor({
@@ -19,4 +19,4 @@ class InvalidGroupNameError extends Error {
   }
 }
 
-export { InvalidGroupNameError };
+export { SLCError };
