@@ -8,12 +8,12 @@ const DeleteRowCell = (
 ): JSX.Element => {
   return (
     <img
+      className={styles.icon}
       src={deleteIcon}
       alt={'Delete'}
       onClick={(): void => {
         handleSpaceDelete({ id });
       }}
-      className={styles.icon}
     />
   );
 };
