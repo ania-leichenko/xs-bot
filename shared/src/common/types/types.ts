@@ -53,7 +53,6 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
-  type SLCFunctionCreateFormDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

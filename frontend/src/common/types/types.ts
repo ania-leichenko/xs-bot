@@ -61,6 +61,5 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
-  type SLCFunctionCreateFormDto,
 } from './slc-function/slc-function';
 export { type ServiceMenuItem } from './ui/ui';

@@ -1,6 +1,6 @@
-import { SLCFunctionCreateFormDto } from 'common/types/types';
+import { SLCFunctionCreateRequestDto } from 'common/types/types';
 
-const DEFAULT_PAYLOAD: SLCFunctionCreateFormDto = {
+const DEFAULT_PAYLOAD: SLCFunctionCreateRequestDto = {
   name: '',
 };
 
