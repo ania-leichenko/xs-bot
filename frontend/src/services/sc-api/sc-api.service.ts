@@ -8,6 +8,8 @@ import {
   SCOperationSystemGetAllResponseDto,
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
+  SCInstanceGetByTenantRequestParamsDto,
+  SCInstanceGetByTenantResponseDto,
 } from 'common/types/types';
 import { Http } from 'services/http/http.service';
 import { joinItems } from 'helpers/helpers';
@@ -33,6 +35,15 @@ class SCApi {
         method: HttpMethod.GET,
       },
     );
+  }
+
+  public async loadInstances(
+    params: SCInstanceGetByTenantRequestParamsDto,
+  ): Promise<SCInstanceGetByTenantResponseDto> {
+    return this.#http.load(joinItems(this.#apiPrefix, ApiPath.SC), {
+      method: HttpMethod.GET,
+      params,
+    });
   }
 
   public async createInstance(
