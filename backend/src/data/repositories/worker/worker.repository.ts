@@ -49,8 +49,6 @@ class Worker {
       .offset(offset)
       .limit(limit);
 
-    await this.getWorkerPermissions(workers[0].id);
-
     return workers;
   }
 
