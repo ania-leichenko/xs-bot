@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { useAppForm } from 'hooks/hooks';
+import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { SLCFunctionCreateRequestDto } from 'common/types/types';
 import { DEFAULT_PAYLOAD } from './common/constants';
 import { slcFunctionCreate as CreateSLCFunctionValidationSchema } from 'validation-schemas/validation-schemas';
+import { SLCFunctionConfigurate as SLCFunctionConfigurateActions } from 'store/actions';
 import {
   AppRoute,
   ButtonStyle,
@@ -15,10 +16,17 @@ import { getNameOf } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 const SLCConfigurateFunction: FC = () => {
-  const { control, errors } = useAppForm<SLCFunctionCreateRequestDto>({
-    defaultValues: DEFAULT_PAYLOAD,
-    validationSchema: CreateSLCFunctionValidationSchema,
-  });
+  const dispatch = useAppDispatch();
+
+  const { control, errors, handleSubmit } =
+    useAppForm<SLCFunctionCreateRequestDto>({
+      defaultValues: DEFAULT_PAYLOAD,
+      validationSchema: CreateSLCFunctionValidationSchema,
+    });
+
+  const handleFormSubmit = (payload: SLCFunctionCreateRequestDto): void => {
+    dispatch(SLCFunctionConfigurateActions.createFunction(payload));
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -28,7 +36,7 @@ const SLCConfigurateFunction: FC = () => {
       </h2>
       <section className={styles.formWrapper}>
         <h3 className={styles.formTitle}>Create Function</h3>
-        <form>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
               <h3 className={styles.inputTitle}>Function name</h3>
