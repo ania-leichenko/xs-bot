@@ -1,3 +1,9 @@
+/* stylelint-disable declaration-no-important */
+
+:global(.close-toastr) span {
+  top: 25% !important;
+}
+
 .wrapper {
   position: absolute;
   top: 110px;
@@ -13,6 +19,15 @@
   border-top: 5px solid var(--color-red);
 }
 
+.successWrapper > div {
+  display: flex;
+  width: 100%;
+  color: #9a9a9a;
+  font-size: 14px;
+  background: var(--color-boltgun);
+  border-top: 5px solid var(--color-green);
+}
+
 .wrapper > div > div:first-child > div {
   margin-top: 0;
 }
@@ -23,6 +38,13 @@
   font-size: 18px;
 }
 
+.successWrapper > div > div:first-child > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+}
+
 .wrapper div[role="alertdialog"] div:first-child {
   color: #ffffff;
 }
@@ -30,5 +52,29 @@
 .attention {
   width: 70px;
   height: 70px;
-  background: center no-repeat url("../../assets/img/attention-icon.svg");
+  background: center no-repeat url("/assets/img/attention-icon.svg");
+}
+
+.check {
+  width: 30px;
+  height: 30px;
+  background: center no-repeat url("/assets/img/check-icon.svg");
+  background-color: var(--color-green);
+  border-radius: 100%;
+}
+
+.successWrapper {
+  position: absolute;
+  top: 110px;
+  right: 25px;
+}
+
+.successWrapper div[role="button"] span {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.successWrapper div[role="alertdialog"] div:first-child {
+  color: #ffffff;
 }
