@@ -1,18 +1,30 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
-import { BSSpaceGetResponseItemDto } from 'common/types/types';
+import {
+  BSSpaceGetResponseItemDto,
+  BSSpaceDeleteParamsDto,
+} from 'common/types/types';
+import { DeleteRowCell } from 'components/bs/components/spaces-table/helpers/delete-row-cell/delete-row-cell';
 
 type Row = {
   [SpacesTableAccessor.SPACE_NAME]: string;
   [SpacesTableAccessor.CREATION_TIME]: string;
+  [SpacesTableAccessor.ACTIONS]: JSX.Element;
 };
 
-const getRows = (spaces: BSSpaceGetResponseItemDto[]): Row[] => {
+const getRows = ({
+  spaces,
+  handleSpaceDelete,
+}: {
+  spaces: BSSpaceGetResponseItemDto[];
+  handleSpaceDelete: (payload: BSSpaceDeleteParamsDto) => void;
+}): Row[] => {
   return spaces.map((item) => {
-    const { name, createdAt } = item;
+    const { name, createdAt, id } = item;
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: name,
       [SpacesTableAccessor.CREATION_TIME]: createdAt,
+      [SpacesTableAccessor.ACTIONS]: DeleteRowCell(id, handleSpaceDelete),
     };
   });
 };

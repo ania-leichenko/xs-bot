@@ -5,6 +5,8 @@ import { bs as bsActions } from 'store/actions';
 import { SpacesTable } from './components/components';
 import { FC } from 'react';
 import styles from './styles.module.scss';
+import { bs as BSActions } from 'store/actions';
+import { BSSpaceDeleteParamsDto } from 'common/types/types';
 
 const BS: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,6 +20,10 @@ const BS: FC = () => {
     );
   }, [dispatch]);
 
+  const handleSpaceDelete = (payload: BSSpaceDeleteParamsDto): void => {
+    dispatch(BSActions.deleteSpace(payload));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -25,7 +31,7 @@ const BS: FC = () => {
         Binary Storage
       </h2>
       <div className={styles.tableWrapper}>
-        <SpacesTable>
+        <SpacesTable handleSpaceDelete={handleSpaceDelete}>
           <Button
             className={styles.addSpaceBtn}
             to={AppRoute.BS_CREATE_SPACE}

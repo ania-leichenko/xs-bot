@@ -1,0 +1,10 @@
+.icon {
+  width: 19px;
+  height: 21px;
+  color: var(--color-text);
+  background-image: url("/assets/img/delete-icon.svg");
+}
+
+.icon:hover {
+  color: var(--color-orange);
+}

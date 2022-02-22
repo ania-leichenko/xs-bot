@@ -7,6 +7,7 @@ import {
 import {
   BSSpaceCreateRequestDto,
   BSSpaceCreateResponseDto,
+  BSSpaceDeleteParamsDto,
   BSSpaceGetRequestParamsDto,
   BSSpaceGetResponseDto,
 } from 'common/types/types';
@@ -34,6 +35,18 @@ class BSApi {
       joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES),
       {
         method: HttpMethod.GET,
+        params,
+      },
+    );
+  }
+
+  public deleteSpace(
+    params: BSSpaceDeleteParamsDto,
+  ): Promise<BSSpaceDeleteParamsDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES),
+      {
+        method: HttpMethod.DELETE,
         params,
       },
     );
