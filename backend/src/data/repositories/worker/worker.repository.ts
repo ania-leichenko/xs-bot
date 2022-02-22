@@ -49,28 +49,33 @@ class Worker {
       .offset(offset)
       .limit(limit);
 
+    await this.getWorkerPermissions(workers[0].id);
+
     return workers;
   }
 
   public async getWorkerPermissions(workerId: string): Promise<Array<string>> {
-    const groupsIds = await this.#UsersGroupsModel
+    type userGroups = {
+      groupId: string;
+    };
+    const groups: userGroups[] = await this.#UsersGroupsModel
       .query()
       .select('groupId')
       .where({ 'userId': workerId });
 
+    const groupsIds: string[] = groups.map((item): string => item.groupId);
+
+    const permissions = await this.#GroupsPermissionsModel
+      .query()
+      .select('permissionId')
+      .whereIn('groupId', groupsIds);
+
     const permissionIds = new Set<string>([]);
 
-    await Promise.all(
-      groupsIds.map(async (item) => {
-        const permissions = await this.#GroupsPermissionsModel
-          .query()
-          .select('permissionId')
-          .where({ 'groupId': item.groupId });
-        permissions.map((item) => {
-          permissionIds.add(item.permissionId);
-        });
-      }),
-    );
+    permissions.map((item) => {
+      permissionIds.add(item.permissionId);
+      return item;
+    });
 
     return Array.from(permissionIds);
   }
