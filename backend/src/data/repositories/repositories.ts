@@ -34,6 +34,7 @@ const worker = new Worker({
   WorkerModel,
   UsersGroupsModel,
   GroupsPermissionsModel,
+  PermissionModel,
 });
 
 const group = new Group({
