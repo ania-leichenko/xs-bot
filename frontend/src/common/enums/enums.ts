@@ -25,4 +25,5 @@ export {
   PermissionsTableHeader,
 } from './eam/eam';
 export { SpacesTableHeader, SpacesTableAccessor } from './bs/bs';
+export { FunctionsTableHeader, FunctionsTableAccessor } from './slc/slc';
 export { UserRole } from './roles/roles';
