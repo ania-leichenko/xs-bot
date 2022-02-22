@@ -5,6 +5,7 @@ import { AuthApi } from './auth-api/auth-api.service';
 import { TenantApi } from './tenant-api/tenant-api.service';
 import { EAMApi } from './eam-api/eam-api.service';
 import { BSApi } from './bs-api/bs-api.service';
+import { SCApi } from './sc-api/sc-api.service';
 import { SLCApi } from './slc-api/slc-api.service';
 import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
@@ -39,6 +40,11 @@ const bsApi = new BSApi({
   apiPrefix: ENV.API_PATH,
 });
 
+const scApi = new SCApi({
+  http,
+  apiPrefix: ENV.API_PATH,
+});
+
 const slcApi = new SLCApi({
   http,
   apiPrefix: ENV.API_PATH,
@@ -62,5 +68,6 @@ export {
   workerApi,
   eamApi,
   bsApi,
+  scApi,
   slcApi,
 };

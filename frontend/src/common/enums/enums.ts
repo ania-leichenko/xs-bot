@@ -7,6 +7,7 @@ export {
   GroupsApiPath,
   WorkersApiPath,
   BSApiPath,
+  SCApiPath,
   SLCApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';

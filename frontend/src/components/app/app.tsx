@@ -18,6 +18,8 @@ import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-config
 import { NotFound } from 'components/not-found-page/not-found-page';
 import { BS } from 'components/bs/bs';
 import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
+import { SC } from 'components/sc/sc';
+import { SCConfigurateInstance } from 'components/sc-configurate-instance/sc-configurate-instance';
 import { SLC } from 'components/slc/slc';
 import { SLCConfigurateFunction } from 'components/slc-configurate-function/slc-configurate-function';
 
@@ -75,6 +77,14 @@ const App: FC = () => {
         <Route
           path={AppRoute.BS_CREATE_SPACE}
           element={<AuthorizedRoute component={<BSCreateSpace />} />}
+        />
+        <Route
+          path={AppRoute.SC}
+          element={<AuthorizedRoute component={<SC />} />}
+        />
+        <Route
+          path={AppRoute.SC_CONFIGURATE_INSTANCE}
+          element={<AuthorizedRoute component={<SCConfigurateInstance />} />}
         />
         <Route
           path={AppRoute.SLC}
