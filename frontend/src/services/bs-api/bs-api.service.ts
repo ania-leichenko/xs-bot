@@ -44,10 +44,9 @@ class BSApi {
     params: BSSpaceDeleteParamsDto,
   ): Promise<BSSpaceDeleteParamsDto> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES),
+      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES, '/', params.id),
       {
         method: HttpMethod.DELETE,
-        params,
       },
     );
   }

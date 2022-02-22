@@ -25,11 +25,11 @@ const deleteSpace = createAsyncThunk<
 >(ActionType.DELETE_SPACE, async (payload, { extra }) => {
   const { bsApi } = extra;
 
-  const deleted = await bsApi.deleteSpace(payload);
+  await bsApi.deleteSpace(payload);
 
   notification.success('Success!', 'Space has been successfully deleted');
 
-  return deleted;
+  return payload;
 });
 
 export { loadSpaces, deleteSpace };
