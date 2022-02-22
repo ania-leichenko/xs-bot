@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import deleteIcon from '../../../../../../assets/img/delete-icon.svg';
+import deleteIcon from 'assets/img/delete-icon.svg';
 import { BSSpaceDeleteParamsDto } from 'common/types/types';
 
 const DeleteRowCell = (

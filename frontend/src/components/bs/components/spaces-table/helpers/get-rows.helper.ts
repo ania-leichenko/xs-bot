@@ -4,6 +4,7 @@ import {
   BSSpaceDeleteParamsDto,
 } from 'common/types/types';
 import { DeleteRowCell } from 'components/bs/components/spaces-table/helpers/delete-row-cell/delete-row-cell';
+import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
   [SpacesTableAccessor.SPACE_NAME]: string;
@@ -23,7 +24,9 @@ const getRows = ({
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: name,
-      [SpacesTableAccessor.CREATION_TIME]: createdAt,
+      [SpacesTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+        new Date(createdAt),
+      ),
       [SpacesTableAccessor.ACTIONS]: DeleteRowCell(id, handleSpaceDelete),
     };
   });
