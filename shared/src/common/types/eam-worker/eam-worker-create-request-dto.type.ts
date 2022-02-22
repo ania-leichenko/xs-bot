@@ -3,7 +3,6 @@ type EAMWorkerCreateRequestDto = {
   password: string;
   groupIds: string[];
   token: string;
-  // tenantId: string;
 };
 
 export { type EAMWorkerCreateRequestDto };
