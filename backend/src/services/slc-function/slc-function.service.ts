@@ -49,11 +49,8 @@ class SLCFunction {
     name: string;
     token: string;
   }): Promise<SLCFunctionCreateResponseDto> {
-    const {
-      userId: createdBy,
-      tenantId,
-      userRole,
-    } = this.#tokenService.decode<TokenPayload>(token);
+    const { userId: createdBy, userRole } =
+      this.#tokenService.decode<TokenPayload>(token);
 
     if (userRole !== UserRole.WORKER) {
       throw new SLCError({
@@ -62,13 +59,9 @@ class SLCFunction {
       });
     }
 
-    const functionByNameAndTenant =
-      await this.#slcFunctionRepository.getByNameAndTenant({
-        name,
-        tenantId,
-      });
+    const slcFunctionByName = await this.#slcFunctionRepository.getByName(name);
 
-    if (functionByNameAndTenant) {
+    if (slcFunctionByName) {
       throw new SLCError();
     }
 

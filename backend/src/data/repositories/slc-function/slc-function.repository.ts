@@ -1,4 +1,3 @@
-import { TableName } from '~/common/enums/enums';
 import { SLCFunction as SLCFunctionM } from '~/data/models/models';
 import { SLCFunction as SLCFunctionEntity } from '~/services/slc-function/slc-function.entity';
 
@@ -13,23 +12,11 @@ class SLCFunction {
     this.#SLCFunctionModel = SLCFunctionModel;
   }
 
-  async getByNameAndTenant({
-    name,
-    tenantId,
-  }: {
-    name: string;
-    tenantId: string;
-  }): Promise<SLCFunctionEntity | null> {
+  async getByName(name: string): Promise<SLCFunctionEntity | null> {
     const slcFunction = await this.#SLCFunctionModel
       .query()
-      .join(
-        TableName.WORKERS,
-        `${TableName.FUNCTIONS}.createdBy`,
-        `${TableName.WORKERS}.id`,
-      )
-      .select(`${TableName.FUNCTIONS}.name`)
-      .where({ tenantId })
-      .andWhere({ [`${TableName.FUNCTIONS}.name`]: name })
+      .select()
+      .where({ name })
       .first();
 
     if (!slcFunction) {
