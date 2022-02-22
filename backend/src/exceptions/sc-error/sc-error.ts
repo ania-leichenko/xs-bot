@@ -1,14 +1,14 @@
-import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
+import { HttpCode } from '~/common/enums/enums';
 
-const DEFAULT_MESSAGE = ExceptionMessage.MASTER_INSTANCE_CREATE;
+type Constructor = {
+  status: HttpCode;
+  message: string;
+};
 
 class SCError extends Error {
   status: HttpCode;
 
-  constructor({
-    status = HttpCode.BAD_REQUEST,
-    message = DEFAULT_MESSAGE,
-  } = {}) {
+  constructor({ status, message }: Constructor) {
     super(message);
     this.status = status;
   }
