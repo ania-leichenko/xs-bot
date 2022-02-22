@@ -14,7 +14,7 @@ import {
   useAppForm,
   useEffect,
 } from 'hooks/hooks';
-import { sc as scActions } from 'store/actions';
+import { SCConfigurateInstance as scActions } from 'store/actions';
 import { scInstanceCreate as CreateInstanceValidationSchema } from 'validation-schemas/validation-schemas';
 import { DEFAULT_PAYLOAD } from './common/constants';
 import { getOperationSystemOptions } from './helpers/helpers';
@@ -22,8 +22,8 @@ import styles from './styles.module.scss';
 
 const SCConfigurateInstance: FC = () => {
   const dispatch = useAppDispatch();
-  const { operationSystems } = useAppSelector(({ sc }) => ({
-    operationSystems: sc.operationSystems,
+  const { operationSystems } = useAppSelector(({ SCConfigurateInstance }) => ({
+    operationSystems: SCConfigurateInstance.operationSystems,
   }));
 
   const { control, errors, handleSubmit } =

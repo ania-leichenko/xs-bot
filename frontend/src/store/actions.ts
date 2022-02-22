@@ -5,4 +5,4 @@ export * as eam from './eam/actions';
 export * as bs from './bs/actions';
 export * as BSSpace from './bs-space-create/actions';
 export * as EAMWorkerConfigurate from './eam-worker-configurate/actions';
-export * as sc from './sc-configurate-instance/actions';
+export * as SCConfigurateInstance from './sc-configurate-instance/actions';
