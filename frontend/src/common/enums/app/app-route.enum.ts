@@ -8,6 +8,7 @@ enum AppRoute {
   BS = '/bs',
   BS_CREATE_SPACE = '/bs/create-space',
   SC = '/sc',
+  SC_CREATE_INSTANCE = '/sc/create-instance',
   SLC = '/slc',
   NOT_FOUND = '*',
 }

@@ -4,3 +4,4 @@ export * as EAMGroupConfigurate from './eam-group-configurate/actions';
 export * as eam from './eam/actions';
 export * as BSSpace from './bs-space-create/actions';
 export * as EAMWorkerConfigurate from './eam-worker-configurate/actions';
+export * as sc from './sc/actions';

@@ -20,6 +20,7 @@ import { Worker } from './worker/worker.service';
 import { Auth } from './auth/auth.service';
 import { EC2 } from './aws/ec2/ec2.service';
 import { KeyPair } from './key-pair/key-pair.service';
+import { OperationSystem } from './operation-system/operation-system.service';
 import { Instance } from './instance/instance.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
@@ -72,9 +73,13 @@ const keyPair = new KeyPair({
   ec2Service: ec2,
 });
 
+const operationSystem = new OperationSystem({
+  operationSystemRepository,
+});
+
 const instance = new Instance({
   instanceRepository,
-  operationSystemRepository,
+  operationSystemService: operationSystem,
   keyPairService: keyPair,
   ec2Service: ec2,
   tokenService: token,
@@ -108,6 +113,7 @@ export {
   auth,
   ec2,
   keyPair,
+  operationSystem,
   instance,
   space,
   s3,

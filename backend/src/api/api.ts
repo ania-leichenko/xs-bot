@@ -8,6 +8,7 @@ import {
   auth,
   instance,
   space,
+  operationSystem,
 } from '~/services/services';
 import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
@@ -53,6 +54,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initScApi, {
     services: {
       instance,
+      operationSystem,
     },
     prefix: ApiPath.SC,
   });
