@@ -2,6 +2,8 @@ import {
   LambdaClient,
   CreateFunctionCommand,
   CreateFunctionCommandOutput,
+  DeleteFunctionCommand,
+  DeleteFunctionCommandOutput,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
 import { LambdaDefaultParam } from '~/common/enums/enums';
@@ -55,6 +57,16 @@ class Lambda {
         },
         FunctionName: name,
         Role: this.#role,
+      }),
+    );
+  }
+
+  public async deleteFunction(
+    name: string,
+  ): Promise<DeleteFunctionCommandOutput> {
+    return this.#lambdaClient.send(
+      new DeleteFunctionCommand({
+        FunctionName: name,
       }),
     );
   }
