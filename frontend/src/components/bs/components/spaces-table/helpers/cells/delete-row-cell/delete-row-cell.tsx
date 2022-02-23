@@ -5,14 +5,13 @@ const DeleteRowCell = (
   id: string,
   onSpaceDelete: (id: string) => void,
 ): JSX.Element => {
+  const handleSpaceDelete = (): void => {
+    onSpaceDelete(id);
+  };
+
   return (
-    <button
-      className={styles.button}
-      onClick={(): void => {
-        onSpaceDelete(id);
-      }}
-    >
-      <img src={deleteIcon} alt={'Delete'} />
+    <button className={styles.button} onClick={handleSpaceDelete}>
+      <img src={deleteIcon} alt="Delete" />
     </button>
   );
 };

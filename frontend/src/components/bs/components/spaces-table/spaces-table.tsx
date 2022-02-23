@@ -4,7 +4,6 @@ import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
 
 type Props = {
-  children: JSX.Element;
   onSpaceDelete: (id: string) => void;
 };
 
