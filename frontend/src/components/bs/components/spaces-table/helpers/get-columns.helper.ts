@@ -1,9 +1,5 @@
 import { SpacesTableHeader, SpacesTableAccessor } from 'common/enums/enums';
-
-type Column = {
-  Header: string;
-  accessor: string;
-};
+import { Column } from 'react-table';
 
 const getColumns = (): Column[] => {
   return [
