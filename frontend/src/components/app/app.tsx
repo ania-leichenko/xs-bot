@@ -13,7 +13,7 @@ import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
 import { storage } from 'services/services';
 import { EAM } from 'components/eam/eam';
-import { EAMWorkerCreate } from 'components/eam-create-worker/eam-create-worker';
+import { EAMConfigurateWorker } from 'components/eam-configurate-worker/eam-configurate-worker';
 import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
 import { NotFound } from 'components/not-found-page/not-found-page';
 import { BS } from 'components/bs/bs';
@@ -68,7 +68,7 @@ const App: FC = () => {
         />
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
-          element={<AuthorizedRoute component={<EAMWorkerCreate />} />}
+          element={<AuthorizedRoute component={<EAMConfigurateWorker />} />}
         />
         <Route
           path={AppRoute.BS}
