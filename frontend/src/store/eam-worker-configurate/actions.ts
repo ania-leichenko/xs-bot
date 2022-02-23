@@ -43,8 +43,9 @@ const saveCSV = createAsyncThunk<void, void, AsyncThunkConfig>(
     const { EAMWorkerConfigurate } = getState();
 
     const { csvColumns } = EAMWorkerConfigurate;
+    const [[, name]] = csvColumns;
 
-    saver.saveCSV(csvColumns, `${csvColumns[0][1]}-worker-credentials`);
+    saver.saveCSV(csvColumns, `${name}-worker-credentials`);
   },
 );
 
