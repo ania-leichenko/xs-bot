@@ -7,7 +7,7 @@ import {
   EAMGroupGetByTenantResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { getRandomId, generateCsv } from 'helpers/helpers';
+import { getRandomId } from 'helpers/helpers';
 import { AppRoute } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
@@ -17,7 +17,7 @@ const workerCreate = createAsyncThunk<
 >(
   ActionType.CREATE_WORKER,
   async (payload: EAMWorkerCreateRequestDto, { extra }) => {
-    const { workerApi, navigation, notification } = extra;
+    const { workerApi, navigation, notification, saveCsv } = extra;
 
     const password = getRandomId();
 
@@ -30,7 +30,8 @@ const workerCreate = createAsyncThunk<
       ['name:', payload.name],
       ['password:', password],
     ];
-    generateCsv(content, 'Credentials.csv');
+    saveCsv.save(content, 'Credentials.csv');
+
     navigation.push(AppRoute.EAM);
 
     notification.success('Success!', 'User has been successfully created');

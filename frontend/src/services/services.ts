@@ -11,6 +11,7 @@ import { Storage } from './storage/storage.service';
 import { Notification } from './notification/notification.service';
 import { Navigation } from './navigation/navigation.service';
 import { WorkerApi } from './worker-api/worker-api.service';
+import { SaveCsv } from './save-csv/save-csv';
 
 const storage = new Storage({
   storage: window.localStorage,
@@ -19,6 +20,8 @@ const storage = new Storage({
 const http = new Http({ storage });
 
 const notification = new Notification();
+
+const saveCsv = new SaveCsv();
 
 const authApi = new AuthApi({
   http,
@@ -70,4 +73,5 @@ export {
   bsApi,
   scApi,
   slcApi,
+  saveCsv,
 };
