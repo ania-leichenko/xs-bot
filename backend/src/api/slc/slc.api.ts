@@ -2,10 +2,16 @@ import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { slcFunction as slcFunctionServ } from '~/services/services';
 import { slcFunctionCreate as slcFunctionCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { HttpCode, HttpMethod, SLCApiPath } from '~/common/enums/enums';
+import {
+  HttpCode,
+  HttpMethod,
+  SLCApiPath,
+  SLCFunctionApiPath,
+} from '~/common/enums/enums';
 import {
   SLCFunctionCreateRequestDto,
   SLCFunctionGetRequestParamsDto,
+  SLCFunctionDeleteParamsDto,
 } from '~/common/types/types';
 
 type Options = {
@@ -59,6 +65,24 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       return rep.send(slcFunctions).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: SLCApiPath.SLC_FUNCTIONS + SLCFunctionApiPath.$ID,
+    async handler(
+      req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
+      rep,
+    ) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+
+      await slcFunctionService.delete({
+        id: req.params.id,
+        token,
+      });
+
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 };

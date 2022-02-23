@@ -4,3 +4,4 @@ export { type SLCFunctionGetRequestParamsDto } from './slc-function-get-request-
 export { type SLCFunctionGetFilter } from './slc-function-get-filter.type';
 export { type SLCFunctionGetResponseItemDto } from './slc-function-get-response-item-dto.type';
 export { type SLCFunctionGetResponseDto } from './slc-function-get-response-dto.type';
+export { type SLCFunctionDeleteParamsDto } from './slc-function-delete-params-dto.type';
