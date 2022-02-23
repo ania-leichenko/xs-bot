@@ -1,12 +1,14 @@
 import { ContentType } from 'common/enums/enums';
+import { saveAs } from 'file-saver';
 
 class Saver {
-  public saveCSV(content: string[][], fileName: string): File {
+  public saveCSV(content: string[][], fileName: string): void {
     const csvContent = content.map((e) => e.join(' ')).join('\n');
 
-    return new File([csvContent], `${fileName}.csv`, {
+    const csvFile = new File([csvContent], `${fileName}.csv`, {
       type: ContentType.CSV,
     });
+    saveAs(csvFile);
   }
 }
 

@@ -7,16 +7,16 @@ import {
 } from 'common/types/types';
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
-import { CSV } from 'common/enums/enums';
+import { EAMCreateWorkerCSVColumn } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
-  File,
+  string[][],
   EAMWorkerCreateRequestDto,
   AsyncThunkConfig
 >(
   ActionType.CREATE_WORKER,
   async (payload: EAMWorkerCreateRequestDto, { extra }) => {
-    const { workerApi, notification, saver } = extra;
+    const { workerApi, notification } = extra;
 
     const password = getRandomId();
 
@@ -25,17 +25,26 @@ const workerCreate = createAsyncThunk<
       password,
     });
 
-    const csvFile = saver.saveCSV(
-      [
-        [CSV.NAME, payload.name],
-        [CSV.PASSWORD, password],
-      ],
-      `${payload.name}-worker-credentials`,
-    );
+    const csvColumns = [
+      [EAMCreateWorkerCSVColumn.NAME, payload.name],
+      [EAMCreateWorkerCSVColumn.PASSWORD, password],
+    ];
 
     notification.success('Success!', 'User has been successfully created');
 
-    return csvFile;
+    return csvColumns;
+  },
+);
+
+const saveCSV = createAsyncThunk<void, void, AsyncThunkConfig>(
+  ActionType.SAVE_CSV,
+  async (_payload, { extra, getState }) => {
+    const { saver } = extra;
+    const { EAMWorkerConfigurate } = getState();
+
+    const { csvColumns } = EAMWorkerConfigurate;
+
+    saver.saveCSV(csvColumns, `${csvColumns[0][1]}-worker-credentials`);
   },
 );
 
@@ -48,4 +57,4 @@ const getGroups = createAsyncThunk<
   return eamApi.loadGroups(filter);
 });
 
-export { workerCreate, getGroups };
+export { workerCreate, getGroups, saveCSV };

@@ -20,16 +20,15 @@ import styles from './styles.module.scss';
 import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
 import { getColumns, getRows } from './helpers/helpers';
-import { saveAs } from 'file-saver';
 
 const EAMWorkerCreate: FC = () => {
   const dispatch = useAppDispatch();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const { tenantId, groups, csvFile } = useAppSelector(
+  const { tenantId, groups, csvColumns } = useAppSelector(
     ({ app, EAMWorkerConfigurate }) => ({
       tenantId: app.tenant?.id,
       groups: EAMWorkerConfigurate.groups,
-      csvFile: EAMWorkerConfigurate.csvFile,
+      csvColumns: EAMWorkerConfigurate.csvColumns,
     }),
   );
 
@@ -73,10 +72,10 @@ const EAMWorkerCreate: FC = () => {
   };
 
   const handleSave = (): void => {
-    if (csvFile) {
-      saveAs(csvFile);
-    }
+    dispatch(EAMWorkerConfigurateActions.saveCSV());
   };
+
+  const hasCsvColumns = Boolean(csvColumns.length);
 
   const columns = getColumns(
     handleAddGroupId,
@@ -119,14 +118,16 @@ const EAMWorkerCreate: FC = () => {
               />
             </li>
           </ul>
-          <div className={!csvFile ? 'visually-hidden' : ''}>
-            <button
-              className={styles.saveBtn}
-              type={ButtonType.BUTTON}
-              onClick={handleSave}
-            >
-              Save csv
-            </button>
+          <div>
+            {hasCsvColumns && (
+              <button
+                className={styles.saveBtn}
+                type={ButtonType.BUTTON}
+                onClick={handleSave}
+              >
+                Save csv
+              </button>
+            )}
           </div>
           <div className={styles.buttons}>
             <div className={styles.button}>
