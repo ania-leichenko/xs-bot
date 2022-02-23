@@ -9,3 +9,4 @@ export { SCApiPath } from './sc-api-path.enum';
 export { BSApiPath } from './bs-api-path.enum';
 export { SLCApiPath } from './slc-api-path.enum';
 export { SLCFunctionApiPath } from './slc-function-api-path.enum';
+export { SpacesApiPath } from './spaces-api-path.enum';

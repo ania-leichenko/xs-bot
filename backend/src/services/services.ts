@@ -47,6 +47,7 @@ const master = new Master({
 
 const worker = new Worker({
   workerRepository,
+  tenantRepository,
   encryptService: encrypt,
   tokenService: token,
   masterService: master,

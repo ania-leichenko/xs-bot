@@ -1,4 +1,7 @@
-import { worker as workerRep } from '~/data/repositories/repositories';
+import {
+  worker as workerRep,
+  tenant as tenantRep,
+} from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
@@ -21,6 +24,7 @@ import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/
 
 type Constructor = {
   workerRepository: typeof workerRep;
+  tenantRepository: typeof tenantRep;
   encryptService: typeof encryptServ;
   tokenService: typeof tokenServ;
   masterService: typeof masterServ;
@@ -29,6 +33,7 @@ type Constructor = {
 
 class Worker {
   #workerRepository: typeof workerRep;
+  #tenantRepository: typeof tenantRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
   #masterService: typeof masterServ;
@@ -36,12 +41,14 @@ class Worker {
 
   constructor({
     workerRepository,
+    tenantRepository,
     encryptService,
     tokenService,
     masterService,
     tenantService,
   }: Constructor) {
     this.#workerRepository = workerRepository;
+    this.#tenantRepository = tenantRepository;
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
     this.#masterService = masterService;
@@ -130,29 +137,31 @@ class Worker {
   public async verifyLoginCredentials(
     verifyWorkerDto: EAMWorkerSignInRequestDto,
   ): Promise<EAMWorkerSignInResponseDto> {
+    const { tenantName, workerName, password } = verifyWorkerDto;
+
+    const tenant = await this.#tenantRepository.getByName(tenantName);
+
+    if (!tenant) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INCORRECT_TENANT_NAME,
+      });
+    }
+
     const worker = await this.#workerRepository.getByName(
-      verifyWorkerDto.workerName,
-      verifyWorkerDto.tenantName,
+      workerName,
+      tenant.id,
     );
 
     if (!worker) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.WORKER_NAME,
-      });
-    }
-
-    const tenant = await this.#tenantService.getTenantById(worker.tenantId);
-
-    if (verifyWorkerDto.tenantName !== tenant?.name) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_WORKER_NAME,
       });
     }
 
     const isEqualPassword = await this.#encryptService.compare(
-      verifyWorkerDto.password,
+      password,
       worker.passwordSalt,
       worker.passwordHash,
     );
@@ -160,7 +169,7 @@ class Worker {
     if (!isEqualPassword) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_CREDENTIALS,
       });
     }
 
