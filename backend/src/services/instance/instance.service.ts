@@ -119,6 +119,13 @@ class Instance {
       publicDNS: instance.hostname,
     };
   }
+
+  public async delete(id: string): Promise<void> {
+    const { awsInstanceId, keyPairId } =
+      (await this.#instanceRepository.getById(id)) as InstanceEntity;
+    await this.#ec2Service.deleteInstance(awsInstanceId);
+    await this.#ec2Service.deleteKeyPair(keyPairId);
+  }
 }
 
 export { Instance };

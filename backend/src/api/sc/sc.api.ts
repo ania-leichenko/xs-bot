@@ -7,6 +7,7 @@ import { HttpCode, HttpMethod, SCApiPath } from '~/common/enums/enums';
 import {
   SCInstanceCreateRequestDto,
   SCInstanceGetByTenantRequestParamsDto,
+  SCInstanceDeleteRequestDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { scInstanceCreate as scInstanceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
@@ -46,6 +47,20 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         token,
       });
       return rep.send(instances).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: SCApiPath.ROOT,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: SCInstanceDeleteRequestDto;
+      }>,
+      rep,
+    ) {
+      await instanceService.delete(req.query.id);
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 
