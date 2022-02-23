@@ -1,4 +1,7 @@
-import { worker as workerRep } from '~/data/repositories/repositories';
+import {
+  worker as workerRep,
+  tenant as tenantRep,
+} from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
   EAMWorkerCreateResponseDto,
@@ -21,6 +24,7 @@ import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/
 
 type Constructor = {
   workerRepository: typeof workerRep;
+  tenantRepository: typeof tenantRep;
   encryptService: typeof encryptServ;
   tokenService: typeof tokenServ;
   masterService: typeof masterServ;
@@ -29,6 +33,7 @@ type Constructor = {
 
 class Worker {
   #workerRepository: typeof workerRep;
+  #tenantRepository: typeof tenantRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
   #masterService: typeof masterServ;
@@ -36,12 +41,14 @@ class Worker {
 
   constructor({
     workerRepository,
+    tenantRepository,
     encryptService,
     tokenService,
     masterService,
     tenantService,
   }: Constructor) {
     this.#workerRepository = workerRepository;
+    this.#tenantRepository = tenantRepository;
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
     this.#masterService = masterService;
@@ -78,15 +85,6 @@ class Worker {
     token,
     groupIds,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
-    const workerByName = await this.#workerRepository.getByName(name);
-
-    if (workerByName) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.BAD_REQUEST,
-        message: `Worker with name ${name} exist`,
-      });
-    }
-
     const { userId } = this.#tokenService.decode<TokenPayload>(token);
 
     const master = await this.#masterService.getMasterById(userId);
@@ -94,7 +92,7 @@ class Worker {
     if (!master) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: 'Master not Found',
+        message: ExceptionMessage.MASTER_NOT_FOUND,
       });
     }
 
@@ -103,6 +101,18 @@ class Worker {
       password,
       passwordSalt,
     );
+
+    const workerByName = await this.#workerRepository.getByName(
+      name,
+      master.tenantId,
+    );
+
+    if (workerByName) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.WORKER_NAME_EXISTS,
+      });
+    }
 
     const worker = WorkerEntity.createNew({
       name,
@@ -113,34 +123,45 @@ class Worker {
       groupIds,
     });
 
+    const hasGroups = Boolean(worker.groupIds.length);
+
+    if (!hasGroups) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.GROUP_NOT_SELECTED,
+      });
+    }
     return await this.#workerRepository.create(worker);
   }
 
   public async verifyLoginCredentials(
     verifyWorkerDto: EAMWorkerSignInRequestDto,
   ): Promise<EAMWorkerSignInResponseDto> {
+    const { tenantName, workerName, password } = verifyWorkerDto;
+
+    const tenant = await this.#tenantRepository.getByName(tenantName);
+
+    if (!tenant) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.UNAUTHORIZED,
+        message: ExceptionMessage.INCORRECT_TENANT_NAME,
+      });
+    }
+
     const worker = await this.#workerRepository.getByName(
-      verifyWorkerDto.workerName,
+      workerName,
+      tenant.id,
     );
 
     if (!worker) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.WORKER_NAME,
-      });
-    }
-
-    const tenant = await this.#tenantService.getTenantById(worker.tenantId);
-
-    if (verifyWorkerDto.tenantName !== tenant?.name) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_WORKER_NAME,
       });
     }
 
     const isEqualPassword = await this.#encryptService.compare(
-      verifyWorkerDto.password,
+      password,
       worker.passwordSalt,
       worker.passwordHash,
     );
@@ -148,7 +169,7 @@ class Worker {
     if (!isEqualPassword) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: ExceptionMessage.INVALID_CREDENTIALS,
+        message: ExceptionMessage.INCORRECT_CREDENTIALS,
       });
     }
 

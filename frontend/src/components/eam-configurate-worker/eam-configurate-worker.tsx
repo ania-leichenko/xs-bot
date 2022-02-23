@@ -21,7 +21,7 @@ import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actio
 import { DEFAULT_PAYLOAD } from './common/constants';
 import { getColumns, getRows } from './helpers/helpers';
 
-const EAMWorkerCreate: FC = () => {
+const EAMConfigurateWorker: FC = () => {
   const dispatch = useAppDispatch();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const { tenantId, groups, csvColumns } = useAppSelector(
@@ -145,4 +145,4 @@ const EAMWorkerCreate: FC = () => {
   );
 };
 
-export { EAMWorkerCreate };
+export { EAMConfigurateWorker };
