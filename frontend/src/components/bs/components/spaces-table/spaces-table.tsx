@@ -1,20 +1,19 @@
 import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
-import { BSSpaceDeleteParamsDto } from 'common/types/types';
 import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
 
 type Props = {
   children: JSX.Element;
-  handleSpaceDelete: ({ id }: BSSpaceDeleteParamsDto) => void;
+  onSpaceDelete: (id: string) => void;
 };
 
-const SpacesTable: FC<Props> = ({ children, handleSpaceDelete }) => {
+const SpacesTable: FC<Props> = ({ children, onSpaceDelete }) => {
   const { spaces } = useAppSelector(({ bs }) => ({
     spaces: bs.spaces,
   }));
 
-  const data = useMemo(() => getRows({ spaces, handleSpaceDelete }), [spaces]);
+  const data = useMemo(() => getRows({ spaces, onSpaceDelete }), [spaces]);
 
   const columns = useMemo(() => getColumns(), []);
 

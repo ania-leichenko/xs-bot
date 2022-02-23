@@ -1,12 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  BSSpaceDeleteParamsDto,
   BSSpaceGetRequestParamsDto,
   BSSpaceGetResponseDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { notification } from 'services/services';
 
 const loadSpaces = createAsyncThunk<
   BSSpaceGetResponseDto,
@@ -18,18 +16,17 @@ const loadSpaces = createAsyncThunk<
   return bsApi.loadSpaces(filter);
 });
 
-const deleteSpace = createAsyncThunk<
-  BSSpaceDeleteParamsDto,
-  BSSpaceDeleteParamsDto,
-  AsyncThunkConfig
->(ActionType.DELETE_SPACE, async (payload, { extra }) => {
-  const { bsApi } = extra;
+const deleteSpace = createAsyncThunk<string, string, AsyncThunkConfig>(
+  ActionType.DELETE_SPACE,
+  async (id, { extra }) => {
+    const { bsApi, notification } = extra;
 
-  await bsApi.deleteSpace(payload);
+    await bsApi.deleteSpace(id);
 
-  notification.success('Success!', 'Space has been successfully deleted');
+    notification.success('Success!', 'Space has been successfully deleted');
 
-  return payload;
-});
+    return id;
+  },
+);
 
 export { loadSpaces, deleteSpace };

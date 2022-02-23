@@ -1,9 +1,6 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
-import {
-  BSSpaceGetResponseItemDto,
-  BSSpaceDeleteParamsDto,
-} from 'common/types/types';
-import { DeleteRowCell } from 'components/bs/components/spaces-table/helpers/delete-row-cell/delete-row-cell';
+import { BSSpaceGetResponseItemDto } from 'common/types/types';
+import { DeleteRowCell } from './cells/cells';
 import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
@@ -14,10 +11,10 @@ type Row = {
 
 const getRows = ({
   spaces,
-  handleSpaceDelete,
+  onSpaceDelete,
 }: {
   spaces: BSSpaceGetResponseItemDto[];
-  handleSpaceDelete: (payload: BSSpaceDeleteParamsDto) => void;
+  onSpaceDelete: (id: string) => void;
 }): Row[] => {
   return spaces.map((item) => {
     const { name, createdAt, id } = item;
@@ -27,7 +24,7 @@ const getRows = ({
       [SpacesTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),
       ),
-      [SpacesTableAccessor.ACTIONS]: DeleteRowCell(id, handleSpaceDelete),
+      [SpacesTableAccessor.ACTIONS]: DeleteRowCell(id, onSpaceDelete),
     };
   });
 };

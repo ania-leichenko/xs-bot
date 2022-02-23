@@ -29,9 +29,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteSpace.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
-    state.spaces = state.spaces.filter(
-      (space) => space.id !== action.payload.id,
-    );
+    state.spaces = state.spaces.filter((space) => space.id !== action.payload);
   });
   builder.addCase(deleteSpace.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
