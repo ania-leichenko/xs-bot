@@ -26,7 +26,7 @@ const SignInMasterForm: FC<Props> = ({ onSubmit, onChangeForm }) => {
 
   return (
     <>
-      <h1 className={styles.title}>Sign In</h1>
+      <h1 className={styles.title}>Sign In as Master</h1>
       <div>
         <button className={styles.button} onClick={handleOnChangeForm}>
           Sign In as worker

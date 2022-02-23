@@ -78,15 +78,6 @@ class Worker {
     token,
     groupIds,
   }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
-    const workerByName = await this.#workerRepository.getByName(name);
-
-    if (workerByName) {
-      throw new InvalidCredentialsError({
-        status: HttpCode.BAD_REQUEST,
-        message: `Worker with name ${name} exist`,
-      });
-    }
-
     const { userId } = this.#tokenService.decode<TokenPayload>(token);
 
     const master = await this.#masterService.getMasterById(userId);
@@ -94,7 +85,7 @@ class Worker {
     if (!master) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: 'Master not Found',
+        message: ExceptionMessage.MASTER_NOT_FOUND,
       });
     }
 
@@ -104,14 +95,35 @@ class Worker {
       passwordSalt,
     );
 
+    const workerByName = await this.#workerRepository.getByName(
+      name,
+      master.tenantId,
+    );
+
+    if (workerByName) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.WORKER_NAME_EXISTS,
+      });
+    }
+
     const worker = WorkerEntity.createNew({
       name,
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
       tenantId: master.tenantId,
+      permissions: [],
       groupIds,
     });
 
+    const hasGroups = Boolean(worker.groupIds.length);
+
+    if (!hasGroups) {
+      throw new InvalidCredentialsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.GROUP_NOT_SELECTED,
+      });
+    }
     return await this.#workerRepository.create(worker);
   }
 
@@ -120,6 +132,7 @@ class Worker {
   ): Promise<EAMWorkerSignInResponseDto> {
     const worker = await this.#workerRepository.getByName(
       verifyWorkerDto.workerName,
+      verifyWorkerDto.tenantName,
     );
 
     if (!worker) {
