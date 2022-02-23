@@ -1,1 +1,1 @@
-export { SelectRowCell } from './celect-row-cell/select-row-cell';
+export { SelectRowCell } from './select-row-cell/select-row-cell';
