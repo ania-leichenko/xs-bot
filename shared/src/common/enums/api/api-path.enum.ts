@@ -5,7 +5,6 @@ enum ApiPath {
   EAM = '/eam',
   SC = '/sc',
   BS = '/bs',
-  SPACES = '/spaces',
   SLC = '/slc',
 }
 

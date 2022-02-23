@@ -20,7 +20,6 @@ import { initAuthApi } from './auth/auth.api';
 import { initEamApi } from './eam/eam.api';
 import { initScApi } from './sc/sc.api';
 import { initSLCApi } from './slc/slc.api';
-import { initSpacesApi } from './spaces/spaces.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(authorizationPlugin, {
@@ -72,12 +71,6 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       slcFunction,
     },
     prefix: ApiPath.SLC,
-  });
-  fastify.register(initSpacesApi, {
-    services: {
-      space,
-    },
-    prefix: ApiPath.SPACES,
   });
 };
 
