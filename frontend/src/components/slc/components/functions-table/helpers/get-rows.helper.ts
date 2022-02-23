@@ -5,6 +5,7 @@ import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
   [FunctionsTableAccessor.FUNCTION_NAME]: string;
+  [FunctionsTableAccessor.CREATION_TIME]: string;
   [FunctionsTableAccessor.UPDATION_TIME]: string;
   [FunctionsTableAccessor.ACTIONS]: JSX.Element;
 };
@@ -21,6 +22,9 @@ const getRows = ({
 
     return {
       [FunctionsTableAccessor.FUNCTION_NAME]: name,
+      [FunctionsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+        new Date(updatedAt),
+      ),
       [FunctionsTableAccessor.UPDATION_TIME]: getDistanceToDateNow(
         new Date(updatedAt),
       ),
