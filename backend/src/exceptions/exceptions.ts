@@ -3,3 +3,4 @@ export { InvalidCredentialsError } from './invalid-credentials-error/invalid-cre
 export { InvalidGroupNameError } from './invalid-group-name-error/invalid-group-name-error';
 export { SCError } from './sc-error/sc-error';
 export { SLCError } from './slc-error/slc-error';
+export { BsError } from './bs-error/bs-error';

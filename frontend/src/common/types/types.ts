@@ -57,6 +57,7 @@ export {
   type BSSpaceGetResponseItemDto,
   type BSSpaceGetResponseDto,
   type BSSpaceGetRequestParamsDto,
+  type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
 export {
   type SCInstanceCreateRequestDto,

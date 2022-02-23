@@ -5,4 +5,5 @@ export {
   type BSSpaceGetResponseItemDto,
   type BSSpaceGetResponseDto,
   type BSSpaceGetFilter,
+  type BSSpaceDeleteParamsDto,
 } from 'bws-shared/common/types/types';
