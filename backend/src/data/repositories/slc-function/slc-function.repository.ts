@@ -1,5 +1,12 @@
 import { SLCFunction as SLCFunctionM } from '~/data/models/models';
 import { SLCFunction as SLCFunctionEntity } from '~/services/slc-function/slc-function.entity';
+import {
+  SLCFunctionGetFilter,
+  SLCFunctionGetResponseItemDto,
+} from '~/common/types/types';
+import { TableName } from '~/common/enums/enums';
+import { FunctionTableField } from '~/data/models/slc-function/slc-function-table-field.enum';
+import { AbstractTableField } from '~/data/models/abstract/abstract-table-field.enum';
 
 type Constructor = {
   SLCFunctionModel: typeof SLCFunctionM;
@@ -37,14 +44,45 @@ class SLCFunction {
       updatedAt,
     } = slcFunction;
 
-    return this.#SLCFunctionModel.query().insert({
-      id,
-      name,
-      createdAt,
-      sourceCode,
-      createdBy,
-      awsLambdaId,
-      updatedAt,
+    return SLCFunction.modelToEntity(
+      await this.#SLCFunctionModel.query().insert({
+        id,
+        name,
+        createdAt,
+        sourceCode,
+        createdBy,
+        awsLambdaId,
+        updatedAt,
+      }),
+    );
+  }
+
+  async getAllByTenant(
+    filter: SLCFunctionGetFilter,
+  ): Promise<SLCFunctionGetResponseItemDto[]> {
+    const { from: offset, count: limit, tenantId } = filter;
+
+    const slcFunctions = await this.#SLCFunctionModel
+      .query()
+      .select(
+        `${TableName.FUNCTIONS}.${FunctionTableField.NAME}`,
+        `${TableName.FUNCTIONS}.${FunctionTableField.UPDATED_AT}`,
+      )
+      .join(
+        TableName.WORKERS,
+        `${FunctionTableField.CREATED_BY}`,
+        `${TableName.WORKERS}.${AbstractTableField.ID}`,
+      )
+      .where({ tenantId })
+      .orderBy(`${FunctionTableField.UPDATED_AT}`, 'desc')
+      .offset(offset)
+      .limit(limit);
+
+    return slcFunctions.map((slcFunction) => {
+      return {
+        name: slcFunction.name,
+        updatedAt: slcFunction.updatedAt,
+      };
     });
   }
 
