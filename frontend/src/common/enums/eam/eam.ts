@@ -8,4 +8,4 @@ export {
   PermissionsTableAccessor,
   PermissionsTableHeader,
 } from './table/table';
-export { EAMCreateWorkerCSVColumn } from './EAMCreateWorkerCSVColumn.enum';
+export { EAMCreateWorkerCSVColumn } from './eam-create-worker-csv-column.enum';
