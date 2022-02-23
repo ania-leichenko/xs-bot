@@ -112,6 +112,7 @@ class Worker {
       passwordHash: passwordHash,
       passwordSalt: passwordSalt,
       tenantId: master.tenantId,
+      permissions: [],
       groupIds,
     });
 

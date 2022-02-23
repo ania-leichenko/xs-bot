@@ -34,8 +34,11 @@ export {
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
-  type ScInstanceOperationSystemEntity,
+  type SCInstanceGetByTenantRequestParamsDto,
+  type SCInstanceGetByTenantResponseItemDto,
+  type SCInstanceGetByTenantResponseDto,
 } from './sc-instance/sc-instance';
+export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
@@ -51,5 +54,9 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
+  type SLCFunctionGetRequestParamsDto,
+  type SLCFunctionGetFilter,
+  type SLCFunctionGetResponseItemDto,
+  type SLCFunctionGetResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

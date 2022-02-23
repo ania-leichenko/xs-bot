@@ -1,17 +1,22 @@
 import {
   Worker as WorkerM,
   UsersGroups as UsersGroupsM,
+  GroupsPermissions as GroupsPermissionsM,
+  Permission as PermissionM,
 } from '~/data/models/models';
 import { Worker as WorkerEntity } from '~/services/worker/worker.entity';
 import { getRandomId } from '~/helpers/helpers';
 import {
   EAMWorkerGetAllItemResponseDto,
+  EAMPermissionGetAllItemResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
 } from '~/common/types/types';
 
 type Constructor = {
   WorkerModel: typeof WorkerM;
   UsersGroupsModel: typeof UsersGroupsM;
+  GroupsPermissionsModel: typeof GroupsPermissionsM;
+  PermissionModel: typeof PermissionM;
 };
 
 type UsersGroups = {
@@ -21,10 +26,19 @@ type UsersGroups = {
 class Worker {
   #WorkerModel: typeof WorkerM;
   #UsersGroupsModel: typeof UsersGroupsM;
+  #GroupsPermissionsModel: typeof GroupsPermissionsM;
+  #PermissionModel: typeof PermissionM;
 
-  constructor({ WorkerModel, UsersGroupsModel }: Constructor) {
+  constructor({
+    WorkerModel,
+    UsersGroupsModel,
+    GroupsPermissionsModel,
+    PermissionModel,
+  }: Constructor) {
     this.#WorkerModel = WorkerModel;
     this.#UsersGroupsModel = UsersGroupsModel;
+    this.#GroupsPermissionsModel = GroupsPermissionsModel;
+    this.#PermissionModel = PermissionModel;
   }
 
   public async getAll(
@@ -42,6 +56,40 @@ class Worker {
       .limit(limit);
 
     return workers;
+  }
+
+  public async getWorkerPermissions(workerId: string): Promise<string[]> {
+    const groups = await this.#UsersGroupsModel
+      .query()
+      .select('groupId')
+      .where({ 'userId': workerId });
+
+    if (!groups) {
+      return [];
+    }
+    const groupsIds: string[] = groups.map((item): string => item.groupId);
+
+    const GroupPermissions = await this.#GroupsPermissionsModel
+      .query()
+      .select('permissionId')
+      .whereIn('groupId', groupsIds);
+
+    if (!GroupPermissions) {
+      return [];
+    }
+
+    const permissionIds: Set<string> = GroupPermissions.reduce(
+      (acc, it) => acc.add(it.permissionId),
+      new Set<string>([]),
+    );
+
+    const permissions: EAMPermissionGetAllItemResponseDto[] =
+      await this.#PermissionModel
+        .query()
+        .select('name')
+        .whereIn('id', Array.from(permissionIds));
+
+    return permissions.map((item) => item.name);
   }
 
   public async getByName(
@@ -66,7 +114,9 @@ class Worker {
 
     const groupIds: string[] = groups.map((group) => group.groupId);
 
-    return Worker.modelToEntity(worker, groupIds);
+    const permissions = await this.getWorkerPermissions(worker.id);
+
+    return Worker.modelToEntity(worker, groupIds, permissions);
   }
 
   async getById(id: string): Promise<WorkerEntity | null> {
@@ -86,8 +136,9 @@ class Worker {
       .where({ userId: id });
 
     const groupIds: string[] = groups.map((group) => group.groupId);
+    const permissions = await this.getWorkerPermissions(id);
 
-    return Worker.modelToEntity(worker, groupIds);
+    return Worker.modelToEntity(worker, groupIds, permissions);
   }
 
   public async create(worker: WorkerEntity): Promise<WorkerEntity> {
@@ -114,12 +165,16 @@ class Worker {
         })),
       );
     }
-    return Worker.modelToEntity(newWorker, groupIds);
+
+    const permissions = await this.getWorkerPermissions(id);
+
+    return Worker.modelToEntity(newWorker, groupIds, permissions);
   }
 
   public static modelToEntity(
     model: WorkerM,
     groupIds: string[],
+    permissions: string[],
   ): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
 
@@ -130,6 +185,7 @@ class Worker {
       passwordSalt,
       tenantId,
       groupIds,
+      permissions,
       createdAt: new Date(model.createdAt),
     });
   }

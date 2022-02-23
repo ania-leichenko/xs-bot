@@ -36,7 +36,15 @@ export {
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
+  type SCInstanceCreateFormDto,
+  type SCInstanceGetByTenantRequestParamsDto,
+  type SCInstanceGetByTenantResponseItemDto,
+  type SCInstanceGetByTenantResponseDto,
 } from './sc-instance/sc-instance';
+export {
+  type SCOperationSystemGetAllResponseDto,
+  type SCOperationSystemGetAllItemResponseDto,
+} from './sc-operation-system/sc-operation-system';
 export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,
@@ -53,6 +61,10 @@ export {
 export {
   type SLCFunctionCreateRequestDto,
   type SLCFunctionCreateResponseDto,
+  type SLCFunctionGetRequestParamsDto,
+  type SLCFunctionGetFilter,
+  type SLCFunctionGetResponseItemDto,
+  type SLCFunctionGetResponseDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

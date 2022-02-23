@@ -1,10 +1,9 @@
-import {
-  instance as InstanceRep,
-  operationSystem as OperationSystemRep,
-} from '~/data/repositories/repositories';
+import { instance as InstanceRep } from '~/data/repositories/repositories';
 import {
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
+  SCInstanceGetByTenantRequestParamsDto,
+  SCInstanceGetByTenantResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
@@ -12,6 +11,7 @@ import {
   keyPair as KeyPairServ,
   ec2 as EC2Serv,
   token as tokenServ,
+  operationSystem as OperationSystemServ,
 } from '~/services/services';
 import {
   InstanceDefaultParam,
@@ -19,12 +19,11 @@ import {
   HttpCode,
   ExceptionMessage,
 } from '~/common/enums/enums';
-import { InvalidCredentialsError } from '~/exceptions/exceptions';
-import { ScInstanceOperationSystemEntity } from '~/common/types/types';
+import { SCError } from '~/exceptions/exceptions';
 
 type Constructor = {
   instanceRepository: typeof InstanceRep;
-  operationSystemRepository: typeof OperationSystemRep;
+  operationSystemService: typeof OperationSystemServ;
   keyPairService: typeof KeyPairServ;
   ec2Service: typeof EC2Serv;
   tokenService: typeof tokenServ;
@@ -32,31 +31,47 @@ type Constructor = {
 
 class Instance {
   #instanceRepository: typeof InstanceRep;
-  #operationSystemRepository: typeof OperationSystemRep;
+  #operationSystemService: typeof OperationSystemServ;
   #keyPairService: typeof KeyPairServ;
   #ec2Service: typeof EC2Serv;
   #tokenService: typeof tokenServ;
 
   constructor({
     instanceRepository,
-    operationSystemRepository,
+    operationSystemService,
     keyPairService,
     ec2Service,
     tokenService,
   }: Constructor) {
     this.#instanceRepository = instanceRepository;
-    this.#operationSystemRepository = operationSystemRepository;
+    this.#operationSystemService = operationSystemService;
     this.#keyPairService = keyPairService;
     this.#ec2Service = ec2Service;
     this.#tokenService = tokenService;
   }
 
-  public async getImageId(operationSystemId: string): Promise<string> {
-    const operationSystem = await this.#operationSystemRepository.getById(
-      operationSystemId,
-    );
-    return (operationSystem as ScInstanceOperationSystemEntity)
-      .awsGenerationName;
+  public async getByTenantId({
+    requestParams,
+    token,
+  }: {
+    requestParams: SCInstanceGetByTenantRequestParamsDto;
+    token: string;
+  }): Promise<SCInstanceGetByTenantResponseDto> {
+    const { tenantId }: TokenPayload = await this.#tokenService.decode(token);
+    const instances = await this.#instanceRepository.getByTenantId({
+      filter: requestParams,
+      tenantId,
+    });
+
+    return {
+      items: instances.map(({ name, id, createdAt, hostname }) => ({
+        name,
+        instanceId: id,
+        instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
+        createdAt,
+        publicDNS: hostname,
+      })),
+    };
   }
 
   public async create({
@@ -70,7 +85,7 @@ class Instance {
     const { userId, userRole, tenantId }: TokenPayload =
       await this.#tokenService.decode(token);
     if (userRole !== UserRole.WORKER) {
-      throw new InvalidCredentialsError({
+      throw new SCError({
         status: HttpCode.DENIED,
         message: ExceptionMessage.MASTER_INSTANCE_CREATE,
       });
@@ -80,7 +95,7 @@ class Instance {
     const { hostname, instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairId,
-      imageId: await this.getImageId(operationSystemId),
+      imageId: await this.#operationSystemService.getImageId(operationSystemId),
     });
 
     const instance = InstanceEntity.createNew({

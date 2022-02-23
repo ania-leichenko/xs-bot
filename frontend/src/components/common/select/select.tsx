@@ -1,29 +1,44 @@
 import { FC } from 'react';
-import ReactSelect, { ActionMeta } from 'react-select';
+import ReactSelect from 'react-select';
+import { useFormControl } from 'hooks/hooks';
+import {
+  FormControl,
+  FormControlErrors,
+  FormControlPath,
+  Option,
+} from 'common/types/types';
+import { ErrorMessage } from 'components/common/common';
 import { styles as selectStyles } from './styles';
-import styles from './select.module.scss';
-
-type OptionType = {
-  id?: string;
-  value: string;
-  label: string;
-};
+import styles from './styles.module.scss';
 
 type Props = {
+  name: FormControlPath;
+  control: FormControl;
+  errors: FormControlErrors;
   label: string;
-  options: OptionType[];
-  onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
+  options: Option[];
 };
 
-const Select: FC<Props> = ({ label, options, onChange }) => {
+const Select: FC<Props> = ({ label, options, name, control, errors }) => {
+  const { field } = useFormControl({ name, control });
+
+  const handleSelectChange = (newValue?: Option | null): void => {
+    field.onChange(newValue?.value);
+  };
+
   return (
     <div className={styles.reactSelectContainer}>
       <span>{label}</span>
       <ReactSelect
+        {...field}
         styles={selectStyles}
-        onChange={onChange}
         options={options}
+        value={field.value.label}
+        onChange={handleSelectChange}
       />
+      <span className={styles.error}>
+        <ErrorMessage errors={errors} name={name} />
+      </span>
     </div>
   );
 };

@@ -7,6 +7,8 @@ export {
   GroupsApiPath,
   WorkersApiPath,
   BSApiPath,
+  SCApiPath,
+  SLCApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -23,4 +25,6 @@ export {
   PermissionsTableHeader,
 } from './eam/eam';
 export { SpacesTableHeader, SpacesTableAccessor } from './bs/bs';
+export { InstancesTableHeader, InstancesTableAccessor } from './sc/sc';
+export { FunctionsTableHeader, FunctionsTableAccessor } from './slc/slc';
 export { UserRole } from './roles/roles';
