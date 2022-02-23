@@ -2,6 +2,8 @@ import { instance as InstanceRep } from '~/data/repositories/repositories';
 import {
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
+  SCInstanceGetByTenantRequestParamsDto,
+  SCInstanceGetByTenantResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
@@ -46,6 +48,30 @@ class Instance {
     this.#keyPairService = keyPairService;
     this.#ec2Service = ec2Service;
     this.#tokenService = tokenService;
+  }
+
+  public async getByTenantId({
+    requestParams,
+    token,
+  }: {
+    requestParams: SCInstanceGetByTenantRequestParamsDto;
+    token: string;
+  }): Promise<SCInstanceGetByTenantResponseDto> {
+    const { tenantId }: TokenPayload = await this.#tokenService.decode(token);
+    const instances = await this.#instanceRepository.getByTenantId({
+      filter: requestParams,
+      tenantId,
+    });
+
+    return {
+      items: instances.map(({ name, id, createdAt, hostname }) => ({
+        name,
+        instanceId: id,
+        instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
+        createdAt,
+        publicDNS: hostname,
+      })),
+    };
   }
 
   public async create({

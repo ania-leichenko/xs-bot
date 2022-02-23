@@ -1,5 +1,6 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
+import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -12,7 +13,26 @@ class Instance {
     this.#InstanceModel = InstanceModel;
   }
 
-  async create(instance: InstanceEntity): Promise<InstanceM> {
+  public async getByTenantId({
+    filter,
+    tenantId,
+  }: {
+    filter: SCInstanceGetByTenantRequestParamsDto;
+    tenantId: string;
+  }): Promise<InstanceEntity[]> {
+    const { from: offset, count: limit } = filter;
+    const instances = await this.#InstanceModel
+      .query()
+      .select()
+      .where({ tenantId })
+      .orderBy('createdAt', 'desc')
+      .offset(offset)
+      .limit(limit);
+
+    return instances.map(Instance.modelToEntity);
+  }
+
+  public async create(instance: InstanceEntity): Promise<InstanceM> {
     const {
       id,
       name,
