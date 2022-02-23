@@ -85,7 +85,7 @@ class Worker {
     if (!master) {
       throw new InvalidCredentialsError({
         status: HttpCode.UNAUTHORIZED,
-        message: 'Master not Found',
+        message: ExceptionMessage.MASTER_NOT_FOUND,
       });
     }
 
@@ -103,7 +103,7 @@ class Worker {
     if (workerByName) {
       throw new InvalidCredentialsError({
         status: HttpCode.BAD_REQUEST,
-        message: `Worker with name ${name} exist`,
+        message: ExceptionMessage.WORKER_NAME_EXISTS,
       });
     }
 
@@ -114,10 +114,13 @@ class Worker {
       tenantId: master.tenantId,
       groupIds,
     });
-    if (worker.groupIds.length < 1) {
+
+    const hasGroups = Boolean(worker.groupIds.length);
+
+    if (!hasGroups) {
       throw new InvalidCredentialsError({
         status: HttpCode.BAD_REQUEST,
-        message: 'Please select any group or create a new one first',
+        message: ExceptionMessage.GROUP_NOT_SELECTED,
       });
     }
     return await this.#workerRepository.create(worker);
