@@ -49,14 +49,14 @@ class Worker {
   }
 
   public async login(id: string): Promise<EAMWorkerSignInResponseDto> {
-    const { name, tenantId } = (await this.#workerRepository.getById(
-      id,
-    )) as WorkerEntity;
+    const { name, tenantId, permissions } =
+      (await this.#workerRepository.getById(id)) as WorkerEntity;
     return {
       user: {
         id,
         name,
         tenantId,
+        permissions,
       },
       token: this.#tokenService.create({
         userId: id,
@@ -97,7 +97,7 @@ class Worker {
 
     const workerByName = await this.#workerRepository.getByName(
       name,
-      master.tenantId,
+      // master.tenantId,
     );
 
     if (workerByName) {
@@ -132,7 +132,6 @@ class Worker {
   ): Promise<EAMWorkerSignInResponseDto> {
     const worker = await this.#workerRepository.getByName(
       verifyWorkerDto.workerName,
-      verifyWorkerDto.tenantName,
     );
 
     if (!worker) {
