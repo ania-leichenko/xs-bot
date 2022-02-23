@@ -86,6 +86,10 @@ class SLCFunction {
     });
   }
 
+  async delete(id: string): Promise<void> {
+    await this.#SLCFunctionModel.query().deleteById(id);
+  }
+
   public static modelToEntity(model: SLCFunctionM): SLCFunctionEntity {
     const {
       id,
