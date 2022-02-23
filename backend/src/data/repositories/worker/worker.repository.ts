@@ -92,15 +92,11 @@ class Worker {
     return permissions.map((item) => item.name);
   }
 
-  public async getByName(
-    name: string,
-    tenantId: string,
-  ): Promise<WorkerEntity | null> {
+  public async getByName(name: string): Promise<WorkerEntity | null> {
     const worker = await this.#WorkerModel
       .query()
       .select()
       .where({ name })
-      .where({ tenantId })
       .first();
 
     if (!worker) {
