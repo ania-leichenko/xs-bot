@@ -70,7 +70,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.DELETE,
-    url: SLCApiPath.SLC_FUNCTIONS + SLCFunctionApiPath.$ID,
+    url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
     async handler(
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
       rep,
