@@ -1,12 +1,8 @@
+import { Column } from 'react-table';
 import {
   FunctionsTableHeader,
   FunctionsTableAccessor,
 } from 'common/enums/enums';
-
-type Column = {
-  Header: string;
-  accessor: string;
-};
 
 const getColumns = (): Column[] => {
   return [
