@@ -11,7 +11,7 @@ import {
   storage,
   workerApi,
   notification,
-  saveCsv,
+  saver,
 } from 'services/services';
 import { handleError } from './middlewares/middlewares';
 
@@ -26,7 +26,7 @@ const extraArgument = {
   storage,
   workerApi,
   notification,
-  saveCsv,
+  saver,
 };
 
 const store = configureStore({

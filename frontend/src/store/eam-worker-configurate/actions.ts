@@ -1,42 +1,41 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   EAMWorkerCreateRequestDto,
-  EAMWorkerCreateResponseDto,
   AsyncThunkConfig,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
-import { AppRoute } from 'common/enums/enums';
+import { CSV } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
-  EAMWorkerCreateResponseDto,
+  File,
   EAMWorkerCreateRequestDto,
   AsyncThunkConfig
 >(
   ActionType.CREATE_WORKER,
   async (payload: EAMWorkerCreateRequestDto, { extra }) => {
-    const { workerApi, navigation, notification, saveCsv } = extra;
+    const { workerApi, notification, saver } = extra;
 
     const password = getRandomId();
 
-    const worker = await workerApi.createWorker({
+    await workerApi.createWorker({
       ...payload,
       password,
     });
 
-    const content = [
-      ['name:', payload.name],
-      ['password:', password],
-    ];
-    saveCsv.save(content, 'Credentials.csv');
-
-    navigation.push(AppRoute.EAM);
+    const csvFile = saver.saveCSV(
+      [
+        [CSV.NAME, payload.name],
+        [CSV.PASSWORD, password],
+      ],
+      `${payload.name}-worker-credentials`,
+    );
 
     notification.success('Success!', 'User has been successfully created');
 
-    return worker;
+    return csvFile;
   },
 );
 

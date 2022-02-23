@@ -1,33 +1,35 @@
 import { FC } from 'react';
 import {
-  InputType,
-  ButtonType,
   AppRoute,
   ButtonStyle,
+  ButtonType,
+  InputType,
 } from 'common/enums/enums';
 import {
-  useAppSelector,
-  useState,
-  useAppForm,
   useAppDispatch,
+  useAppForm,
+  useAppSelector,
   useEffect,
+  useState,
 } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
-import { Input, Button, Table } from 'components/common/common';
+import { Button, Input, Table } from 'components/common/common';
 import { EAMWorkerCreateRequestDto } from 'common/types/types';
 import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
-import { getRows, getColumns } from './helpers/helpers';
+import { getColumns, getRows } from './helpers/helpers';
+import { saveAs } from 'file-saver';
 
 const EAMWorkerCreate: FC = () => {
   const dispatch = useAppDispatch();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const { tenantId, groups } = useAppSelector(
+  const { tenantId, groups, csvFile } = useAppSelector(
     ({ app, EAMWorkerConfigurate }) => ({
       tenantId: app.tenant?.id,
       groups: EAMWorkerConfigurate.groups,
+      csvFile: EAMWorkerConfigurate.csvFile,
     }),
   );
 
@@ -68,6 +70,12 @@ const EAMWorkerCreate: FC = () => {
         groupIds: selectedGroups,
       }),
     );
+  };
+
+  const handleSave = (): void => {
+    if (csvFile) {
+      saveAs(csvFile);
+    }
   };
 
   const columns = getColumns(
@@ -111,6 +119,15 @@ const EAMWorkerCreate: FC = () => {
               />
             </li>
           </ul>
+          <div className={!csvFile ? 'visually-hidden' : ''}>
+            <button
+              className={styles.saveBtn}
+              type={ButtonType.BUTTON}
+              onClick={handleSave}
+            >
+              Save csv
+            </button>
+          </div>
           <div className={styles.buttons}>
             <div className={styles.button}>
               <Button
