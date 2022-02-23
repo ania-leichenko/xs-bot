@@ -41,7 +41,7 @@ class BSApi {
 
   public deleteSpace(id: string): Promise<boolean> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACES, '/', id),
+      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACE, id),
       {
         method: HttpMethod.DELETE,
       },
