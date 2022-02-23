@@ -1,4 +1,5 @@
 type SLCFunctionGetResponseItemDto = {
+  id: string;
   name: string;
   updatedAt: string;
 };

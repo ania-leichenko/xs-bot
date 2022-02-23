@@ -65,6 +65,7 @@ class SLCFunction {
     const slcFunctions = await this.#SLCFunctionModel
       .query()
       .select(
+        `${TableName.FUNCTIONS}.${AbstractTableField.ID}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.NAME}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.UPDATED_AT}`,
       )
@@ -80,6 +81,7 @@ class SLCFunction {
 
     return slcFunctions.map((slcFunction) => {
       return {
+        id: slcFunction.id,
         name: slcFunction.name,
         updatedAt: slcFunction.updatedAt,
       };
