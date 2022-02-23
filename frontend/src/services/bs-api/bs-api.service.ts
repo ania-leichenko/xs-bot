@@ -3,6 +3,7 @@ import {
   BSApiPath,
   ContentType,
   HttpMethod,
+  SpacesApiPath,
 } from 'common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
@@ -41,7 +42,13 @@ class BSApi {
 
   public deleteSpace(id: string): Promise<boolean> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.BS, BSApiPath.SPACE, id),
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        id,
+      ),
       {
         method: HttpMethod.DELETE,
       },
