@@ -9,6 +9,7 @@ export {
   SCApiPath,
   BSApiPath,
   SLCApiPath,
+  SpacesApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
