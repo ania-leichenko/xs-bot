@@ -11,6 +11,7 @@ const ExceptionMessage = {
     'Account with that name does not exist. Try again or create a new account.',
   MASTER_SPACE_CREATE: 'Master is not able to crete space.',
   MASTER_FUNCTION_CREATE: 'Master is not able to crete function.',
+  MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
   FUNCTION_NOT_CREATED: 'Something went wrong and function don`t created.',

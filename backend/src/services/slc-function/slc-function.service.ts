@@ -115,6 +115,29 @@ class SLCFunction {
 
     return { items: slcFunctions };
   }
+
+  public async delete({
+    id,
+    token,
+  }: {
+    id: string;
+    token: string;
+  }): Promise<void> {
+    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
+
+    if (userRole !== UserRole.WORKER) {
+      throw new SLCError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+      });
+    }
+
+    const { name } = await this.#slcFunctionRepository.getById(id);
+
+    await this.#lambdaService.deleteFunction(name);
+
+    await this.#slcFunctionRepository.delete(id);
+  }
 }
 
 export { SLCFunction };
