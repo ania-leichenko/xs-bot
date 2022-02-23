@@ -27,7 +27,7 @@ class Lambda {
     this.#role = role;
   }
 
-  public async creteFunction({
+  public async createFunction({
     name,
     sourceCode,
   }: {

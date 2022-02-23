@@ -69,7 +69,7 @@ class SLCFunction {
 
     const sourceCode = LambdaDefaultParam.SOURCE_CODE;
 
-    const { FunctionArn } = await this.#lambdaService.creteFunction({
+    const { FunctionArn } = await this.#lambdaService.createFunction({
       name,
       sourceCode,
     });
