@@ -37,6 +37,9 @@ export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
   type SCInstanceCreateFormDto,
+  type SCInstanceGetByTenantRequestParamsDto,
+  type SCInstanceGetByTenantResponseItemDto,
+  type SCInstanceGetByTenantResponseDto,
 } from './sc-instance/sc-instance';
 export {
   type SCOperationSystemGetAllResponseDto,

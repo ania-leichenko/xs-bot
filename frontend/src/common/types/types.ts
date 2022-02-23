@@ -62,6 +62,9 @@ export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
   type SCInstanceCreateFormDto,
+  type SCInstanceGetByTenantResponseItemDto,
+  type SCInstanceGetByTenantResponseDto,
+  type SCInstanceGetByTenantRequestParamsDto,
 } from './sc-instance/sc-instance';
 export {
   type SLCFunctionCreateRequestDto,
