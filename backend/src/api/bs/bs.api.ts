@@ -72,7 +72,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.DELETE,
-    url: BSApiPath.SPACES + SpacesApiPath.$ID,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID}`,
     async handler(
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
       rep,
