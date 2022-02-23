@@ -67,6 +67,7 @@ class SLCFunction {
       .select(
         `${TableName.FUNCTIONS}.${AbstractTableField.ID}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.NAME}`,
+        `${TableName.FUNCTIONS}.${AbstractTableField.CREATED_AT}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.UPDATED_AT}`,
       )
       .join(
@@ -83,6 +84,7 @@ class SLCFunction {
       return {
         id: slcFunction.id,
         name: slcFunction.name,
+        createdAt: slcFunction.createdAt,
         updatedAt: slcFunction.updatedAt,
       };
     });
