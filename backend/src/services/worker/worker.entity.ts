@@ -7,7 +7,7 @@ class Worker {
   public passwordSalt: string;
   public tenantId: string;
   public groupIds: string[];
-  public permissions: string[] | null;
+  public permissions: string[];
   public createdAt: Date;
 
   private constructor({
@@ -26,7 +26,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    permissions: string[] | null;
+    permissions: string[];
     createdAt: Date;
   }) {
     this.id = id;
@@ -55,7 +55,7 @@ class Worker {
     passwordSalt: string;
     tenantId: string;
     groupIds: string[];
-    permissions: string[] | null;
+    permissions: string[];
     createdAt: Date;
   }): Worker {
     return new Worker({
@@ -81,7 +81,7 @@ class Worker {
     passwordHash: string;
     passwordSalt: string;
     groupIds: string[];
-    permissions: string[] | null;
+    permissions: string[];
     tenantId: string;
   }): Worker {
     return new Worker({

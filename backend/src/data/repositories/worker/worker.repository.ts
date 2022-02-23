@@ -58,16 +58,14 @@ class Worker {
     return workers;
   }
 
-  public async getWorkerPermissions(
-    workerId: string,
-  ): Promise<string[] | null> {
+  public async getWorkerPermissions(workerId: string): Promise<string[]> {
     const groups = await this.#UsersGroupsModel
       .query()
       .select('groupId')
       .where({ 'userId': workerId });
 
     if (!groups) {
-      return null;
+      return [];
     }
     const groupsIds: string[] = groups.map((item): string => item.groupId);
 
@@ -77,7 +75,7 @@ class Worker {
       .whereIn('groupId', groupsIds);
 
     if (!GroupPermissions) {
-      return null;
+      return [];
     }
 
     const permissionIds: Set<string> = GroupPermissions.reduce(
@@ -172,7 +170,7 @@ class Worker {
   public static modelToEntity(
     model: WorkerM,
     groupIds: string[],
-    permissions: string[] | null,
+    permissions: string[],
   ): WorkerEntity {
     const { id, name, passwordHash, passwordSalt, tenantId } = model;
 
