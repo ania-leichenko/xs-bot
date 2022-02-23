@@ -36,6 +36,20 @@ class Tenant {
     });
   }
 
+  async getByName(name: string): Promise<TenantEntity | null> {
+    const tenant = await this.#TenantModel
+      .query()
+      .select()
+      .where({ name })
+      .first();
+
+    if (!tenant) {
+      return null;
+    }
+
+    return Tenant.modelToEntity(tenant);
+  }
+
   public static modelToEntity(model: TenantM): TenantEntity {
     const { id, name } = model;
 
