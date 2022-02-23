@@ -1,7 +1,7 @@
 export {
   EAMWorkerValidationMessage,
   EAMWorkerValidationRule,
-} from './worker/worker';
+} from './eam-worker/eam-worker';
 export {
   EAMMasterValidationMessage,
   EAMMasterValidationRule,

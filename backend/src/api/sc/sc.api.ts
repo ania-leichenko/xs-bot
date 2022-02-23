@@ -4,7 +4,10 @@ import {
   operationSystem as OperationSystemServ,
 } from '~/services/services';
 import { HttpCode, HttpMethod, SCApiPath } from '~/common/enums/enums';
-import { SCInstanceCreateRequestDto } from '~/common/types/types';
+import {
+  SCInstanceCreateRequestDto,
+  SCInstanceGetByTenantRequestParamsDto,
+} from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { scInstanceCreate as scInstanceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 
@@ -25,6 +28,24 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req, rep) {
       const operationSystems = await operationSystemService.getAll();
       return rep.send(operationSystems).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: SCApiPath.ROOT,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: SCInstanceGetByTenantRequestParamsDto;
+      }>,
+      rep,
+    ) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const instances = await instanceService.getByTenantId({
+        requestParams: req.query,
+        token,
+      });
+      return rep.send(instances).status(HttpCode.OK);
     },
   });
 
