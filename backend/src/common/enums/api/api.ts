@@ -9,5 +9,6 @@ export {
   SCApiPath,
   BSApiPath,
   SLCApiPath,
+  SpacesApiPath,
 } from 'bws-shared/common/enums/enums';
 export { ControllerHook } from './controller-hook.enum';
