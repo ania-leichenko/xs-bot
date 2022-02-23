@@ -16,4 +16,17 @@ const loadSpaces = createAsyncThunk<
   return bsApi.loadSpaces(filter);
 });
 
-export { loadSpaces };
+const deleteSpace = createAsyncThunk<string, string, AsyncThunkConfig>(
+  ActionType.DELETE_SPACE,
+  async (id, { extra }) => {
+    const { bsApi, notification } = extra;
+
+    await bsApi.deleteSpace(id);
+
+    notification.success('Success!', 'Space has been successfully deleted');
+
+    return id;
+  },
+);
+
+export { loadSpaces, deleteSpace };
