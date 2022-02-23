@@ -68,15 +68,11 @@
   max-width: 50%;
 }
 
-.buttonContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .buttons {
+  position: relative;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
 }
 
@@ -85,6 +81,8 @@
 }
 
 .saveBtn {
+  position: absolute;
+  left: 0;
   color: var(--color-orange);
   font-weight: 500;
   font-size: 14px;

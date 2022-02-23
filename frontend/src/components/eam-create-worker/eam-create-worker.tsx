@@ -118,29 +118,25 @@ const EAMWorkerCreate: FC = () => {
               />
             </li>
           </ul>
-          <div className={styles.buttonContainer}>
-            <div>
-              {hasCsvColumns && (
-                <button
-                  className={styles.saveBtn}
-                  type={ButtonType.BUTTON}
-                  onClick={handleSave}
-                >
-                  Save csv
-                </button>
-              )}
+          <div className={styles.buttons}>
+            {hasCsvColumns && (
+              <button
+                className={styles.saveBtn}
+                type={ButtonType.BUTTON}
+                onClick={handleSave}
+              >
+                Save csv
+              </button>
+            )}
+            <div className={styles.button}>
+              <Button
+                btnStyle={ButtonStyle.OUTLINED}
+                label="Cancel"
+                to={AppRoute.EAM}
+              />
             </div>
-            <div className={styles.buttons}>
-              <div className={styles.button}>
-                <Button
-                  btnStyle={ButtonStyle.OUTLINED}
-                  label="Cancel"
-                  to={AppRoute.EAM}
-                />
-              </div>
-              <div className={styles.button}>
-                <Button type={ButtonType.SUBMIT} label="Create" />
-              </div>
+            <div className={styles.button}>
+              <Button type={ButtonType.SUBMIT} label="Create" />
             </div>
           </div>
         </form>
