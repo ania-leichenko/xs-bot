@@ -124,7 +124,9 @@ class Instance {
     const { awsInstanceId, keyPairId } =
       (await this.#instanceRepository.getById(id)) as InstanceEntity;
     await this.#ec2Service.deleteInstance(awsInstanceId);
+    await this.#instanceRepository.delete(id);
     await this.#ec2Service.deleteKeyPair(keyPairId);
+    await this.#keyPairService.delete(keyPairId);
   }
 }
 

@@ -40,10 +40,13 @@ class SCApi {
   public async loadInstances(
     params: SCInstanceGetByTenantRequestParamsDto,
   ): Promise<SCInstanceGetByTenantResponseDto> {
-    return this.#http.load(joinItems(this.#apiPrefix, ApiPath.SC), {
-      method: HttpMethod.GET,
-      params,
-    });
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.SC, SCApiPath.ROOT),
+      {
+        method: HttpMethod.GET,
+        params,
+      },
+    );
   }
 
   public async createInstance(
