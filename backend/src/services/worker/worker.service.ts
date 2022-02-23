@@ -102,7 +102,10 @@ class Worker {
       passwordSalt,
     );
 
-    const workerByName = await this.#workerRepository.getByName(name);
+    const workerByName = await this.#workerRepository.getByName(
+      name,
+      master.tenantId,
+    );
 
     if (workerByName) {
       throw new InvalidCredentialsError({
