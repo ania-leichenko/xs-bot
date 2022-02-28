@@ -48,10 +48,8 @@ const PrivateRoute: FC<Props> = ({
     }
   }
 
-  if (requiredPermission) {
-    if (!user?.permissions.includes(requiredPermission)) {
-      return <Navigate to={AppRoute.ROOT} />;
-    }
+  if (requiredPermission && !user?.permissions.includes(requiredPermission)) {
+    return <Navigate to={AppRoute.ROOT} />;
   }
 
   return <>{component}</>;
