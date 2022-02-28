@@ -1,6 +1,6 @@
 enum GroupsTableHeader {
   GROUP_NAME = 'Group name',
-  USERS = 'Users',
+  USERS = 'Workers',
   PERMISSIONS = 'Permissions',
   CREATION_TIME = 'Created at',
   ACTIONS = 'Actions',
