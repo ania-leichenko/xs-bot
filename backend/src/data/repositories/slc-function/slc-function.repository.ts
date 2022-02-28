@@ -65,7 +65,9 @@ class SLCFunction {
     const slcFunctions = await this.#SLCFunctionModel
       .query()
       .select(
+        `${TableName.FUNCTIONS}.${AbstractTableField.ID}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.NAME}`,
+        `${TableName.FUNCTIONS}.${AbstractTableField.CREATED_AT}`,
         `${TableName.FUNCTIONS}.${FunctionTableField.UPDATED_AT}`,
       )
       .join(
@@ -80,10 +82,25 @@ class SLCFunction {
 
     return slcFunctions.map((slcFunction) => {
       return {
+        id: slcFunction.id,
         name: slcFunction.name,
+        createdAt: slcFunction.createdAt,
         updatedAt: slcFunction.updatedAt,
       };
     });
+  }
+
+  async getById(id: string): Promise<SLCFunctionEntity> {
+    const slcFunction = await this.#SLCFunctionModel
+      .query()
+      .findById(id)
+      .first();
+
+    return SLCFunction.modelToEntity(slcFunction as SLCFunctionM);
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.#SLCFunctionModel.query().deleteById(id);
   }
 
   public static modelToEntity(model: SLCFunctionM): SLCFunctionEntity {

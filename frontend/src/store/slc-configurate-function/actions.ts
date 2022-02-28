@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import { AppRoute } from 'common/enums/enums';
 import {
   AsyncThunkConfig,
@@ -20,7 +21,10 @@ const createFunction = createAsyncThunk<
 
     navigation.push(AppRoute.SLC);
 
-    notification.success('Success!', 'Function has been successfully created');
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.SLC_FUNCTION_CREATE,
+    );
 
     return slcFunction;
   },

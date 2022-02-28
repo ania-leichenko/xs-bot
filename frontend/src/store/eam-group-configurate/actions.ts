@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   AsyncThunkConfig,
   EAMGroupConfigurateRequestDto,
@@ -31,7 +32,10 @@ const create = createAsyncThunk<
   const group = await eamApi.createGroup(request);
 
   navigation.push(AppRoute.EAM);
-  notification.success('Success!', 'Group has been successfully created');
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.EAM_GROUP_CREATE,
+  );
 
   return group;
 });

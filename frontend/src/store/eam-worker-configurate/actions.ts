@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   EAMWorkerCreateRequestDto,
   AsyncThunkConfig,
@@ -30,7 +31,10 @@ const workerCreate = createAsyncThunk<
       [EAMCreateWorkerCSVColumn.PASSWORD, password],
     ];
 
-    notification.success('Success!', 'User has been successfully created');
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.EAM_WORKER_CREATE,
+    );
 
     return csvColumns;
   },

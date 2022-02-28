@@ -1,6 +1,7 @@
 import {
   ApiPath,
   SLCApiPath,
+  SLCFunctionApiPath,
   ContentType,
   HttpMethod,
 } from 'common/enums/enums';
@@ -48,6 +49,21 @@ class SLCApi {
       {
         method: HttpMethod.GET,
         params,
+      },
+    );
+  }
+
+  public deleteFunction(id: string): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.SLC,
+        SLCApiPath.SLC_FUNCTIONS,
+        SLCFunctionApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.DELETE,
       },
     );
   }

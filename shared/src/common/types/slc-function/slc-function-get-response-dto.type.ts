@@ -1,4 +1,4 @@
-import { SLCFunctionGetResponseItemDto } from './slc-function-get-responce-item-dto.type';
+import { SLCFunctionGetResponseItemDto } from './slc-function-get-response-item-dto.type';
 
 type SLCFunctionGetResponseDto = {
   items: SLCFunctionGetResponseItemDto[];
