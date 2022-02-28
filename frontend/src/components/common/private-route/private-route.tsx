@@ -1,16 +1,18 @@
 import { FC, ReactNode } from 'react';
 import { AppRoute } from 'common/enums/enums';
-import { useLocation, useAppSelector } from 'hooks/hooks';
+import { useAppSelector } from 'hooks/hooks';
 import { Navigate } from 'components/common/common';
 
 type Props = {
   redirectTo: AppRoute;
   component: ReactNode;
+  permissions: string[];
 };
 
 const PrivateRoute: FC<Props> = ({
   redirectTo = AppRoute.SIGN_IN,
   component,
+  permissions,
 }) => {
   const { user } = useAppSelector(({ auth }) => ({
     user: auth.user,
@@ -22,33 +24,14 @@ const PrivateRoute: FC<Props> = ({
     return <Navigate to={redirectTo} />;
   }
 
-  const { pathname } = useLocation();
+  const requiredPermission = permissions.filter((permission) => {
+    return user?.permissions.some(
+      (userPermission) => userPermission === permission,
+    );
+  });
+  const hasRequiredPermission = Boolean(requiredPermission.length);
 
-  let requiredPermission: string;
-
-  switch (pathname) {
-    case AppRoute.EAM: {
-      requiredPermission = 'manage-eam';
-      break;
-    }
-    case AppRoute.BS: {
-      requiredPermission = 'manage-bs';
-      break;
-    }
-    case AppRoute.SC: {
-      requiredPermission = 'manage-sc';
-      break;
-    }
-    case AppRoute.SLC: {
-      requiredPermission = 'manage-slc';
-      break;
-    }
-    default: {
-      requiredPermission = '';
-    }
-  }
-
-  if (requiredPermission && !user?.permissions.includes(requiredPermission)) {
+  if (permissions.length && !hasRequiredPermission) {
     return <Navigate to={AppRoute.ROOT} />;
   }
 
