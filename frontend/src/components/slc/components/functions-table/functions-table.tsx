@@ -3,12 +3,19 @@ import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
 
-const FunctionsTable: FC = ({ children }) => {
+type Props = {
+  onFunctionDelete: (id: string) => void;
+};
+
+const FunctionsTable: FC<Props> = ({ children, onFunctionDelete }) => {
   const { functions } = useAppSelector(({ slc }) => ({
     functions: slc.functions,
   }));
 
-  const data = useMemo(() => getRows(functions), [functions]);
+  const data = useMemo(
+    () => getRows({ slcFunctions: functions, onFunctionDelete }),
+    [functions],
+  );
 
   const columns = useMemo(() => getColumns(), []);
 
