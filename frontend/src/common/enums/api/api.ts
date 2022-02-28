@@ -10,4 +10,5 @@ export {
   SCApiPath,
   SLCApiPath,
   SpacesApiPath,
+  InstancesApiPath,
 } from 'bws-shared/common/enums/enums';

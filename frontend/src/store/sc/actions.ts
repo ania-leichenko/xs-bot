@@ -15,4 +15,17 @@ const loadInstances = createAsyncThunk<
   return scApi.loadInstances(params);
 });
 
-export { loadInstances };
+const deleteInstance = createAsyncThunk<string, string, AsyncThunkConfig>(
+  ActionType.DELETE_INSTANCE,
+  async (id, { extra }) => {
+    const { scApi, notification } = extra;
+
+    await scApi.deleteInstance(id);
+
+    notification.success('Success!', 'Instance has been successfully deleted');
+
+    return id;
+  },
+);
+
+export { loadInstances, deleteInstance };

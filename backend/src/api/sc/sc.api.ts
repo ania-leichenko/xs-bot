@@ -3,7 +3,12 @@ import {
   instance as InstanceServ,
   operationSystem as OperationSystemServ,
 } from '~/services/services';
-import { HttpCode, HttpMethod, SCApiPath } from '~/common/enums/enums';
+import {
+  HttpCode,
+  HttpMethod,
+  SCApiPath,
+  InstancesApiPath,
+} from '~/common/enums/enums';
 import {
   SCInstanceCreateRequestDto,
   SCInstanceGetByTenantRequestParamsDto,
@@ -52,14 +57,14 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.DELETE,
-    url: SCApiPath.ROOT,
+    url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
     async handler(
       req: FastifyRequest<{
-        Querystring: SCInstanceDeleteRequestDto;
+        Params: SCInstanceDeleteRequestDto;
       }>,
       rep,
     ) {
-      await instanceService.delete(req.query.id);
+      await instanceService.delete(req.params.id);
       return rep.send(true).status(HttpCode.OK);
     },
   });
