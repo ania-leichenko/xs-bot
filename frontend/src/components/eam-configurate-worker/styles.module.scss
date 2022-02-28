@@ -68,8 +68,7 @@
   max-width: 50%;
 }
 
-.buttons {
-  position: relative;
+.buttonContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -81,8 +80,7 @@
 }
 
 .saveBtn {
-  position: absolute;
-  left: 0;
+  margin-right: 32%;
   color: var(--color-orange);
   font-weight: 500;
   font-size: 14px;
