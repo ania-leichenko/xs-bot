@@ -12,8 +12,8 @@ const getColumns = (): Column[] => {
       accessor: GroupsTableAccessor.GROUP_NAME,
     },
     {
-      Header: GroupsTableHeader.USERS,
-      accessor: GroupsTableAccessor.USERS,
+      Header: GroupsTableHeader.WORKERS,
+      accessor: GroupsTableAccessor.WORKERS,
     },
     {
       Header: GroupsTableHeader.PERMISSIONS,
