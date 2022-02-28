@@ -1,7 +1,7 @@
 import { SLCFunctionGetResponseItemDto } from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadFunctions } from './actions';
+import { loadFunctions, deleteFunction } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -22,6 +22,18 @@ const reducer = createReducer(initialState, (builder) => {
     state.functions = action.payload.items;
   });
   builder.addCase(loadFunctions.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(deleteFunction.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(deleteFunction.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.functions = state.functions.filter(
+      (slcFunction) => slcFunction.id !== action.payload,
+    );
+  });
+  builder.addCase(deleteFunction.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
 });

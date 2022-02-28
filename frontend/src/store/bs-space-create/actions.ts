@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import { AppRoute } from 'common/enums/enums';
 import {
   AsyncThunkConfig,
@@ -20,7 +21,10 @@ const createSpace = createAsyncThunk<
 
     navigation.push(AppRoute.BS);
 
-    notification.success('Success!', 'Space has been successfully created');
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.BS_SPACE_CREATE,
+    );
 
     return space;
   },
