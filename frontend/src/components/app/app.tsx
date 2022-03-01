@@ -12,7 +12,7 @@ import {
   AppRoute,
   DataStatus,
   StorageKey,
-  RoutPermission,
+  Permission,
 } from 'common/enums/enums';
 import { Auth } from 'components/auth/auth';
 import { Dashboard } from 'components/dashboard/dashboard';
@@ -72,7 +72,7 @@ const App: FC = () => {
           element={
             <AuthorizedRoute
               component={<EAM />}
-              permissions={[RoutPermission.EAM]}
+              permissions={[Permission.MANAGE_EAM]}
             />
           }
         />
@@ -85,7 +85,7 @@ const App: FC = () => {
           element={
             <AuthorizedRoute
               component={<BS />}
-              permissions={[RoutPermission.BS]}
+              permissions={[Permission.MANAGE_BS]}
             />
           }
         />
@@ -98,7 +98,7 @@ const App: FC = () => {
           element={
             <AuthorizedRoute
               component={<SC />}
-              permissions={[RoutPermission.SC]}
+              permissions={[Permission.MANAGE_SC]}
             />
           }
         />
@@ -111,7 +111,7 @@ const App: FC = () => {
           element={
             <AuthorizedRoute
               component={<SLC />}
-              permissions={[RoutPermission.SLC]}
+              permissions={[Permission.MANAGE_SLC]}
             />
           }
         />
