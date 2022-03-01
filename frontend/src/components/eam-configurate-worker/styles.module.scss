@@ -95,3 +95,17 @@
   border: none;
   cursor: pointer;
 }
+
+.saveBtnWrapper {
+  display: flex;
+}
+
+.saveBtnWrapper::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/file.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 20px;
+}

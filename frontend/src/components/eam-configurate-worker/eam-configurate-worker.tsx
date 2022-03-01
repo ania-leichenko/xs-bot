@@ -10,7 +10,7 @@ import {
   useAppForm,
   useAppSelector,
   useEffect,
-  useState,
+  useSelectedItems,
 } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
 import { Button, Input, Table } from 'components/common/common';
@@ -23,7 +23,7 @@ import { getColumns, getRows } from './helpers/helpers';
 
 const EAMConfigurateWorker: FC = () => {
   const dispatch = useAppDispatch();
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  const selectedGroups = useSelectedItems<string>([]);
   const { tenantId, groups, csvColumns } = useAppSelector(
     ({ app, EAMWorkerConfigurate }) => ({
       tenantId: app.tenant?.id,
@@ -44,19 +44,7 @@ const EAMConfigurateWorker: FC = () => {
     }
   }, [dispatch, tenantId]);
 
-  const handleAddGroupId = (id: string): void => {
-    setSelectedGroups((prevState) => prevState.concat(id));
-  };
-
-  const handleRemoveGroupId = (id: string): void => {
-    setSelectedGroups((prevState) => prevState.filter((it) => it !== id));
-  };
-
-  const handleIsCheckedId = (id: string): boolean => {
-    return selectedGroups.some((it) => it === id);
-  };
-
-  const { control, errors, handleSubmit } =
+  const { control, errors, handleSubmit, reset } =
     useAppForm<EAMWorkerCreateRequestDto>({
       defaultValues: DEFAULT_PAYLOAD,
       validationSchema: CreateWorkerValidationSchema,
@@ -66,9 +54,11 @@ const EAMConfigurateWorker: FC = () => {
     dispatch(
       EAMWorkerConfigurateActions.workerCreate({
         ...payload,
-        groupIds: selectedGroups,
+        groupIds: selectedGroups.selectedItems,
       }),
     );
+    reset();
+    selectedGroups.handleRemoveAll();
   };
 
   const handleSave = (): void => {
@@ -78,9 +68,9 @@ const EAMConfigurateWorker: FC = () => {
   const hasCsvColumns = Boolean(csvColumns.length);
 
   const columns = getColumns(
-    handleAddGroupId,
-    handleRemoveGroupId,
-    handleIsCheckedId,
+    selectedGroups.handleAdd,
+    selectedGroups.handleRemove,
+    selectedGroups.handleCheck,
   );
 
   const data = getRows(groups);
@@ -120,13 +110,15 @@ const EAMConfigurateWorker: FC = () => {
           </ul>
           <div className={styles.buttonContainer}>
             {hasCsvColumns && (
-              <button
-                className={styles.saveBtn}
-                type={ButtonType.BUTTON}
-                onClick={handleSave}
-              >
-                Save csv
-              </button>
+              <div className={styles.saveBtnWrapper}>
+                <button
+                  className={styles.saveBtn}
+                  type={ButtonType.BUTTON}
+                  onClick={handleSave}
+                >
+                  Save csv
+                </button>
+              </div>
             )}
             <div className={styles.buttons}>
               <div className={styles.button}>
