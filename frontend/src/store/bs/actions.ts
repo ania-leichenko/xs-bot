@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   BSSpaceGetRequestParamsDto,
   BSSpaceGetResponseDto,
@@ -23,7 +24,10 @@ const deleteSpace = createAsyncThunk<string, string, AsyncThunkConfig>(
 
     await bsApi.deleteSpace(id);
 
-    notification.success('Success!', 'Space has been successfully deleted');
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.BS_SPACE_DELETE,
+    );
 
     return id;
   },

@@ -9,6 +9,7 @@ export {
   SCApiPath,
   BSApiPath,
   SLCApiPath,
+  SLCFunctionApiPath,
   SpacesApiPath,
   InstancesApiPath,
 } from './api/api';

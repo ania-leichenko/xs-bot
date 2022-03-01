@@ -67,6 +67,7 @@ export {
   type SLCFunctionGetFilter,
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
+  type SLCFunctionDeleteParamsDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';

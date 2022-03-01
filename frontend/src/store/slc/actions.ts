@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   SLCFunctionGetRequestParamsDto,
   SLCFunctionGetResponseDto,
@@ -16,4 +17,20 @@ const loadFunctions = createAsyncThunk<
   return slcApi.loadFunctions(filter);
 });
 
-export { loadFunctions };
+const deleteFunction = createAsyncThunk<string, string, AsyncThunkConfig>(
+  ActionType.DELETE_FUNCTION,
+  async (id, { extra }) => {
+    const { slcApi, notification } = extra;
+
+    await slcApi.deleteFunction(id);
+
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.SLC_FUNCTION_DELETE,
+    );
+
+    return id;
+  },
+);
+
+export { loadFunctions, deleteFunction };

@@ -11,6 +11,10 @@ const getColumns = (): Column[] => {
       accessor: FunctionsTableAccessor.FUNCTION_NAME,
     },
     {
+      Header: FunctionsTableHeader.CREATION_TIME,
+      accessor: FunctionsTableAccessor.CREATION_TIME,
+    },
+    {
       Header: FunctionsTableHeader.UPDATION_TIME,
       accessor: FunctionsTableAccessor.UPDATION_TIME,
     },

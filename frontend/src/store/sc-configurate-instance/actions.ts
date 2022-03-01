@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   SCOperationSystemGetAllResponseDto,
   SCInstanceCreateRequestDto,
@@ -29,7 +30,10 @@ const createInstance = createAsyncThunk<
 
   const instance = await scApi.createInstance(payload);
 
-  notification.success('Success!', 'Instance has been successfully created');
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.SL_INSTANCE_CREATE,
+  );
 
   return instance;
 });

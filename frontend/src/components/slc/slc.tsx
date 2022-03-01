@@ -18,6 +18,10 @@ const SLC: FC = () => {
     );
   }, [dispatch]);
 
+  const handleFunctionDelete = (id: string): void => {
+    dispatch(slcActions.deleteFunction(id));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -25,7 +29,7 @@ const SLC: FC = () => {
         ServerLess Computing
       </h2>
       <div className={styles.tableWrapper}>
-        <FunctionsTable>
+        <FunctionsTable onFunctionDelete={handleFunctionDelete}>
           <Button
             className={styles.addFunctionBtn}
             to={AppRoute.SLC_CONFIGURATE_FUNCTION}

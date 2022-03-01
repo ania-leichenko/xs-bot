@@ -1,34 +1,55 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   EAMWorkerCreateRequestDto,
-  EAMWorkerCreateResponseDto,
   AsyncThunkConfig,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { getRandomId } from 'helpers/helpers';
-import { AppRoute } from 'common/enums/enums';
+import { EAMCreateWorkerCSVColumn } from 'common/enums/enums';
 
 const workerCreate = createAsyncThunk<
-  EAMWorkerCreateResponseDto,
+  string[][],
   EAMWorkerCreateRequestDto,
   AsyncThunkConfig
 >(
   ActionType.CREATE_WORKER,
   async (payload: EAMWorkerCreateRequestDto, { extra }) => {
-    const { workerApi, navigation, notification } = extra;
+    const { workerApi, notification } = extra;
 
-    const worker = await workerApi.createWorker({
+    const password = getRandomId();
+
+    await workerApi.createWorker({
       ...payload,
-      password: getRandomId(),
+      password,
     });
 
-    navigation.push(AppRoute.EAM);
+    const csvColumns = [
+      [EAMCreateWorkerCSVColumn.NAME, payload.name],
+      [EAMCreateWorkerCSVColumn.PASSWORD, password],
+    ];
 
-    notification.success('Success!', 'User has been successfully created');
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.EAM_WORKER_CREATE,
+    );
 
-    return worker;
+    return csvColumns;
+  },
+);
+
+const saveCSV = createAsyncThunk<void, void, AsyncThunkConfig>(
+  ActionType.SAVE_CSV,
+  async (_payload, { extra, getState }) => {
+    const { saver } = extra;
+    const { EAMWorkerConfigurate } = getState();
+
+    const { csvColumns } = EAMWorkerConfigurate;
+    const [[, name]] = csvColumns;
+
+    saver.saveCSV(csvColumns, `${name}-worker-credentials`);
   },
 );
 
@@ -41,4 +62,4 @@ const getGroups = createAsyncThunk<
   return eamApi.loadGroups(filter);
 });
 
-export { workerCreate, getGroups };
+export { workerCreate, getGroups, saveCSV };
