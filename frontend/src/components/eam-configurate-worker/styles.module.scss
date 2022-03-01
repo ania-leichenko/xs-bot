@@ -68,12 +68,26 @@
   max-width: 50%;
 }
 
-.buttons {
+.buttonContainer {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
 }
 
 .button {
   min-width: 200px;
+}
+
+.saveBtn {
+  margin-right: 32%;
+  color: var(--color-orange);
+  font-weight: 500;
+  font-size: 14px;
+  font-style: normal;
+  text-align: left;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
