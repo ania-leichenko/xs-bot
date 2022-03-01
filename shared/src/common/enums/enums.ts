@@ -23,6 +23,8 @@ export {
   EAMMasterValidationRule,
   EAMGroupValidationRule,
   EAMGroupValidationMessage,
+  EAMTenantValidationRule,
+  EAMTenantValidationMessage,
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
   SCInstanceValidationRule,

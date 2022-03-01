@@ -3,7 +3,7 @@ import { Button } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { eam as eamActions } from 'store/actions';
-import { GroupsTable, WorkersTable } from './components/components';
+import { GroupsTable, WorkersTable, Tenant } from './components/components';
 import styles from './styles.module.scss';
 
 const EAM: FC = () => {
@@ -41,6 +41,7 @@ const EAM: FC = () => {
         EAM - <br />
         Entity Access Management
       </h2>
+      <Tenant />
       <div className={styles.tableWrapper}>
         <WorkersTable>
           <Button

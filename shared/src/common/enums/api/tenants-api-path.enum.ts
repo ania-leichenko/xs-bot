@@ -1,4 +1,5 @@
 enum TenantsApiPath {
+  ROOT = '/',
   $ID = '/:id',
 }
 
