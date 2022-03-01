@@ -10,10 +10,10 @@ const eamWorkerSignIn = Joi.object({
   [getNameOf<EAMWorkerSignInRequestDto>('tenantName')]: Joi.string(),
   [getNameOf<EAMWorkerSignInRequestDto>('workerName')]: Joi.string()
     .trim()
-    .regex(EAMWorkerValidationRule.NAME_REGEX)
     .ruleset.min(EAMWorkerValidationRule.NAME_MIN_LENGTH)
     .max(EAMWorkerValidationRule.NAME_MAX_LENGTH)
     .rule({ message: EAMWorkerValidationMessage.NAME_LENGTH })
+    .regex(EAMWorkerValidationRule.NAME_REGEX)
     .required()
     .messages({
       'string.empty': EAMWorkerValidationMessage.NAME_REQUIRE,
