@@ -109,8 +109,8 @@ const EAMConfigurateWorker: FC = () => {
             </li>
           </ul>
           <div className={styles.buttonContainer}>
-            {hasCsvColumns && (
-              <div className={styles.saveBtnWrapper}>
+            <div className={styles.saveBtnWrapper}>
+              {hasCsvColumns && (
                 <button
                   className={styles.saveBtn}
                   type={ButtonType.BUTTON}
@@ -118,8 +118,8 @@ const EAMConfigurateWorker: FC = () => {
                 >
                   Save csv
                 </button>
-              </div>
-            )}
+              )}
+            </div>
             <div className={styles.buttons}>
               <div className={styles.button}>
                 <Button
