@@ -7,7 +7,17 @@ import {
 } from '~/common/enums/enums';
 
 const eamWorkerSignIn = Joi.object({
-  [getNameOf<EAMWorkerSignInRequestDto>('tenantName')]: Joi.string(),
+  [getNameOf<EAMWorkerSignInRequestDto>('tenantName')]: Joi.string()
+    .trim()
+    .min(EAMWorkerValidationRule.TENANT_NAME_MIN_LENGTH)
+    .max(EAMWorkerValidationRule.TENANT_NAME_MAX_LENGTH)
+    .regex(EAMWorkerValidationRule.TENANT_NAME_PATTERN)
+    .required()
+    .messages({
+      'string.empty': EAMWorkerValidationMessage.TENANT_NAME_REQUIRE,
+      'string.min': EAMWorkerValidationMessage.TENANT_NAME_MIN_LENGTH,
+      'string.pattern.base': EAMWorkerValidationMessage.TENANT_NAME_PATTERN,
+    }),
   [getNameOf<EAMWorkerSignInRequestDto>('workerName')]: Joi.string()
     .trim()
     .ruleset.min(EAMWorkerValidationRule.NAME_MIN_LENGTH)
