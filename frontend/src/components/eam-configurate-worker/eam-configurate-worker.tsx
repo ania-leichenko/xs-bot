@@ -44,7 +44,7 @@ const EAMConfigurateWorker: FC = () => {
     }
   }, [dispatch, tenantId]);
 
-  const { control, errors, handleSubmit, reset } =
+  const { control, errors, handleSubmit, handleReset } =
     useAppForm<EAMWorkerCreateRequestDto>({
       defaultValues: DEFAULT_PAYLOAD,
       validationSchema: CreateWorkerValidationSchema,
@@ -57,7 +57,7 @@ const EAMConfigurateWorker: FC = () => {
         groupIds: selectedGroups.selectedItems,
       }),
     );
-    reset();
+    handleReset();
     selectedGroups.handleRemoveAll();
   };
 

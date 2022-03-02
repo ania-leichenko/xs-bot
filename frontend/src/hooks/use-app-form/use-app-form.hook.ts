@@ -16,7 +16,7 @@ type UseAppFormResult<T extends FormControlValues = FormControlValues> = {
   control: FormControl;
   errors: FormControlErrors;
   handleSubmit: UseFormHandleSubmit<T>;
-  reset: UseFormReset<T>;
+  handleReset: UseFormReset<T>;
 };
 
 const useAppForm = <T extends FormControlValues = FormControlValues>({
@@ -39,7 +39,7 @@ const useAppForm = <T extends FormControlValues = FormControlValues>({
     control,
     errors,
     handleSubmit: handleSubmit as UseFormHandleSubmit<T>,
-    reset,
+    handleReset: reset as UseFormReset<T>,
   };
 };
 
