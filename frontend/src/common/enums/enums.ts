@@ -35,4 +35,5 @@ export { UserRole } from './roles/roles';
 export {
   NotificationTitle,
   NotificationMessage,
+  NotificationType,
 } from './notification/notification';
