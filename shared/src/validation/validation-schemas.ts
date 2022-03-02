@@ -1,6 +1,7 @@
 export {
   EamWorkerCreate,
   eamWorkerCreateBackend,
+  eamWorkerSignIn,
 } from './eam-worker/eam-worker';
 export { eamMasterSignUp, eamMasterSignIn } from './eam-master/eam-master';
 export { eamGroupCreate, eamGroupConfigurate } from './eam-group/eam-group';
