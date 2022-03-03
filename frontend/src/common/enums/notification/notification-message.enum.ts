@@ -8,7 +8,7 @@ enum NotificationMessage {
   SC_INSTANCE_DELETE = 'Instance has been successfully deleted',
   SLC_FUNCTION_CREATE = 'Function has been successfully created',
   SLC_FUNCTION_DELETE = 'Function has been successfully deleted',
-  EAM_UPDATE_TENANT_NAME = 'Tenant has been successfully changed',
+  EAM_UPDATE_TENANT_NAME = 'Tenant name has been successfully changed',
 }
 
 export { NotificationMessage };
