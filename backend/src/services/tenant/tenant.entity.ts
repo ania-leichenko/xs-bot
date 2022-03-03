@@ -42,6 +42,9 @@ class Tenant {
       createdAt: new Date(),
     });
   }
+  public setName(name: string): void {
+    this.name = name;
+  }
 }
 
 export { Tenant };

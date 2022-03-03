@@ -1,9 +1,11 @@
-import { useForm, UseFormHandleSubmit, UseFormReset } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   FormControl,
   FormControlErrors,
   FormControlValues,
   ValidationSchema,
+  UseFormHandleSubmit,
+  UseFormReset,
 } from 'common/types/types';
 import { getFormValidationResolver } from 'helpers/helpers';
 

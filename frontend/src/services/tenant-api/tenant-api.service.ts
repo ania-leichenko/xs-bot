@@ -2,15 +2,16 @@ import { ApiPath, ContentType, HttpMethod } from 'common/enums/enums';
 import {
   EAMTenantByIdRequestParamsDto,
   EAMTenantByIdResponseDto,
+  EAMTenantUpdateRequestDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
+import { TenantsApiPath } from 'common/enums/enums';
 
 type Constructor = {
   http: Http;
   apiPrefix: string;
 };
-
 class TenantApi {
   #http: Http;
   #apiPrefix: string;
@@ -28,6 +29,24 @@ class TenantApi {
       {
         method: HttpMethod.GET,
         contentType: ContentType.JSON,
+      },
+    );
+  }
+
+  public updateTenant(
+    params: EAMTenantUpdateRequestDto,
+  ): Promise<EAMTenantByIdResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.TENANTS,
+        TenantsApiPath.ROOT,
+        params.id,
+      ),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify({ name: params.name }),
       },
     );
   }
