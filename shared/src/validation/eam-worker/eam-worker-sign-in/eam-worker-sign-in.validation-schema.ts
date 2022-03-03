@@ -11,6 +11,7 @@ const eamWorkerSignIn = Joi.object({
     .trim()
     .min(EAMWorkerValidationRule.TENANT_NAME_MIN_LENGTH)
     .max(EAMWorkerValidationRule.TENANT_NAME_MAX_LENGTH)
+    .rule({ message: EAMWorkerValidationMessage.TENANT_NAME_MAX_LENGTH })
     .regex(EAMWorkerValidationRule.TENANT_NAME_PATTERN)
     .required()
     .messages({
