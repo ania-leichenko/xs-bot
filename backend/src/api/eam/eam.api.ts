@@ -16,9 +16,12 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
+  EAMGroupDeleteParamsDto,
 } from '~/common/types/types';
-import { eamGroupCreate as groupCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { eamWorkerCreateBackend as workerValidationSchema } from '~/validation-schemas/validation-schemas';
+import {
+  eamWorkerCreateBackend as workerValidationSchema,
+  eamGroupCreate as groupCreateValidationSchema,
+} from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
 type Options = {
@@ -121,6 +124,21 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{ Params: EAMGroupDeleteParamsDto }>,
+      rep,
+    ) {
+      const { id } = req.params;
+
+      await groupServ.delete({ id });
+
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 };

@@ -4,9 +4,11 @@ import {
   EAMGroupCreateResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
+  EAMGroupDeleteParamsDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
-import { InvalidGroupNameError } from '~/exceptions/exceptions';
+import { EamError } from '~/exceptions/exceptions';
+import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 
 type Constructor = {
   groupRepository: typeof groupRep;
@@ -37,7 +39,7 @@ class Group {
       tenantId,
     );
     if (groupByName) {
-      throw new InvalidGroupNameError();
+      throw new EamError();
     }
 
     const group = GroupEntity.createNew({
@@ -47,9 +49,20 @@ class Group {
       permissionsIds,
     });
 
-    const newGroup = await this.#groupRepository.create(group);
+    return this.#groupRepository.create(group);
+  }
 
-    return newGroup;
+  public async delete({ id }: EAMGroupDeleteParamsDto): Promise<number> {
+    const group = await this.#groupRepository.getGroupById(id);
+
+    if (group!.users.length >= 1) {
+      throw new EamError({
+        status: HttpCode.UNPROCESSABLE_ENTITY,
+        message: ExceptionMessage.GROUP_NOT_EMPTY,
+      });
+    }
+
+    return this.#groupRepository.delete(id);
   }
 }
 

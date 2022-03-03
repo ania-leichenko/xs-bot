@@ -5,3 +5,5 @@ export type { EAMGroupGetByTenantResponseDto } from './eam-group-get-by-tenant-r
 export type { EAMGroupRelatedItem } from './eam-group-related-item.type';
 export type { EAMGroupGetByTenantResponseItemDto } from './eam-group-get-by-tenant-response-item-dto.type';
 export type { EAMGroupConfigurateRequestDto } from './eam-group-configurate-request-dto';
+export type { EAMGroupDeleteParamsDto } from './eam-group-delete-request-dto';
+export type { EamGroupGetByIdItem } from './eam-group-get-by-id-item.type';

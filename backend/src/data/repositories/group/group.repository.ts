@@ -7,6 +7,7 @@ import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseItemDto,
+  EamGroupGetByIdItem,
 } from '~/common/types/types';
 import { getRandomId } from '~/helpers/helpers';
 
@@ -63,6 +64,15 @@ class Group {
     return Group.modelToEntity(group, [], []);
   }
 
+  async getGroupById(id: string): Promise<EamGroupGetByIdItem | undefined> {
+    return this.#GroupModel
+      .query()
+      .select('id', 'name', 'createdAt')
+      .where({ id })
+      .withGraphFetched('[users, permissions]')
+      .first();
+  }
+
   async create(group: GroupEntity): Promise<GroupEntity> {
     const { id, name, tenantId, createdAt, workersIds, permissionsIds } = group;
 
@@ -94,6 +104,10 @@ class Group {
     );
 
     return Group.modelToEntity(created, workersIds, permissionsIds);
+  }
+
+  async delete(id: string): Promise<number> {
+    return this.#GroupModel.query().where({ id }).del();
   }
 
   public static modelToEntity(
