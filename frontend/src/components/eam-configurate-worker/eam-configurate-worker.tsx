@@ -1,33 +1,34 @@
 import { FC } from 'react';
 import {
-  InputType,
-  ButtonType,
   AppRoute,
   ButtonStyle,
+  ButtonType,
+  InputType,
 } from 'common/enums/enums';
 import {
-  useAppSelector,
-  useState,
-  useAppForm,
   useAppDispatch,
+  useAppForm,
+  useAppSelector,
   useEffect,
+  useSelectedItems,
 } from 'hooks/hooks';
 import { getNameOf } from 'helpers/helpers';
-import { Input, Button, Table } from 'components/common/common';
+import { Button, Input, Table } from 'components/common/common';
 import { EAMWorkerCreateRequestDto } from 'common/types/types';
 import { EamWorkerCreate as CreateWorkerValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { EAMWorkerConfigurate as EAMWorkerConfigurateActions } from 'store/actions';
 import { DEFAULT_PAYLOAD } from './common/constants';
-import { getRows, getColumns } from './helpers/helpers';
+import { getColumns, getRows } from './helpers/helpers';
 
 const EAMConfigurateWorker: FC = () => {
   const dispatch = useAppDispatch();
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const { tenantId, groups } = useAppSelector(
+  const selectedGroups = useSelectedItems<string>([]);
+  const { tenantId, groups, csvColumns } = useAppSelector(
     ({ app, EAMWorkerConfigurate }) => ({
       tenantId: app.tenant?.id,
       groups: EAMWorkerConfigurate.groups,
+      csvColumns: EAMWorkerConfigurate.csvColumns,
     }),
   );
 
@@ -43,19 +44,7 @@ const EAMConfigurateWorker: FC = () => {
     }
   }, [dispatch, tenantId]);
 
-  const handleAddGroupId = (id: string): void => {
-    setSelectedGroups((prevState) => prevState.concat(id));
-  };
-
-  const handleRemoveGroupId = (id: string): void => {
-    setSelectedGroups((prevState) => prevState.filter((it) => it !== id));
-  };
-
-  const handleIsCheckedId = (id: string): boolean => {
-    return selectedGroups.some((it) => it === id);
-  };
-
-  const { control, errors, handleSubmit } =
+  const { control, errors, handleSubmit, handleReset } =
     useAppForm<EAMWorkerCreateRequestDto>({
       defaultValues: DEFAULT_PAYLOAD,
       validationSchema: CreateWorkerValidationSchema,
@@ -65,15 +54,23 @@ const EAMConfigurateWorker: FC = () => {
     dispatch(
       EAMWorkerConfigurateActions.workerCreate({
         ...payload,
-        groupIds: selectedGroups,
+        groupIds: selectedGroups.selectedItems,
       }),
     );
+    handleReset();
+    selectedGroups.handleRemoveAll();
   };
 
+  const handleSave = (): void => {
+    dispatch(EAMWorkerConfigurateActions.saveCSV());
+  };
+
+  const hasCsvColumns = Boolean(csvColumns.length);
+
   const columns = getColumns(
-    handleAddGroupId,
-    handleRemoveGroupId,
-    handleIsCheckedId,
+    selectedGroups.handleAdd,
+    selectedGroups.handleRemove,
+    selectedGroups.handleCheck,
   );
 
   const data = getRows(groups);
@@ -111,16 +108,29 @@ const EAMConfigurateWorker: FC = () => {
               />
             </li>
           </ul>
-          <div className={styles.buttons}>
-            <div className={styles.button}>
-              <Button
-                btnStyle={ButtonStyle.OUTLINED}
-                label="Cancel"
-                to={AppRoute.EAM}
-              />
+          <div className={styles.buttonContainer}>
+            <div className={styles.saveBtnWrapper}>
+              {hasCsvColumns && (
+                <button
+                  className={styles.saveBtn}
+                  type={ButtonType.BUTTON}
+                  onClick={handleSave}
+                >
+                  Save csv
+                </button>
+              )}
             </div>
-            <div className={styles.button}>
-              <Button type={ButtonType.SUBMIT} label="Create" />
+            <div className={styles.buttons}>
+              <div className={styles.button}>
+                <Button
+                  btnStyle={ButtonStyle.OUTLINED}
+                  label="Cancel"
+                  to={AppRoute.EAM}
+                />
+              </div>
+              <div className={styles.button}>
+                <Button type={ButtonType.SUBMIT} label="Create" />
+              </div>
             </div>
           </div>
         </form>

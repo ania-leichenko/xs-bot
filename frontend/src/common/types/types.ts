@@ -3,6 +3,7 @@ export {
   type AppDispatch,
   type AsyncThunkConfig,
   type UseSelectedItemsHook,
+  type NotifyActionPayload,
 } from './app/app';
 export {
   type FormControlErrors,
@@ -24,6 +25,8 @@ export {
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
+  type EAMTenantUpdateRequestDto,
+  type EAMTenantFormDto,
 } from './eam-tenant/eam-tenant';
 export {
   type EAMGroupGetByTenantRequestParamsDto,
@@ -79,3 +82,8 @@ export {
   type SCOperationSystemGetAllItemResponseDto,
 } from './sc-operation-system/sc-operation-system';
 export { type ServiceMenuItem, type Option } from './ui/ui';
+export type {
+  UseFormHandleSubmit,
+  UseFormReset,
+  FieldValues,
+} from 'react-hook-form';

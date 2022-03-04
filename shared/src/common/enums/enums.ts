@@ -11,6 +11,7 @@ export {
   SLCApiPath,
   SLCFunctionApiPath,
   SpacesApiPath,
+  InstancesApiPath,
 } from './api/api';
 export { CustomExceptionName } from './exceptions/exceptions';
 export { ContentType } from './file/file';
@@ -22,6 +23,8 @@ export {
   EAMMasterValidationRule,
   EAMGroupValidationRule,
   EAMGroupValidationMessage,
+  EAMTenantValidationRule,
+  EAMTenantValidationMessage,
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
   SCInstanceValidationRule,

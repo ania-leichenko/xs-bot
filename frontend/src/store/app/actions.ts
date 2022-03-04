@@ -3,8 +3,19 @@ import {
   EAMTenantByIdRequestParamsDto,
   EAMTenantByIdResponseDto,
   AsyncThunkConfig,
+  NotifyActionPayload,
 } from 'common/types/types';
 import { ActionType } from './common';
+
+const notify = createAsyncThunk<void, NotifyActionPayload, AsyncThunkConfig>(
+  ActionType.NOTIFY,
+  async (payload, { extra }) => {
+    const { notification } = extra;
+    const { title, message, type } = payload;
+
+    notification[type](title, message);
+  },
+);
 
 const getTenant = createAsyncThunk<
   EAMTenantByIdResponseDto,
@@ -18,4 +29,4 @@ const getTenant = createAsyncThunk<
   return tenant;
 });
 
-export { getTenant };
+export { notify, getTenant };

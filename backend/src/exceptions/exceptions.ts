@@ -4,3 +4,4 @@ export { EamError } from 'src/exceptions/eam-error/eam-error';
 export { SCError } from './sc-error/sc-error';
 export { SLCError } from './slc-error/slc-error';
 export { BsError } from './bs-error/bs-error';
+export { TenantError } from './tenant-error/tenant-error';

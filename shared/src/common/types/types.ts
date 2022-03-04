@@ -34,6 +34,8 @@ export {
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
+  type EAMTenantUpdateRequestDto,
+  type EAMTenantFormDto,
 } from './eam-tenant/eam-tenant';
 export {
   type SCInstanceCreateRequestDto,
@@ -42,6 +44,7 @@ export {
   type SCInstanceGetByTenantRequestParamsDto,
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
+  type SCInstanceDeleteRequestDto,
 } from './sc-instance/sc-instance';
 export {
   type SCOperationSystemGetAllResponseDto,

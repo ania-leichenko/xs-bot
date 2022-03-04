@@ -4,7 +4,7 @@ import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
   [GroupsTableAccessor.GROUP_NAME]: string;
-  [GroupsTableAccessor.USERS]: number;
+  [GroupsTableAccessor.WORKERS]: number;
   [GroupsTableAccessor.PERMISSIONS]: string;
   [GroupsTableAccessor.CREATION_TIME]: string;
 };
@@ -16,7 +16,7 @@ const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
 
     return {
       [GroupsTableAccessor.GROUP_NAME]: name,
-      [GroupsTableAccessor.USERS]: users.length,
+      [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: permissionsContent,
       [GroupsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),

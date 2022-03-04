@@ -4,6 +4,8 @@ const ExceptionMessage = {
   INCORRECT_EMAIL:
     'Account with that email does not exist. Try again or create a new account.',
   INCORRECT_TENANT_NAME: 'Account with that tenant name does not exist.',
+  TENANT_EXISTS: 'Tenant does not is exists',
+  TENANT_NAME_EXISTS: 'Tenant with this name already exists',
   INCORRECT_WORKER_NAME:
     'Account with that worker name does not exist. Try again or create a new account.',
   INVALID_TOKEN: 'Token is invalid.',

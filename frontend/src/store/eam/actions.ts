@@ -4,9 +4,12 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
+  EAMTenantByIdResponseDto,
+  EAMTenantUpdateRequestDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
+import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 
 const getWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
@@ -28,4 +31,18 @@ const loadGroups = createAsyncThunk<
   return eamApi.loadGroups(filter);
 });
 
-export { getWorkers, loadGroups };
+const updateTenant = createAsyncThunk<
+  EAMTenantByIdResponseDto,
+  EAMTenantUpdateRequestDto,
+  AsyncThunkConfig
+>(ActionType.UPDATE_TENANT_NAME, async (payload, { extra }) => {
+  const { tenantApi, notification } = extra;
+  const tenant = await tenantApi.updateTenant(payload);
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.EAM_UPDATE_TENANT_NAME,
+  );
+  return tenant;
+});
+
+export { getWorkers, loadGroups, updateTenant };

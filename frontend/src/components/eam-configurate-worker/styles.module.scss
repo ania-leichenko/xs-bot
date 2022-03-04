@@ -68,12 +68,47 @@
   max-width: 50%;
 }
 
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 .buttons {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  gap: 0 10px;
 }
 
 .button {
   min-width: 200px;
+}
+
+.saveBtn {
+  display: flex;
+  gap: 0 5px;
+  padding: 0;
+  color: var(--color-orange);
+  font-weight: 500;
+  font-size: 14px;
+  font-style: normal;
+  text-align: left;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.saveBtn::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("../../assets/img/file.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 20px;
+}
+
+.saveBtnWrapper {
+  display: flex;
 }
