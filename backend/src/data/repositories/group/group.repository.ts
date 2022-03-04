@@ -107,6 +107,7 @@ class Group {
   }
 
   async delete(id: string): Promise<number> {
+    await this.#GroupsPermissionsModel.query().where({ groupId: id }).del();
     return this.#GroupModel.query().where({ id }).del();
   }
 
