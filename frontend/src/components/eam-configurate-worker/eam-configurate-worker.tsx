@@ -57,7 +57,9 @@ const EAMConfigurateWorker: FC = () => {
         groupIds: selectedGroups.selectedItems,
       }),
     );
-    handleReset();
+    if (selectedGroups.selectedItems.length) {
+      handleReset();
+    }
     selectedGroups.handleRemoveAll();
   };
 
