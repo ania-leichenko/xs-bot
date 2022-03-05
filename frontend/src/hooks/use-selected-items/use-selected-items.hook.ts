@@ -15,7 +15,17 @@ const useSelectedItems = <T>(items: T[]): UseSelectedItemsHook<T> => {
     return selectedItems.some((it): boolean => it === id);
   };
 
-  return { selectedItems, handleAdd, handleRemove, handleCheck };
+  const handleRemoveAll = (): void => {
+    setSelectedItems([]);
+  };
+
+  return {
+    selectedItems,
+    handleAdd,
+    handleRemove,
+    handleCheck,
+    handleRemoveAll,
+  };
 };
 
 export { useSelectedItems };

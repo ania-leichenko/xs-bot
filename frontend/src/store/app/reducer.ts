@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import { getTenant } from './actions';
+import { updateTenant } from '../eam/actions';
 import { EAMTenantByIdResponseDto } from 'common/types/types';
 
 type State = {
@@ -23,6 +24,10 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(getTenant.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(updateTenant.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.tenant = action.payload;
   });
 });
 

@@ -26,6 +26,18 @@ class Tenant {
     return Tenant.modelToEntity(tenant);
   }
 
+  async save(tenant: TenantEntity): Promise<TenantEntity | null> {
+    const { id, name } = tenant;
+    const tenantModel = await this.#TenantModel
+      .query()
+      .patchAndFetchById(id, { name });
+    if (!tenantModel) {
+      return null;
+    }
+
+    return Tenant.modelToEntity(tenantModel);
+  }
+
   async create(tenant: TenantEntity): Promise<TenantM> {
     const { id, name } = tenant;
 

@@ -1,4 +1,5 @@
 enum NotificationMessage {
+  EAM_PERMISSION_LACK = 'You do not have the necessary rights to perform these actions.',
   EAM_WORKER_CREATE = 'Worker has been successfully created',
   EAM_GROUP_CREATE = 'Group has been successfully created',
   BS_SPACE_CREATE = 'Space has been successfully created',
@@ -7,6 +8,7 @@ enum NotificationMessage {
   SC_INSTANCE_DELETE = 'Instance has been successfully deleted',
   SLC_FUNCTION_CREATE = 'Function has been successfully created',
   SLC_FUNCTION_DELETE = 'Function has been successfully deleted',
+  EAM_UPDATE_TENANT_NAME = 'Tenant name has been successfully changed',
 }
 
 export { NotificationMessage };

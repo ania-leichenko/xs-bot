@@ -31,7 +31,8 @@ export {
   type EAMTenantCreateResponseDto,
   type EAMTenantByIdRequestParamsDto,
   type EAMTenantByIdResponseDto,
-} from './eam-tenant/eam-tenant';
+  type EAMTenantUpdateRequestDto,
+} from './eam-tenant-update/eam-tenant-update';
 export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,

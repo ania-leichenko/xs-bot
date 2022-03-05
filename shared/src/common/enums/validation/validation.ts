@@ -11,6 +11,10 @@ export {
   EAMGroupValidationMessage,
 } from './eam-group/eam-group';
 export {
+  EAMTenantValidationMessage,
+  EAMTenantValidationRule,
+} from './eam-tenant/eam-tenant';
+export {
   BSSpaceValidationRule,
   BSSpaceValidationMessage,
 } from './bs-space/bs-space';
