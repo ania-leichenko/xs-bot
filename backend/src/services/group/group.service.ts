@@ -4,7 +4,6 @@ import {
   EAMGroupCreateResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
-  EAMGroupConfigurateRequestDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import { InvalidGroupNameError } from '~/exceptions/exceptions';
@@ -55,12 +54,7 @@ class Group {
 
   public async update(
     id: string,
-    {
-      name,
-      tenantId,
-      workersIds,
-      permissionsIds,
-    }: EAMGroupConfigurateRequestDto,
+    { name, tenantId, workersIds, permissionsIds }: EAMGroupCreateRequestDto,
   ): Promise<EAMGroupCreateResponseDto | null> {
     const group = await this.#groupRepository.getGroupById(id);
 
