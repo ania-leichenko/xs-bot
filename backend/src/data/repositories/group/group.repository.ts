@@ -60,7 +60,64 @@ class Group {
       return null;
     }
 
-    return Group.modelToEntity(group, [], []);
+    const workerIds = await this.getGroupWorkersById(group.id);
+    const permissionIds = await this.getGroupPermissionsById(group.id);
+
+    return Group.modelToEntity(group, workerIds, permissionIds);
+  }
+
+  async getGroupWorkersById(id: string): Promise<string[]> {
+    const worker = await this.#UsersGroupsModel
+      .query()
+      .select('userId')
+      .where({ groupId: id });
+    return worker.map((item) => item.userId);
+  }
+
+  async getGroupPermissionsById(id: string): Promise<string[]> {
+    const permissions = await this.#GroupsPermissionsModel
+      .query()
+      .select('permissionId')
+      .where({ groupId: id });
+    return permissions.map((item) => item.permissionId);
+  }
+
+  async getGroupById(id: string): Promise<GroupEntity | null> {
+    const group = await this.#GroupModel.query().select().where({ id }).first();
+
+    if (!group) {
+      return null;
+    }
+    const permissionIds = await this.getGroupPermissionsById(id);
+    return Group.modelToEntity(group, [], permissionIds);
+  }
+
+  async insertWorkerByIdGroup(id: string, workerIds: string[]): Promise<void> {
+    const hasWorkersIds = Boolean(workerIds.length);
+    if (hasWorkersIds) {
+      await this.#UsersGroupsModel.query().insert(
+        workerIds.map((workerId) => ({
+          id: getRandomId(),
+          userId: workerId,
+          groupId: id,
+          createdAt: new Date().toISOString(),
+        })),
+      );
+    }
+  }
+
+  async insertPermissionsByIdGroup(
+    id: string,
+    permissionIds: string[],
+  ): Promise<void> {
+    await this.#GroupsPermissionsModel.query().insert(
+      permissionIds.map((permissionId) => ({
+        id: getRandomId(),
+        groupId: id,
+        permissionId: permissionId,
+        createdAt: new Date().toISOString(),
+      })),
+    );
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
@@ -72,28 +129,32 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
-    const hasWorkersIds = Boolean(workersIds.length);
-    if (hasWorkersIds) {
-      await this.#UsersGroupsModel.query().insert(
-        workersIds.map((workerId) => ({
-          id: getRandomId(),
-          userId: workerId,
-          groupId: id,
-          createdAt: createdAt,
-        })),
-      );
-    }
 
-    await this.#GroupsPermissionsModel.query().insert(
-      permissionsIds.map((permissionId) => ({
-        id: getRandomId(),
-        groupId: id,
-        permissionId: permissionId,
-        createdAt: createdAt,
-      })),
-    );
+    await this.insertWorkerByIdGroup(id, workersIds);
+    await this.insertPermissionsByIdGroup(id, permissionsIds);
 
     return Group.modelToEntity(created, workersIds, permissionsIds);
+  }
+
+  public async save(group: GroupEntity): Promise<GroupEntity | null> {
+    const { id, name, workersIds, permissionsIds } = group;
+    const groupModel = await this.#GroupModel
+      .query()
+      .patchAndFetchById(id, { name });
+    if (!groupModel) {
+      return null;
+    }
+
+    await this.#GroupsPermissionsModel
+      .query()
+      .delete()
+      .where({ 'groupId': id });
+    await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
+
+    await this.insertWorkerByIdGroup(id, workersIds);
+    await this.insertPermissionsByIdGroup(id, permissionsIds);
+
+    return Group.modelToEntity(groupModel, workersIds, permissionsIds);
   }
 
   public static modelToEntity(

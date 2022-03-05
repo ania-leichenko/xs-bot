@@ -16,9 +16,13 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
+  EAMGroupConfigurateRequestDto,
 } from '~/common/types/types';
-import { eamGroupCreate as groupCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { eamWorkerCreateBackend as workerValidationSchema } from '~/validation-schemas/validation-schemas';
+import {
+  eamGroupCreate as groupCreateValidationSchema,
+  eamWorkerCreateBackend as workerValidationSchema,
+  eamGroupConfigurate as groupConfigurateValidationSchema,
+} from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
 type Options = {
@@ -86,6 +90,35 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const group = await groupService.create(req.body);
       return rep.send(group).status(HttpCode.CREATED);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.POST,
+    url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    schema: {
+      body: groupConfigurateValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof groupConfigurateValidationSchema>) {
+      return (
+        data: EAMGroupConfigurateRequestDto,
+      ): ReturnType<typeof groupConfigurateValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
+
+    async handler(
+      req: FastifyRequest<{
+        Querystring: { id: string };
+        Body: EAMGroupConfigurateRequestDto;
+      }>,
+      rep,
+    ) {
+      const group = await groupService.update(req.query.id, req.body);
+
+      return rep.send(group).status(HttpCode.OK);
     },
   });
 

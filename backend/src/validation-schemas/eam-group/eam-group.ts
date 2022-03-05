@@ -1,1 +1,4 @@
-export { eamGroupCreate } from 'bws-shared/validation/eam-group/eam-group';
+export {
+  eamGroupCreate,
+  eamGroupConfigurate,
+} from 'bws-shared/validation/eam-group/eam-group';

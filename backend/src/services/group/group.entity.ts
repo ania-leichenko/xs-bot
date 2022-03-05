@@ -76,6 +76,18 @@ class Group {
       permissionsIds,
     });
   }
+
+  public setName(name: string): void {
+    this.name = name ? name : this.name;
+  }
+
+  public setWorkersIds(workersIds: string[]): void {
+    this.workersIds = workersIds ? workersIds : this.workersIds;
+  }
+
+  public setPermissionsIds(permissionsIds: string[]): void {
+    this.permissionsIds = permissionsIds ? permissionsIds : this.permissionsIds;
+  }
 }
 
 export { Group };
