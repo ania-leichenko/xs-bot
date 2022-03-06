@@ -62,6 +62,8 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionUpdateParamsDto,
+  type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';
