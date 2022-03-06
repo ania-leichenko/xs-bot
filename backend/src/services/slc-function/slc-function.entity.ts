@@ -86,6 +86,10 @@ class SLCFunction {
       updatedAt: date,
     });
   }
+
+  public setSourceCode(sourceCode: string): void {
+    this.sourceCode = sourceCode;
+  }
 }
 
 export { SLCFunction };

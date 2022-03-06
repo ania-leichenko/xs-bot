@@ -21,6 +21,9 @@ const ExceptionMessage = {
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
   FUNCTION_NOT_CREATED: 'Something went wrong and function don`t created.',
+  FUNCTION_NOT_FOUND: 'Function not found.',
+  FUNCTION_NOT_CHANGE: 'Function code no changes.',
+  FUNCTION_NOT_UPDATED: 'Function code not updated.',
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
 } as const;
 

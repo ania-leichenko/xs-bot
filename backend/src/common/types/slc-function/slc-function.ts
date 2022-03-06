@@ -6,4 +6,5 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionUpdateResponseDto,
 } from 'bws-shared/common/types/types';
