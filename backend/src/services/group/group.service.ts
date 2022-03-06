@@ -55,7 +55,13 @@ class Group {
   public async delete({ id }: EAMGroupDeleteParamsDto): Promise<number> {
     const group = await this.#groupRepository.getGroupById(id);
 
-    if (group!.users.length >= 1) {
+    if (!group) {
+      throw new EamError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
+      });
+    }
+    if (group.users.length >= 1) {
       throw new EamError({
         status: HttpCode.UNPROCESSABLE_ENTITY,
         message: ExceptionMessage.GROUP_NOT_EMPTY,
