@@ -6,7 +6,7 @@ import {
   ButtonColor,
 } from 'common/enums/enums';
 import { getValidClasses } from 'helpers/helpers';
-import styles from './button.module.scss';
+import styles from './styles.module.scss';
 import { Link } from '../link/link';
 
 type Props = {

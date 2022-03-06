@@ -3,9 +3,9 @@ import { IconButton } from 'components/common/icon-button/icon-button';
 
 const ActionCell = (
   id: string,
-  onDeleteInstance: (id: string) => void,
+  onFunctionDelete: (id: string) => void,
 ): JSX.Element => {
-  return <IconButton id={id} icon={deleteIcon} onAction={onDeleteInstance} />;
+  return <IconButton id={id} icon={deleteIcon} onAction={onFunctionDelete} />;
 };
 
 export { ActionCell };
