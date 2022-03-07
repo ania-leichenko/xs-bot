@@ -18,12 +18,12 @@ const getRows = ({
   onFunctionDelete: (id: string) => void;
 }): Row[] => {
   return slcFunctions.map((item) => {
-    const { id, name, updatedAt } = item;
+    const { id, name, createdAt, updatedAt } = item;
 
     return {
       [FunctionsTableAccessor.FUNCTION_NAME]: name,
       [FunctionsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
-        new Date(updatedAt),
+        new Date(createdAt),
       ),
       [FunctionsTableAccessor.UPDATION_TIME]: getDistanceToDateNow(
         new Date(updatedAt),
