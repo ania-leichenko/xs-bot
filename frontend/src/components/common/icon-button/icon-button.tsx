@@ -2,18 +2,13 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 
 type Props = {
-  id: string;
   icon: string;
-  onAction: (id: string) => void;
+  onClick: () => void;
 };
 
-const IconButton: FC<Props> = ({ id, icon, onAction }) => {
-  const handleAction = (): void => {
-    onAction(id);
-  };
-
+const IconButton: FC<Props> = ({ icon, onClick }) => {
   return (
-    <button className={styles.button} onClick={handleAction}>
+    <button className={styles.button} onClick={onClick}>
       <img src={icon} alt="Action" />
     </button>
   );

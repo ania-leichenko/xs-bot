@@ -9,6 +9,7 @@ import {
 import { Group as GroupEntity } from '~/services/group/group.entity';
 import { EamError } from '~/exceptions/exceptions';
 import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
+import { EMPTY_ARRAY_LENGTH } from '~/common/constants/constants';
 
 type Constructor = {
   groupRepository: typeof groupRep;
@@ -61,7 +62,7 @@ class Group {
         message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
       });
     }
-    if (group.users.length >= 1) {
+    if (group.users.length > EMPTY_ARRAY_LENGTH) {
       throw new EamError({
         status: HttpCode.UNPROCESSABLE_ENTITY,
         message: ExceptionMessage.GROUP_NOT_EMPTY,

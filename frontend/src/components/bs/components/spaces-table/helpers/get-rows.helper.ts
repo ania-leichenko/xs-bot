@@ -1,6 +1,6 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
-import { ActionCell } from 'components/bs/components/spaces-table/components/components';
+import { ActionCell } from '../components/components';
 import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {

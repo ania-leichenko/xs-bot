@@ -16,7 +16,13 @@ export {
 export { AppRoute, ENV, DataStatus, StorageKey, Permission } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
 export { ContentType } from './file/file';
-export { ButtonType, ButtonStyle, InputType, ButtonColor } from './ui/ui';
+export {
+  ButtonType,
+  ButtonStyle,
+  InputType,
+  ButtonColor,
+  IconName,
+} from './ui/ui';
 export {
   GroupsTableHeader,
   GroupsTableAccessor,

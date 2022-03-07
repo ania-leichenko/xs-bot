@@ -1,11 +1,16 @@
-import deleteIcon from 'assets/img/delete-icon.svg';
 import { IconButton } from 'components/common/icon-button/icon-button';
+import { IconName } from 'common/enums/enums';
 
 const ActionCell = (
   id: string,
-  onDeleteInstance: (id: string) => void,
+  onInstanceDelete: (id: string) => void,
 ): JSX.Element => {
-  return <IconButton id={id} icon={deleteIcon} onAction={onDeleteInstance} />;
+  return (
+    <IconButton
+      icon={IconName.TRASH}
+      onClick={(): void => onInstanceDelete(id)}
+    />
+  );
 };
 
 export { ActionCell };

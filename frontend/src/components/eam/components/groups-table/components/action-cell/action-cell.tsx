@@ -1,11 +1,13 @@
 import { IconButton } from 'components/common/common';
-import deleteIcon from 'assets/img/delete-icon.svg';
+import { IconName } from 'common/enums/enums';
 
 const ActionCell = (
   id: string,
   onGroupDelete: (id: string) => void,
 ): JSX.Element => {
-  return <IconButton id={id} icon={deleteIcon} onAction={onGroupDelete} />;
+  return (
+    <IconButton icon={IconName.TRASH} onClick={(): void => onGroupDelete(id)} />
+  );
 };
 
 export { ActionCell };

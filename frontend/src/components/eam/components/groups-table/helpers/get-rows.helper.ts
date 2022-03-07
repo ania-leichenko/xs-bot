@@ -1,7 +1,7 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/helpers';
-import { ActionCell } from 'components/sc/components/instances-table/components/action-cell/action-cell';
+import { ActionCell } from '../components/action-cell/action-cell';
 
 type Row = {
   [GroupsTableAccessor.GROUP_NAME]: string;
