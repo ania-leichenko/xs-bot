@@ -39,7 +39,10 @@ export {
   type SCInstanceGetByTenantRequestParamsDto,
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
-  type SCInstanceDeleteRequestDto,
+  type SCInstanceDeleteParamsDto,
+  type SCInstanceUpdateParamsDto,
+  type SCInstanceUpdateRequestDto,
+  type SCInstanceUpdateResponseDto,
 } from './sc-instance/sc-instance';
 export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
 export {
@@ -63,5 +66,8 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionUpdateParamsDto,
+  type SLCFunctionUpdateRequestDto,
+  type SLCFunctionUpdateResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

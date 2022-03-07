@@ -93,7 +93,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   });
 
   fastify.route({
-    method: HttpMethod.POST,
+    method: HttpMethod.PUT,
     url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
     schema: {
       body: groupConfigurateValidationSchema,

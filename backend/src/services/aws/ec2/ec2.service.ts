@@ -48,6 +48,23 @@ class EC2 {
     await this.#ec2Client.send(new DeleteKeyPairCommand({ KeyName: name }));
   }
 
+  public async setInstanceName(
+    instanceId: string,
+    name: string,
+  ): Promise<void> {
+    await this.#ec2Client.send(
+      new CreateTagsCommand({
+        Resources: [instanceId],
+        Tags: [
+          {
+            Key: 'Name',
+            Value: name,
+          },
+        ],
+      }),
+    );
+  }
+
   public async createInstance({
     name,
     keyName,
@@ -73,17 +90,7 @@ class EC2 {
     const [instance] = data.Instances as Instance[];
     const { InstanceId: instanceId } = instance;
 
-    await this.#ec2Client.send(
-      new CreateTagsCommand({
-        Resources: [instanceId as string],
-        Tags: [
-          {
-            Key: 'Name',
-            Value: name,
-          },
-        ],
-      }),
-    );
+    await this.setInstanceName(instanceId as string, name);
 
     await waitUntilInstanceRunning(
       {
