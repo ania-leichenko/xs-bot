@@ -25,6 +25,8 @@ const ExceptionMessage = {
   FUNCTION_NOT_CHANGE: 'Function code no changes.',
   FUNCTION_NOT_UPDATED: 'Function code not updated.',
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
+  INSTANCE_NOT_FOUND: 'Instance not found',
+  NOTHING_TO_UPDATE: 'Nothing to update',
 } as const;
 
 export { ExceptionMessage };

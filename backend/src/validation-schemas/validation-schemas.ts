@@ -5,6 +5,6 @@ export {
 } from './eam-worker/eam-worker';
 export { eamGroupCreate } from './eam-group/eam-group';
 export { bsSpaceCreate } from './bs-space/bs-space';
-export { scInstanceCreate } from './sc-instance/sc-instance';
+export { scInstanceCreate, scInstanceUpdate } from './sc-instance/sc-instance';
 export { slcFunctionCreate } from './slc-function/slc-function';
 export { eamTenantUpdate } from './eam-tenant-update/eam-tenant-update';
