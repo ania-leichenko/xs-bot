@@ -3,7 +3,9 @@ import {
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
   SCInstanceGetByTenantRequestParamsDto,
+  SCInstanceUpdateRequestDto,
   SCInstanceGetByTenantResponseDto,
+  type SCInstanceUpdateResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
@@ -117,6 +119,44 @@ class Instance {
       name: instance.name,
       createdAt: instance.createdAt,
       publicDNS: instance.hostname,
+    };
+  }
+
+  public async update(
+    id: string,
+    data: SCInstanceUpdateRequestDto,
+  ): Promise<SCInstanceUpdateResponseDto> {
+    const instance = await this.#instanceRepository.getById(id);
+    if (!instance) {
+      throw new SCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.INSTANCE_NOT_FOUND,
+      });
+    }
+
+    const { name } = data;
+
+    if (!Object.keys(data).length || name === instance.name) {
+      throw new SCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.NOTHING_TO_UPDATE,
+      });
+    }
+
+    if (name) {
+      const { awsInstanceId } = (await this.#instanceRepository.getById(
+        id,
+      )) as InstanceEntity;
+      await this.#ec2Service.setInstanceName(awsInstanceId, name as string);
+    }
+
+    const updateInstance = await this.#instanceRepository.updateById(id, data);
+    return {
+      instanceId: updateInstance.id,
+      instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
+      name: updateInstance.name,
+      createdAt: updateInstance.createdAt,
+      publicDNS: updateInstance.hostname,
     };
   }
 

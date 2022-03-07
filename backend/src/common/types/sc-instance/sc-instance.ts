@@ -4,5 +4,8 @@ export {
   type SCInstanceGetByTenantRequestParamsDto,
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
-  type SCInstanceDeleteRequestDto,
+  type SCInstanceDeleteParamsDto,
+  type SCInstanceUpdateParamsDto,
+  type SCInstanceUpdateRequestDto,
+  type SCInstanceUpdateResponseDto,
 } from 'bws-shared/common/types/types';

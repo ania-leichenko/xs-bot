@@ -22,6 +22,8 @@ const ExceptionMessage = {
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
   FUNCTION_NOT_CREATED: 'Something went wrong and function don`t created.',
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
+  INSTANCE_NOT_FOUND: 'Instance not found',
+  NOTHING_TO_UPDATE: 'Nothing to update',
 } as const;
 
 export { ExceptionMessage };
