@@ -12,7 +12,7 @@ import {
 } from 'common/enums/enums';
 import { Button, Input } from 'components/common/common';
 import { getNameOf } from 'helpers/helpers';
-
+import { Routes, Route } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const SLCConfigurateFunction: FC = () => {
@@ -35,36 +35,62 @@ const SLCConfigurateFunction: FC = () => {
         ServerLess Computing
       </h2>
       <section className={styles.formWrapper}>
-        <h3 className={styles.formTitle}>Create Function</h3>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
-          <ul className={styles.inputGroups}>
-            <li className={styles.inputGroup}>
-              <h3 className={styles.inputTitle}>Function name</h3>
-              <div className={styles.inputWrapper}>
-                <Input
-                  type={InputType.TEXT}
-                  label=""
-                  placeholder=""
-                  name={getNameOf<SLCFunctionCreateRequestDto>('name')}
-                  control={control}
-                  errors={errors}
-                />
-              </div>
-            </li>
-          </ul>
-          <div className={styles.buttons}>
-            <div className={styles.button}>
-              <Button
-                btnStyle={ButtonStyle.OUTLINED}
-                label="Cancel"
-                to={AppRoute.SLC}
-              />
-            </div>
-            <div className={styles.button}>
-              <Button type={ButtonType.SUBMIT} label="Create" />
-            </div>
-          </div>
-        </form>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <h3 className={styles.formTitle}>Create Function</h3>
+                <form onSubmit={handleSubmit(handleFormSubmit)}>
+                  <ul className={styles.inputGroups}>
+                    <li className={styles.inputGroup}>
+                      <h3 className={styles.inputTitle}>Function name</h3>
+                      <div className={styles.inputWrapper}>
+                        <Input
+                          type={InputType.TEXT}
+                          label=""
+                          placeholder=""
+                          name={getNameOf<SLCFunctionCreateRequestDto>('name')}
+                          control={control}
+                          errors={errors}
+                        />
+                      </div>
+                    </li>
+                  </ul>
+                  <div className={styles.buttons}>
+                    <div className={styles.button}>
+                      <Button
+                        btnStyle={ButtonStyle.OUTLINED}
+                        label="Cancel"
+                        to={AppRoute.SLC}
+                      />
+                    </div>
+                    <div className={styles.button}>
+                      <Button type={ButtonType.SUBMIT} label="Create" />
+                    </div>
+                  </div>
+                </form>
+              </>
+            }
+          />
+          <Route
+            path="/:id"
+            element={
+              <>
+                <h3 className={styles.formTitle}>Edit Function</h3>;
+                <div className={styles.buttons}>
+                  <div className={styles.button}>
+                    <Button
+                      btnStyle={ButtonStyle.OUTLINED}
+                      label="Cancel"
+                      to={AppRoute.SLC}
+                    />
+                  </div>
+                </div>
+              </>
+            }
+          />
+        </Routes>
       </section>
     </div>
   );
