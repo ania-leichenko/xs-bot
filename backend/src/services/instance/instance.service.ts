@@ -5,7 +5,7 @@ import {
   SCInstanceGetByTenantRequestParamsDto,
   SCInstanceUpdateRequestDto,
   SCInstanceGetByTenantResponseDto,
-  type SCInstanceUpdateResponseDto,
+  SCInstanceUpdateResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { Instance as InstanceEntity } from './instance.entity';
