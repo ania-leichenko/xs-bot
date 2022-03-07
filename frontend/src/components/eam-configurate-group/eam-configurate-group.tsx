@@ -53,6 +53,7 @@ const EAMConfigurateGroup: FC = () => {
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
+      id: '',
       name: payload.name,
       workersIds: selectedWorkers.selectedItems,
       permissionsIds: selectedPermissions.selectedItems,

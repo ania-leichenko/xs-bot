@@ -62,6 +62,20 @@ class EAMApi {
     );
   }
 
+  public updateGroup(
+    id: string,
+    payload: EAMGroupCreateRequestDto,
+  ): Promise<EAMGroupCreateResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.GROUPS, '/', id),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
   public getAllWorkers(
     params: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllResponseDto> {

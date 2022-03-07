@@ -1,9 +1,6 @@
 import { GroupsTableHeader, GroupsTableAccessor } from 'common/enums/enums';
-
-type Column = {
-  Header: string;
-  accessor: string;
-};
+import { EditGroupRowCell } from '../../../helpers/helpers';
+import { Column } from 'react-table';
 
 const getColumns = (): Column[] => {
   return [
@@ -26,6 +23,11 @@ const getColumns = (): Column[] => {
     {
       Header: GroupsTableHeader.ACTIONS,
       accessor: GroupsTableAccessor.ACTIONS,
+    },
+    {
+      Header: '',
+      accessor: 'check',
+      Cell: ({ row }): JSX.Element => EditGroupRowCell(row),
     },
   ];
 };

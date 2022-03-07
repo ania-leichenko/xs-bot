@@ -40,6 +40,27 @@ const create = createAsyncThunk<
   return group;
 });
 
+const update = createAsyncThunk<
+  EAMGroupCreateResponseDto,
+  EAMGroupConfigurateRequestDto,
+  AsyncThunkConfig
+>(ActionType.UPDATE, async (registerPayload, { getState, extra }) => {
+  const { eamApi } = extra;
+
+  const { app } = getState();
+  const { tenant } = app;
+
+  const request: EAMGroupCreateRequestDto = {
+    name: registerPayload.name,
+    tenantId: tenant?.id ?? '',
+    workersIds: registerPayload.workersIds,
+    permissionsIds: registerPayload.permissionsIds,
+  };
+
+  const group = await eamApi.updateGroup(registerPayload.id, request);
+
+  return group;
+});
 const getWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
@@ -58,4 +79,4 @@ const getPermission = createAsyncThunk<
   return eamApi.getAllPermission();
 });
 
-export { create, getWorkers, getPermission };
+export { create, update, getWorkers, getPermission };

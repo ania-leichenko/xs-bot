@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
-import { create, getWorkers, getPermission } from './actions';
+import { create, getWorkers, getPermission, update } from './actions';
 import {
   EAMWorkerGetAllItemResponseDto,
   EAMPermissionGetAllItemResponseDto,
@@ -23,6 +23,10 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(create.fulfilled, (state) => {
     state.dataStatus = DataStatus.FULFILLED;
   });
+  builder.addCase(update.fulfilled, (state) => {
+    state.dataStatus = DataStatus.FULFILLED;
+  });
+
   builder.addCase(getWorkers.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;

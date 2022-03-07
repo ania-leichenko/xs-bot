@@ -3,6 +3,7 @@ import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
+  [GroupsTableAccessor.ID]: string;
   [GroupsTableAccessor.GROUP_NAME]: string;
   [GroupsTableAccessor.WORKERS]: number;
   [GroupsTableAccessor.PERMISSIONS]: string;
@@ -11,10 +12,11 @@ type Row = {
 
 const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
   return groups.map((item) => {
-    const { name, users, permissions, createdAt } = item;
+    const { id, name, users, permissions, createdAt } = item;
     const permissionsContent = permissions.map((item) => item.name).join(', ');
 
     return {
+      [GroupsTableAccessor.ID]: id,
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: permissionsContent,
