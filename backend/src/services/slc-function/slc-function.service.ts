@@ -2,6 +2,7 @@ import {
   SLCFunctionCreateResponseDto,
   SLCFunctionGetRequestParamsDto,
   SLCFunctionGetResponseDto,
+  SLCFunctionUpdateResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
@@ -137,6 +138,58 @@ class SLCFunction {
     await this.#lambdaService.deleteFunction(name);
 
     await this.#slcFunctionRepository.delete(id);
+  }
+
+  public async updateById({
+    id,
+    sourceCode,
+    token,
+  }: {
+    id: string;
+    sourceCode: string;
+    token: string;
+  }): Promise<SLCFunctionUpdateResponseDto> {
+    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
+
+    if (userRole !== UserRole.WORKER) {
+      throw new SLCError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+      });
+    }
+
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
+
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    if (slcFunction.sourceCode === sourceCode) {
+      throw new SLCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.FUNCTION_NOT_CHANGE,
+      });
+    }
+
+    await this.#lambdaService.updateFunctionCode(slcFunction.name, sourceCode);
+
+    slcFunction.setSourceCode(sourceCode);
+
+    const updatedSLCFunction = await this.#slcFunctionRepository.save(
+      slcFunction,
+    );
+
+    if (!updatedSLCFunction) {
+      throw new SLCError({
+        status: HttpCode.INTERNAL_SERVER_ERROR,
+        message: ExceptionMessage.FUNCTION_NOT_UPDATED,
+      });
+    }
+
+    return { sourceCode: updatedSLCFunction.sourceCode };
   }
 }
 

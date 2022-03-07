@@ -103,6 +103,20 @@ class SLCFunction {
     await this.#SLCFunctionModel.query().deleteById(id);
   }
 
+  async save(
+    slcFunction: SLCFunctionEntity,
+  ): Promise<SLCFunctionEntity | null> {
+    const updatedSLCFunction = await this.#SLCFunctionModel
+      .query()
+      .patchAndFetchById(slcFunction.id, { ...slcFunction });
+
+    if (!updatedSLCFunction) {
+      return null;
+    }
+
+    return SLCFunction.modelToEntity(updatedSLCFunction);
+  }
+
   public static modelToEntity(model: SLCFunctionM): SLCFunctionEntity {
     const {
       id,
