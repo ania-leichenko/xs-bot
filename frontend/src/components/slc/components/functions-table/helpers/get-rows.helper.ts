@@ -1,7 +1,7 @@
 import { FunctionsTableAccessor } from 'common/enums/enums';
 import { SLCFunctionGetResponseItemDto } from 'common/types/types';
-import { DeleteRowCell } from './cells/cells';
 import { getDistanceToDateNow } from 'helpers/helpers';
+import { ActionsRowCell } from './cells/cells';
 
 type Row = {
   [FunctionsTableAccessor.FUNCTION_NAME]: string;
@@ -28,7 +28,7 @@ const getRows = ({
       [FunctionsTableAccessor.UPDATION_TIME]: getDistanceToDateNow(
         new Date(updatedAt),
       ),
-      [FunctionsTableAccessor.ACTIONS]: DeleteRowCell(id, onFunctionDelete),
+      [FunctionsTableAccessor.ACTIONS]: ActionsRowCell(id, onFunctionDelete),
     };
   });
 };

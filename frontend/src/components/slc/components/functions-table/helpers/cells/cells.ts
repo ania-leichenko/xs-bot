@@ -1,1 +1,1 @@
-export { DeleteRowCell } from './delete-row-cell/delete-row-cell';
+export { ActionsRowCell } from './actions-row-cell/actions-row-cell';
