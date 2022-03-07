@@ -12,10 +12,15 @@ import {
 import {
   SCInstanceCreateRequestDto,
   SCInstanceGetByTenantRequestParamsDto,
-  SCInstanceDeleteRequestDto,
+  SCInstanceDeleteParamsDto,
+  SCInstanceUpdateParamsDto,
+  SCInstanceUpdateRequestDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { scInstanceCreate as scInstanceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
+import {
+  scInstanceCreate as scInstanceCreateValidationSchema,
+  scInstanceUpdate as scInstanceUpdateValidationSchema,
+} from '~/validation-schemas/validation-schemas';
 
 type Options = {
   services: {
@@ -60,12 +65,39 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
     async handler(
       req: FastifyRequest<{
-        Params: SCInstanceDeleteRequestDto;
+        Params: SCInstanceDeleteParamsDto;
       }>,
       rep,
     ) {
       await instanceService.delete(req.params.id);
       return rep.send(true).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.PUT,
+    url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
+    schema: {
+      body: scInstanceUpdateValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof scInstanceUpdateValidationSchema>) {
+      return (
+        data: SCInstanceUpdateRequestDto,
+      ): ReturnType<typeof scInstanceUpdateValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
+    async handler(
+      req: FastifyRequest<{
+        Params: SCInstanceUpdateParamsDto;
+        Body: SCInstanceUpdateRequestDto;
+      }>,
+      rep,
+    ) {
+      const instance = await instanceService.update(req.params.id, req.body);
+      return rep.send(instance).status(HttpCode.OK);
     },
   });
 
