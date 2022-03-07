@@ -1,33 +1,9 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppForm } from 'hooks/hooks';
-import { SLCFunctionCreateRequestDto } from 'common/types/types';
-import { DEFAULT_PAYLOAD } from './common/constants';
-import { slcFunctionCreate as CreateSLCFunctionValidationSchema } from 'validation-schemas/validation-schemas';
-import { SLCFunctionConfigurate as SLCFunctionConfigurateActions } from 'store/actions';
-import {
-  AppRoute,
-  ButtonStyle,
-  ButtonType,
-  InputType,
-} from 'common/enums/enums';
-import { Button, Input } from 'components/common/common';
-import { getNameOf } from 'helpers/helpers';
 import { Routes, Route } from 'components/common/common';
+import { CreateForm, EditForm } from './components/components';
 import styles from './styles.module.scss';
 
 const SLCConfigurateFunction: FC = () => {
-  const dispatch = useAppDispatch();
-
-  const { control, errors, handleSubmit } =
-    useAppForm<SLCFunctionCreateRequestDto>({
-      defaultValues: DEFAULT_PAYLOAD,
-      validationSchema: CreateSLCFunctionValidationSchema,
-    });
-
-  const handleFormSubmit = (payload: SLCFunctionCreateRequestDto): void => {
-    dispatch(SLCFunctionConfigurateActions.createFunction(payload));
-  };
-
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -36,60 +12,8 @@ const SLCConfigurateFunction: FC = () => {
       </h2>
       <section className={styles.formWrapper}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <h3 className={styles.formTitle}>Create Function</h3>
-                <form onSubmit={handleSubmit(handleFormSubmit)}>
-                  <ul className={styles.inputGroups}>
-                    <li className={styles.inputGroup}>
-                      <h3 className={styles.inputTitle}>Function name</h3>
-                      <div className={styles.inputWrapper}>
-                        <Input
-                          type={InputType.TEXT}
-                          label=""
-                          placeholder=""
-                          name={getNameOf<SLCFunctionCreateRequestDto>('name')}
-                          control={control}
-                          errors={errors}
-                        />
-                      </div>
-                    </li>
-                  </ul>
-                  <div className={styles.buttons}>
-                    <div className={styles.button}>
-                      <Button
-                        btnStyle={ButtonStyle.OUTLINED}
-                        label="Cancel"
-                        to={AppRoute.SLC}
-                      />
-                    </div>
-                    <div className={styles.button}>
-                      <Button type={ButtonType.SUBMIT} label="Create" />
-                    </div>
-                  </div>
-                </form>
-              </>
-            }
-          />
-          <Route
-            path="/:id"
-            element={
-              <>
-                <h3 className={styles.formTitle}>Edit Function</h3>;
-                <div className={styles.buttons}>
-                  <div className={styles.button}>
-                    <Button
-                      btnStyle={ButtonStyle.OUTLINED}
-                      label="Cancel"
-                      to={AppRoute.SLC}
-                    />
-                  </div>
-                </div>
-              </>
-            }
-          />
+          <Route path="/" element={<CreateForm />} />
+          <Route path="/:id" element={<EditForm />} />
         </Routes>
       </section>
     </div>
