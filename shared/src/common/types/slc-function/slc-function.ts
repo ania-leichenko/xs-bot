@@ -5,3 +5,6 @@ export { type SLCFunctionGetFilter } from './slc-function-get-filter.type';
 export { type SLCFunctionGetResponseItemDto } from './slc-function-get-response-item-dto.type';
 export { type SLCFunctionGetResponseDto } from './slc-function-get-response-dto.type';
 export { type SLCFunctionDeleteParamsDto } from './slc-function-delete-params-dto.type';
+export { type SLCFunctionUpdateParamsDto } from './slc-function-update-params-dto.type';
+export { type SLCFunctionUpdateRequestDto } from './slc-function-update-request-dto.type';
+export { type SLCFunctionUpdateResponseDto } from './slc-function-update-response-dto.type';
