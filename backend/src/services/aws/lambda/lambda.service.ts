@@ -4,6 +4,8 @@ import {
   CreateFunctionCommandOutput,
   DeleteFunctionCommand,
   DeleteFunctionCommandOutput,
+  UpdateFunctionCodeCommand,
+  UpdateFunctionCodeCommandOutput,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
 import { LambdaDefaultParam } from '~/common/enums/enums';
@@ -67,6 +69,27 @@ class Lambda {
     return this.#lambdaClient.send(
       new DeleteFunctionCommand({
         FunctionName: name,
+      }),
+    );
+  }
+
+  public async updateFunctionCode(
+    name: string,
+    sourceCode: string,
+  ): Promise<UpdateFunctionCodeCommandOutput> {
+    const zipArchive = new AdmZip();
+
+    zipArchive.addFile(
+      LambdaDefaultParam.ROOT_FILE,
+      Buffer.alloc(sourceCode.length, sourceCode),
+    );
+
+    const sendZipArchive = zipArchive.toBuffer();
+
+    return this.#lambdaClient.send(
+      new UpdateFunctionCodeCommand({
+        FunctionName: name,
+        ZipFile: sendZipArchive,
       }),
     );
   }

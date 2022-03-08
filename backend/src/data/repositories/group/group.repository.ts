@@ -89,35 +89,9 @@ class Group {
       return null;
     }
     const permissionIds = await this.getGroupPermissionsById(id);
-    return Group.modelToEntity(group, [], permissionIds);
-  }
+    const workerIds = await this.getGroupWorkersById(id);
 
-  async insertWorkerByIdGroup(id: string, workerIds: string[]): Promise<void> {
-    const hasWorkersIds = Boolean(workerIds.length);
-    if (hasWorkersIds) {
-      await this.#UsersGroupsModel.query().insert(
-        workerIds.map((workerId) => ({
-          id: getRandomId(),
-          userId: workerId,
-          groupId: id,
-          createdAt: new Date().toISOString(),
-        })),
-      );
-    }
-  }
-
-  async insertPermissionsByIdGroup(
-    id: string,
-    permissionIds: string[],
-  ): Promise<void> {
-    await this.#GroupsPermissionsModel.query().insert(
-      permissionIds.map((permissionId) => ({
-        id: getRandomId(),
-        groupId: id,
-        permissionId: permissionId,
-        createdAt: new Date().toISOString(),
-      })),
-    );
+    return Group.modelToEntity(group, workerIds, permissionIds);
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
@@ -129,9 +103,25 @@ class Group {
       createdAt: createdAt,
       tenantId,
     });
-
-    await this.insertWorkerByIdGroup(id, workersIds);
-    await this.insertPermissionsByIdGroup(id, permissionsIds);
+    const hasWorkersIds = Boolean(workersIds.length);
+    if (hasWorkersIds) {
+      await this.#UsersGroupsModel.query().insert(
+        workersIds.map((workerId) => ({
+          id: getRandomId(),
+          userId: workerId,
+          groupId: id,
+          createdAt: new Date().toISOString(),
+        })),
+      );
+    }
+    await this.#GroupsPermissionsModel.query().insert(
+      permissionsIds.map((permissionId) => ({
+        id: getRandomId(),
+        groupId: id,
+        permissionId: permissionId,
+        createdAt: new Date().toISOString(),
+      })),
+    );
 
     return Group.modelToEntity(created, workersIds, permissionsIds);
   }
@@ -151,9 +141,25 @@ class Group {
       .where({ 'groupId': id });
     await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
 
-    await this.insertWorkerByIdGroup(id, workersIds);
-    await this.insertPermissionsByIdGroup(id, permissionsIds);
-
+    const hasWorkersIds = Boolean(workersIds.length);
+    if (hasWorkersIds) {
+      await this.#UsersGroupsModel.query().insert(
+        workersIds.map((workerId) => ({
+          id: getRandomId(),
+          userId: workerId,
+          groupId: id,
+          createdAt: new Date().toISOString(),
+        })),
+      );
+    }
+    await this.#GroupsPermissionsModel.query().insert(
+      permissionsIds.map((permissionId) => ({
+        id: getRandomId(),
+        groupId: id,
+        permissionId: permissionId,
+        createdAt: new Date().toISOString(),
+      })),
+    );
     return Group.modelToEntity(groupModel, workersIds, permissionsIds);
   }
 
