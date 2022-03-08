@@ -1,9 +1,12 @@
 import { FC } from 'react';
-import { Routes, Route } from 'components/common/common';
 import { CreateForm, EditForm } from './components/components';
+import { useParams } from 'hooks/hooks';
 import styles from './styles.module.scss';
 
 const SLCConfigurateFunction: FC = () => {
+  const params = useParams();
+  const hasId = Boolean(params.id);
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -11,10 +14,7 @@ const SLCConfigurateFunction: FC = () => {
         ServerLess Computing
       </h2>
       <section className={styles.formWrapper}>
-        <Routes>
-          <Route path="/" element={<CreateForm />} />
-          <Route path="/:id" element={<EditForm />} />
-        </Routes>
+        {hasId ? <EditForm /> : <CreateForm />}
       </section>
     </div>
   );
