@@ -16,6 +16,7 @@ export {
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
   type EAMWorkerByIdResponseDto,
+  type EAMWorkerDeleteRequestDto,
 } from './eam-worker/eam-worker';
 export {
   type EAMGroupCreateResponseDto,
