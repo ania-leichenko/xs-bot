@@ -2,3 +2,33 @@
   display: flex;
   align-items: center;
 }
+
+.button {
+  background: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.redirect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100px;
+  min-height: 30px;
+  margin-left: 10px;
+  color: var(--color-white);
+  font-weight: bold;
+  text-decoration: none;
+  background-color: var(--color-orange);
+  border-radius: 5px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.redirect:hover {
+  color: var(--color-orange);
+  background-color: inherit;
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--color-orange);
+}
