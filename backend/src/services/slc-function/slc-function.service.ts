@@ -177,6 +177,7 @@ class SLCFunction {
     await this.#lambdaService.updateFunctionCode(slcFunction.name, sourceCode);
 
     slcFunction.setSourceCode(sourceCode);
+    slcFunction.updateUpdatedAt();
 
     const updatedSLCFunction = await this.#slcFunctionRepository.save(
       slcFunction,
