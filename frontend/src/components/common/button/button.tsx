@@ -10,8 +10,10 @@ import styles from './styles.module.scss';
 import { Link } from '../link/link';
 
 type Props = {
-  label: string;
+  label?: string;
   to?: AppRoute;
+  icon?: string;
+  iconName?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
   btnStyle?: ButtonStyle;
@@ -23,12 +25,15 @@ const Button: FC<Props> = ({
   label,
   to,
   onClick,
+  icon,
+  iconName,
   type = ButtonType.BUTTON,
   btnStyle = ButtonStyle.FILLED,
   btnColor = ButtonColor.ORANGE,
   className,
 }) => {
   const isLink = Boolean(to);
+  const isIcon = Boolean(icon);
   const fullClassName = getValidClasses(
     styles.btn,
     styles[`btnColor${btnColor}`],
@@ -37,12 +42,16 @@ const Button: FC<Props> = ({
   );
 
   return isLink ? (
-    <Link className={fullClassName} to={to as AppRoute}>
-      {label}
+    <Link className={isIcon ? className : fullClassName} to={to as AppRoute}>
+      {isIcon ? <img src={icon} alt={iconName} /> : label}
     </Link>
   ) : (
-    <button onClick={onClick} type={type} className={fullClassName}>
-      {label}
+    <button
+      className={isIcon ? className : fullClassName}
+      onClick={onClick}
+      type={type}
+    >
+      {isIcon ? <img src={icon} alt={iconName} /> : label}
     </button>
   );
 };

@@ -1,7 +1,11 @@
 import deleteIcon from 'assets/img/delete-icon.svg';
 
-const IconName = {
-  TRASH: deleteIcon,
-} as const;
+enum IconName {
+  TRASH = 'trash',
+}
 
-export { IconName };
+const iconNameToSrc = {
+  [IconName.TRASH]: deleteIcon,
+};
+
+export { IconName, iconNameToSrc };
