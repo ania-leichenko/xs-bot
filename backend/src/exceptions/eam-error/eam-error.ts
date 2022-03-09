@@ -5,13 +5,13 @@ type Constructor = {
   message?: string;
 };
 
-const DEFAULT_MESSAGE = ExceptionMessage.GROUP_EXISTS;
+const DEFAULT_MESSAGE = ExceptionMessage.WORKER_DELETE_WORKER;
 
-class EamError extends Error {
+class EAMError extends Error {
   status: HttpCode;
 
   constructor({
-    status = HttpCode.BAD_REQUEST,
+    status = HttpCode.DENIED,
     message = DEFAULT_MESSAGE,
   }: Constructor = {}) {
     super(message);
@@ -19,4 +19,4 @@ class EamError extends Error {
   }
 }
 
-export { EamError };
+export { EAMError };

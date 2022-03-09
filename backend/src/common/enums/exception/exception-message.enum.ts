@@ -30,6 +30,7 @@ const ExceptionMessage = {
   GROUP_EXISTS: 'Group with this name already exists',
   INSTANCE_NOT_FOUND: 'Instance not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
+  WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
 } as const;
 
 export { ExceptionMessage };

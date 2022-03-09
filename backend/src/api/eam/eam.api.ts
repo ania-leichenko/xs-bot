@@ -17,10 +17,11 @@ import {
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
   EAMGroupDeleteParamsDto,
+  EAMWorkerDeleteRequestDto,
 } from '~/common/types/types';
 import {
-  eamWorkerCreateBackend as workerValidationSchema,
   eamGroupCreate as groupCreateValidationSchema,
+  eamWorkerCreateBackend as workerValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
@@ -137,6 +138,25 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const { id } = req.params;
 
       await groupServ.delete({ id });
+
+      return rep.send(true).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: `${EAMApiPath.WORKERS}${WorkersApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{ Params: EAMWorkerDeleteRequestDto }>,
+      rep,
+    ) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const { id } = req.params;
+
+      await workerService.deleteWorker({
+        id,
+        token,
+      });
 
       return rep.send(true).status(HttpCode.OK);
     },
