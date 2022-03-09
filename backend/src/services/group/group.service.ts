@@ -7,7 +7,7 @@ import {
   EAMGroupDeleteParamsDto,
 } from '~/common/types/types';
 import { Group as GroupEntity } from '~/services/group/group.entity';
-import { EamError } from '~/exceptions/exceptions';
+import { EAMError } from '~/exceptions/exceptions';
 import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 
 type Constructor = {
@@ -39,7 +39,7 @@ class Group {
       tenantId,
     );
     if (groupByName) {
-      throw new EamError();
+      throw new EAMError();
     }
 
     const group = GroupEntity.createNew({
@@ -56,14 +56,14 @@ class Group {
     const group = await this.#groupRepository.getGroupById(id);
 
     if (!group) {
-      throw new EamError({
+      throw new EAMError({
         status: HttpCode.NOT_FOUND,
         message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
       });
     }
     const hasUsers = Boolean(group.users.length);
     if (hasUsers) {
-      throw new EamError({
+      throw new EAMError({
         status: HttpCode.UNPROCESSABLE_ENTITY,
         message: ExceptionMessage.GROUP_NOT_EMPTY,
       });
