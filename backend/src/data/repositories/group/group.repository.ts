@@ -106,9 +106,9 @@ class Group {
     return Group.modelToEntity(created, workersIds, permissionsIds);
   }
 
-  async delete(id: string): Promise<number> {
+  async delete(id: string): Promise<void> {
     await this.#GroupsPermissionsModel.query().where({ groupId: id }).del();
-    return this.#GroupModel.query().where({ id }).del();
+    await this.#GroupModel.query().where({ id }).del();
   }
 
   public static modelToEntity(

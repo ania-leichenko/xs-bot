@@ -52,7 +52,7 @@ class Group {
     return this.#groupRepository.create(group);
   }
 
-  public async delete({ id }: EAMGroupDeleteParamsDto): Promise<number> {
+  public async delete({ id }: EAMGroupDeleteParamsDto): Promise<void> {
     const group = await this.#groupRepository.getGroupById(id);
 
     if (!group) {
@@ -69,7 +69,7 @@ class Group {
       });
     }
 
-    return this.#groupRepository.delete(id);
+    await this.#groupRepository.delete(id);
   }
 }
 

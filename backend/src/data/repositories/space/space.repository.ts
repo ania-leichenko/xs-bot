@@ -31,8 +31,8 @@ class Space {
     return Space.modelToEntity(created);
   }
 
-  async delete(id: string): Promise<number> {
-    return this.#SpaceModel.query().where({ id }).del();
+  async delete(id: string): Promise<void> {
+    await this.#SpaceModel.query().where({ id }).del();
   }
 
   async getSpaceById(id: string): Promise<SpaceEntity> {
