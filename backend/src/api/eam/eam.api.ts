@@ -16,6 +16,7 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
+  EAMWorkerDeleteRequestDto,
 } from '~/common/types/types';
 import {
   eamGroupCreate as groupCreateValidationSchema,
@@ -110,12 +111,13 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
     async handler(
       req: FastifyRequest<{
-        Querystring: { id: string };
+        Params: { id: string };
         Body: EAMGroupCreateRequestDto;
       }>,
       rep,
     ) {
-      const group = await groupService.update(req.query.id, req.body);
+      const { id } = req.params;
+      const group = await groupService.update(id, req.body);
 
       return rep.send(group).status(HttpCode.OK);
     },
@@ -153,6 +155,25 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: `${EAMApiPath.WORKERS}${WorkersApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{ Params: EAMWorkerDeleteRequestDto }>,
+      rep,
+    ) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const { id } = req.params;
+
+      await workerService.deleteWorker({
+        id,
+        token,
+      });
+
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 };

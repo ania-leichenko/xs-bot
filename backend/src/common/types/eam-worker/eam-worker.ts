@@ -8,4 +8,5 @@ export {
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
   type EAMWorkerByIdResponseDto,
+  type EAMWorkerDeleteRequestDto,
 } from 'bws-shared/common/types/types';

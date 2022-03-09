@@ -8,3 +8,4 @@ export { type EAMWorkerGetAllItemResponseDto } from './eam-worker-get-all-item-r
 export { type EAMWorkerByIdResponseDto } from './eam-worker-by-id-response-dto.type';
 export { type EAMWorkerSignInRequestDto } from './eam-worker-sign-in-request-dto.type';
 export { type EAMWorkerSignInResponseDto } from './eam-worker-sign-in-response-dto.type';
+export { type EAMWorkerDeleteRequestDto } from './eam-worker-delete-request-dto.type';
