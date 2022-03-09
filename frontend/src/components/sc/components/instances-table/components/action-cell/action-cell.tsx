@@ -1,5 +1,5 @@
 import { IconButton } from 'components/common/icon-button/icon-button';
-import { IconName, iconNameToSrc } from 'common/enums/enums';
+import { IconName } from 'common/enums/enums';
 
 const ActionCell = (
   id: string,
@@ -9,11 +9,7 @@ const ActionCell = (
     onInstanceDelete(id);
   };
   return (
-    <IconButton
-      icon={iconNameToSrc[IconName.TRASH]}
-      name="Delete"
-      onClick={handleDelete}
-    />
+    <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
   );
 };
 

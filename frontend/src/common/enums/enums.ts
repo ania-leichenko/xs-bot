@@ -22,7 +22,6 @@ export {
   InputType,
   ButtonColor,
   IconName,
-  iconNameToSrc,
 } from './ui/ui';
 export {
   GroupsTableHeader,

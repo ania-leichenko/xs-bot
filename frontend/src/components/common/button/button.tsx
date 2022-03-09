@@ -1,19 +1,20 @@
 import { FC } from 'react';
 import {
-  ButtonType,
-  ButtonStyle,
   AppRoute,
   ButtonColor,
+  ButtonStyle,
+  ButtonType,
+  IconName,
 } from 'common/enums/enums';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Link } from '../link/link';
+import deleteIcon from 'assets/img/delete-icon.svg';
 
 type Props = {
-  label?: string;
+  label: string;
   to?: AppRoute;
-  icon?: string;
-  iconName?: string;
+  icon?: IconName;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
   btnStyle?: ButtonStyle;
@@ -26,14 +27,12 @@ const Button: FC<Props> = ({
   to,
   onClick,
   icon,
-  iconName,
   type = ButtonType.BUTTON,
   btnStyle = ButtonStyle.FILLED,
   btnColor = ButtonColor.ORANGE,
   className,
 }) => {
   const isLink = Boolean(to);
-  const isIcon = Boolean(icon);
   const fullClassName = getValidClasses(
     styles.btn,
     styles[`btnColor${btnColor}`],
@@ -41,17 +40,21 @@ const Button: FC<Props> = ({
     className,
   );
 
+  const iconNameToSrc = {
+    [IconName.TRASH]: deleteIcon,
+  };
+
   return isLink ? (
-    <Link className={isIcon ? className : fullClassName} to={to as AppRoute}>
-      {isIcon ? <img src={icon} alt={iconName} /> : label}
+    <Link className={icon ? className : fullClassName} to={to as AppRoute}>
+      {icon ? <img src={icon} alt={label} /> : label}
     </Link>
   ) : (
     <button
-      className={isIcon ? className : fullClassName}
+      className={icon ? className : fullClassName}
       onClick={onClick}
       type={type}
     >
-      {isIcon ? <img src={icon} alt={iconName} /> : label}
+      {icon ? <img src={iconNameToSrc[icon]} alt={label} /> : label}
     </button>
   );
 };

@@ -61,7 +61,8 @@ class Group {
         message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
       });
     }
-    if (group.users.length) {
+    const hasUsers = Boolean(group.users.length);
+    if (hasUsers) {
       throw new EamError({
         status: HttpCode.UNPROCESSABLE_ENTITY,
         message: ExceptionMessage.GROUP_NOT_EMPTY,
