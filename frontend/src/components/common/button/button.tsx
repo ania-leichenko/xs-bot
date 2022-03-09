@@ -46,7 +46,7 @@ const Button: FC<Props> = ({
 
   return isLink ? (
     <Link className={icon ? className : fullClassName} to={to as AppRoute}>
-      {icon ? <img src={icon} alt={label} /> : label}
+      {icon ? <img src={iconNameToSrc[icon]} alt={label} /> : label}
     </Link>
   ) : (
     <button
