@@ -111,12 +111,13 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
     async handler(
       req: FastifyRequest<{
-        Querystring: { id: string };
+        Params: { id: string };
         Body: EAMGroupCreateRequestDto;
       }>,
       rep,
     ) {
-      const group = await groupService.update(req.query.id, req.body);
+      const { id } = req.params;
+      const group = await groupService.update(id, req.body);
 
       return rep.send(group).status(HttpCode.OK);
     },
