@@ -27,6 +27,7 @@ const ExceptionMessage = {
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
   INSTANCE_NOT_FOUND: 'Instance not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
+  WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
 } as const;
 
 export { ExceptionMessage };
