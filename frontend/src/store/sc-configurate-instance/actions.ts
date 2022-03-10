@@ -8,6 +8,9 @@ import {
   SCOperationSystemGetAllResponseDto,
   SCInstanceCreateRequestDto,
   SCInstanceCreateResponseDto,
+  SCInstanceUpdateParamsDto,
+  SCInstanceUpdateRequestDto,
+  SCInstanceUpdateResponseDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
@@ -41,4 +44,23 @@ const createInstance = createAsyncThunk<
   return instance;
 });
 
-export { loadOperationSystems, createInstance };
+const updateInstance = createAsyncThunk<
+  SCInstanceUpdateResponseDto,
+  SCInstanceUpdateParamsDto & SCInstanceUpdateRequestDto,
+  AsyncThunkConfig
+>(ActionType.UPDATE_INSTANCE, async (payload, { extra }) => {
+  const { scApi, navigation, notification } = extra;
+
+  navigation.push(AppRoute.SC);
+
+  const instance = await scApi.updateInstance(payload);
+
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.SC_INSTANCE_UPDATE,
+  );
+
+  return instance;
+});
+
+export { loadOperationSystems, createInstance, updateInstance };

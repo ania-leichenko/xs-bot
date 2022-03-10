@@ -11,7 +11,7 @@ import { Link } from '../link/link';
 
 type Props = {
   label: string;
-  to?: AppRoute;
+  to?: AppRoute | string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
   btnStyle?: ButtonStyle;
