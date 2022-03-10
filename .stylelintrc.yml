@@ -165,7 +165,7 @@ rules:
     - list-style-type
     - list-style-image
     - table-layout
-    - empty-cells
+    - empty-action-cell
     - caption-side
     - background
     - background-color

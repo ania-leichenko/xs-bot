@@ -58,6 +58,10 @@ class Worker {
     return workers;
   }
 
+  public async deleteWorker(workerId: string): Promise<number> {
+    return this.#WorkerModel.query().deleteById(workerId);
+  }
+
   public async getWorkerPermissions(workerId: string): Promise<string[]> {
     const groups = await this.#UsersGroupsModel
       .query()

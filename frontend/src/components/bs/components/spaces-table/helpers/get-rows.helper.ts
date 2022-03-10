@@ -1,6 +1,6 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
-import { DeleteRowCell } from './cells/cells';
+import { ActionCell } from '../components/components';
 import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
@@ -24,7 +24,7 @@ const getRows = ({
       [SpacesTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),
       ),
-      [SpacesTableAccessor.ACTIONS]: DeleteRowCell(id, onSpaceDelete),
+      [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),
     };
   });
 };

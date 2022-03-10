@@ -13,12 +13,7 @@ class Permission {
   }
 
   public async getAll(): Promise<EAMPermissionGetAllItemResponseDto[]> {
-    const permissions = await this.#PermissionModel
-      .query()
-      .select()
-      .orderBy('name', 'asc');
-
-    return permissions;
+    return this.#PermissionModel.query().select().orderBy('name', 'asc');
   }
 }
 
