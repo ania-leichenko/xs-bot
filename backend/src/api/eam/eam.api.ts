@@ -16,6 +16,7 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
+  EAMGroupDeleteParamsDto,
   EAMWorkerDeleteRequestDto,
 } from '~/common/types/types';
 import {
@@ -124,6 +125,21 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{ Params: EAMGroupDeleteParamsDto }>,
+      rep,
+    ) {
+      const { id } = req.params;
+
+      await groupServ.delete({ id });
+
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 
