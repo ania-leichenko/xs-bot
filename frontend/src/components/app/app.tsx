@@ -116,7 +116,11 @@ const App: FC = () => {
           }
         />
         <Route
-          path={`${AppRoute.SLC_CONFIGURATE_FUNCTION}/*`}
+          path={AppRoute.SLC_CONFIGURATE_FUNCTION}
+          element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
+        />
+        <Route
+          path={AppRoute.SLC_CONFIGURATE_FUNCTION_$ID}
           element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
         />
         <Route

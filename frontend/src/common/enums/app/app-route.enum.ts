@@ -11,6 +11,7 @@ enum AppRoute {
   SC_CONFIGURATE_INSTANCE = '/sc/configurate-instance',
   SLC = '/slc',
   SLC_CONFIGURATE_FUNCTION = '/slc/configurate-function',
+  SLC_CONFIGURATE_FUNCTION_$ID = '/slc/configurate-function/:id',
   NOT_FOUND = '*',
 }
 
