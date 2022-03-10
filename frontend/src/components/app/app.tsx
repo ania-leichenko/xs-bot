@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { auth as authActions, app as appActions } from 'store/actions';
 import {
   AppRoute,
-  AdditionalRoute,
   DataStatus,
   StorageKey,
   Permission,
@@ -117,14 +116,9 @@ const App: FC = () => {
           }
         />
         <Route
-          path={AppRoute.SLC_CONFIGURATE_FUNCTION}
+          path={`${AppRoute.SLC_CONFIGURATE_FUNCTION}/*`}
           element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
-        >
-          <Route
-            path={`${AppRoute.SLC_CONFIGURATE_FUNCTION}${AdditionalRoute.ID}`}
-            element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
-          />
-        </Route>
+        />
         <Route
           path={AppRoute.NOT_FOUND}
           element={<AuthorizedRoute component={<NotFound />} />}
