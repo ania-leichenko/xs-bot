@@ -1,9 +1,5 @@
 .wrapper {
   display: flex;
-}
-
-.button {
-  background: inherit;
-  border: none;
-  cursor: pointer;
+  align-items: center;
+  gap: 7px;
 }

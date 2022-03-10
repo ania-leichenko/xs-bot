@@ -20,7 +20,7 @@ import {
   token as tokenServ,
   tenant as tenantServ,
 } from '~/services/services';
-import { InvalidCredentialsError } from '~/exceptions/invalid-credentials-error/invalid-credentials-error';
+import { InvalidCredentialsError, EAMError } from '~/exceptions/exceptions';
 
 type Constructor = {
   workerRepository: typeof workerRep;
@@ -181,6 +181,22 @@ class Worker {
   ): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll(param);
     return { items: workers };
+  }
+
+  public async deleteWorker({
+    id,
+    token,
+  }: {
+    id: string;
+    token: string;
+  }): Promise<void> {
+    const user: TokenPayload = await this.#tokenService.decode(token);
+
+    if (user.userRole !== UserRole.MASTER) {
+      throw new EAMError();
+    }
+
+    await this.#workerRepository.deleteWorker(id);
   }
 }
 

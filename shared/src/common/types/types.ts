@@ -14,6 +14,8 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
   type EAMGroupConfigurateRequestDto,
   type EAMGroupRelatedItem,
+  type EAMGroupDeleteParamsDto,
+  type EamGroupGetByIdItem,
 } from './eam-group/eam-group';
 export {
   type EAMWorkerGetAllItemResponseDto,
@@ -26,6 +28,7 @@ export {
   type EAMWorkerByIdResponseDto,
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
+  type EAMWorkerDeleteRequestDto,
 } from './eam-worker/eam-worker';
 export {
   type EAMTenantCreateRequestDto,

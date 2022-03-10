@@ -1,15 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  EAMWorkerGetAllResponseDto,
+  AsyncThunkConfig,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
-  EAMWorkerGetByTenantRequestParamsDto,
   EAMTenantByIdResponseDto,
   EAMTenantUpdateRequestDto,
-  AsyncThunkConfig,
+  EAMWorkerGetAllResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
+import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const getWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
@@ -17,9 +17,7 @@ const getWorkers = createAsyncThunk<
   AsyncThunkConfig
 >(ActionType.GET_WORKERS, async (payload, { extra }) => {
   const { eamApi } = extra;
-  const workers = await eamApi.getAllWorkers(payload);
-
-  return workers;
+  return eamApi.getAllWorkers(payload);
 });
 
 const loadGroups = createAsyncThunk<
@@ -45,4 +43,20 @@ const updateTenant = createAsyncThunk<
   return tenant;
 });
 
-export { getWorkers, loadGroups, updateTenant };
+const deleteGroup = createAsyncThunk<string, string, AsyncThunkConfig>(
+  ActionType.DELETE_GROUP,
+  async (id, { extra }) => {
+    const { eamApi, notification } = extra;
+
+    await eamApi.deleteGroup(id);
+
+    notification.success(
+      NotificationTitle.SUCCESS,
+      NotificationMessage.EAM_GROUP_DELETE,
+    );
+
+    return id;
+  },
+);
+
+export { getWorkers, loadGroups, updateTenant, deleteGroup };

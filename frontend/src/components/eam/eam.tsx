@@ -35,6 +35,10 @@ const EAM: FC = () => {
     );
   }, [dispatch, tenantId]);
 
+  const handleGroupDelete = (id: string): void => {
+    dispatch(eamActions.deleteGroup(id));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -51,7 +55,7 @@ const EAM: FC = () => {
           />
         </WorkersTable>
       </div>
-      <GroupsTable>
+      <GroupsTable onGroupDelete={handleGroupDelete}>
         <Button
           className={styles.addGroupBtn}
           to={AppRoute.EAM_CONFIGURATE_GROUP}
