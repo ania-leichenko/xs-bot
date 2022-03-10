@@ -49,7 +49,14 @@ const UpdateInstanceForm: FC<Props> = ({ id }) => {
       return;
     }
 
-    dispatch(scActions.updateInstance({ ...payload, id: id as string }));
+    dispatch(
+      scActions.updateInstance({
+        payload,
+        params: {
+          id: id as string,
+        },
+      }),
+    );
   };
 
   return (

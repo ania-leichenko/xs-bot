@@ -46,14 +46,17 @@ const createInstance = createAsyncThunk<
 
 const updateInstance = createAsyncThunk<
   SCInstanceUpdateResponseDto,
-  SCInstanceUpdateParamsDto & SCInstanceUpdateRequestDto,
+  {
+    params: SCInstanceUpdateParamsDto;
+    payload: SCInstanceUpdateRequestDto;
+  },
   AsyncThunkConfig
->(ActionType.UPDATE_INSTANCE, async (payload, { extra }) => {
+>(ActionType.UPDATE_INSTANCE, async ({ params, payload }, { extra }) => {
   const { scApi, navigation, notification } = extra;
 
   navigation.push(AppRoute.SC);
 
-  const instance = await scApi.updateInstance(payload);
+  const instance = await scApi.updateInstance(params, payload);
 
   notification.success(
     NotificationTitle.SUCCESS,

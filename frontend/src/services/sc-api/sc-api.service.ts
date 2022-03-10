@@ -67,21 +67,21 @@ class SCApi {
   }
 
   public async updateInstance(
-    payload: SCInstanceUpdateParamsDto & SCInstanceUpdateRequestDto,
+    params: SCInstanceUpdateParamsDto,
+    payload: SCInstanceUpdateRequestDto,
   ): Promise<SCInstanceUpdateResponseDto> {
-    const { id, ...data } = payload;
     return this.#http.load(
       joinItems(
         this.#apiPrefix,
         ApiPath.SC,
         SCApiPath.INSTANCES,
         InstancesApiPath.ROOT,
-        id,
+        params.id,
       ),
       {
         method: HttpMethod.PUT,
         contentType: ContentType.JSON,
-        payload: JSON.stringify(data),
+        payload: JSON.stringify(payload),
       },
     );
   }
