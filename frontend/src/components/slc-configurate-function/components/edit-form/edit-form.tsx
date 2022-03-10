@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { AppRoute, ButtonStyle } from 'common/enums/enums';
-import { Button } from 'components/common/common';
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+import { Button, Editor } from 'components/common/common';
+import { useState } from 'hooks/hooks';
 import styles from './styles.module.scss';
 
 const EditForm: FC = () => {
+  const [value, setValue] = useState<string>('');
+
   return (
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
@@ -17,11 +18,7 @@ const EditForm: FC = () => {
           <Button btnStyle={ButtonStyle.FILLED} label="Save" />
         </div>
       </div>
-      <CodeMirror
-        height="500px"
-        extensions={[javascript()]}
-        placeholder="Source code can't be empty."
-      />
+      <Editor value={value} onChangeValue={setValue} />
       <div className={styles.buttons}>
         <div className={styles.button}>
           <Button
