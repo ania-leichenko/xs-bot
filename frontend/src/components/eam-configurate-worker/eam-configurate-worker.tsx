@@ -42,6 +42,10 @@ const EAMConfigurateWorker: FC = () => {
         }),
       );
     }
+
+    return function cleanup(): void {
+      dispatch(EAMWorkerConfigurateActions.cleanupCSV());
+    };
   }, [dispatch, tenantId]);
 
   const { control, errors, handleSubmit, handleReset } =
