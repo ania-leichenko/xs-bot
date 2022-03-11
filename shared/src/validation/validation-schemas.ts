@@ -1,5 +1,5 @@
 export {
-  EamWorkerCreate,
+  eamWorkerCreate,
   eamWorkerCreateBackend,
   eamWorkerSignIn,
 } from './eam-worker/eam-worker';

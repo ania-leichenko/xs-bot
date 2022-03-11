@@ -1,5 +1,5 @@
-export { EamWorkerCreate, eamWorkerSignIn } from './worker/worker';
-export { eamGroupConfigurate } from './group/group';
+export { eamWorkerCreate, eamWorkerSignIn } from './eam-worker/eam-worker';
+export { eamGroupConfigurate } from './eam-group/eam-group';
 export { eamMasterSignUp, eamMasterSignIn } from './eam-master/eam-master';
 export { bsSpaceCreate } from './bs-space/bs-space';
 export { scInstanceCreate, scInstanceUpdate } from './sc-instance/sc-instance';
