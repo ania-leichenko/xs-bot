@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import ClickAwayListener from 'react-click-away-listener';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useState, useAppSelector, useAppDispatch } from 'hooks/hooks';
@@ -21,7 +20,6 @@ const Header: FC = () => {
   }));
 
   const handleVisibleChange = (): void => setVisible(!isVisible);
-  const handleClickAway = (): void => setVisible(false);
   const handleLogout = (): void => {
     dispatch(authActions.logOut());
   };
@@ -44,13 +42,13 @@ const Header: FC = () => {
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
             {isVisible && (
-              <ClickAwayListener onClickAway={handleClickAway}>
-                <div className={styles.dropdownContent}>
-                  <div className={styles.dropdownItem} onClick={handleLogout}>
+              <ul className={styles.dropdownContent}>
+                <li className={styles.dropdownItem}>
+                  <button className={styles.dropdownBtn} onClick={handleLogout}>
                     Log Out
-                  </div>
-                </div>
-              </ClickAwayListener>
+                  </button>
+                </li>
+              </ul>
             )}
           </button>
         </div>
