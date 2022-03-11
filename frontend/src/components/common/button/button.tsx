@@ -10,10 +10,11 @@ import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Link } from '../link/link';
 import deleteIcon from 'assets/img/delete-icon.svg';
+import editIcon from 'assets/img/edit-icon.svg';
 
 type Props = {
   label: string;
-  to?: AppRoute;
+  to?: AppRoute | string;
   icon?: IconName;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   type?: ButtonType;
@@ -42,6 +43,7 @@ const Button: FC<Props> = ({
 
   const iconNameToSrc = {
     [IconName.TRASH]: deleteIcon,
+    [IconName.GEAR]: editIcon,
   };
 
   return isLink ? (

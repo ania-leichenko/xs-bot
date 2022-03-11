@@ -104,8 +104,23 @@ const App: FC = () => {
         />
         <Route
           path={AppRoute.SC_CONFIGURATE_INSTANCE}
-          element={<AuthorizedRoute component={<SCConfigurateInstance />} />}
-        />
+          element={
+            <AuthorizedRoute
+              component={<SCConfigurateInstance />}
+              permissions={[Permission.MANAGE_SC]}
+            />
+          }
+        >
+          <Route
+            path={AppRoute.$ID}
+            element={
+              <AuthorizedRoute
+                component={<SCConfigurateInstance />}
+                permissions={[Permission.MANAGE_SC]}
+              />
+            }
+          />
+        </Route>
         <Route
           path={AppRoute.SLC}
           element={
