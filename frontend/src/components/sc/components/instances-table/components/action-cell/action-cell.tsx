@@ -14,7 +14,9 @@ const ActionCell = (
       <IconButton
         icon={IconName.GEAR}
         label="Edit"
-        to={`${AppRoute.SC_CONFIGURATE_INSTANCE}/${id}`}
+        to={
+          `${AppRoute.SC_CONFIGURATE_INSTANCE}/${id}` as AppRoute.SC_CONFIGURATE_INSTANCE_$ID
+        }
       />
       <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
     </div>

@@ -9,9 +9,11 @@ enum AppRoute {
   BS_CREATE_SPACE = '/bs/create-space',
   SC = '/sc',
   SC_CONFIGURATE_INSTANCE = '/sc/configurate-instance',
+  SC_CONFIGURATE_INSTANCE_$ID = '/sc/configurate-instance/:id',
   SLC = '/slc',
   SLC_CONFIGURATE_FUNCTION = '/bs/configurate-function',
   NOT_FOUND = '*',
+  $ID = ':id',
 }
 
 export { AppRoute };

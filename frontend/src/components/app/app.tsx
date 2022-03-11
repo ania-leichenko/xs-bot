@@ -112,7 +112,7 @@ const App: FC = () => {
           }
         >
           <Route
-            path=":id"
+            path={AppRoute.$ID}
             element={
               <AuthorizedRoute
                 component={<SCConfigurateInstance />}

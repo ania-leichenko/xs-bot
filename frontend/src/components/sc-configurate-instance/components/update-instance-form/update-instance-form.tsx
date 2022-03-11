@@ -13,10 +13,10 @@ import {
   useAppForm,
   useAppSelector,
   useEffect,
+  useNavigate,
 } from 'hooks/hooks';
 import { SCConfigurateInstance as scActions } from 'store/actions';
 import { scInstanceUpdate as UpdateInstanceValidationSchema } from 'validation-schemas/validation-schemas';
-import { navigation } from 'services/services';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -25,13 +25,14 @@ type Props = {
 
 const UpdateInstanceForm: FC<Props> = ({ id }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { instances } = useAppSelector(({ sc }) => ({
     instances: sc.instances,
   }));
 
   useEffect(() => {
     if (!instances.length) {
-      navigation.push(AppRoute.SC);
+      navigate(AppRoute.SC);
     }
   }, []);
 
@@ -45,7 +46,7 @@ const UpdateInstanceForm: FC<Props> = ({ id }) => {
 
   const handleFormSubmit = (payload: SCInstanceUpdateRequestDto): void => {
     if (payload.name === instanceName) {
-      navigation.push(AppRoute.SC);
+      navigate(AppRoute.SC);
       return;
     }
 

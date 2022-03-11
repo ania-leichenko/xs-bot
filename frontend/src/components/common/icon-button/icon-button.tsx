@@ -7,7 +7,7 @@ type Props = {
   icon: IconName;
   label: string;
   onClick?: () => void;
-  to?: AppRoute | string;
+  to?: AppRoute;
 };
 
 const IconButton: FC<Props> = ({ icon, label, onClick, to }) => {
