@@ -77,6 +77,8 @@ export {
   type SLCFunctionGetRequestParamsDto,
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
 } from './slc-function/slc-function';
 export {
   type SCOperationSystemGetAllResponseDto,
