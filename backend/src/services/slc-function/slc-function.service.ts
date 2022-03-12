@@ -3,6 +3,8 @@ import {
   SLCFunctionGetRequestParamsDto,
   SLCFunctionGetResponseDto,
   SLCFunctionUpdateResponseDto,
+  SLCFunctionLoadParamsDto,
+  SLCFunctionLoadResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
@@ -191,6 +193,14 @@ class SLCFunction {
     }
 
     return { sourceCode: updatedSLCFunction.sourceCode };
+  }
+
+  public async loadById({
+    id,
+  }: SLCFunctionLoadParamsDto): Promise<SLCFunctionLoadResponseDto> {
+    const { sourceCode } = await this.#slcFunctionRepository.getById(id);
+
+    return { sourceCode };
   }
 }
 

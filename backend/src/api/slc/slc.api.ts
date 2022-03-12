@@ -14,6 +14,7 @@ import {
   SLCFunctionDeleteParamsDto,
   SLCFunctionUpdateParamsDto,
   SLCFunctionUpdateRequestDto,
+  SLCFunctionLoadParamsDto,
 } from '~/common/types/types';
 
 type Options = {
@@ -106,6 +107,25 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             id: req.params.id,
             sourceCode: req.body.sourceCode,
             token,
+          }),
+        )
+        .status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{
+        Params: SLCFunctionLoadParamsDto;
+      }>,
+      rep,
+    ) {
+      return rep
+        .send(
+          await slcFunctionService.loadById({
+            ...req.params,
           }),
         )
         .status(HttpCode.OK);
