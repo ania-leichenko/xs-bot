@@ -8,6 +8,8 @@ import {
   AsyncThunkConfig,
   SLCFunctionCreateRequestDto,
   SLCFunctionCreateResponseDto,
+  SLCFunctionLoadParamsDto,
+  SLCFunctionLoadResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -33,4 +35,19 @@ const createFunction = createAsyncThunk<
   },
 );
 
-export { createFunction };
+const loadFunction = createAsyncThunk<
+  SLCFunctionLoadResponseDto,
+  SLCFunctionLoadParamsDto,
+  AsyncThunkConfig
+>(
+  ActionType.LOAD_FUNCTION,
+  async (params: SLCFunctionLoadParamsDto, { extra }) => {
+    const { slcApi } = extra;
+
+    const loadFunction = await slcApi.loadFunction(params);
+
+    return loadFunction;
+  },
+);
+
+export { createFunction, loadFunction };
