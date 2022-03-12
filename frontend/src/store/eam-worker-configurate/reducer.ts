@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { workerCreate, getGroups, saveCSV } from './actions';
+import { workerCreate, getGroups, saveCSV, cleanupCSV } from './actions';
 import { DataStatus } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
 
@@ -27,6 +27,10 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(getGroups.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.groups = action.payload.items;
+  });
+
+  builder.addCase(cleanupCSV, (state) => {
+    state.csvColumns = [];
   });
 });
 
