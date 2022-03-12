@@ -1,0 +1,30 @@
+.inputGroups {
+  margin: 0;
+  padding: 0 0 30px;
+  list-style: none;
+}
+
+.inputGroup:not(:last-child) {
+  margin: 0 0 20px;
+  border-bottom: 2px solid var(--color-background);
+}
+
+.inputTitle {
+  margin: 0 0 10px;
+  color: var(--color-white);
+  font-size: 14px;
+}
+
+.inputWrapper {
+  max-width: 50%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button {
+  min-width: 200px;
+}

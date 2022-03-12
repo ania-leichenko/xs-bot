@@ -6,11 +6,14 @@ import {
   EAMWorkerValidationRule,
 } from '~/common/enums/enums';
 
-const EamWorkerCreate = Joi.object({
+const eamWorkerCreate = Joi.object({
   [getNameOf<EAMWorkerCreateRequestDto>('name')]: Joi.string()
     .trim()
     .min(EAMWorkerValidationRule.NAME_MIN_LENGTH)
     .max(EAMWorkerValidationRule.NAME_MAX_LENGTH)
+    .ruleset.regex(EAMWorkerValidationRule.NAME_FIRST_CHARTER)
+    .regex(EAMWorkerValidationRule.NAME_LAST_CHARTER)
+    .rule({ message: EAMWorkerValidationMessage.NAME_FIRST_AND_LAST_CHARTER })
     .regex(EAMWorkerValidationRule.NAME_REGEX)
     .required()
     .messages({
@@ -20,4 +23,4 @@ const EamWorkerCreate = Joi.object({
     }),
 });
 
-export { EamWorkerCreate };
+export { eamWorkerCreate };

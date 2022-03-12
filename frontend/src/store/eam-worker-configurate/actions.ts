@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import {
   NotificationTitle,
   NotificationMessage,
@@ -65,4 +65,6 @@ const getGroups = createAsyncThunk<
   return eamApi.loadGroups(filter);
 });
 
-export { workerCreate, getGroups, saveCSV };
+const cleanupCSV = createAction(ActionType.CLEANUP_CSV);
+
+export { workerCreate, getGroups, saveCSV, cleanupCSV };

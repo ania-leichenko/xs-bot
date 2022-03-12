@@ -42,11 +42,13 @@ const Header: FC = () => {
           <button className={styles.dropdownMenu} onClick={handleVisibleChange}>
             <img className={styles.dropdownMenuImg} src={menu} alt="menu" />
             {isVisible && (
-              <div className={styles.dropdownContent}>
-                <div className={styles.dropdownItem} onClick={handleLogout}>
-                  Log Out
-                </div>
-              </div>
+              <ul className={styles.dropdownContent}>
+                <li className={styles.dropdownItem}>
+                  <button className={styles.dropdownBtn} onClick={handleLogout}>
+                    Log Out
+                  </button>
+                </li>
+              </ul>
             )}
           </button>
         </div>

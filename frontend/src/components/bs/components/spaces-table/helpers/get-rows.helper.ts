@@ -5,7 +5,7 @@ import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
   [SpacesTableAccessor.SPACE_NAME]: string;
-  [SpacesTableAccessor.CREATION_TIME]: string;
+  [SpacesTableAccessor.CREATED_AT]: string;
   [SpacesTableAccessor.ACTIONS]: JSX.Element;
 };
 
@@ -21,7 +21,7 @@ const getRows = ({
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: name,
-      [SpacesTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+      [SpacesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),
       ),
       [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),
