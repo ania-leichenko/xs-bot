@@ -8,8 +8,8 @@ const getColumns = (): Column[] => {
       accessor: SpacesTableAccessor.SPACE_NAME,
     },
     {
-      Header: SpacesTableHeader.CREATION_TIME,
-      accessor: SpacesTableAccessor.CREATION_TIME,
+      Header: SpacesTableHeader.CREATED_AT,
+      accessor: SpacesTableAccessor.CREATED_AT,
     },
     {
       Header: SpacesTableHeader.ACTIONS,
