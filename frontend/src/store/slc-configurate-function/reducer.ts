@@ -1,6 +1,6 @@
 import { DataStatus } from 'common/enums/enums';
 import { createReducer } from '@reduxjs/toolkit';
-import { createFunction, loadFunction } from './actions';
+import { createFunction, loadFunction, updateFunction } from './actions';
 import { SLCFunctionLoadResponseDto } from 'common/types/types';
 
 type State = {
@@ -26,6 +26,13 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadFunction.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(updateFunction.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(updateFunction.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.loadFunction = { ...state.loadFunction, ...action.payload };
   });
 });
 
