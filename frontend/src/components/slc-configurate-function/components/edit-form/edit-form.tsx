@@ -21,9 +21,10 @@ const EditForm: FC<Props> = ({ id }) => {
       loadFunction: SLCFunctionConfigurate.loadFunction,
     }),
   );
-
   const [editCode, setEditCode] = useState<string>('');
   const dispatch = useAppDispatch();
+  const hasSave = loadFunction?.sourceCode === editCode;
+  const hasCodeLoading = dataStatus === DataStatus.PENDING;
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -32,6 +33,15 @@ const EditForm: FC<Props> = ({ id }) => {
   useEffect(() => {
     setEditCode(loadFunction?.sourceCode ?? '');
   }, [loadFunction]);
+
+  const handleSaveCode = (): void => {
+    dispatch(
+      SLCFunctionActions.updateFunction({
+        params: { id },
+        payload: { sourceCode: editCode },
+      }),
+    );
+  };
 
   if (dataStatus === DataStatus.REJECTED) {
     return <Navigate to={AppRoute.SLC} />;
@@ -44,10 +54,18 @@ const EditForm: FC<Props> = ({ id }) => {
           <Button btnStyle={ButtonStyle.FILLED} label="Run" />
         </div>
         <div className={styles.button}>
-          <Button btnStyle={ButtonStyle.FILLED} label="Save" />
+          {hasSave || hasCodeLoading ? (
+            <Button btnStyle={ButtonStyle.OUTLINED} label="Save" />
+          ) : (
+            <Button
+              btnStyle={ButtonStyle.FILLED}
+              label="Save"
+              onClick={handleSaveCode}
+            />
+          )}
         </div>
       </div>
-      {dataStatus === DataStatus.PENDING ? (
+      {hasCodeLoading ? (
         <Loader />
       ) : (
         <Editor value={editCode} onChangeValue={setEditCode} />
