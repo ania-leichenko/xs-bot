@@ -1,7 +1,12 @@
 import { FC } from 'react';
-import { AppRoute, ButtonStyle } from 'common/enums/enums';
-import { Button, Editor } from 'components/common/common';
-import { useAppDispatch, useEffect, useState } from 'hooks/hooks';
+import { AppRoute, ButtonStyle, DataStatus } from 'common/enums/enums';
+import { Button, Editor, Loader, Navigate } from 'components/common/common';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useEffect,
+  useState,
+} from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
 import styles from './styles.module.scss';
 
@@ -10,6 +15,13 @@ interface Props {
 }
 
 const EditForm: FC<Props> = ({ id }) => {
+  const { dataStatus, loadFunction } = useAppSelector(
+    ({ SLCFunctionConfigurate }) => ({
+      dataStatus: SLCFunctionConfigurate.dataStatus,
+      loadFunction: SLCFunctionConfigurate.loadFunction,
+    }),
+  );
+
   const [editCode, setEditCode] = useState<string>('');
   const dispatch = useAppDispatch();
 
@@ -17,6 +29,13 @@ const EditForm: FC<Props> = ({ id }) => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
   }, [dispatch]);
 
+  useEffect(() => {
+    setEditCode(loadFunction?.sourceCode ?? '');
+  }, [loadFunction]);
+
+  if (dataStatus === DataStatus.REJECTED) {
+    return <Navigate to={AppRoute.SLC} />;
+  }
   return (
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
@@ -28,7 +47,11 @@ const EditForm: FC<Props> = ({ id }) => {
           <Button btnStyle={ButtonStyle.FILLED} label="Save" />
         </div>
       </div>
-      <Editor value={editCode} onChangeValue={setEditCode} />
+      {dataStatus === DataStatus.PENDING ? (
+        <Loader />
+      ) : (
+        <Editor value={editCode} onChangeValue={setEditCode} />
+      )}
       <div className={styles.buttons}>
         <div className={styles.button}>
           <Button
