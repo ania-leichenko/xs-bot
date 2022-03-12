@@ -161,8 +161,16 @@ class Instance {
   }
 
   public async delete(id: string): Promise<void> {
-    const { awsInstanceId, keyPairId } =
-      (await this.#instanceRepository.getById(id)) as InstanceEntity;
+    const instance = (await this.#instanceRepository.getById(
+      id,
+    )) as InstanceEntity;
+    if (!instance) {
+      throw new SCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.INSTANCE_NOT_FOUND,
+      });
+    }
+    const { awsInstanceId, keyPairId } = instance;
     await this.#ec2Service.deleteInstance(awsInstanceId);
     await this.#instanceRepository.delete(id);
     await this.#ec2Service.deleteKeyPair(keyPairId);

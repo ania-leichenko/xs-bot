@@ -90,6 +90,13 @@ class Space {
 
     const space = await this.#spaceRepository.getSpaceById(id);
 
+    if (!space) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.SPACE_NOT_FOUND,
+      });
+    }
+
     const { name } = space;
 
     await this.#s3Service.deleteBucket(name);
