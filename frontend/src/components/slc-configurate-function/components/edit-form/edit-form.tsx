@@ -1,11 +1,21 @@
 import { FC } from 'react';
 import { AppRoute, ButtonStyle } from 'common/enums/enums';
 import { Button, Editor } from 'components/common/common';
-import { useState } from 'hooks/hooks';
+import { useAppDispatch, useEffect, useState } from 'hooks/hooks';
+import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
 import styles from './styles.module.scss';
 
-const EditForm: FC = () => {
-  const [value, setValue] = useState<string>('');
+interface Props {
+  id: string;
+}
+
+const EditForm: FC<Props> = ({ id }) => {
+  const [editCode, setEditCode] = useState<string>('');
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(SLCFunctionActions.loadFunction({ id }));
+  }, [dispatch]);
 
   return (
     <>
@@ -18,7 +28,7 @@ const EditForm: FC = () => {
           <Button btnStyle={ButtonStyle.FILLED} label="Save" />
         </div>
       </div>
-      <Editor value={value} onChangeValue={setValue} />
+      <Editor value={editCode} onChangeValue={setEditCode} />
       <div className={styles.buttons}>
         <div className={styles.button}>
           <Button

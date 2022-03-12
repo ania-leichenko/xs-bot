@@ -2,10 +2,9 @@ import { FC } from 'react';
 import { CreateForm, EditForm } from './components/components';
 import { useParams } from 'hooks/hooks';
 import styles from './styles.module.scss';
-
 const SLCConfigurateFunction: FC = () => {
-  const params = useParams();
-  const hasId = Boolean(params.id);
+  const { id } = useParams<string>();
+  const hasId = Boolean(id);
 
   return (
     <div className={styles.wrapper}>
@@ -14,7 +13,7 @@ const SLCConfigurateFunction: FC = () => {
         ServerLess Computing
       </h2>
       <section className={styles.formWrapper}>
-        {hasId ? <EditForm /> : <CreateForm />}
+        {hasId ? <EditForm id={id as string} /> : <CreateForm />}
       </section>
     </div>
   );
