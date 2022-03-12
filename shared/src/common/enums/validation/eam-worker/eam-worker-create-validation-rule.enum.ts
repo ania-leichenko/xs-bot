@@ -1,7 +1,7 @@
 const EAMWorkerValidationRule = {
   NAME_MIN_LENGTH: 3,
   NAME_MAX_LENGTH: 20,
-  NAME_REGEX: /^[a-zA-Z\d][a-zA-Z\d-.]+[a-zA-Z\d]$/,
+  NAME_REGEX: /^[a-zA-Z0-9\-.]+$/,
   NAME_FIRST_CHARTER: /^[a-zA-Z0-9].+$/,
   NAME_LAST_CHARTER: /[a-zA-Z0-9]$/,
   TENANT_NAME_MIN_LENGTH: 3,

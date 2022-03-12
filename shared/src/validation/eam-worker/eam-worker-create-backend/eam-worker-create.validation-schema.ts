@@ -11,10 +11,10 @@ const eamWorkerCreateBackend = Joi.object({
     .trim()
     .min(EAMWorkerValidationRule.NAME_MIN_LENGTH)
     .max(EAMWorkerValidationRule.NAME_MAX_LENGTH)
+    .regex(EAMWorkerValidationRule.NAME_REGEX)
     .ruleset.regex(EAMWorkerValidationRule.NAME_FIRST_CHARTER)
     .regex(EAMWorkerValidationRule.NAME_LAST_CHARTER)
     .rule({ message: EAMWorkerValidationMessage.NAME_FIRST_AND_LAST_CHARTER })
-    .regex(EAMWorkerValidationRule.NAME_REGEX)
     .required()
     .messages({
       'string.empty': EAMWorkerValidationMessage.NAME_REQUIRE,
