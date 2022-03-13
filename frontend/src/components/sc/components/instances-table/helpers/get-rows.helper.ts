@@ -17,18 +17,24 @@ const getRows = ({
   onDeleteInstance: (id: string) => void;
 }): Row[] => {
   return instances.map((item) => {
-    const { name, createdAt, instanceType, instanceId } = item;
+    const {
+      name,
+      awsInstanceId,
+      publicIpAddress,
+      createdAt,
+      instanceType,
+      id,
+    } = item;
 
     return {
       [InstancesTableAccessor.NAME]: name,
+      [InstancesTableAccessor.INSTANCE_ID]: awsInstanceId,
       [InstancesTableAccessor.INSTANCE_TYPE]: instanceType,
+      [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress,
       [InstancesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),
       ),
-      [InstancesTableAccessor.ACTIONS]: ActionCell(
-        instanceId,
-        onDeleteInstance,
-      ),
+      [InstancesTableAccessor.ACTIONS]: ActionCell(id, onDeleteInstance),
     };
   });
 };

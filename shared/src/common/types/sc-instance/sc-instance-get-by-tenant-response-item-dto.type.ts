@@ -1,9 +1,10 @@
 type SCInstanceGetByTenantResponseItemDto = {
   name: string;
-  instanceId: string;
+  id: string;
+  awsInstanceId: string;
   instanceType: string;
   createdAt: string;
-  publicDNS: string;
+  publicIpAddress: string;
 };
 
 export { type SCInstanceGetByTenantResponseItemDto };
