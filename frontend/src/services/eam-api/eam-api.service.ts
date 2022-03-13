@@ -14,6 +14,7 @@ import {
   EAMGroupGetByTenantResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMPermissionGetAllResponseDto,
+  EamGroupGetByIdResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -67,11 +68,32 @@ class EAMApi {
     payload: EAMGroupCreateRequestDto,
   ): Promise<EAMGroupCreateResponseDto> {
     return this.#http.load(
-      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.GROUPS, '/', id),
+      joinItems(
+        `${this.#apiPrefix}${ApiPath.EAM}${EAMApiPath.GROUPS}${
+          GroupsApiPath.ROOT
+        }${id}`,
+      ),
       {
-        method: HttpMethod.POST,
+        method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getGroupById(params: {
+    id: string;
+  }): Promise<EamGroupGetByIdResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUP,
+        GroupsApiPath.ROOT,
+      ),
+      {
+        method: HttpMethod.GET,
+        params,
       },
     );
   }
@@ -92,6 +114,7 @@ class EAMApi {
       },
     );
   }
+
   public getAllPermission(): Promise<EAMPermissionGetAllResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.PERMISSION),

@@ -8,6 +8,8 @@ import {
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
   EAMPermissionGetAllResponseDto,
+  EamGroupGetByIdRequestDto,
+  EamGroupGetByIdResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { AppRoute } from '../../common/enums/app/app-route.enum';
@@ -61,6 +63,16 @@ const update = createAsyncThunk<
 
   return group;
 });
+
+const getGroupById = createAsyncThunk<
+  EamGroupGetByIdResponseDto,
+  EamGroupGetByIdRequestDto,
+  AsyncThunkConfig
+>(ActionType.GET_GROUP, async (payload, { extra }) => {
+  const { eamApi } = extra;
+  return await eamApi.getGroupById(payload);
+});
+
 const getWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
@@ -79,4 +91,4 @@ const getPermission = createAsyncThunk<
   return eamApi.getAllPermission();
 });
 
-export { create, update, getWorkers, getPermission };
+export { create, update, getWorkers, getPermission, getGroupById };

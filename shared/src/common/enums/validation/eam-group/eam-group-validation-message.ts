@@ -7,8 +7,7 @@ const EAMGroupValidationMessage = {
   NAME_REGEX: 'Group name can contain latin letters, digits, hyphen or dot)',
   PERMISSION_SELECTED_MIN:
     'User can not create a group without any permissions for it',
-  WORKERS_SELECTED_MIN:
-    'User can not create a group without any workers for it',
+  WORKERS_SELECTED_MIN: 'Group must have workers',
 } as const;
 
 export { EAMGroupValidationMessage };

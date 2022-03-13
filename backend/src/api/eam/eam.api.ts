@@ -17,6 +17,7 @@ import {
   EAMWorkerGetByTenantRequestParamsDto,
   EAMWorkerCreateRequestDto,
   EAMWorkerDeleteRequestDto,
+  EamGroupGetByIdRequestDto,
 } from '~/common/types/types';
 import {
   eamGroupCreate as groupCreateValidationSchema,
@@ -95,7 +96,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.PUT,
-    url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
     schema: {
       body: groupConfigurateValidationSchema,
     },
@@ -111,14 +112,29 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
     async handler(
       req: FastifyRequest<{
-        Params: { id: string };
+        Querystring: EamGroupGetByIdRequestDto;
         Body: EAMGroupCreateRequestDto;
       }>,
       rep,
     ) {
-      const { id } = req.params;
+      const { id } = req.query;
       const group = await groupService.update(id, req.body);
 
+      return rep.send(group).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: EamGroupGetByIdRequestDto;
+      }>,
+      rep,
+    ) {
+      const { id } = req.query;
+      const group = await groupService.getGroupById(id);
       return rep.send(group).status(HttpCode.OK);
     },
   });
