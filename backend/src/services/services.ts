@@ -28,6 +28,7 @@ import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
 import { Lambda } from './aws/lambda/lambda.service';
 import { SLCFunction } from './slc-function/slc-function.service';
+import { Background } from './background/background.service';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -123,6 +124,12 @@ const slcFunction = new SLCFunction({
   lambdaService: lambda,
 });
 
+const background = new Background({
+  instanceService: instance,
+  instanceRepository,
+  ec2Service: ec2,
+});
+
 export {
   master,
   encrypt,
@@ -140,4 +147,5 @@ export {
   permission,
   lambda,
   slcFunction,
+  background,
 };

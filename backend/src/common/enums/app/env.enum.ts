@@ -21,6 +21,7 @@ const {
   AWS_ACCESS_KEY,
   AWS_SECRET_KEY,
   AWS_LAMBDA_ROLE,
+  INSTANCE_AUTO_DELETING,
 } = process.env;
 
 const ENV = {
@@ -49,6 +50,9 @@ const ENV = {
     ACCESS_KEY: AWS_ACCESS_KEY as string,
     SECRET_KEY: AWS_SECRET_KEY as string,
     LAMBDA_ROLE: AWS_LAMBDA_ROLE as string,
+  },
+  FLAGS: {
+    INSTANCE_AUTO_DELETING: Boolean(INSTANCE_AUTO_DELETING),
   },
   API: {
     V1_PREFIX: '/api/v1',
