@@ -161,9 +161,7 @@ class Instance {
   }
 
   public async delete(id: string): Promise<void> {
-    const instance = (await this.#instanceRepository.getById(
-      id,
-    )) as InstanceEntity;
+    const instance = await this.#instanceRepository.getById(id);
     if (!instance) {
       throw new SCError({
         status: HttpCode.NOT_FOUND,
