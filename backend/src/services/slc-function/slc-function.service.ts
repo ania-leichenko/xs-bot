@@ -133,9 +133,16 @@ class SLCFunction {
       });
     }
 
-    const { name } = await this.#slcFunctionRepository.getById(id);
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
 
-    await this.#lambdaService.deleteFunction(name);
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    await this.#lambdaService.deleteFunction(slcFunction.name);
 
     await this.#slcFunctionRepository.delete(id);
   }
