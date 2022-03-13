@@ -8,7 +8,7 @@ type Constructor = {
   ec2Service: typeof EC2Serv;
 };
 
-class Background {
+class DeleteOldInstancesBackgroundJob {
   #instanceService: typeof instanceServ;
   #instanceRepository: typeof InstanceRep;
   #ec2Service: typeof EC2Serv;
@@ -23,16 +23,15 @@ class Background {
     this.#ec2Service = ec2Service;
   }
 
-  public async backgroundWork(): Promise<void> {
+  public async backgroundJob(): Promise<void> {
     const { FLAGS } = ENV;
     FLAGS.INSTANCE_AUTO_DELETING
       ? setInterval(async () => {
           const oldInstances = await this.#instanceRepository.getOldInstances();
-
           oldInstances.forEach((instance) => instanceServ.delete(instance.id));
         }, 60 * 60 * 1000)
       : null;
   }
 }
 
-export { Background };
+export { DeleteOldInstancesBackgroundJob };

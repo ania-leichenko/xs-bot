@@ -5,7 +5,7 @@ import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
 import cors from 'fastify-cors';
-import { background } from '~/services/services';
+import { instanceAutoDeleting } from '~/services/services';
 
 const app = Fastify({
   logger: {
@@ -27,7 +27,7 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
   if (err) {
     app.log.error(err);
   }
-  background.backgroundWork();
+  instanceAutoDeleting.backgroundJob();
   app.log.info(
     `Listening to connections on - ${address}, Environment: ${ENV.APP.NODE_ENV}`,
   );
