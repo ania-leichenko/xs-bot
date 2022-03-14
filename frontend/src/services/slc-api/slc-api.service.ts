@@ -15,6 +15,8 @@ import {
   SLCFunctionUpdateParamsDto,
   SLCFunctionUpdateRequestDto,
   SLCFunctionUpdateResponseDto,
+  SLCFunctionRunParamsDto,
+  SLCFunctionRunResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -103,6 +105,23 @@ class SLCApi {
         method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public runFunction({
+    id,
+  }: SLCFunctionRunParamsDto): Promise<SLCFunctionRunResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.SLC,
+        SLCApiPath.SLC_FUNCTIONS,
+        SLCFunctionApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.POST,
       },
     );
   }
