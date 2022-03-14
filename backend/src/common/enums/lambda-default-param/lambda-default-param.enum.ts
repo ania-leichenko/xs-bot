@@ -1,7 +1,7 @@
 const LambdaDefaultParam = {
   ROOT_FILE: 'index.js',
   ARCHITECTURE: 'x86_64',
-  HANDLER: '.zip',
+  HANDLER: 'index.handler',
   RUNTIME: 'nodejs14.x',
   TIMEOUT: 10,
   MEMORY_SIZE: 150,

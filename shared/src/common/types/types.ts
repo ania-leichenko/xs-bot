@@ -76,6 +76,8 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
   type SLCFunctionUpdateParamsDto,
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
