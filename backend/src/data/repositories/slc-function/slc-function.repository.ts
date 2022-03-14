@@ -90,11 +90,15 @@ class SLCFunction {
     });
   }
 
-  async getById(id: string): Promise<SLCFunctionEntity> {
+  async getById(id: string): Promise<SLCFunctionEntity | null> {
     const slcFunction = await this.#SLCFunctionModel
       .query()
       .findById(id)
       .first();
+
+    if (!slcFunction) {
+      return null;
+    }
 
     return SLCFunction.modelToEntity(slcFunction as SLCFunctionM);
   }

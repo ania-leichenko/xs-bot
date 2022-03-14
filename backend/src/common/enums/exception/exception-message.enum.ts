@@ -18,6 +18,7 @@ const ExceptionMessage = {
   MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',
   MASTER_SPACE_CREATE: 'Master is not able to create space.',
   MASTER_SPACE_DELETE: 'Master is not able to delete space',
+  SPACE_NOT_FOUND: 'Space not found.',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
   FUNCTION_NOT_CREATED: 'Something went wrong and function don`t created.',
@@ -32,6 +33,7 @@ const ExceptionMessage = {
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
   WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
+  SPACE_EXISTS: 'Space with this name already exists',
 } as const;
 
 export { ExceptionMessage };

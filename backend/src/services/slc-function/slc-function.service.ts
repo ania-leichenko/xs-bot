@@ -3,6 +3,8 @@ import {
   SLCFunctionGetRequestParamsDto,
   SLCFunctionGetResponseDto,
   SLCFunctionUpdateResponseDto,
+  SLCFunctionLoadParamsDto,
+  SLCFunctionLoadResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
@@ -133,9 +135,16 @@ class SLCFunction {
       });
     }
 
-    const { name } = await this.#slcFunctionRepository.getById(id);
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
 
-    await this.#lambdaService.deleteFunction(name);
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    await this.#lambdaService.deleteFunction(slcFunction.name);
 
     await this.#slcFunctionRepository.delete(id);
   }
@@ -190,6 +199,23 @@ class SLCFunction {
     }
 
     return { sourceCode: updatedSLCFunction.sourceCode };
+  }
+
+  public async loadById({
+    id,
+  }: SLCFunctionLoadParamsDto): Promise<SLCFunctionLoadResponseDto> {
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
+
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    const { sourceCode } = slcFunction;
+
+    return { sourceCode };
   }
 }
 
