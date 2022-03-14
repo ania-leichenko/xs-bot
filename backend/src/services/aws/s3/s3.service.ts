@@ -5,8 +5,8 @@ import {
   DeleteBucketCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
-import { BsError } from '~/exceptions/bs-error/bs-error';
-import { ExceptionMessage } from '~/common/enums/enums';
+import { BsError } from '~/exceptions/exceptions';
+import { AwsExceptionMessage, ExceptionMessage } from '~/common/enums/enums';
 
 type Constructor = {
   region: string;
@@ -33,8 +33,8 @@ class S3 {
         throw new BsError({
           status: err.$response.statusCode,
           message:
-            err.message === 'BucketAlreadyExists' ||
-            err.message === 'BucketAlreadyOwnedByYou'
+            err.message === AwsExceptionMessage.BUCKET_EXISTS ||
+            err.message === AwsExceptionMessage.BUCKET_YOURS
               ? ExceptionMessage.SPACE_EXISTS
               : err.message,
         });
