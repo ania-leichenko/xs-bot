@@ -165,7 +165,7 @@ class SLCFunction {
     if (userRole !== UserRole.WORKER) {
       throw new SLCError({
         status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+        message: ExceptionMessage.MASTER_FUNCTION_UPDATE,
       });
     }
 
