@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   BSSpaceGetRequestParamsDto,
@@ -33,4 +33,6 @@ const deleteSpace = createAsyncThunk<string, string, AsyncThunkConfig>(
   },
 );
 
-export { loadSpaces, deleteSpace };
+const resetState = createAction(ActionType.RESET_STATE);
+
+export { loadSpaces, deleteSpace, resetState };

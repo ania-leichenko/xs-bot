@@ -1,7 +1,7 @@
 import { SLCFunctionGetResponseItemDto } from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { loadFunctions, deleteFunction } from './actions';
+import { loadFunctions, deleteFunction, resetState } from './actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -35,6 +35,9 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteFunction.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(resetState, (state) => {
+    Object.assign(state, initialState);
   });
 });
 

@@ -2,7 +2,13 @@ import { FC } from 'react';
 import { Link } from 'components/common/common';
 import { AppRoute } from 'common/enums/enums';
 import { useState, useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { auth as authActions } from 'store/actions';
+import {
+  auth as authActions,
+  eam as eamActions,
+  bs as bsActions,
+  sc as scActions,
+  slc as slcActions,
+} from 'store/actions';
 import logo from 'assets/img/logo.svg';
 import menu from 'assets/img/menu.svg';
 import {
@@ -21,6 +27,10 @@ const Header: FC = () => {
 
   const handleVisibleChange = (): void => setVisible(!isVisible);
   const handleLogout = (): void => {
+    dispatch(eamActions.resetState());
+    dispatch(bsActions.resetState());
+    dispatch(scActions.resetState());
+    dispatch(slcActions.resetState());
     dispatch(authActions.logOut());
   };
 
