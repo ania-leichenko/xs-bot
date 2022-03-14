@@ -13,6 +13,8 @@ import {
   SLCFunctionUpdateParamsDto,
   SLCFunctionUpdateRequestDto,
   SLCFunctionUpdateResponseDto,
+  SLCFunctionRunParamsDto,
+  SLCFunctionRunResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 
@@ -65,4 +67,16 @@ const updateFunction = createAsyncThunk<
   return updateFunction;
 });
 
-export { createFunction, loadFunction, updateFunction };
+const runFunction = createAsyncThunk<
+  SLCFunctionRunResponseDto,
+  SLCFunctionRunParamsDto,
+  AsyncThunkConfig
+>(ActionType.RUN_FUNCTION, async (params, { extra }) => {
+  const { slcApi } = extra;
+
+  const response = await slcApi.runFunction(params);
+
+  return response;
+});
+
+export { createFunction, loadFunction, updateFunction, runFunction };
