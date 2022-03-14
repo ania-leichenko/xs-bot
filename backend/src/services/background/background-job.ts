@@ -1,7 +1,10 @@
 import { instance as InstanceRep } from '~/data/repositories/repositories';
 import { ec2 as EC2Serv, instance as instanceServ } from '~/services/services';
 import { ENV } from '~/common/enums/enums';
-import { INSTANCE_AUTO_DELETE_INTERVAL } from '~/common/constants/constants';
+import {
+  INSTANCE_AUTO_DELETE_INTERVAL,
+  ONE_HOUR,
+} from '~/common/constants/constants';
 import { getSubHours } from '~/helpers/helpers';
 
 type Constructor = {
@@ -32,7 +35,7 @@ class BackgroundJob {
   public async backgroundJob(): Promise<void> {
     this.#flags.HAS_INSTANCE_AUTO_DELETING
       ? setInterval(async () => {
-          const oldDate = getSubHours(1).toISOString();
+          const oldDate = getSubHours(ONE_HOUR).toISOString();
 
           const oldInstances =
             await this.#instanceRepository.getInstancesByDate(oldDate);
