@@ -1,16 +1,26 @@
-import { SCInstanceGetByTenantResponseItemDto } from 'common/types/types';
+import {
+  SCInstanceGetByTenantResponseItemDto,
+  SCSshKeyGetByIdResponseDto,
+} from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { deleteInstance, loadInstances } from './actions';
+import {
+  deleteInstance,
+  loadInstances,
+  loadSshKey,
+  cleanupSshKey,
+} from './actions';
 
 type State = {
   dataStatus: DataStatus;
   instances: SCInstanceGetByTenantResponseItemDto[];
+  sshKey: SCSshKeyGetByIdResponseDto | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   instances: [],
+  sshKey: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -35,6 +45,12 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(deleteInstance.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(loadSshKey.fulfilled, (state, action) => {
+    state.sshKey = action.payload;
+  });
+  builder.addCase(cleanupSshKey, (state) => {
+    state.sshKey = null;
   });
 });
 

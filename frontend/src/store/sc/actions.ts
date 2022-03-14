@@ -1,11 +1,26 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   SCInstanceGetByTenantRequestParamsDto,
   SCInstanceGetByTenantResponseDto,
+  SCSshKeyGetByIdResponseDto,
   AsyncThunkConfig,
 } from 'common/types/types';
 import { ActionType } from './common';
+
+const loadSshKey = createAsyncThunk<
+  SCSshKeyGetByIdResponseDto,
+  string,
+  AsyncThunkConfig
+>(ActionType.GET_SSH_KEY, async (id, { extra }) => {
+  const { scApi, notification } = extra;
+  const sshKey = await scApi.loadSshKey(id);
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.SC_SSH_KEY_COPY,
+  );
+  return sshKey;
+});
 
 const loadInstances = createAsyncThunk<
   SCInstanceGetByTenantResponseDto,
@@ -32,4 +47,6 @@ const deleteInstance = createAsyncThunk<string, string, AsyncThunkConfig>(
   },
 );
 
-export { loadInstances, deleteInstance };
+const cleanupSshKey = createAction(ActionType.CLEANUP_SSH_KEY);
+
+export { loadInstances, deleteInstance, loadSshKey, cleanupSshKey };

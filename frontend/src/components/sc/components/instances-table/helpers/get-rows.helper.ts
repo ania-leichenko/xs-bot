@@ -11,10 +11,12 @@ type Row = {
 
 const getRows = ({
   instances,
-  onDeleteInstance,
+  onInstanceDelete,
+  onKeyClick,
 }: {
   instances: SCInstanceGetByTenantResponseItemDto[];
-  onDeleteInstance: (id: string) => void;
+  onInstanceDelete: (id: string) => void;
+  onKeyClick: (id: string) => void;
 }): Row[] => {
   return instances.map((item) => {
     const {
@@ -24,6 +26,7 @@ const getRows = ({
       createdAt,
       instanceType,
       id,
+      keyPairId: keyId,
     } = item;
 
     return {
@@ -34,7 +37,12 @@ const getRows = ({
       [InstancesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),
       ),
-      [InstancesTableAccessor.ACTIONS]: ActionCell(id, onDeleteInstance),
+      [InstancesTableAccessor.ACTIONS]: ActionCell({
+        id,
+        keyId,
+        onInstanceDelete,
+        onKeyClick,
+      }),
     };
   });
 };
