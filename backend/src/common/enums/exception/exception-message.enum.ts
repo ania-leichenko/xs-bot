@@ -25,6 +25,7 @@ const ExceptionMessage = {
   FUNCTION_NOT_FOUND: 'Function not found.',
   FUNCTION_NOT_CHANGE: 'Function code no changes.',
   FUNCTION_NOT_UPDATED: 'Function code not updated.',
+  FUNCTION_NOT_RUN: 'Function not run.',
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
   GROUP_NOT_EMPTY: 'The group with workers can not be deleted',
   GROUP_DOES_NOT_EXIST: 'An error happened, reload page and try again',
