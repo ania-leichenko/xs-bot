@@ -10,6 +10,11 @@ import {
   SLCFunctionCreateResponseDto,
   SLCFunctionGetRequestParamsDto,
   SLCFunctionGetResponseDto,
+  SLCFunctionLoadParamsDto,
+  SLCFunctionLoadResponseDto,
+  SLCFunctionUpdateParamsDto,
+  SLCFunctionUpdateRequestDto,
+  SLCFunctionUpdateResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -64,6 +69,40 @@ class SLCApi {
       ),
       {
         method: HttpMethod.DELETE,
+      },
+    );
+  }
+
+  public loadFunction({
+    id,
+  }: SLCFunctionLoadParamsDto): Promise<SLCFunctionLoadResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.SLC,
+        SLCApiPath.SLC_FUNCTIONS,
+        SLCFunctionApiPath.ROOT,
+        id,
+      ),
+    );
+  }
+
+  public updateFunction(
+    { id }: SLCFunctionUpdateParamsDto,
+    payload: SLCFunctionUpdateRequestDto,
+  ): Promise<SLCFunctionUpdateResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.SLC,
+        SLCApiPath.SLC_FUNCTIONS,
+        SLCFunctionApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }
