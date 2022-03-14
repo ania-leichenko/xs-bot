@@ -6,9 +6,16 @@ import {
   DeleteFunctionCommandOutput,
   UpdateFunctionCodeCommand,
   UpdateFunctionCodeCommandOutput,
+  InvokeCommand,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
-import { LambdaDefaultParam } from '~/common/enums/enums';
+import {
+  ExceptionMessage,
+  HttpCode,
+  LambdaDefaultParam,
+} from '~/common/enums/enums';
+import { toUtf8 } from '@aws-sdk/util-utf8-node';
+import { SLCError } from '~/exceptions/exceptions';
 
 type Constructor = {
   region: string;
@@ -92,6 +99,23 @@ class Lambda {
         ZipFile: sendZipArchive,
       }),
     );
+  }
+
+  public async runFunction(name: string): Promise<string> {
+    const { Payload, StatusCode } = await this.#lambdaClient.send(
+      new InvokeCommand({
+        FunctionName: name,
+      }),
+    );
+
+    if (StatusCode !== 200 || !Payload) {
+      throw new SLCError({
+        status: HttpCode.INTERNAL_SERVER_ERROR,
+        message: ExceptionMessage.FUNCTION_NOT_RUN,
+      });
+    }
+
+    return JSON.stringify(JSON.parse(toUtf8(Payload)), null, '\t');
   }
 }
 
