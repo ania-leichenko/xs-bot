@@ -8,6 +8,7 @@ import {
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
+// import { getResponse } from '..//../helpers/helpers';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -15,10 +16,11 @@ interface Props {
 }
 
 const EditForm: FC<Props> = ({ id }) => {
-  const { dataStatus, loadFunction } = useAppSelector(
+  const { dataStatus, loadFunction, response } = useAppSelector(
     ({ SLCFunctionConfigurate }) => ({
       dataStatus: SLCFunctionConfigurate.dataStatus,
       loadFunction: SLCFunctionConfigurate.loadFunction,
+      response: SLCFunctionConfigurate.response,
     }),
   );
   const [editCode, setEditCode] = useState<string>('');
@@ -27,6 +29,7 @@ const EditForm: FC<Props> = ({ id }) => {
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleRun = hasSave && !hasCodeLoading;
   const isPossibleSave = !hasSave && !hasCodeLoading;
+  const hasResponse = Boolean(response);
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -35,6 +38,10 @@ const EditForm: FC<Props> = ({ id }) => {
   useEffect(() => {
     setEditCode(loadFunction?.sourceCode ?? '');
   }, [loadFunction]);
+
+  const handleRun = (): void => {
+    dispatch(SLCFunctionActions.runFunction({ id }));
+  };
 
   const handleSaveCode = (): void => {
     dispatch(
@@ -54,7 +61,11 @@ const EditForm: FC<Props> = ({ id }) => {
       <div className={styles.buttons}>
         <div className={styles.button}>
           {isPossibleRun ? (
-            <Button btnStyle={ButtonStyle.FILLED} label="Run" />
+            <Button
+              btnStyle={ButtonStyle.FILLED}
+              label="Run"
+              onClick={handleRun}
+            />
           ) : (
             <Button btnStyle={ButtonStyle.OUTLINED} label="Run" />
           )}
@@ -71,6 +82,12 @@ const EditForm: FC<Props> = ({ id }) => {
           )}
         </div>
       </div>
+      {hasResponse && (
+        <>
+          <h4 className={styles.titleResponse}>Response</h4>
+          <p className={styles.response}>{response?.payload}</p>
+        </>
+      )}
       {hasCodeLoading ? (
         <Loader />
       ) : (
