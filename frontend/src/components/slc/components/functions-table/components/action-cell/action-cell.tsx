@@ -1,4 +1,4 @@
-import { IconButton, Button } from 'components/common/common';
+import { IconButton } from 'components/common/common';
 import { AppRoute, IconName } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
@@ -13,8 +13,8 @@ const ActionCell = (
   };
   return (
     <div className={styles.actionsWrapper}>
+      <IconButton icon={IconName.GEAR} label="Edit" to={url as AppRoute} />
       <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
-      <Button className={styles.editButton} label="Edit" to={url as AppRoute} />
     </div>
   );
 };
