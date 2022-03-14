@@ -204,7 +204,17 @@ class SLCFunction {
   public async loadById({
     id,
   }: SLCFunctionLoadParamsDto): Promise<SLCFunctionLoadResponseDto> {
-    const { sourceCode } = await this.#slcFunctionRepository.getById(id);
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
+
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    const { sourceCode } = slcFunction;
+
     return { sourceCode };
   }
 }
