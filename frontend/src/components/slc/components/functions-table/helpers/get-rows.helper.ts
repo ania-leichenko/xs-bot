@@ -1,6 +1,6 @@
 import { FunctionsTableAccessor } from 'common/enums/enums';
 import { SLCFunctionGetResponseItemDto } from 'common/types/types';
-import { ActionCell } from 'components/slc/components/functions-table/components/components';
+import { ActionCell } from '../components/components';
 import { getDistanceToDateNow } from 'helpers/helpers';
 
 type Row = {
@@ -18,12 +18,12 @@ const getRows = ({
   onFunctionDelete: (id: string) => void;
 }): Row[] => {
   return slcFunctions.map((item) => {
-    const { id, name, updatedAt } = item;
+    const { id, name, createdAt, updatedAt } = item;
 
     return {
       [FunctionsTableAccessor.FUNCTION_NAME]: name,
       [FunctionsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
-        new Date(updatedAt),
+        new Date(createdAt),
       ),
       [FunctionsTableAccessor.UPDATION_TIME]: getDistanceToDateNow(
         new Date(updatedAt),
