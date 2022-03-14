@@ -125,7 +125,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       return rep
         .send(
           await slcFunctionService.loadById({
-            ...req.params,
+            id: req.params.id,
           }),
         )
         .status(HttpCode.OK);
