@@ -26,6 +26,7 @@
 
 .input:focus,
 .inputError:focus {
+  outline: none;
   cursor: text;
 }
 
