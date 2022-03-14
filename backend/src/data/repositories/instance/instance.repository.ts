@@ -60,12 +60,8 @@ class Instance {
     return instances.map(Instance.modelToEntity);
   }
 
-  public async getOldInstances(): Promise<InstanceM[]> {
-    const old = new Date(
-      new Date().setHours(new Date().getHours() - 1),
-    ).toISOString();
-
-    return this.#InstanceModel.query().select().where('createdAt', '<', old);
+  public async getInstancesByDate(date: string): Promise<InstanceM[]> {
+    return this.#InstanceModel.query().select().where('createdAt', '<', date);
   }
 
   public async create(instance: InstanceEntity): Promise<InstanceM> {

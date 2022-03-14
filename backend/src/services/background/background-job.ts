@@ -1,37 +1,45 @@
 import { instance as InstanceRep } from '~/data/repositories/repositories';
 import { ec2 as EC2Serv, instance as instanceServ } from '~/services/services';
 import { ENV } from '~/common/enums/enums';
+import { INSTANCE_AUTO_DELETE_INTERVAL } from '~/common/constants/constants';
+import { getSubHours } from '~/helpers/helpers';
 
 type Constructor = {
+  flags: typeof ENV.FLAGS;
   instanceService: typeof instanceServ;
   instanceRepository: typeof InstanceRep;
   ec2Service: typeof EC2Serv;
 };
 
-class DeleteOldInstancesBackgroundJob {
+class BackgroundJob {
+  #flags: typeof ENV.FLAGS;
   #instanceService: typeof instanceServ;
   #instanceRepository: typeof InstanceRep;
   #ec2Service: typeof EC2Serv;
 
   constructor({
+    flags,
     instanceService,
     instanceRepository,
     ec2Service,
   }: Constructor) {
+    this.#flags = flags;
     this.#instanceService = instanceService;
     this.#instanceRepository = instanceRepository;
     this.#ec2Service = ec2Service;
   }
 
   public async backgroundJob(): Promise<void> {
-    const { FLAGS } = ENV;
-    FLAGS.INSTANCE_AUTO_DELETING
+    this.#flags.HAS_INSTANCE_AUTO_DELETING
       ? setInterval(async () => {
-          const oldInstances = await this.#instanceRepository.getOldInstances();
+          const oldDate = getSubHours(1).toISOString();
+
+          const oldInstances =
+            await this.#instanceRepository.getInstancesByDate(oldDate);
           oldInstances.forEach((instance) => instanceServ.delete(instance.id));
-        }, 60 * 60 * 1000)
+        }, INSTANCE_AUTO_DELETE_INTERVAL)
       : null;
   }
 }
 
-export { DeleteOldInstancesBackgroundJob };
+export { BackgroundJob };

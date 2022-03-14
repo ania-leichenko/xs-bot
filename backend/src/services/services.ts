@@ -28,7 +28,7 @@ import { S3 } from './aws/s3/s3.service';
 import { Permission } from './permission/permission.service';
 import { Lambda } from './aws/lambda/lambda.service';
 import { SLCFunction } from './slc-function/slc-function.service';
-import { DeleteOldInstancesBackgroundJob } from '~/services/background/old-instances-auto-deleting/old.insnaces.bj.service';
+import { BackgroundJob } from '~/services/background/background-job';
 
 const token = new Token();
 const encrypt = new Encrypt({
@@ -124,7 +124,8 @@ const slcFunction = new SLCFunction({
   lambdaService: lambda,
 });
 
-const instanceAutoDeleting = new DeleteOldInstancesBackgroundJob({
+const backgroundJob = new BackgroundJob({
+  flags: ENV.FLAGS,
   instanceService: instance,
   instanceRepository,
   ec2Service: ec2,
@@ -147,5 +148,5 @@ export {
   permission,
   lambda,
   slcFunction,
-  instanceAutoDeleting,
+  backgroundJob,
 };
