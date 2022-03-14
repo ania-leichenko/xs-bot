@@ -198,7 +198,6 @@ class SLCFunction {
     id,
   }: SLCFunctionLoadParamsDto): Promise<SLCFunctionLoadResponseDto> {
     const { sourceCode } = await this.#slcFunctionRepository.getById(id);
-
     return { sourceCode };
   }
 }
