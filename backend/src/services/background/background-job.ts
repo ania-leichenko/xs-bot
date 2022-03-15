@@ -32,16 +32,17 @@ class BackgroundJob {
     this.#ec2Service = ec2Service;
   }
 
-  public async backgroundJob(): Promise<void> {
-    this.#flags.HAS_INSTANCE_AUTO_DELETING
-      ? setInterval(async () => {
-          const oldDate = getSubHours(ONE_HOUR).toISOString();
+  public async clearInstances(): Promise<void> {
+    if (this.#flags.HAS_INSTANCE_AUTO_DELETING) {
+      setInterval(async () => {
+        const oldDate = getSubHours(ONE_HOUR).toISOString();
 
-          const oldInstances =
-            await this.#instanceRepository.getInstancesByDate(oldDate);
-          oldInstances.forEach((instance) => instanceServ.delete(instance.id));
-        }, INSTANCE_AUTO_DELETE_INTERVAL)
-      : null;
+        const oldInstances = await this.#instanceRepository.getInstancesByDate(
+          oldDate,
+        );
+        oldInstances.forEach((instance) => instanceServ.delete(instance.id));
+      }, INSTANCE_AUTO_DELETE_INTERVAL);
+    }
   }
 }
 

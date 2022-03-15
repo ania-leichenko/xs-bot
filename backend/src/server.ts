@@ -27,7 +27,7 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
   if (err) {
     app.log.error(err);
   }
-  backgroundJob.backgroundJob();
+  backgroundJob.clearInstances();
   app.log.info(
     `Listening to connections on - ${address}, Environment: ${ENV.APP.NODE_ENV}`,
   );
