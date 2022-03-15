@@ -1,1 +1,4 @@
-export { scInstanceCreate } from 'bws-shared/validation/validation-schemas';
+export {
+  scInstanceCreate,
+  scInstanceUpdate,
+} from 'bws-shared/validation/validation-schemas';

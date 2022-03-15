@@ -1,18 +1,25 @@
+import { IconButton } from 'components/common/icon-button/icon-button';
+import { IconName, AppRoute } from 'common/enums/enums';
 import styles from './styles.module.scss';
-import deleteIcon from 'assets/img/delete-icon.svg';
 
 const ActionCell = (
   id: string,
-  onDeleteInstance: (id: string) => void,
+  onInstanceDelete: (id: string) => void,
 ): JSX.Element => {
-  const handleDeleteInstance = (): void => {
-    onDeleteInstance(id);
+  const handleDelete = (): void => {
+    onInstanceDelete(id);
   };
-
   return (
-    <button className={styles.button} onClick={handleDeleteInstance}>
-      <img src={deleteIcon} alt="Delete" />
-    </button>
+    <div className={styles.wrapper}>
+      <IconButton
+        icon={IconName.GEAR}
+        label="Edit"
+        to={
+          `${AppRoute.SC_CONFIGURATE_INSTANCE}/${id}` as AppRoute.SC_CONFIGURATE_INSTANCE_$ID
+        }
+      />
+      <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
+    </div>
   );
 };
 

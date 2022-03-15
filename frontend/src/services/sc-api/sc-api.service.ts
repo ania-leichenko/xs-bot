@@ -8,7 +8,10 @@ import {
 import {
   SCOperationSystemGetAllResponseDto,
   SCInstanceCreateRequestDto,
+  SCInstanceUpdateRequestDto,
+  SCInstanceUpdateParamsDto,
   SCInstanceCreateResponseDto,
+  SCInstanceUpdateResponseDto,
   SCInstanceGetByTenantRequestParamsDto,
   SCInstanceGetByTenantResponseDto,
 } from 'common/types/types';
@@ -57,6 +60,26 @@ class SCApi {
       joinItems(this.#apiPrefix, ApiPath.SC, SCApiPath.ROOT),
       {
         method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public async updateInstance(
+    params: SCInstanceUpdateParamsDto,
+    payload: SCInstanceUpdateRequestDto,
+  ): Promise<SCInstanceUpdateResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.SC,
+        SCApiPath.INSTANCES,
+        InstancesApiPath.ROOT,
+        params.id,
+      ),
+      {
+        method: HttpMethod.PUT,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
       },

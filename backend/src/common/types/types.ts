@@ -16,6 +16,7 @@ export {
   type EAMWorkerSignInRequestDto,
   type EAMWorkerSignInResponseDto,
   type EAMWorkerByIdResponseDto,
+  type EAMWorkerDeleteRequestDto,
 } from './eam-worker/eam-worker';
 export {
   type EAMGroupCreateResponseDto,
@@ -24,6 +25,8 @@ export {
   type EAMGroupGetByTenantResponseDto,
   type EAMGroupGetByTenantResponseItemDto,
   type EAMGroupRelatedItem,
+  type EAMGroupDeleteParamsDto,
+  type EamGroupGetByIdItem,
 } from './eam-group/eam-group';
 export {
   type EAMTenantCreateRequestDto,
@@ -38,7 +41,10 @@ export {
   type SCInstanceGetByTenantRequestParamsDto,
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
-  type SCInstanceDeleteRequestDto,
+  type SCInstanceDeleteParamsDto,
+  type SCInstanceUpdateParamsDto,
+  type SCInstanceUpdateRequestDto,
+  type SCInstanceUpdateResponseDto,
 } from './sc-instance/sc-instance';
 export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
 export {
@@ -62,5 +68,10 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionUpdateParamsDto,
+  type SLCFunctionUpdateRequestDto,
+  type SLCFunctionUpdateResponseDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

@@ -90,17 +90,35 @@ class SLCFunction {
     });
   }
 
-  async getById(id: string): Promise<SLCFunctionEntity> {
+  async getById(id: string): Promise<SLCFunctionEntity | null> {
     const slcFunction = await this.#SLCFunctionModel
       .query()
       .findById(id)
       .first();
+
+    if (!slcFunction) {
+      return null;
+    }
 
     return SLCFunction.modelToEntity(slcFunction as SLCFunctionM);
   }
 
   async delete(id: string): Promise<void> {
     await this.#SLCFunctionModel.query().deleteById(id);
+  }
+
+  async save(
+    slcFunction: SLCFunctionEntity,
+  ): Promise<SLCFunctionEntity | null> {
+    const updatedSLCFunction = await this.#SLCFunctionModel
+      .query()
+      .patchAndFetchById(slcFunction.id, { ...slcFunction });
+
+    if (!updatedSLCFunction) {
+      return null;
+    }
+
+    return SLCFunction.modelToEntity(updatedSLCFunction);
   }
 
   public static modelToEntity(model: SLCFunctionM): SLCFunctionEntity {

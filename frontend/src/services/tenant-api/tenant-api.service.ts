@@ -1,4 +1,9 @@
-import { ApiPath, ContentType, HttpMethod } from 'common/enums/enums';
+import {
+  TenantsApiPath,
+  ApiPath,
+  ContentType,
+  HttpMethod,
+} from 'common/enums/enums';
 import {
   EAMTenantByIdRequestParamsDto,
   EAMTenantByIdResponseDto,
@@ -6,7 +11,6 @@ import {
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
-import { TenantsApiPath } from 'common/enums/enums';
 
 type Constructor = {
   http: Http;

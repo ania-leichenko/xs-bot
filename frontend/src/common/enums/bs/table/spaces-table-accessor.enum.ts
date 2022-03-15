@@ -1,6 +1,6 @@
 enum SpacesTableAccessor {
   SPACE_NAME = 'name',
-  CREATION_TIME = 'createdAt',
+  CREATED_AT = 'createdAt',
   ACTIONS = 'actions',
 }
 
