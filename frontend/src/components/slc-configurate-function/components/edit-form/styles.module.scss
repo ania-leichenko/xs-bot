@@ -4,6 +4,12 @@
   font-size: 30px;
 }
 
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .buttons {
   display: flex;
   justify-content: flex-end;
@@ -15,7 +21,7 @@
   min-width: 100px;
 }
 
-.titleResponse {
+.title {
   margin: 10px 0;
   color: var(--color-white);
   font-size: 24px;
