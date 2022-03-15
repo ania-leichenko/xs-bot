@@ -8,6 +8,7 @@ import {
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
+import { debounce } from 'underscore';
 import styles from './styles.module.scss';
 
 interface Props {
@@ -50,6 +51,8 @@ const EditForm: FC<Props> = ({ id }) => {
     );
   };
 
+  const handleOnChangeValue = debounce(setEditCode, 500);
+
   const handleCancel = (): void => {
     dispatch(SLCFunctionActions.resetFunction());
   };
@@ -87,7 +90,7 @@ const EditForm: FC<Props> = ({ id }) => {
       {hasCodeLoading ? (
         <Loader />
       ) : (
-        <Editor value={editCode} onChangeValue={setEditCode} />
+        <Editor value={editCode} onChangeValue={handleOnChangeValue} />
       )}
       <div className={styles.buttons}>
         <div className={styles.button}>
