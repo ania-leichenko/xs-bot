@@ -26,7 +26,6 @@ const EditForm: FC<Props> = ({ id }) => {
   const dispatch = useAppDispatch();
   const hasSave = loadFunction?.sourceCode === editCode;
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
-  const isPossibleRun = hasSave && !hasCodeLoading;
   const isPossibleSave = !hasSave && !hasCodeLoading;
   const hasResponse = Boolean(response);
 
@@ -64,28 +63,19 @@ const EditForm: FC<Props> = ({ id }) => {
       <div className={styles.wrapper}>
         <h4 className={styles.title}>{loadFunction?.name ?? ''}</h4>
         <div className={styles.buttons}>
-          <div className={styles.button}>
-            {isPossibleRun ? (
-              <Button
-                btnStyle={ButtonStyle.FILLED}
-                label="Run"
-                onClick={handleRun}
-              />
-            ) : (
-              <Button btnStyle={ButtonStyle.OUTLINED} label="Run" />
-            )}
-          </div>
-          <div className={styles.button}>
-            {isPossibleSave ? (
-              <Button
-                btnStyle={ButtonStyle.FILLED}
-                label="Save"
-                onClick={handleSaveCode}
-              />
-            ) : (
-              <Button btnStyle={ButtonStyle.OUTLINED} label="Save" />
-            )}
-          </div>
+          <Button
+            className={styles.button}
+            btnStyle={ButtonStyle.FILLED}
+            label="Run"
+            onClick={handleRun}
+          />
+          <Button
+            className={styles.button}
+            btnStyle={ButtonStyle.FILLED}
+            label="Save"
+            onClick={handleSaveCode}
+            disabled={isPossibleSave ? false : true}
+          />
         </div>
       </div>
       {hasResponse && (
