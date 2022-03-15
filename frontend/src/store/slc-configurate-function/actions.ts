@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   NotificationTitle,
   NotificationMessage,
@@ -18,7 +18,14 @@ import {
 } from 'common/types/types';
 import { ActionType } from './common';
 
-const resetFunction = createAction(ActionType.RUN_FUNCTION);
+const resetFunction = createAsyncThunk<void, void, AsyncThunkConfig>(
+  ActionType.RESET_FUNCTION,
+  async (_payload, { extra }) => {
+    const { navigation } = extra;
+
+    navigation.push(AppRoute.SLC);
+  },
+);
 
 const createFunction = createAsyncThunk<
   SLCFunctionCreateResponseDto,

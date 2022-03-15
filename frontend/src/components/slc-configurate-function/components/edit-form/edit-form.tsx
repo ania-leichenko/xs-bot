@@ -5,7 +5,6 @@ import {
   useAppDispatch,
   useAppSelector,
   useEffect,
-  useNavigate,
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
@@ -25,7 +24,6 @@ const EditForm: FC<Props> = ({ id }) => {
   );
   const [editCode, setEditCode] = useState<string>('');
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const hasSave = loadFunction?.sourceCode === editCode;
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleRun = hasSave && !hasCodeLoading;
@@ -55,7 +53,6 @@ const EditForm: FC<Props> = ({ id }) => {
 
   const handleCancel = (): void => {
     dispatch(SLCFunctionActions.resetFunction());
-    navigate(AppRoute.SLC);
   };
 
   if (dataStatus === DataStatus.REJECTED) {
