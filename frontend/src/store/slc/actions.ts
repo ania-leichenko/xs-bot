@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   SLCFunctionGetRequestParamsDto,
@@ -33,6 +33,4 @@ const deleteFunction = createAsyncThunk<string, string, AsyncThunkConfig>(
   },
 );
 
-const resetState = createAction(ActionType.RESET_STATE);
-
-export { loadFunctions, deleteFunction, resetState };
+export { loadFunctions, deleteFunction };

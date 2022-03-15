@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
   EAMGroupGetByTenantRequestParamsDto,
@@ -59,6 +59,4 @@ const deleteGroup = createAsyncThunk<string, string, AsyncThunkConfig>(
   },
 );
 
-const resetState = createAction(ActionType.RESET_STATE);
-
-export { getWorkers, loadGroups, updateTenant, deleteGroup, resetState };
+export { getWorkers, loadGroups, updateTenant, deleteGroup };

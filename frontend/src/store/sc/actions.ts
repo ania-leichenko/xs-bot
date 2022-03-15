@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { NotificationTitle, NotificationMessage } from 'common/enums/enums';
 import {
   SCInstanceGetByTenantRequestParamsDto,
@@ -32,6 +32,4 @@ const deleteInstance = createAsyncThunk<string, string, AsyncThunkConfig>(
   },
 );
 
-const resetState = createAction(ActionType.RESET_STATE);
-
-export { loadInstances, deleteInstance, resetState };
+export { loadInstances, deleteInstance };

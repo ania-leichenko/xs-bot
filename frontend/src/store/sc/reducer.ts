@@ -1,7 +1,8 @@
 import { SCInstanceGetByTenantResponseItemDto } from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { deleteInstance, loadInstances, resetState } from './actions';
+import { deleteInstance, loadInstances } from './actions';
+import { logOut } from 'store/auth/actions';
 
 type State = {
   dataStatus: DataStatus;
@@ -36,7 +37,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(deleteInstance.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
-  builder.addCase(resetState, (state) => {
+  builder.addCase(logOut.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
 });
