@@ -9,7 +9,6 @@ import {
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
-// import { getResponse } from '..//../helpers/helpers';
 import styles from './styles.module.scss';
 
 interface Props {
