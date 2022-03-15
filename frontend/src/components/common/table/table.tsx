@@ -17,6 +17,8 @@ const Table: FC<Props> = ({ columns, data, title, children, className }) => {
       data: data as Record<string, string>[],
     });
 
+  const hasData = data.length !== 0;
+
   return (
     <div className={getValidClasses(styles.tableWrapper, className)}>
       {title && (
@@ -60,6 +62,11 @@ const Table: FC<Props> = ({ columns, data, title, children, className }) => {
           })}
         </tbody>
       </table>
+      {!hasData && (
+        <div
+          className={styles.placeholder}
+        >{`No ${title?.toLowerCase()} to display`}</div>
+      )}
     </div>
   );
 };
