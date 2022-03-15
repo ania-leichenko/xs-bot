@@ -107,15 +107,20 @@ class Lambda {
         FunctionName: name,
       }),
     );
+    const hasPayload = Boolean(Payload);
 
-    if (StatusCode !== 200 || !Payload) {
+    if (StatusCode !== HttpCode.OK || !hasPayload) {
       throw new SLCError({
         status: HttpCode.INTERNAL_SERVER_ERROR,
         message: ExceptionMessage.FUNCTION_NOT_RUN,
       });
     }
 
-    return JSON.stringify(JSON.parse(toUtf8(Payload)), null, '\t');
+    return JSON.stringify(
+      JSON.parse(toUtf8(Payload as Uint8Array)),
+      null,
+      '\t',
+    );
   }
 }
 
