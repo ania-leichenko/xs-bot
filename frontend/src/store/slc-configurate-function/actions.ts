@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   NotificationTitle,
   NotificationMessage,
@@ -17,6 +17,8 @@ import {
   SLCFunctionRunResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
+
+const resetFunction = createAction(ActionType.RUN_FUNCTION);
 
 const createFunction = createAsyncThunk<
   SLCFunctionCreateResponseDto,
@@ -79,4 +81,10 @@ const runFunction = createAsyncThunk<
   return response;
 });
 
-export { createFunction, loadFunction, updateFunction, runFunction };
+export {
+  resetFunction,
+  createFunction,
+  loadFunction,
+  updateFunction,
+  runFunction,
+};
