@@ -25,7 +25,7 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(resetFunction, (state) => {
+  builder.addCase(resetFunction.fulfilled, (state) => {
     Object.assign(state, initialState);
   });
   builder.addCase(createFunction.fulfilled, () => {
