@@ -64,33 +64,36 @@ const EditForm: FC<Props> = ({ id }) => {
   return (
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
-      <div className={styles.buttons}>
-        <div className={styles.button}>
-          {isPossibleRun ? (
-            <Button
-              btnStyle={ButtonStyle.FILLED}
-              label="Run"
-              onClick={handleRun}
-            />
-          ) : (
-            <Button btnStyle={ButtonStyle.OUTLINED} label="Run" />
-          )}
-        </div>
-        <div className={styles.button}>
-          {isPossibleSave ? (
-            <Button
-              btnStyle={ButtonStyle.FILLED}
-              label="Save"
-              onClick={handleSaveCode}
-            />
-          ) : (
-            <Button btnStyle={ButtonStyle.OUTLINED} label="Save" />
-          )}
+      <div className={styles.wrapper}>
+        <h4 className={styles.title}>{loadFunction?.name ?? ''}</h4>
+        <div className={styles.buttons}>
+          <div className={styles.button}>
+            {isPossibleRun ? (
+              <Button
+                btnStyle={ButtonStyle.FILLED}
+                label="Run"
+                onClick={handleRun}
+              />
+            ) : (
+              <Button btnStyle={ButtonStyle.OUTLINED} label="Run" />
+            )}
+          </div>
+          <div className={styles.button}>
+            {isPossibleSave ? (
+              <Button
+                btnStyle={ButtonStyle.FILLED}
+                label="Save"
+                onClick={handleSaveCode}
+              />
+            ) : (
+              <Button btnStyle={ButtonStyle.OUTLINED} label="Save" />
+            )}
+          </div>
         </div>
       </div>
       {hasResponse && (
         <>
-          <h4 className={styles.titleResponse}>Response</h4>
+          <h4 className={styles.title}>Response</h4>
           <p className={styles.response}>{response?.payload}</p>
         </>
       )}
