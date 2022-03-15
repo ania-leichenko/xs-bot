@@ -1,6 +1,7 @@
 import { DataStatus } from 'common/enums/enums';
 import { createReducer } from '@reduxjs/toolkit';
 import {
+  resetFunction,
   createFunction,
   loadFunction,
   updateFunction,
@@ -24,6 +25,9 @@ const initialState: State = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(resetFunction, (state) => {
+    Object.assign(state, initialState);
+  });
   builder.addCase(createFunction.fulfilled, () => {
     return;
   });
