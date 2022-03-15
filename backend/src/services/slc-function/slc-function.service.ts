@@ -215,9 +215,9 @@ class SLCFunction {
       });
     }
 
-    const { sourceCode } = slcFunction;
+    const { name, sourceCode } = slcFunction;
 
-    return { sourceCode };
+    return { name, sourceCode };
   }
 
   public async runById({
