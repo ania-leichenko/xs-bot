@@ -78,7 +78,7 @@ const EditForm: FC<Props> = ({ id }) => {
             btnStyle={ButtonStyle.FILLED}
             label="Save"
             onClick={handleSaveCode}
-            disabled={isPossibleSave ? false : true}
+            disabled={!isPossibleSave}
           />
         </div>
       </div>
