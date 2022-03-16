@@ -7,3 +7,4 @@ export type { EAMGroupGetByTenantResponseItemDto } from './eam-group-get-by-tena
 export type { EAMGroupConfigurateRequestDto } from './eam-group-configurate-request-dto';
 export type { EamGroupGetByIdRequestDto } from './eam-group-get-by-id-request-dto';
 export type { EamGroupGetByIdResponseDto } from './eam-group-get-by-id-response-dto';
+export type { EAMGroupUpdateRequestDto } from './eam-group-update-request-dto';

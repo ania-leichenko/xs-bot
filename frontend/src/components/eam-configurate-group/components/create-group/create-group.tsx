@@ -16,20 +16,19 @@ import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'vali
 import { WorkersTable, PermissionsTable } from '../components';
 
 const CreateGroup: FC = () => {
-  const dispatch = useAppDispatch();
-
   const { control, errors, handleSubmit } =
     useAppForm<EAMGroupConfigurateRequestDto>({
-      defaultValues: DEFAULT_GROUP_PAYLOAD(''),
+      defaultValues: DEFAULT_GROUP_PAYLOAD,
       validationSchema: eamGroupConfigurateValidationSchema,
     });
+
+  const dispatch = useAppDispatch();
 
   const selectedWorkers = useSelectedItems<string>([]);
   const selectedPermissions = useSelectedItems<string>([]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
     const newPayload: EAMGroupConfigurateRequestDto = {
-      id: '',
       name: payload.name,
       workersIds: selectedWorkers.selectedItems,
       permissionsIds: selectedPermissions.selectedItems,

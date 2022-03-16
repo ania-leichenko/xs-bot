@@ -22,7 +22,7 @@ import {
 import {
   eamGroupCreate as groupCreateValidationSchema,
   eamWorkerCreateBackend as workerValidationSchema,
-  eamGroupConfigurate as groupConfigurateValidationSchema,
+  eamGroupUpdate as groupUpdateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 
@@ -98,18 +98,17 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.PUT,
     url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
     schema: {
-      body: groupConfigurateValidationSchema,
+      body: groupUpdateValidationSchema,
     },
     validatorCompiler({
       schema,
-    }: FastifyRouteSchemaDef<typeof groupConfigurateValidationSchema>) {
+    }: FastifyRouteSchemaDef<typeof groupUpdateValidationSchema>) {
       return (
         data: EAMGroupCreateRequestDto,
-      ): ReturnType<typeof groupConfigurateValidationSchema['validate']> => {
+      ): ReturnType<typeof groupUpdateValidationSchema['validate']> => {
         return schema.validate(data);
       };
     },
-
     async handler(
       req: FastifyRequest<{
         Querystring: EamGroupGetByIdRequestDto;

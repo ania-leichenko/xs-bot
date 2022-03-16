@@ -10,6 +10,7 @@ import {
   EAMPermissionGetAllResponseDto,
   EamGroupGetByIdRequestDto,
   EamGroupGetByIdResponseDto,
+  EAMGroupUpdateRequestDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import { AppRoute } from '../../common/enums/app/app-route.enum';
@@ -44,22 +45,28 @@ const create = createAsyncThunk<
 
 const update = createAsyncThunk<
   EAMGroupCreateResponseDto,
-  EAMGroupConfigurateRequestDto,
+  EAMGroupUpdateRequestDto,
   AsyncThunkConfig
->(ActionType.UPDATE, async (registerPayload, { getState, extra }) => {
-  const { eamApi } = extra;
+>(ActionType.UPDATE, async (payload, { getState, extra }) => {
+  const { eamApi, navigation, notification } = extra;
 
   const { app } = getState();
   const { tenant } = app;
 
   const request: EAMGroupCreateRequestDto = {
-    name: registerPayload.name,
+    name: payload.name,
     tenantId: tenant?.id ?? '',
-    workersIds: registerPayload.workersIds,
-    permissionsIds: registerPayload.permissionsIds,
+    workersIds: payload.workersIds,
+    permissionsIds: payload.permissionsIds,
   };
 
-  const group = await eamApi.updateGroup(registerPayload.id, request);
+  const group = await eamApi.updateGroup(payload.id, request);
+
+  navigation.push(AppRoute.EAM);
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.EAM_GROUP_UPDATE,
+  );
 
   return group;
 });
@@ -70,7 +77,8 @@ const getGroupById = createAsyncThunk<
   AsyncThunkConfig
 >(ActionType.GET_GROUP, async (payload, { extra }) => {
   const { eamApi } = extra;
-  return await eamApi.getGroupById(payload);
+  const group = await eamApi.getGroupById(payload);
+  return group;
 });
 
 const getWorkers = createAsyncThunk<

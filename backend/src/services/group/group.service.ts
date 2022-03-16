@@ -62,7 +62,7 @@ class Group {
     if (!group) {
       return null;
     }
-    if (name) {
+    if (name && name != group.name) {
       const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
         name,
         tenantId,
@@ -75,8 +75,8 @@ class Group {
       group.setName(name);
     }
 
-    group.setPermissionsIds(permissionsIds);
     group.setWorkersIds(workersIds);
+    group.setPermissionsIds(permissionsIds);
 
     await this.#groupRepository.save(group);
 

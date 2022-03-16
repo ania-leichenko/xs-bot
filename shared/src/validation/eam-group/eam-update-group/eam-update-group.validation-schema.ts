@@ -6,20 +6,32 @@ import {
   EAMGroupValidationRule,
 } from '~/common/enums/enums';
 
-const eamGroupConfigurate = Joi.object({
+const eamGroupUpdate = Joi.object({
   [getNameOf<EAMGroupCreateRequestDto>('name')]: Joi.string()
     .trim()
     .min(EAMGroupValidationRule.NAME_MIN_LENGTH)
     .max(EAMGroupValidationRule.NAME_MAX_LENGTH)
     .regex(EAMGroupValidationRule.NAME_REGEX)
-    .required()
     .messages({
       'string.empty': EAMGroupValidationMessage.NAME_REQUIRE,
       'string.min': EAMGroupValidationMessage.NAME_MIN_LENGTH,
       'string.pattern.base': EAMGroupValidationMessage.NAME_REGEX,
     }),
-  [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array(),
-  [getNameOf<EAMGroupCreateRequestDto>('permissionsIds')]: Joi.array(),
+  [getNameOf<EAMGroupCreateRequestDto>('tenantId')]: Joi.string()
+    .trim()
+    .required(),
+  [getNameOf<EAMGroupCreateRequestDto>('workersIds')]: Joi.array()
+    .required()
+    .min(EAMGroupValidationRule.PERMISSION_SELECTED_MIN)
+    .messages({
+      'array.min': EAMGroupValidationMessage.WORKERS_SELECTED_MIN,
+    }),
+  [getNameOf<EAMGroupCreateRequestDto>('permissionsIds')]: Joi.array()
+    .required()
+    .min(EAMGroupValidationRule.PERMISSION_SELECTED_MIN)
+    .messages({
+      'array.min': EAMGroupValidationMessage.PERMISSION_SELECTED_MIN,
+    }),
 });
 
-export { eamGroupConfigurate };
+export { eamGroupUpdate };

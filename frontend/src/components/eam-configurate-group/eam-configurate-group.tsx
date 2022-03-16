@@ -31,12 +31,13 @@ const EAMConfigurateGroup: FC = () => {
     dispatch(
       EAMGroupConfigurateActions.getWorkers({
         from: 0,
-        count: 5,
+        count: 10,
         tenantId: tenantId as string,
       }),
     );
     dispatch(EAMGroupConfigurateActions.getPermission());
-  }, [dispatch, tenantId]);
+  }, [dispatch, tenantId, group]);
+
   return <div>{group ? <UpdateGroup group={group} /> : <CreateGroup />}</div>;
 };
 

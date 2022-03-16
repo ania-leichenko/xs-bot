@@ -34,6 +34,7 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
   type EamGroupGetByIdRequestDto,
   type EamGroupGetByIdResponseDto,
+  type EAMGroupUpdateRequestDto,
 } from './eam-group/eam-group';
 export {
   type EAMGroupCreateRequestDto,

@@ -69,12 +69,14 @@ class EAMApi {
   ): Promise<EAMGroupCreateResponseDto> {
     return this.#http.load(
       joinItems(
-        `${this.#apiPrefix}${ApiPath.EAM}${EAMApiPath.GROUPS}${
-          GroupsApiPath.ROOT
-        }${id}`,
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUP,
+        GroupsApiPath.ROOT,
       ),
       {
         method: HttpMethod.PUT,
+        params: { id },
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
       },

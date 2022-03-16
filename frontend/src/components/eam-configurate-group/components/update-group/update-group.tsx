@@ -19,6 +19,7 @@ import styles from './styles.module.scss';
 import {
   EAMGroupConfigurateRequestDto,
   EamGroupGetByIdResponseDto,
+  EAMGroupUpdateRequestDto,
 } from 'common/types/types';
 import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from '../components';
@@ -28,22 +29,24 @@ type Props = {
 const UpdateGroup: FC<Props> = ({ group }) => {
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    group;
-  }, [group]);
-
-  const { control, errors, handleSubmit } =
+  const { control, errors, handleSubmit, handleReset } =
     useAppForm<EAMGroupConfigurateRequestDto>({
-      defaultValues: DEFAULT_GROUP_PAYLOAD(group!.name),
+      defaultValues: DEFAULT_GROUP_PAYLOAD,
       validationSchema: eamGroupConfigurateValidationSchema,
     });
 
-  const selectedWorkers = useSelectedItems<string>(group!.workersIds);
-  const selectedPermissions = useSelectedItems<string>(group!.permissionsIds);
+  const selectedWorkers = useSelectedItems<string>(group.workersIds);
+  const selectedPermissions = useSelectedItems<string>(group.permissionsIds);
+
+  useEffect(() => {
+    handleReset({ name: group.name });
+    selectedWorkers.handleReset(group.workersIds);
+    selectedPermissions.handleReset(group.permissionsIds);
+  }, [group]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
-    const newPayload: EAMGroupConfigurateRequestDto = {
-      id: '',
+    const newPayload: EAMGroupUpdateRequestDto = {
+      id: group.id,
       name: payload.name,
       workersIds: selectedWorkers.selectedItems,
       permissionsIds: selectedPermissions.selectedItems,

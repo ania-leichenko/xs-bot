@@ -141,17 +141,15 @@ class Group {
       .where({ 'groupId': id });
     await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
 
-    const hasWorkersIds = Boolean(workersIds.length);
-    if (hasWorkersIds) {
-      await this.#UsersGroupsModel.query().insert(
-        workersIds.map((workerId) => ({
-          id: getRandomId(),
-          userId: workerId,
-          groupId: id,
-          createdAt: new Date().toISOString(),
-        })),
-      );
-    }
+    await this.#UsersGroupsModel.query().insert(
+      workersIds.map((workerId) => ({
+        id: getRandomId(),
+        userId: workerId,
+        groupId: id,
+        createdAt: new Date().toISOString(),
+      })),
+    );
+
     await this.#GroupsPermissionsModel.query().insert(
       permissionsIds.map((permissionId) => ({
         id: getRandomId(),
