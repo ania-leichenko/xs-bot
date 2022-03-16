@@ -90,6 +90,19 @@ class SLCFunction {
     });
   }
 
+  public async getByWorkerId(workerId: string): Promise<string[]> {
+    const slcFunctions = await this.#SLCFunctionModel
+      .query()
+      .select()
+      .where({ 'createdBy': workerId });
+
+    if (!slcFunctions) {
+      return [];
+    }
+
+    return slcFunctions.map((slcFunction) => slcFunction.id);
+  }
+
   async getById(id: string): Promise<SLCFunctionEntity | null> {
     const slcFunction = await this.#SLCFunctionModel
       .query()
