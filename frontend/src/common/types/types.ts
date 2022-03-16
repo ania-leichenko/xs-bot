@@ -70,6 +70,9 @@ export {
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
   type SCInstanceGetByTenantRequestParamsDto,
+  type SCInstanceUpdateParamsDto,
+  type SCInstanceUpdateRequestDto,
+  type SCInstanceUpdateResponseDto,
 } from './sc-instance/sc-instance';
 export {
   type SLCFunctionCreateRequestDto,
@@ -77,6 +80,11 @@ export {
   type SLCFunctionGetRequestParamsDto,
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
+  type SLCFunctionUpdateParamsDto,
+  type SLCFunctionUpdateRequestDto,
+  type SLCFunctionUpdateResponseDto,
 } from './slc-function/slc-function';
 export {
   type SCOperationSystemGetAllResponseDto,

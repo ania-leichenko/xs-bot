@@ -7,6 +7,7 @@ enum NotificationMessage {
   BS_SPACE_DELETE = 'Space has been successfully deleted',
   SC_INSTANCE_CREATE = 'Instance has been successfully created',
   SC_INSTANCE_DELETE = 'Instance has been successfully deleted',
+  SC_INSTANCE_UPDATE = 'Instance has been successfully updated',
   SLC_FUNCTION_CREATE = 'Function has been successfully created',
   SLC_FUNCTION_DELETE = 'Function has been successfully deleted',
   EAM_UPDATE_TENANT_NAME = 'Tenant name has been successfully changed',

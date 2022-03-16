@@ -5,6 +5,8 @@ import {
   DeleteBucketCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
+import { BsError } from '~/exceptions/exceptions';
+import { AwsExceptionMessage, ExceptionMessage } from '~/common/enums/enums';
 
 type Constructor = {
   region: string;
@@ -24,8 +26,19 @@ class S3 {
     });
   }
 
-  public async creteBucket(name: string): Promise<CreateBucketOutput> {
-    return this.#s3Client.send(new CreateBucketCommand({ Bucket: name }));
+  public async creteBucket(name: string): Promise<CreateBucketOutput | void> {
+    return this.#s3Client
+      .send(new CreateBucketCommand({ Bucket: name }))
+      .catch((err) => {
+        throw new BsError({
+          status: err.$response.statusCode,
+          message:
+            err.message === AwsExceptionMessage.BUCKET_EXISTS ||
+            err.message === AwsExceptionMessage.BUCKET_YOURS
+              ? ExceptionMessage.SPACE_EXISTS
+              : err.message,
+        });
+      });
   }
 
   public async deleteBucket(name: string): Promise<DeleteBucketCommandOutput> {

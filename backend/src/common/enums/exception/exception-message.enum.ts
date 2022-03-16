@@ -19,6 +19,7 @@ const ExceptionMessage = {
   MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',
   MASTER_SPACE_CREATE: 'Master is not able to create space.',
   MASTER_SPACE_DELETE: 'Master is not able to delete space',
+  SPACE_NOT_FOUND: 'Space not found.',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
   MASTER_DELETE: 'Master can not be deleted',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
@@ -32,6 +33,7 @@ const ExceptionMessage = {
   GROUP_EXISTS: 'Group with this name already exists',
   INSTANCE_NOT_FOUND: 'Instance not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
+  SPACE_EXISTS: 'Space with this name already exists',
 } as const;
 
 export { ExceptionMessage };

@@ -1,5 +1,9 @@
 import { DataStatus } from 'common/enums/enums';
-import { loadOperationSystems, createInstance } from './actions';
+import {
+  loadOperationSystems,
+  createInstance,
+  updateInstance,
+} from './actions';
 import { SCOperationSystemGetAllItemResponseDto } from 'common/types/types';
 import { createReducer } from '@reduxjs/toolkit';
 
@@ -25,6 +29,9 @@ const reducer = createReducer(initialState, (builder) => {
     state.operationSystemsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(createInstance.fulfilled, () => {
+    return;
+  });
+  builder.addCase(updateInstance.fulfilled, () => {
     return;
   });
 });
