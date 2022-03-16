@@ -8,7 +8,7 @@ import {
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
-import { debounce } from 'underscore';
+import { debounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 interface Props {
