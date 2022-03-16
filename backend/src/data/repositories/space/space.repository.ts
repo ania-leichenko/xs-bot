@@ -51,10 +51,6 @@ class Space {
       .select()
       .where({ 'createdBy': workerId });
 
-    if (!space) {
-      return [];
-    }
-
     return space.map(Space.modelToEntity);
   }
 

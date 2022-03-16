@@ -96,10 +96,6 @@ class SLCFunction {
       .select()
       .where({ 'createdBy': workerId });
 
-    if (!slcFunctions) {
-      return [];
-    }
-
     return slcFunctions.map(SLCFunction.modelToEntity);
   }
 
