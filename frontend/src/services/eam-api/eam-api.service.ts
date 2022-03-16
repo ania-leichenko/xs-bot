@@ -3,18 +3,18 @@ import {
   ContentType,
   EAMApiPath,
   GroupsApiPath,
-  WorkersApiPath,
   HttpMethod,
+  WorkersApiPath,
 } from 'common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
   EAMGroupCreateResponseDto,
-  EAMWorkerGetAllResponseDto,
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
-  EAMWorkerGetByTenantRequestParamsDto,
   EAMPermissionGetAllResponseDto,
   EamGroupGetByIdResponseDto,
+  EAMWorkerGetAllResponseDto,
+  EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -96,6 +96,21 @@ class EAMApi {
       {
         method: HttpMethod.GET,
         params,
+      },
+    );
+  }
+
+  public deleteGroup(id: string): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUPS,
+        GroupsApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.DELETE,
       },
     );
   }

@@ -161,6 +161,11 @@ class Group {
     return Group.modelToEntity(groupModel, workersIds, permissionsIds);
   }
 
+  public async delete(id: string): Promise<void> {
+    await this.#GroupsPermissionsModel.query().where({ groupId: id }).del();
+    await this.#GroupModel.query().where({ id }).del();
+  }
+
   public static modelToEntity(
     model: GroupM,
     workersIds: string[],

@@ -17,6 +17,8 @@ export {
   type EamGroupGetByIdRequestDto,
   type EamGroupGetByIdResponseDto,
   type EAMGroupUpdateRequestDto,
+  type EAMGroupDeleteParamsDto,
+  type EamGroupGetByIdItem,
 } from './eam-group/eam-group';
 export {
   type EAMWorkerGetAllItemResponseDto,
@@ -56,6 +58,10 @@ export {
   type SCOperationSystemGetAllItemResponseDto,
 } from './sc-operation-system/sc-operation-system';
 export {
+  type SCSshKeyGetByIdParamsDto,
+  type SCSshKeyGetByIdResponseDto,
+} from './sc-ssh-key/sc-ssh-key';
+export {
   type BSSpaceCreateRequestDto,
   type BSSpaceCreateResponseDto,
   type BSSpaceCreateFormDto,
@@ -77,6 +83,8 @@ export {
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
   type SLCFunctionDeleteParamsDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
   type SLCFunctionUpdateParamsDto,
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,

@@ -2,7 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { DataStatus } from 'common/enums/enums';
 import {
   create,
-  getWorkers,
+  loadWorkers,
   getPermission,
   update,
   getGroupById,
@@ -35,8 +35,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(update.fulfilled, (state) => {
     state.dataStatus = DataStatus.FULFILLED;
   });
-
-  builder.addCase(getWorkers.fulfilled, (state, action) => {
+  builder.addCase(loadWorkers.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;
   });

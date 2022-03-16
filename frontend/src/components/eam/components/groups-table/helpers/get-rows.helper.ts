@@ -1,6 +1,7 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/helpers';
+import { ActionCell } from '../components/action-cell/action-cell';
 
 type Row = {
   [GroupsTableAccessor.ID]: string;
@@ -10,7 +11,13 @@ type Row = {
   [GroupsTableAccessor.CREATION_TIME]: string;
 };
 
-const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
+const getRows = ({
+  groups,
+  onGroupDelete,
+}: {
+  groups: EAMGroupGetByTenantResponseItemDto[];
+  onGroupDelete: (id: string) => void;
+}): Row[] => {
   return groups.map((item) => {
     const { id, name, users, permissions, createdAt } = item;
     const permissionsContent = permissions.map((item) => item.name).join(', ');
@@ -23,6 +30,7 @@ const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
       [GroupsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),
       ),
+      [GroupsTableAccessor.ACTIONS]: ActionCell(id, onGroupDelete),
     };
   });
 };

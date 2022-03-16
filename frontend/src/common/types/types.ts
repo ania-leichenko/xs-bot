@@ -35,6 +35,7 @@ export {
   type EamGroupGetByIdRequestDto,
   type EamGroupGetByIdResponseDto,
   type EAMGroupUpdateRequestDto,
+  type EAMGroupDeleteParamsDto,
 } from './eam-group/eam-group';
 export {
   type EAMGroupCreateRequestDto,
@@ -72,6 +73,9 @@ export {
   type SCInstanceGetByTenantResponseItemDto,
   type SCInstanceGetByTenantResponseDto,
   type SCInstanceGetByTenantRequestParamsDto,
+  type SCInstanceUpdateParamsDto,
+  type SCInstanceUpdateRequestDto,
+  type SCInstanceUpdateResponseDto,
 } from './sc-instance/sc-instance';
 export {
   type SLCFunctionCreateRequestDto,
@@ -79,11 +83,17 @@ export {
   type SLCFunctionGetRequestParamsDto,
   type SLCFunctionGetResponseItemDto,
   type SLCFunctionGetResponseDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
+  type SLCFunctionUpdateParamsDto,
+  type SLCFunctionUpdateRequestDto,
+  type SLCFunctionUpdateResponseDto,
 } from './slc-function/slc-function';
 export {
   type SCOperationSystemGetAllResponseDto,
   type SCOperationSystemGetAllItemResponseDto,
 } from './sc-operation-system/sc-operation-system';
+export { type SCSshKeyGetByIdResponseDto } from './sc-ssh-key/sc-ssh-key';
 export { type ServiceMenuItem, type Option } from './ui/ui';
 export type {
   UseFormHandleSubmit,

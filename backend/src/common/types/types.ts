@@ -28,6 +28,8 @@ export {
   type EAMGroupConfigurateRequestDto,
   type EamGroupGetByIdRequestDto,
   type EamGroupGetByIdResponseDto,
+  type EAMGroupDeleteParamsDto,
+  type EamGroupGetByIdItem,
 } from './eam-group/eam-group';
 export {
   type EAMTenantCreateRequestDto,
@@ -48,6 +50,10 @@ export {
   type SCInstanceUpdateResponseDto,
 } from './sc-instance/sc-instance';
 export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
+export {
+  type SCSshKeyGetByIdParamsDto,
+  type SCSshKeyGetByIdResponseDto,
+} from './sc-ssh-key/sc-ssh-key';
 export {
   type EAMPermissionGetAllItemResponseDto,
   type EAMPermissionGetAllResponseDto,
@@ -72,5 +78,7 @@ export {
   type SLCFunctionUpdateParamsDto,
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
+  type SLCFunctionLoadParamsDto,
+  type SLCFunctionLoadResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

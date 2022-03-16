@@ -31,12 +31,16 @@ class Space {
     return Space.modelToEntity(created);
   }
 
-  async delete(id: string): Promise<number> {
-    return this.#SpaceModel.query().where({ id }).del();
+  async delete(id: string): Promise<void> {
+    await this.#SpaceModel.query().where({ id }).del();
   }
 
-  async getSpaceById(id: string): Promise<SpaceEntity> {
+  async getSpaceById(id: string): Promise<SpaceEntity | null> {
     const space = await this.#SpaceModel.query().select().where({ id }).first();
+
+    if (!space) {
+      return null;
+    }
 
     return Space.modelToEntity(space as SpaceM);
   }

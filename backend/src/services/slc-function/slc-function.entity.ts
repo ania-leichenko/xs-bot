@@ -89,6 +89,7 @@ class SLCFunction {
 
   public setSourceCode(sourceCode: string): void {
     this.sourceCode = sourceCode;
+    this.updatedAt = new Date().toISOString();
   }
 }
 

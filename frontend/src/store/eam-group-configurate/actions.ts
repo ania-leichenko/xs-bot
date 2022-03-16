@@ -81,7 +81,7 @@ const getGroupById = createAsyncThunk<
   return group;
 });
 
-const getWorkers = createAsyncThunk<
+const loadWorkers = createAsyncThunk<
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
   AsyncThunkConfig
@@ -99,4 +99,4 @@ const getPermission = createAsyncThunk<
   return eamApi.getAllPermission();
 });
 
-export { create, update, getWorkers, getPermission, getGroupById };
+export { create, update, loadWorkers, getPermission, getGroupById };

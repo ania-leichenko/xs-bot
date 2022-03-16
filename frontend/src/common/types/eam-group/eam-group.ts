@@ -5,4 +5,5 @@ export {
   type EamGroupGetByIdRequestDto,
   type EamGroupGetByIdResponseDto,
   type EAMGroupUpdateRequestDto,
+  type EAMGroupDeleteParamsDto,
 } from 'bws-shared/common/types/types';

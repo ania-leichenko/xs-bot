@@ -66,13 +66,17 @@ class Instance {
     });
 
     return {
-      items: instances.map(({ name, id, createdAt, hostname }) => ({
-        name,
-        instanceId: id,
-        instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
-        createdAt,
-        publicDNS: hostname,
-      })),
+      items: instances.map(
+        ({ name, id, awsInstanceId, createdAt, hostname, keyPairId }) => ({
+          name,
+          id,
+          awsInstanceId,
+          instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
+          createdAt,
+          publicIpAddress: hostname,
+          keyPairId,
+        }),
+      ),
     };
   }
 
@@ -161,8 +165,14 @@ class Instance {
   }
 
   public async delete(id: string): Promise<void> {
-    const { awsInstanceId, keyPairId } =
-      (await this.#instanceRepository.getById(id)) as InstanceEntity;
+    const instance = await this.#instanceRepository.getById(id);
+    if (!instance) {
+      throw new SCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.INSTANCE_NOT_FOUND,
+      });
+    }
+    const { awsInstanceId, keyPairId } = instance;
     await this.#ec2Service.deleteInstance(awsInstanceId);
     await this.#instanceRepository.delete(id);
     await this.#ec2Service.deleteKeyPair(keyPairId);

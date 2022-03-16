@@ -12,6 +12,10 @@ const eamGroupConfigurate = Joi.object({
     .min(EAMGroupValidationRule.NAME_MIN_LENGTH)
     .max(EAMGroupValidationRule.NAME_MAX_LENGTH)
     .regex(EAMGroupValidationRule.NAME_REGEX)
+    .ruleset.regex(EAMGroupValidationRule.NAME_REGEX_FIRST_AND_LAST_CHARTER)
+    .rule({
+      message: EAMGroupValidationMessage.NAME_REGEX_FIRST_AND_LAST_CHARTER,
+    })
     .required()
     .messages({
       'string.empty': EAMGroupValidationMessage.NAME_REQUIRE,

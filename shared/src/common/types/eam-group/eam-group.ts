@@ -8,3 +8,5 @@ export type { EAMGroupConfigurateRequestDto } from './eam-group-configurate-requ
 export type { EamGroupGetByIdRequestDto } from './eam-group-get-by-id-request-dto';
 export type { EamGroupGetByIdResponseDto } from './eam-group-get-by-id-response-dto';
 export type { EAMGroupUpdateRequestDto } from './eam-group-update-request-dto';
+export type { EAMGroupDeleteParamsDto } from './eam-group-delete-request-dto';
+export type { EamGroupGetByIdItem } from './eam-group-get-by-id-item.type';
