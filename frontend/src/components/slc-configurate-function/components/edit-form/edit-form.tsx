@@ -29,6 +29,7 @@ const EditForm: FC<Props> = ({ id }) => {
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleSave = !hasSave && !hasCodeLoading;
   const hasResponse = Boolean(response);
+  const TIMEOUT = 500;
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -51,7 +52,7 @@ const EditForm: FC<Props> = ({ id }) => {
     );
   };
 
-  const handleOnChangeValue = debounce(setEditCode, 500);
+  const handleOnChangeValue = debounce(setEditCode, TIMEOUT);
 
   const handleCancel = (): void => {
     dispatch(SLCFunctionActions.resetFunction());
