@@ -22,6 +22,10 @@ const SC: FC = () => {
     dispatch(scActions.deleteInstance(id));
   };
 
+  const handleCopyKey = (keyId: string): void => {
+    dispatch(scActions.loadSshKey(keyId));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -29,7 +33,10 @@ const SC: FC = () => {
         Server Computing
       </h2>
       <div className={styles.tableWrapper}>
-        <InstancesTable onDeleteInstance={handleDeleteInstance}>
+        <InstancesTable
+          onInstanceDelete={handleDeleteInstance}
+          onKeyClick={handleCopyKey}
+        >
           <Button
             className={styles.addInstanceBtn}
             to={AppRoute.SC_CONFIGURATE_INSTANCE}

@@ -31,7 +31,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(deleteInstance.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.instances = state.instances.filter(
-      (item) => item.instanceId !== action.payload,
+      (item) => item.id !== action.payload,
     );
   });
   builder.addCase(deleteInstance.rejected, (state) => {
