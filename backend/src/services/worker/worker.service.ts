@@ -239,17 +239,17 @@ class Worker {
     const space = await this.#spaceRepository.getByWorkerId(id);
     const slcFunctions = await this.#slcFunctionRepository.getByWorkerId(id);
 
-    for (const id of instances) {
-      await this.#instanceService.delete(id);
-    }
-
-    for (const id of space) {
-      await this.#spaceService.delete({ id, token });
-    }
-
-    for (const id of slcFunctions) {
-      await this.#slcFunctionService.delete({ id, token });
-    }
+    await Promise.all(
+      instances.map((instance) => this.#instanceService.delete(instance.id)),
+    );
+    await Promise.all(
+      space.map((item) => this.#instanceService.delete(item.id)),
+    );
+    await Promise.all(
+      slcFunctions.map((slcFunction) =>
+        this.#instanceService.delete(slcFunction.id),
+      ),
+    );
 
     await this.#workerRepository.deleteWorker(id);
   }

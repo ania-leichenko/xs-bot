@@ -90,7 +90,7 @@ class SLCFunction {
     });
   }
 
-  public async getByWorkerId(workerId: string): Promise<string[]> {
+  public async getByWorkerId(workerId: string): Promise<SLCFunctionEntity[]> {
     const slcFunctions = await this.#SLCFunctionModel
       .query()
       .select()
@@ -100,7 +100,7 @@ class SLCFunction {
       return [];
     }
 
-    return slcFunctions.map((slcFunction) => slcFunction.id);
+    return slcFunctions.map(SLCFunction.modelToEntity);
   }
 
   async getById(id: string): Promise<SLCFunctionEntity | null> {

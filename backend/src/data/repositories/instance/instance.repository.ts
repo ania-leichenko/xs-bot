@@ -41,17 +41,13 @@ class Instance {
     return Instance.modelToEntity(instance);
   }
 
-  public async getByWorkerId(workerId: string): Promise<string[]> {
+  public async getByWorkerId(workerId: string): Promise<InstanceEntity[]> {
     const instances = await this.#InstanceModel
       .query()
       .select()
       .where({ 'createdBy': workerId });
 
-    if (!instances) {
-      return [];
-    }
-
-    return instances.map((instance) => instance.id);
+    return instances.map(Instance.modelToEntity);
   }
 
   public async getByTenantId({

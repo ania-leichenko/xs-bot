@@ -45,7 +45,7 @@ class Space {
     return Space.modelToEntity(space as SpaceM);
   }
 
-  public async getByWorkerId(workerId: string): Promise<string[]> {
+  public async getByWorkerId(workerId: string): Promise<SpaceEntity[]> {
     const space = await this.#SpaceModel
       .query()
       .select()
@@ -55,7 +55,7 @@ class Space {
       return [];
     }
 
-    return space.map((item) => item.id);
+    return space.map(Space.modelToEntity);
   }
 
   async getByTenantId(
