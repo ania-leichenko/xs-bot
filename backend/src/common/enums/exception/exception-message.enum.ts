@@ -13,12 +13,14 @@ const ExceptionMessage = {
   USER_EXISTS: 'Account with this email already exists.',
   UNAUTHORIZED_USER: 'Unauthorized user.',
   WORKER_NAME_EXISTS: 'Worker with this name is exist',
+  WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
   MASTER_NOT_FOUND: 'Master not Found',
   MASTER_FUNCTION_CREATE: 'Master is not able to create function.',
   MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',
   MASTER_SPACE_CREATE: 'Master is not able to create space.',
   MASTER_SPACE_DELETE: 'Master is not able to delete space',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
+  MASTER_DELETE: 'Master can not be deleted',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
   FUNCTION_NOT_CREATED: 'Something went wrong and function don`t created.',
   FUNCTION_NOT_FOUND: 'Function not found.',
@@ -30,7 +32,6 @@ const ExceptionMessage = {
   GROUP_EXISTS: 'Group with this name already exists',
   INSTANCE_NOT_FOUND: 'Instance not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
-  WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
 } as const;
 
 export { ExceptionMessage };

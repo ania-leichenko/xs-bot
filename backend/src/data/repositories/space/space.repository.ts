@@ -41,6 +41,19 @@ class Space {
     return Space.modelToEntity(space as SpaceM);
   }
 
+  public async getByWorkerId(workerId: string): Promise<string[]> {
+    const space = await this.#SpaceModel
+      .query()
+      .select()
+      .where({ 'createdBy': workerId });
+
+    if (!space) {
+      return [];
+    }
+
+    return space.map((item) => item.id);
+  }
+
   async getByTenantId(
     filter: BSSpaceGetFilter,
   ): Promise<BSSpaceGetResponseItemDto[]> {
