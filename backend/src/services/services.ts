@@ -45,23 +45,33 @@ const master = new Master({
   tenantService: tenant,
 });
 
-const worker = new Worker({
-  workerRepository,
-  tenantRepository,
-  encryptService: encrypt,
-  tokenService: token,
-  masterService: master,
-  tenantService: tenant,
+const s3 = new S3({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
 });
 
-const group = new Group({
-  groupRepository,
+const space = new Space({
+  spaceRepository,
+  tokenService: token,
+  s3Service: s3,
 });
 
-const auth = new Auth({
-  masterService: master,
-  workerService: worker,
+const lambda = new Lambda({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
+  role: ENV.AWS.LAMBDA_ROLE,
+});
+
+const slcFunction = new SLCFunction({
+  slcFunctionRepository,
   tokenService: token,
+  lambdaService: lambda,
 });
 
 const ec2 = new EC2({
@@ -89,38 +99,33 @@ const instance = new Instance({
   tokenService: token,
 });
 
-const permission = new Permission({
-  permissionRepository,
-});
-
-const s3 = new S3({
-  region: ENV.AWS.REGION,
-  credentials: {
-    accessKeyId: ENV.AWS.ACCESS_KEY,
-    secretAccessKey: ENV.AWS.SECRET_KEY,
-  },
-});
-
-const space = new Space({
+const worker = new Worker({
+  workerRepository,
+  tenantRepository,
   spaceRepository,
-  tokenService: token,
-  s3Service: s3,
-});
-
-const lambda = new Lambda({
-  region: ENV.AWS.REGION,
-  credentials: {
-    accessKeyId: ENV.AWS.ACCESS_KEY,
-    secretAccessKey: ENV.AWS.SECRET_KEY,
-  },
-  role: ENV.AWS.LAMBDA_ROLE,
-});
-
-const slcFunction = new SLCFunction({
   slcFunctionRepository,
+  instanceRepository,
+  encryptService: encrypt,
+  tokenService: token,
+  masterService: master,
+  tenantService: tenant,
+  instanceService: instance,
+  spaceService: space,
+  slcFunctionService: slcFunction,
+});
+
+const group = new Group({
+  groupRepository,
+});
+
+const auth = new Auth({
+  masterService: master,
   workerService: worker,
   tokenService: token,
-  lambdaService: lambda,
+});
+
+const permission = new Permission({
+  permissionRepository,
 });
 
 export {

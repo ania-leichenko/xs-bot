@@ -16,33 +16,25 @@ import {
   UserRole,
   LambdaDefaultParam,
 } from '~/common/enums/enums';
-import {
-  worker as workerServ,
-  token as tokenServ,
-  lambda as lambdaServ,
-} from '~/services/services';
+import { token as tokenServ, lambda as lambdaServ } from '~/services/services';
 
 type Constructor = {
   slcFunctionRepository: typeof slcFunctionRep;
-  workerService: typeof workerServ;
   tokenService: typeof tokenServ;
   lambdaService: typeof lambdaServ;
 };
 
 class SLCFunction {
   #slcFunctionRepository: typeof slcFunctionRep;
-  #workerService: typeof workerServ;
   #tokenService: typeof tokenServ;
   #lambdaService: typeof lambdaServ;
 
   constructor({
     slcFunctionRepository,
-    workerService,
     tokenService,
     lambdaService,
   }: Constructor) {
     this.#slcFunctionRepository = slcFunctionRepository;
-    this.#workerService = workerService;
     this.#tokenService = tokenService;
     this.#lambdaService = lambdaService;
   }
