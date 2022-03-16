@@ -9,11 +9,7 @@ import {
   InvokeCommand,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
-import {
-  ExceptionMessage,
-  HttpCode,
-  LambdaDefaultParam,
-} from '~/common/enums/enums';
+import { LambdaDefaultParam } from '~/common/enums/enums';
 import { toUtf8 } from '@aws-sdk/util-utf8-node';
 import { SLCError } from '~/exceptions/exceptions';
 
@@ -102,19 +98,18 @@ class Lambda {
   }
 
   public async runFunction(name: string): Promise<string> {
-    const { Payload, StatusCode } = await this.#lambdaClient.send(
-      new InvokeCommand({
-        FunctionName: name,
-      }),
-    );
-    const hasPayload = Boolean(Payload);
-
-    if (StatusCode !== HttpCode.OK || !hasPayload) {
-      throw new SLCError({
-        status: HttpCode.INTERNAL_SERVER_ERROR,
-        message: ExceptionMessage.FUNCTION_NOT_RUN,
+    const { Payload } = await this.#lambdaClient
+      .send(
+        new InvokeCommand({
+          FunctionName: name,
+        }),
+      )
+      .catch((err) => {
+        throw new SLCError({
+          status: err.$response.statusCode,
+          message: err.message,
+        });
       });
-    }
 
     return JSON.stringify(
       JSON.parse(toUtf8(Payload as Uint8Array)),
