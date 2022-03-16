@@ -69,6 +69,10 @@ class Instance {
     return instances.map(Instance.modelToEntity);
   }
 
+  public async getInstancesByDate(date: string): Promise<InstanceM[]> {
+    return this.#InstanceModel.query().select().where('createdAt', '<', date);
+  }
+
   public async create(instance: InstanceEntity): Promise<InstanceM> {
     const {
       id,
