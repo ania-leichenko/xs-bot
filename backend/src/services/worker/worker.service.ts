@@ -233,13 +233,13 @@ class Worker {
     await Promise.all(
       space.map((item) => {
         const id = item.id;
-        this.#spaceService.delete({ id, token });
+        return this.#spaceService.delete({ id, token });
       }),
     );
     await Promise.all(
       slcFunctions.map((slcFunction) => {
         const id = slcFunction.id;
-        this.#slcFunctionService.delete({ id, token });
+        return this.#slcFunctionService.delete({ id, token });
       }),
     );
 
