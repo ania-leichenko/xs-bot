@@ -88,3 +88,7 @@ export {
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
+export {
+  type ObjectUploadRequestDto,
+  type ObjectUploadParamsDto,
+} from './object-upload/object-upload';
