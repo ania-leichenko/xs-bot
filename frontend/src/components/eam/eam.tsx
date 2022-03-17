@@ -79,6 +79,11 @@ const EAM: FC = () => {
               label="Add Worker"
             />
           </div>
+          <div className={styles.pagination}>
+            <div>{' < '}</div>
+            <div>1</div>
+            <div>{' > '}</div>
+          </div>
         </WorkersTable>
       </div>
       <GroupsTable onGroupDelete={handleGroupDelete}>
