@@ -243,12 +243,16 @@ class Worker {
       instances.map((instance) => this.#instanceService.delete(instance.id)),
     );
     await Promise.all(
-      space.map((item) => this.#instanceService.delete(item.id)),
+      space.map((item) => {
+        const id = item.id;
+        this.#spaceService.delete({ id, token });
+      }),
     );
     await Promise.all(
-      slcFunctions.map((slcFunction) =>
-        this.#instanceService.delete(slcFunction.id),
-      ),
+      slcFunctions.map((slcFunction) => {
+        const id = slcFunction.id;
+        this.#slcFunctionService.delete({ id, token });
+      }),
     );
 
     await this.#workerRepository.deleteWorker(id);
