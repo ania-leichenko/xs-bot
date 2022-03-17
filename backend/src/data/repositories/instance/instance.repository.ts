@@ -1,9 +1,6 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
-import {
-  SCInstanceGetByTenantRequestParamsDto,
-  SCInstanceUpdateRequestDto,
-} from '~/common/types/types';
+import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -18,7 +15,11 @@ class Instance {
 
   public async updateById(
     id: string,
-    data: SCInstanceUpdateRequestDto,
+    data: {
+      name?: string;
+      state?: string;
+      hostname?: string;
+    },
   ): Promise<InstanceEntity> {
     return this.#InstanceModel.query().patchAndFetchById(id, data);
   }

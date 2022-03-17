@@ -122,7 +122,7 @@ class Instance {
       name,
       keyPairId,
       username: InstanceDefaultParam.USERNAME as string,
-      hostname: '-',
+      hostname: '',
       operationSystemId,
       createdBy: userId,
       awsInstanceId: instanceId,
@@ -146,7 +146,7 @@ class Instance {
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: instance.name,
       createdAt: instance.createdAt,
-      publicDNS: instance.hostname,
+      publicIpAddress: instance.hostname,
       state: instance.state,
     };
   }
@@ -189,7 +189,7 @@ class Instance {
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: updateInstance.name,
       createdAt: updateInstance.createdAt,
-      publicDNS: updateInstance.hostname,
+      publicIpAddress: updateInstance.hostname,
     };
   }
 

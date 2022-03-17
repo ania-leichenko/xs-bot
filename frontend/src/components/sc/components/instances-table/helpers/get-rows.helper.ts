@@ -38,7 +38,7 @@ const getRows = ({
       [InstancesTableAccessor.INSTANCE_ID]: awsInstanceId,
       [InstancesTableAccessor.INSTANCE_STATE]: state,
       [InstancesTableAccessor.INSTANCE_TYPE]: instanceType,
-      [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress,
+      [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress || '-',
       [InstancesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),
       ),

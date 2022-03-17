@@ -3,7 +3,7 @@ type SCInstanceUpdateResponseDto = {
   instanceId: string;
   instanceType: string;
   createdAt: string;
-  publicDNS: string;
+  publicIpAddress: string;
 };
 
 export { type SCInstanceUpdateResponseDto };

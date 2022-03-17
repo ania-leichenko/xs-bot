@@ -3,7 +3,7 @@ type SCInstanceCreateResponseDto = {
   instanceId: string;
   instanceType: string;
   createdAt: string;
-  publicDNS: string;
+  publicIpAddress: string;
   state: string;
 };
 
