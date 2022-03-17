@@ -80,7 +80,10 @@ class Group {
     const group = await this.#groupRepository.getGroupById(id);
 
     if (!group) {
-      return null;
+      throw new EAMError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
+      });
     }
     if (name && name != group.name) {
       const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
@@ -89,7 +92,10 @@ class Group {
       );
 
       if (groupByName) {
-        throw new EAMError();
+        throw new EAMError({
+          status: HttpCode.BAD_REQUEST,
+          message: ExceptionMessage.GROUP_EXISTS,
+        });
       }
 
       group.setName(name);
