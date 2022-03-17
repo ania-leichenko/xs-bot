@@ -11,6 +11,7 @@ class Instance {
   public createdBy: string;
   public awsInstanceId: string;
   public tenantId: string;
+  public state: string;
 
   private constructor({
     id,
@@ -23,6 +24,7 @@ class Instance {
     createdBy,
     awsInstanceId,
     tenantId,
+    state,
   }: {
     id: string;
     name: string;
@@ -34,6 +36,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
+    state: string;
   }) {
     this.id = id;
     this.name = name;
@@ -45,6 +48,7 @@ class Instance {
     this.createdBy = createdBy;
     this.awsInstanceId = awsInstanceId;
     this.tenantId = tenantId;
+    this.state = state;
   }
 
   public static initialize({
@@ -58,6 +62,7 @@ class Instance {
     createdBy,
     awsInstanceId,
     tenantId,
+    state,
   }: {
     id: string;
     name: string;
@@ -69,6 +74,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
+    state: string;
   }): Instance {
     return new Instance({
       id,
@@ -81,6 +87,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 
@@ -93,6 +100,7 @@ class Instance {
     createdBy,
     awsInstanceId,
     tenantId,
+    state,
   }: {
     name: string;
     keyPairId: string;
@@ -102,6 +110,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
+    state: string;
   }): Instance {
     return new Instance({
       id: getRandomId(),
@@ -114,6 +123,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 }

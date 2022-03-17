@@ -9,6 +9,7 @@ import {
   Instance,
   DeleteKeyPairCommand,
   TerminateInstancesCommand,
+  InstanceState,
 } from '@aws-sdk/client-ec2';
 import { InstanceDefaultParam } from '~/common/enums/enums';
 
@@ -74,8 +75,8 @@ class EC2 {
     keyName: string;
     imageId: string;
   }): Promise<{
-    hostname: string;
     instanceId: string;
+    state: string;
   }> {
     const data = await this.#ec2Client.send(
       new RunInstancesCommand({
@@ -88,10 +89,21 @@ class EC2 {
     );
 
     const [instance] = data.Instances as Instance[];
-    const { InstanceId: instanceId } = instance;
+    const { InstanceId: instanceId, State: state } = instance;
+    const { Name: stateName } = state as InstanceState;
 
     await this.setInstanceName(instanceId as string, name);
 
+    return {
+      instanceId: instanceId as string,
+      state: stateName as string,
+    };
+  }
+
+  public async getRunningInstanceData(instanceId: string): Promise<{
+    hostname: string;
+    state: string;
+  }> {
     await waitUntilInstanceRunning(
       {
         client: this.#ec2Client,
@@ -108,10 +120,12 @@ class EC2 {
 
     const [reservation] = dataWithPublicIpAddress.Reservations as Reservation[];
     const [instanceIpAddress] = reservation.Instances as Instance[];
-    const { PublicIpAddress: publicIpAddress } = instanceIpAddress;
+    const { PublicIpAddress: publicIpAddress, State: state } =
+      instanceIpAddress;
+    const { Name: stateName } = state as InstanceState;
 
     return {
-      instanceId: instanceId as string,
+      state: stateName as string,
       hostname: publicIpAddress as string,
     };
   }

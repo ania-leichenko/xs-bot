@@ -4,6 +4,7 @@ type SCInstanceCreateResponseDto = {
   instanceType: string;
   createdAt: string;
   publicDNS: string;
+  state: string;
 };
 
 export { type SCInstanceCreateResponseDto };

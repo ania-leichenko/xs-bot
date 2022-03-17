@@ -76,6 +76,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     } = instance;
     return this.#InstanceModel.query().insert({
       id,
@@ -88,6 +89,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 
@@ -103,6 +105,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     } = model;
 
     return InstanceEntity.initialize({
@@ -116,6 +119,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 }

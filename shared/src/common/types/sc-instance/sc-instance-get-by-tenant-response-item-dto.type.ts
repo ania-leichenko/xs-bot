@@ -6,6 +6,7 @@ type SCInstanceGetByTenantResponseItemDto = {
   createdAt: string;
   publicIpAddress: string;
   keyPairId: string;
+  state: string;
 };
 
 export { type SCInstanceGetByTenantResponseItemDto };
