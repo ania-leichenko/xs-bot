@@ -37,7 +37,7 @@ const WorkersTable: FC<Props> = ({
         className={styles.table}
         columns={columns}
         data={data}
-        placeholder="No group to display"
+        placeholder="No groups to display"
       />
     </div>
   );
