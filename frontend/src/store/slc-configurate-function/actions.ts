@@ -13,8 +13,19 @@ import {
   SLCFunctionUpdateParamsDto,
   SLCFunctionUpdateRequestDto,
   SLCFunctionUpdateResponseDto,
+  SLCFunctionRunParamsDto,
+  SLCFunctionRunResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
+
+const resetFunction = createAsyncThunk<void, void, AsyncThunkConfig>(
+  ActionType.RESET_FUNCTION,
+  async (_payload, { extra }) => {
+    const { navigation } = extra;
+
+    navigation.push(AppRoute.SLC);
+  },
+);
 
 const createFunction = createAsyncThunk<
   SLCFunctionCreateResponseDto,
@@ -65,4 +76,22 @@ const updateFunction = createAsyncThunk<
   return updateFunction;
 });
 
-export { createFunction, loadFunction, updateFunction };
+const runFunction = createAsyncThunk<
+  SLCFunctionRunResponseDto,
+  SLCFunctionRunParamsDto,
+  AsyncThunkConfig
+>(ActionType.RUN_FUNCTION, async (params, { extra }) => {
+  const { slcApi } = extra;
+
+  const response = await slcApi.runFunction(params);
+
+  return response;
+});
+
+export {
+  resetFunction,
+  createFunction,
+  loadFunction,
+  updateFunction,
+  runFunction,
+};
