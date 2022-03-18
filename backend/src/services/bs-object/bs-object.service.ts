@@ -7,9 +7,9 @@ import {
 } from '~/services/services';
 import { BSObject as BSObjectEntity } from './bs-object.entity';
 import { TokenPayload } from 'bws-shared/common/types/types';
-import { BsObjectError } from '~/exceptions/exceptions';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage } from '~/common/enums/enums';
+import { BsError } from '~/exceptions/exceptions';
 import { UploadPayload } from '~/common/types/types';
 
 type Constructor = {
@@ -54,7 +54,7 @@ class BSObject {
     const hasFile = file;
 
     if (!isCurrentWorker || !hasFile) {
-      throw new BsObjectError({
+      throw new BsError({
         status: HttpCode.BAD_REQUEST,
         message: ExceptionMessage.OBJECT_NOT_UPLOADED,
       });
@@ -66,7 +66,7 @@ class BSObject {
     });
 
     if (!awsObjectKey) {
-      throw new BsObjectError({
+      throw new BsError({
         status: HttpCode.BAD_REQUEST,
         message: ExceptionMessage.OBJECT_NOT_UPLOADED,
       });
