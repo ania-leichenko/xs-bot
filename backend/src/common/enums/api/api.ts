@@ -8,6 +8,7 @@ export {
   WorkersApiPath,
   SCApiPath,
   BSApiPath,
+  BSObjectApiPath,
   SLCApiPath,
   SLCFunctionApiPath,
   SpacesApiPath,
