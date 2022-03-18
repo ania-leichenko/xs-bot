@@ -9,7 +9,6 @@ export {
   SCApiPath,
   ControllerHook,
   BSApiPath,
-  BSObjectApiPath,
   SLCApiPath,
   SLCFunctionApiPath,
   SpacesApiPath,

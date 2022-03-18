@@ -7,7 +7,6 @@ import {
   HttpCode,
   HttpMethod,
   BSApiPath,
-  BSObjectApiPath,
   SpacesApiPath,
 } from '~/common/enums/enums';
 import {
@@ -101,7 +100,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     File: File;
   }>({
     method: HttpMethod.POST,
-    url: BSObjectApiPath.SPACES_FILE,
+    url: SpacesApiPath.SPACES_$ID__FILES,
     preHandler: upload.single('file'),
     async handler(req: FastifyRequest<{ Params: ObjectUploadParamsDto }>, rep) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
