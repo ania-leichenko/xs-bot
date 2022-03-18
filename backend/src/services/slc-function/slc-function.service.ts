@@ -5,6 +5,8 @@ import {
   SLCFunctionUpdateResponseDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionLoadResponseDto,
+  SLCFunctionRunParamsDto,
+  SLCFunctionRunResponseDto,
   TokenPayload,
 } from '~/common/types/types';
 import { slcFunction as slcFunctionRep } from '~/data/repositories/repositories';
@@ -155,7 +157,7 @@ class SLCFunction {
     if (userRole !== UserRole.WORKER) {
       throw new SLCError({
         status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+        message: ExceptionMessage.MASTER_FUNCTION_UPDATE,
       });
     }
 
@@ -205,9 +207,26 @@ class SLCFunction {
       });
     }
 
-    const { sourceCode } = slcFunction;
+    const { name, sourceCode } = slcFunction;
 
-    return { sourceCode };
+    return { name, sourceCode };
+  }
+
+  public async runById({
+    id,
+  }: SLCFunctionRunParamsDto): Promise<SLCFunctionRunResponseDto> {
+    const slcFunction = await this.#slcFunctionRepository.getById(id);
+
+    if (!slcFunction) {
+      throw new SLCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.FUNCTION_NOT_FOUND,
+      });
+    }
+
+    const payload = await this.#lambdaService.runFunction(slcFunction.name);
+
+    return { payload };
   }
 }
 
