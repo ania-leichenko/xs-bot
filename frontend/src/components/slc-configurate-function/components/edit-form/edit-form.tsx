@@ -8,25 +8,29 @@ import {
   useState,
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
+import { debounce } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
 interface Props {
   id: string;
 }
 
+const TIMEOUT = 500;
+
 const EditForm: FC<Props> = ({ id }) => {
-  const { dataStatus, loadFunction } = useAppSelector(
+  const { dataStatus, loadFunction, response } = useAppSelector(
     ({ SLCFunctionConfigurate }) => ({
       dataStatus: SLCFunctionConfigurate.dataStatus,
       loadFunction: SLCFunctionConfigurate.loadFunction,
+      response: SLCFunctionConfigurate.response,
     }),
   );
   const [editCode, setEditCode] = useState<string>('');
   const dispatch = useAppDispatch();
   const hasSave = loadFunction?.sourceCode === editCode;
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
-  const isPossibleRun = hasSave && !hasCodeLoading;
   const isPossibleSave = !hasSave && !hasCodeLoading;
+  const hasResponse = Boolean(response);
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -35,6 +39,10 @@ const EditForm: FC<Props> = ({ id }) => {
   useEffect(() => {
     setEditCode(loadFunction?.sourceCode ?? '');
   }, [loadFunction]);
+
+  const handleRun = (): void => {
+    dispatch(SLCFunctionActions.runFunction({ id }));
+  };
 
   const handleSaveCode = (): void => {
     dispatch(
@@ -45,43 +53,53 @@ const EditForm: FC<Props> = ({ id }) => {
     );
   };
 
+  const handleOnChangeValue = debounce(setEditCode, TIMEOUT);
+
+  const handleCancel = (): void => {
+    dispatch(SLCFunctionActions.resetFunction());
+  };
+
   if (dataStatus === DataStatus.REJECTED) {
     return <Navigate to={AppRoute.SLC} />;
   }
   return (
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
-      <div className={styles.buttons}>
-        <div className={styles.button}>
-          {isPossibleRun ? (
-            <Button btnStyle={ButtonStyle.FILLED} label="Run" />
-          ) : (
-            <Button btnStyle={ButtonStyle.OUTLINED} label="Run" />
-          )}
-        </div>
-        <div className={styles.button}>
-          {isPossibleSave ? (
-            <Button
-              btnStyle={ButtonStyle.FILLED}
-              label="Save"
-              onClick={handleSaveCode}
-            />
-          ) : (
-            <Button btnStyle={ButtonStyle.OUTLINED} label="Save" />
-          )}
+      <div className={styles.wrapper}>
+        <h4 className={styles.title}>{loadFunction?.name ?? ''}</h4>
+        <div className={styles.buttons}>
+          <Button
+            className={styles.button}
+            btnStyle={ButtonStyle.FILLED}
+            label="Run"
+            onClick={handleRun}
+          />
+          <Button
+            className={styles.button}
+            btnStyle={ButtonStyle.FILLED}
+            label="Save"
+            onClick={handleSaveCode}
+            isDisabled={!isPossibleSave}
+          />
         </div>
       </div>
+      {hasResponse && (
+        <>
+          <h4 className={styles.title}>Response</h4>
+          <p className={styles.response}>{response?.payload}</p>
+        </>
+      )}
       {hasCodeLoading ? (
         <Loader />
       ) : (
-        <Editor value={editCode} onChangeValue={setEditCode} />
+        <Editor value={editCode} onChangeValue={handleOnChangeValue} />
       )}
       <div className={styles.buttons}>
         <div className={styles.button}>
           <Button
             btnStyle={ButtonStyle.OUTLINED}
             label="Cancel"
-            to={AppRoute.SLC}
+            onClick={handleCancel}
           />
         </div>
       </div>
