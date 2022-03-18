@@ -2,7 +2,7 @@ import { File } from './bs-object-upload-payload.type';
 
 type UploadPayload = {
   token: string;
-  file: File;
+  file?: File;
   id: string;
 };
 

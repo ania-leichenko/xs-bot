@@ -1,1 +1,1 @@
-export * from './upload/upload.middleware';
+export { upload } from './upload/upload.middleware';

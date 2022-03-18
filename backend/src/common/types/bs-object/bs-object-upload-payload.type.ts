@@ -1,2 +1,1 @@
-import { File } from 'fastify-multer/lib/interfaces';
-export { type File };
+export { type File } from 'fastify-multer/lib/interfaces';
