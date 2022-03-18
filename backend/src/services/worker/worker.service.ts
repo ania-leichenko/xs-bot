@@ -224,14 +224,14 @@ class Worker {
     }
 
     const instances = await this.#instanceRepository.getByWorkerId(id);
-    const space = await this.#spaceRepository.getByWorkerId(id);
+    const spaces = await this.#spaceRepository.getByWorkerId(id);
     const slcFunctions = await this.#slcFunctionRepository.getByWorkerId(id);
 
     await Promise.all(
       instances.map((instance) => this.#instanceService.delete(instance.id)),
     );
     await Promise.all(
-      space.map((item) => {
+      spaces.map((item) => {
         const id = item.id;
         return this.#spaceService.delete({ id, token });
       }),

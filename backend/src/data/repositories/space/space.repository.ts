@@ -46,12 +46,12 @@ class Space {
   }
 
   public async getByWorkerId(workerId: string): Promise<SpaceEntity[]> {
-    const space = await this.#SpaceModel
+    const spaces = await this.#SpaceModel
       .query()
       .select()
       .where({ 'createdBy': workerId });
 
-    return space.map(Space.modelToEntity);
+    return spaces.map(Space.modelToEntity);
   }
 
   async getByTenantId(
