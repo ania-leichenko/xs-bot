@@ -50,10 +50,11 @@ class BSObject {
     const space = await this.#spaceService.getSpacesById(id);
 
     const worker = await this.#workerService.getUserById(space.createdBy);
-    const isCurrentWorker = worker?.user?.tenantId === user.tenantId;
+    const isCurrentWorkerOwnerOfSpace =
+      worker?.user?.tenantId === user.tenantId;
     const hasFile = file;
 
-    if (!isCurrentWorker || !hasFile) {
+    if (!isCurrentWorkerOwnerOfSpace || !hasFile) {
       throw new BsError({
         status: HttpCode.BAD_REQUEST,
         message: ExceptionMessage.OBJECT_NOT_UPLOADED,
@@ -76,7 +77,7 @@ class BSObject {
       sizeInBytes: file.size as number,
       spaceId: space.id,
       uploadedBy: user.userId,
-      awsObjectKey: awsObjectKey.substring(1, -1),
+      awsObjectKey: awsObjectKey.substring(1, awsObjectKey.length - 1),
     });
     return this.#bsObjectRepository.create(objectUploadEntity);
   }
