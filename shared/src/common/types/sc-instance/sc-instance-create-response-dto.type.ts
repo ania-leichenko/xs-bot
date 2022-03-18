@@ -1,10 +1,14 @@
+import { InstanceState } from '~/common/enums/enums';
+
 type SCInstanceCreateResponseDto = {
   name: string;
-  instanceId: string;
+  id: string;
+  awsInstanceId: string;
   instanceType: string;
   createdAt: string;
   publicIpAddress: string;
-  state: string;
+  keyPairId: string;
+  state: InstanceState;
 };
 
 export { type SCInstanceCreateResponseDto };

@@ -1,3 +1,5 @@
+import { InstanceState } from '~/common/enums/enums';
+
 type SCInstanceGetByTenantResponseItemDto = {
   name: string;
   id: string;
@@ -6,7 +8,7 @@ type SCInstanceGetByTenantResponseItemDto = {
   createdAt: string;
   publicIpAddress: string;
   keyPairId: string;
-  state: string;
+  state: InstanceState;
 };
 
 export { type SCInstanceGetByTenantResponseItemDto };

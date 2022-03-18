@@ -1,1 +1,1 @@
-export { Event } from './event.enum';
+export { EventName } from './event-name.enum';

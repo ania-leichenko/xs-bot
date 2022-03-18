@@ -1,5 +1,5 @@
-enum Event {
+enum EventName {
   ADD_NEW_INSTANCE = 'ADD_NEW_INSTANCE',
 }
 
-export { Event };
+export { EventName };

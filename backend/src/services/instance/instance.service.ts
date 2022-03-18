@@ -20,7 +20,8 @@ import {
   UserRole,
   HttpCode,
   ExceptionMessage,
-  Event,
+  EventName,
+  InstanceState,
 } from '~/common/enums/enums';
 import { SCError } from '~/exceptions/exceptions';
 
@@ -88,7 +89,7 @@ class Instance {
           createdAt,
           publicIpAddress: hostname,
           keyPairId,
-          state,
+          state: state as InstanceState,
         }),
       ),
     };
@@ -132,22 +133,27 @@ class Instance {
 
     const { id } = await this.#instanceRepository.create(instance);
 
-    this.#eventService.on(Event.ADD_NEW_INSTANCE, async ({ id, awsId }) => {
+    this.#eventService.on(EventName.ADD_NEW_INSTANCE, async ({ id, awsId }) => {
       const { hostname, state } = await this.#ec2Service.getRunningInstanceData(
         awsId,
       );
       await this.update(id, { hostname, state });
     });
 
-    this.#eventService.emit(Event.ADD_NEW_INSTANCE, { id, awsId: instanceId });
+    this.#eventService.emit(EventName.ADD_NEW_INSTANCE, {
+      id,
+      awsId: instanceId,
+    });
 
     return {
-      instanceId: instance.id,
+      id: instance.id,
+      awsInstanceId: instance.awsInstanceId,
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: instance.name,
       createdAt: instance.createdAt,
       publicIpAddress: instance.hostname,
-      state: instance.state,
+      state: instance.state as InstanceState,
+      keyPairId: instance.keyPairId,
     };
   }
 
@@ -185,11 +191,14 @@ class Instance {
 
     const updateInstance = await this.#instanceRepository.updateById(id, data);
     return {
-      instanceId: updateInstance.id,
+      id: updateInstance.id,
+      awsInstanceId: updateInstance.awsInstanceId,
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: updateInstance.name,
       createdAt: updateInstance.createdAt,
       publicIpAddress: updateInstance.hostname,
+      state: updateInstance.state as InstanceState,
+      keyPairId: updateInstance.keyPairId,
     };
   }
 
