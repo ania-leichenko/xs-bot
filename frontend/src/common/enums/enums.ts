@@ -23,6 +23,7 @@ export {
   InputType,
   ButtonColor,
   IconName,
+  ChipStyle,
 } from './ui/ui';
 export {
   GroupsTableHeader,
