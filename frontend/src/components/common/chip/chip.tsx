@@ -1,21 +1,26 @@
 import { FC } from 'react';
-import { ChipStyle } from 'common/enums/enums';
+import { ChipColor, ChipStyle } from 'common/enums/enums';
 import { getValidClasses } from 'helpers/helpers';
 
 import styles from './styles.module.scss';
 
 type Props = {
-  value: string;
   chipStyle?: ChipStyle;
+  chipColor?: ChipColor;
 };
 
-const Chip: FC<Props> = ({ value, chipStyle = ChipStyle.FILLED }) => {
+const Chip: FC<Props> = ({
+  children,
+  chipStyle = ChipStyle.FILLED,
+  chipColor = ChipColor.GRAY,
+}) => {
   const fullClassName = getValidClasses(
     styles.chip,
     styles[`chipStyle${chipStyle}`],
+    styles[`chipColor${chipColor}`],
   );
 
-  return <button className={fullClassName}>{value}</button>;
+  return <span className={fullClassName}>{children}</span>;
 };
 
 export { Chip };

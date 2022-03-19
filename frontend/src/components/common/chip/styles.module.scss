@@ -1,20 +1,33 @@
 .chip {
-  min-height: 40px;
   margin-right: 10px;
-  padding: 10px;
+  padding: 5px 10px;
   color: var(--color-white);
+  font-weight: normal;
+  font-size: 14px;
+  font-style: normal;
   text-align: center;
   background-color: transparent;
   border: 2px solid transparent;
   border-radius: 50px;
-  cursor: pointer;
   transition-duration: 0.4s;
 }
 
-.chip:hover {
-  background-color: rgba(255 255 255 / 25%);
+.chipStyleFilled.chipColorGray {
+  background-color: var(--color-gray);
+  border-color: var(--color-gray);
 }
 
-.chipStyleFilled {
-  background-color: rgba(255 255 255 / 10%);
+.chipStyleFilled.chipColorDarkGray {
+  background-color: var(--color-dark-gray);
+  border-color: var(--color-dark-gray);
+}
+
+.chipStyleFilled.chipColorGreen {
+  background-color: var(--color-green);
+  border-color: var(--color-green);
+}
+
+.chipStyleFilled.chipColorDarkOrange {
+  background-color: var(--color-dark-orange);
+  border-color: var(--color-dark-orange);
 }
