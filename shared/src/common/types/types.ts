@@ -85,6 +85,8 @@ export {
   type SLCFunctionUpdateParamsDto,
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
+  type SLCFunctionRunParamsDto,
+  type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
