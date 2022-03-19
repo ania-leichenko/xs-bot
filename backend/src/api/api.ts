@@ -45,6 +45,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
     services: {
       group,
       worker,
+      auth,
     },
     prefix: ApiPath.EAM,
   });

@@ -35,6 +35,7 @@ const ExceptionMessage = {
   NOTHING_TO_UPDATE: 'Nothing to update',
   WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
   SPACE_EXISTS: 'Space with this name already exists',
+  REQUIRED_PERMISSION: 'Permissions are required to access',
 } as const;
 
 export { ExceptionMessage };
