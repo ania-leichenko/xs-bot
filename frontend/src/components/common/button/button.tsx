@@ -23,6 +23,7 @@ type Props = {
   btnStyle?: ButtonStyle;
   btnColor?: ButtonColor;
   className?: string;
+  isDisabled?: boolean;
 };
 
 const Button: FC<Props> = ({
@@ -34,6 +35,7 @@ const Button: FC<Props> = ({
   btnStyle = ButtonStyle.FILLED,
   btnColor = ButtonColor.ORANGE,
   className,
+  isDisabled,
 }) => {
   const isLink = Boolean(to);
   const fullClassName = getValidClasses(
@@ -59,6 +61,7 @@ const Button: FC<Props> = ({
       className={icon ? className : fullClassName}
       onClick={onClick}
       type={type}
+      disabled={isDisabled}
     >
       {icon ? <img src={iconNameToSrc[icon]} alt={label} /> : label}
     </button>
