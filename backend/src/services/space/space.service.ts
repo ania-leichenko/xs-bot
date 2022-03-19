@@ -7,36 +7,24 @@ import {
   TokenPayload,
 } from '~/common/types/types';
 import { ExceptionMessage, HttpCode, UserRole } from '~/common/enums/enums';
-import {
-  s3 as s3Serv,
-  token as tokenServ,
-  worker as workerServ,
-} from '~/services/services';
+import { s3 as s3Serv, token as tokenServ } from '~/services/services';
 import { BsError } from '~/exceptions/exceptions';
 
 type Constructor = {
   spaceRepository: typeof spaceRep;
   tokenService: typeof tokenServ;
   s3Service: typeof s3Serv;
-  workerService: typeof workerServ;
 };
 
 class Space {
   #spaceRepository: typeof spaceRep;
   #tokenService: typeof tokenServ;
   #s3Service: typeof s3Serv;
-  #workerService: typeof workerServ;
 
-  constructor({
-    spaceRepository,
-    tokenService,
-    s3Service,
-    workerService,
-  }: Constructor) {
+  constructor({ spaceRepository, tokenService, s3Service }: Constructor) {
     this.#spaceRepository = spaceRepository;
     this.#tokenService = tokenService;
     this.#s3Service = s3Service;
-    this.#workerService = workerService;
   }
 
   public async getSpacesByTenant({

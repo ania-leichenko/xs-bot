@@ -47,7 +47,7 @@ class BSObject {
   }: UploadPayload): Promise<BSObjectEntity> {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
-    const space = await this.#spaceService.getSpacesById(id);
+    const space = await this.#spaceService.getSpaceById(id);
 
     const worker = await this.#workerService.getUserById(space.createdBy);
     const isCurrentWorkerOwnerOfSpace =
