@@ -103,6 +103,18 @@ class Space {
 
     await this.#spaceRepository.delete(id);
   }
+
+  public async getSpaceById(id: string): Promise<SpaceEntity> {
+    const space = await this.#spaceRepository.getSpaceById(id);
+
+    if (!space) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.SPACE_NOT_FOUND,
+      });
+    }
+    return space;
+  }
 }
 
 export { Space };

@@ -81,3 +81,6 @@ export {
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';
+export { type ObjectUploadRequestDto } from './object-upload/object-upload';
+export { type ObjectUploadParamsDto } from './bs-object/bs-object-params';
+export { type UploadPayload } from './bs-object/bs-object';
