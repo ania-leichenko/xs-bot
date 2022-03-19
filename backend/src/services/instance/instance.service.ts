@@ -117,20 +117,18 @@ class Instance {
       name,
       keyPairId,
       username: InstanceDefaultParam.USERNAME as string,
-      hostname: null,
       operationSystemId,
       createdBy: userId,
       awsInstanceId: instanceId,
       tenantId,
-      state: InstanceState.CREATING,
     });
 
     const { id } = await this.#instanceRepository.create(instance);
 
     (async (): Promise<void> => {
-      const hostname = await this.#ec2Service.getPublicIpAddress(instanceId);
+      await this.#ec2Service.waitUntilRunning(instanceId);
       await this.update(id, {
-        hostname,
+        hostname: await this.#ec2Service.getPublicIpAddress(instanceId),
         state: InstanceState.ACTIVE,
       });
     })();

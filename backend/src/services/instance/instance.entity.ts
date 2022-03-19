@@ -96,22 +96,18 @@ class Instance {
     name,
     keyPairId,
     username,
-    hostname,
     operationSystemId,
     createdBy,
     awsInstanceId,
     tenantId,
-    state,
   }: {
     name: string;
     keyPairId: string;
     username: string;
-    hostname: null;
     operationSystemId: string;
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
-    state: InstanceState;
   }): Instance {
     return new Instance({
       id: getRandomId(),
@@ -119,12 +115,12 @@ class Instance {
       keyPairId,
       createdAt: new Date().toISOString(),
       username,
-      hostname,
+      hostname: null,
       operationSystemId,
       createdBy,
       awsInstanceId,
       tenantId,
-      state,
+      state: InstanceState.CREATING,
     });
   }
 }

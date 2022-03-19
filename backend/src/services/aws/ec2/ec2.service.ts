@@ -96,22 +96,23 @@ class EC2 {
     };
   }
 
-  public async getPublicIpAddress(instanceId: string): Promise<string> {
+  public async waitUntilRunning(instanceId: string): Promise<void> {
     await waitUntilInstanceRunning(
       {
         client: this.#ec2Client,
         maxWaitTime: InstanceDefaultParam.MAX_WAITING_TIME as number,
       },
       {
-        InstanceIds: [instanceId as string],
+        InstanceIds: [instanceId],
       },
     );
+  }
 
-    const dataWithPublicIpAddress = await this.#ec2Client.send(
-      new DescribeInstancesCommand({ InstanceIds: [instanceId as string] }),
+  public async getPublicIpAddress(instanceId: string): Promise<string> {
+    const instanceData = await this.#ec2Client.send(
+      new DescribeInstancesCommand({ InstanceIds: [instanceId] }),
     );
-
-    const [reservation] = dataWithPublicIpAddress.Reservations as Reservation[];
+    const [reservation] = instanceData.Reservations as Reservation[];
     const [instanceIpAddress] = reservation.Instances as Instance[];
     const { PublicIpAddress: publicIpAddress } = instanceIpAddress;
 
