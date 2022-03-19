@@ -6,7 +6,7 @@ type SCInstanceCreateResponseDto = {
   awsInstanceId: string;
   instanceType: string;
   createdAt: string;
-  publicIpAddress: string;
+  publicIpAddress: null;
   keyPairId: string;
   state: InstanceState;
 };

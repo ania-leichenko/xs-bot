@@ -6,7 +6,7 @@ class Instance extends AbstractModel {
   [InstanceTableField.NAME]: string;
   [InstanceTableField.KEY_PAIRS_ID]: string;
   [InstanceTableField.USERNAME]: string;
-  [InstanceTableField.HOSTNAME]: string;
+  [InstanceTableField.HOSTNAME]: string | null;
   [InstanceTableField.OPERATION_SYSTEM_ID]: string;
   [InstanceTableField.CREATED_BY]: string;
   [InstanceTableField.AWS_INSTANCE_ID]: string;

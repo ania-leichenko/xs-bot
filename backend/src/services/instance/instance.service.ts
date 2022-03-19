@@ -117,7 +117,7 @@ class Instance {
       name,
       keyPairId,
       username: InstanceDefaultParam.USERNAME as string,
-      hostname: '',
+      hostname: null,
       operationSystemId,
       createdBy: userId,
       awsInstanceId: instanceId,
@@ -141,7 +141,7 @@ class Instance {
       instanceType: InstanceDefaultParam.INSTANCE_TYPE as string,
       name: instance.name,
       createdAt: instance.createdAt,
-      publicIpAddress: instance.hostname,
+      publicIpAddress: null,
       state: instance.state,
       keyPairId: instance.keyPairId,
     };

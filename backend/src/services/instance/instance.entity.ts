@@ -7,7 +7,7 @@ class Instance {
   public createdAt: string;
   public keyPairId: string;
   public username: string;
-  public hostname: string;
+  public hostname: string | null;
   public operationSystemId: string;
   public createdBy: string;
   public awsInstanceId: string;
@@ -32,7 +32,7 @@ class Instance {
     createdAt: string;
     keyPairId: string;
     username: string;
-    hostname: string;
+    hostname: string | null;
     operationSystemId: string;
     createdBy: string;
     awsInstanceId: string;
@@ -70,7 +70,7 @@ class Instance {
     createdAt: string;
     keyPairId: string;
     username: string;
-    hostname: string;
+    hostname: string | null;
     operationSystemId: string;
     createdBy: string;
     awsInstanceId: string;
@@ -106,7 +106,7 @@ class Instance {
     name: string;
     keyPairId: string;
     username: string;
-    hostname: string;
+    hostname: null;
     operationSystemId: string;
     createdBy: string;
     awsInstanceId: string;
