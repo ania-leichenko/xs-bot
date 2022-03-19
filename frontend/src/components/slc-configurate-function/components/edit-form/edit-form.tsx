@@ -15,6 +15,8 @@ interface Props {
   id: string;
 }
 
+const TIMEOUT = 500;
+
 const EditForm: FC<Props> = ({ id }) => {
   const { dataStatus, loadFunction, response } = useAppSelector(
     ({ SLCFunctionConfigurate }) => ({
@@ -29,7 +31,6 @@ const EditForm: FC<Props> = ({ id }) => {
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleSave = !hasSave && !hasCodeLoading;
   const hasResponse = Boolean(response);
-  const TIMEOUT = 500;
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
