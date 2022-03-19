@@ -1,4 +1,4 @@
-import { InstanceState } from '~/common/enums/instance-states/instance-state.enum';
+import { InstanceState } from '~/common/enums/enums';
 
 type SCInstanceUpdateResponseDto = {
   name: string;

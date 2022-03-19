@@ -1,5 +1,5 @@
 enum InstanceState {
-  CREATING = 'pending',
+  CREATING = 'creating',
   ACTIVE = 'running',
 }
 
