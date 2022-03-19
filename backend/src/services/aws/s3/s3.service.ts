@@ -3,6 +3,8 @@ import {
   CreateBucketOutput,
   DeleteBucketCommand,
   DeleteBucketCommandOutput,
+  GetObjectCommand,
+  GetObjectCommandOutput,
   PutObjectCommand,
   PutObjectCommandOutput,
   S3Client,
@@ -46,6 +48,7 @@ class S3 {
   public async deleteBucket(name: string): Promise<DeleteBucketCommandOutput> {
     return this.#s3Client.send(new DeleteBucketCommand({ Bucket: name }));
   }
+
   public async uploadObject({
     spaceName,
     file,
@@ -58,6 +61,23 @@ class S3 {
     return this.#s3Client.send(
       new PutObjectCommand({ Bucket: spaceName, Body: file, Key: fileName }),
     );
+  }
+
+  public async downloadObject({
+    bucket,
+    key,
+  }: {
+    bucket: string;
+    key: string;
+  }): Promise<GetObjectCommandOutput> {
+    return this.#s3Client
+      .send(new GetObjectCommand({ Bucket: bucket, Key: key }))
+      .then((res) => {
+        return res.Body;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 }
 export { S3 };

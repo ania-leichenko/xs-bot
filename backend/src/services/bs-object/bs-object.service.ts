@@ -11,6 +11,7 @@ import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage } from '~/common/enums/enums';
 import { BsError } from '~/exceptions/exceptions';
 import { UploadPayload } from '~/common/types/types';
+import { GetObjectCommandOutput } from '@aws-sdk/client-s3';
 
 type Constructor = {
   bsObjectRepository: typeof bsObjectRep;
@@ -80,6 +81,25 @@ class BSObject {
       awsObjectKey: awsObjectKey.substring(1, awsObjectKey.length - 1),
     });
     return this.#bsObjectRepository.create(objectUploadEntity);
+  }
+
+  public async download({
+    spaceId,
+    objectId,
+  }: {
+    spaceId: string;
+    objectId: string;
+  }): Promise<GetObjectCommandOutput> {
+    const space = await this.#spaceService.getSpaceById(spaceId);
+
+    const object = await this.#bsObjectRepository.getById(objectId);
+
+    const downloaded = await this.#s3Service.downloadObject({
+      bucket: space.name,
+      key: object ? object.name : 'null',
+    });
+
+    return downloaded;
   }
 }
 
