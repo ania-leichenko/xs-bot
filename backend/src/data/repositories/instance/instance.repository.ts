@@ -43,6 +43,15 @@ class Instance {
     return Instance.modelToEntity(instance);
   }
 
+  public async getByWorkerId(workerId: string): Promise<InstanceEntity[]> {
+    const instances = await this.#InstanceModel
+      .query()
+      .select()
+      .where({ 'createdBy': workerId });
+
+    return instances.map(Instance.modelToEntity);
+  }
+
   public async getByTenantId({
     filter,
     tenantId,
