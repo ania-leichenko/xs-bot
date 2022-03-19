@@ -100,7 +100,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     File: File;
   }>({
     method: HttpMethod.POST,
-    url: SpacesApiPath.SPACES_$ID__FILES,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
     preHandler: upload.single('file'),
     async handler(req: FastifyRequest<{ Params: ObjectUploadParamsDto }>, rep) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
