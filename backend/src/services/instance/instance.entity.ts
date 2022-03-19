@@ -1,4 +1,5 @@
 import { getRandomId } from '~/helpers/helpers';
+import { InstanceState } from '~/common/enums/enums';
 
 class Instance {
   public id: string;
@@ -11,7 +12,7 @@ class Instance {
   public createdBy: string;
   public awsInstanceId: string;
   public tenantId: string;
-  public state: string;
+  public state: InstanceState;
 
   private constructor({
     id,
@@ -36,7 +37,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
-    state: string;
+    state: InstanceState;
   }) {
     this.id = id;
     this.name = name;
@@ -74,7 +75,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
-    state: string;
+    state: InstanceState;
   }): Instance {
     return new Instance({
       id,
@@ -110,7 +111,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
-    state: string;
+    state: InstanceState;
   }): Instance {
     return new Instance({
       id: getRandomId(),

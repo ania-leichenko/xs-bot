@@ -1,6 +1,6 @@
 enum InstanceState {
-  PENDING = 'pending',
-  RUNNING = 'running',
+  CREATING = 'pending',
+  ACTIVE = 'running',
 }
 
 export { InstanceState };

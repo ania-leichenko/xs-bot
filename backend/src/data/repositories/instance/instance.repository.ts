@@ -1,6 +1,7 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
 import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
+import { InstanceState } from '~/common/enums/enums';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -17,7 +18,7 @@ class Instance {
     id: string,
     data: {
       name?: string;
-      state?: string;
+      state?: InstanceState;
       hostname?: string;
     },
   ): Promise<InstanceEntity> {

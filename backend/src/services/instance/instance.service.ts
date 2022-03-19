@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events';
 import { instance as InstanceRep } from '~/data/repositories/repositories';
 import {
   SCInstanceCreateRequestDto,
@@ -20,7 +19,6 @@ import {
   UserRole,
   HttpCode,
   ExceptionMessage,
-  EventName,
   InstanceState,
 } from '~/common/enums/enums';
 import { SCError } from '~/exceptions/exceptions';
@@ -31,7 +29,6 @@ type Constructor = {
   keyPairService: typeof KeyPairServ;
   ec2Service: typeof EC2Serv;
   tokenService: typeof tokenServ;
-  eventService: EventEmitter;
 };
 
 class Instance {
@@ -40,7 +37,6 @@ class Instance {
   #keyPairService: typeof KeyPairServ;
   #ec2Service: typeof EC2Serv;
   #tokenService: typeof tokenServ;
-  #eventService: EventEmitter;
 
   constructor({
     instanceRepository,
@@ -48,14 +44,12 @@ class Instance {
     keyPairService,
     ec2Service,
     tokenService,
-    eventService,
   }: Constructor) {
     this.#instanceRepository = instanceRepository;
     this.#operationSystemService = operationSystemService;
     this.#keyPairService = keyPairService;
     this.#ec2Service = ec2Service;
     this.#tokenService = tokenService;
-    this.#eventService = eventService;
   }
 
   public async getByTenantId({
@@ -89,7 +83,7 @@ class Instance {
           createdAt,
           publicIpAddress: hostname,
           keyPairId,
-          state: state as InstanceState,
+          state,
         }),
       ),
     };
@@ -113,7 +107,7 @@ class Instance {
     }
 
     const keyPairId = await this.#keyPairService.create();
-    const { state, instanceId } = await this.#ec2Service.createInstance({
+    const { instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairId,
       imageId: await this.#operationSystemService.getImageId(operationSystemId),
@@ -128,22 +122,18 @@ class Instance {
       createdBy: userId,
       awsInstanceId: instanceId,
       tenantId,
-      state,
+      state: InstanceState.CREATING,
     });
 
     const { id } = await this.#instanceRepository.create(instance);
 
-    this.#eventService.on(EventName.ADD_NEW_INSTANCE, async ({ id, awsId }) => {
-      const { hostname, state } = await this.#ec2Service.getRunningInstanceData(
-        awsId,
-      );
-      await this.update(id, { hostname, state });
-    });
-
-    this.#eventService.emit(EventName.ADD_NEW_INSTANCE, {
-      id,
-      awsId: instanceId,
-    });
+    (async (): Promise<void> => {
+      const hostname = await this.#ec2Service.getPublicIpAddress(instanceId);
+      await this.update(id, {
+        hostname,
+        state: InstanceState.ACTIVE,
+      });
+    })();
 
     return {
       id: instance.id,
@@ -152,7 +142,7 @@ class Instance {
       name: instance.name,
       createdAt: instance.createdAt,
       publicIpAddress: instance.hostname,
-      state: instance.state as InstanceState,
+      state: instance.state,
       keyPairId: instance.keyPairId,
     };
   }
@@ -161,7 +151,7 @@ class Instance {
     id: string,
     data: {
       name?: string;
-      state?: string;
+      state?: InstanceState;
       hostname?: string;
     },
   ): Promise<SCInstanceUpdateResponseDto> {
@@ -197,7 +187,7 @@ class Instance {
       name: updateInstance.name,
       createdAt: updateInstance.createdAt,
       publicIpAddress: updateInstance.hostname,
-      state: updateInstance.state as InstanceState,
+      state: updateInstance.state,
       keyPairId: updateInstance.keyPairId,
     };
   }

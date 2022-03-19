@@ -1,4 +1,3 @@
-import { EventEmitter } from 'events';
 import { ENV } from '~/common/enums/enums';
 import { MASTER_PASSWORD_SALT_ROUNDS } from '~/common/constants/master.constants';
 import {
@@ -35,8 +34,6 @@ const token = new Token();
 const encrypt = new Encrypt({
   salt: MASTER_PASSWORD_SALT_ROUNDS,
 });
-
-const event = new EventEmitter();
 
 const tenant = new Tenant({
   tenantRepository,
@@ -91,7 +88,6 @@ const instance = new Instance({
   keyPairService: keyPair,
   ec2Service: ec2,
   tokenService: token,
-  eventService: event,
 });
 
 const permission = new Permission({
