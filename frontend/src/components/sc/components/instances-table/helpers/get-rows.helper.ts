@@ -5,8 +5,11 @@ import { ActionCell } from '../components/components';
 
 type Row = {
   [InstancesTableAccessor.NAME]: string;
+  [InstancesTableAccessor.INSTANCE_ID]: string;
+  [InstancesTableAccessor.INSTANCE_STATE]: string;
   [InstancesTableAccessor.INSTANCE_TYPE]: string;
   [InstancesTableAccessor.CREATED_AT]: string;
+  [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: string;
 };
 
 const getRows = ({
@@ -22,6 +25,7 @@ const getRows = ({
     const {
       name,
       awsInstanceId,
+      state,
       publicIpAddress,
       createdAt,
       instanceType,
@@ -32,8 +36,9 @@ const getRows = ({
     return {
       [InstancesTableAccessor.NAME]: name,
       [InstancesTableAccessor.INSTANCE_ID]: awsInstanceId,
+      [InstancesTableAccessor.INSTANCE_STATE]: state,
       [InstancesTableAccessor.INSTANCE_TYPE]: instanceType,
-      [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress,
+      [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress ?? '-',
       [InstancesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),
       ),

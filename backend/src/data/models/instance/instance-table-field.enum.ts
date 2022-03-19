@@ -7,6 +7,7 @@ enum InstanceTableField {
   CREATED_BY = 'createdBy',
   AWS_INSTANCE_ID = 'awsInstanceId',
   TENANT_ID = 'tenantId',
+  STATE = 'state',
 }
 
 export { InstanceTableField };

@@ -1,9 +1,7 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
-import {
-  SCInstanceGetByTenantRequestParamsDto,
-  SCInstanceUpdateRequestDto,
-} from '~/common/types/types';
+import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
+import { InstanceState } from '~/common/enums/enums';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -18,7 +16,11 @@ class Instance {
 
   public async updateById(
     id: string,
-    data: SCInstanceUpdateRequestDto,
+    data: {
+      name?: string;
+      state?: InstanceState;
+      hostname?: string;
+    },
   ): Promise<InstanceEntity> {
     return this.#InstanceModel.query().patchAndFetchById(id, data);
   }
@@ -85,6 +87,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     } = instance;
     return this.#InstanceModel.query().insert({
       id,
@@ -97,6 +100,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 
@@ -112,6 +116,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     } = model;
 
     return InstanceEntity.initialize({
@@ -125,6 +130,7 @@ class Instance {
       createdBy,
       awsInstanceId,
       tenantId,
+      state,
     });
   }
 }

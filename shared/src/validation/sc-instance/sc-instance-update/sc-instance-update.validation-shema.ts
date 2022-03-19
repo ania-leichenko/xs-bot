@@ -12,7 +12,9 @@ const scInstanceUpdate = Joi.object({
     .min(SCInstanceValidationRule.NAME_MIN_LENGTH)
     .max(SCInstanceValidationRule.NAME_MAX_LENGTH)
     .regex(SCInstanceValidationRule.NAME_PATTERN)
+    .required()
     .messages({
+      'string.empty': SCInstanceValidationMessage.NAME_REQUIRE,
       'string.min': SCInstanceValidationMessage.NAME_LENGTH,
       'string.max': SCInstanceValidationMessage.NAME_LENGTH,
       'string.pattern.base': SCInstanceValidationMessage.NAME_PATTERN,
