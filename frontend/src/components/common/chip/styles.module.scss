@@ -1,6 +1,8 @@
 .chip {
+  display: inline-flex;
+  align-items: center;
   margin-right: 10px;
-  padding: 5px 10px;
+  padding: 0 10px;
   color: var(--color-white);
   font-weight: normal;
   font-size: 14px;
@@ -10,6 +12,12 @@
   border: 2px solid transparent;
   border-radius: 50px;
   transition-duration: 0.4s;
+}
+
+.icon {
+  display: inline;
+  height: 10px;
+  margin-right: 5px;
 }
 
 .chipStyleFilled.chipColorGray {
