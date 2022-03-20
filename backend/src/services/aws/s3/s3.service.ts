@@ -46,7 +46,14 @@ class S3 {
   }
 
   public async deleteBucket(name: string): Promise<DeleteBucketCommandOutput> {
-    return this.#s3Client.send(new DeleteBucketCommand({ Bucket: name }));
+    return this.#s3Client
+      .send(new DeleteBucketCommand({ Bucket: name }))
+      .catch((err) => {
+        throw new BsError({
+          status: err.$response.statusCode,
+          message: err.message,
+        });
+      });
   }
 
   public async uploadObject({
