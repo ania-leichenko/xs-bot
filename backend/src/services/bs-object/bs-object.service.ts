@@ -110,6 +110,17 @@ class BSObject {
 
     const space = await this.#spaceService.getSpaceById(spaceId);
 
+    const worker = await this.#workerService.getUserById(space.createdBy);
+    const isCurrentWorkerOwnerOfSpace =
+      worker?.user?.tenantId === user.tenantId;
+
+    if (!isCurrentWorkerOwnerOfSpace) {
+      throw new BsError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.OBJECT_ACCESS_DENIED,
+      });
+    }
+
     const object = await this.#bsObjectRepository.getById(objectId);
 
     if (!object) {
