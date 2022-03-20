@@ -74,7 +74,7 @@ class EC2 {
     name: string;
     keyName: string;
     imageId: string;
-    userData?: string;
+    userData: string;
   }): Promise<{
     instanceId: string;
   }> {
