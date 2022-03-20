@@ -37,19 +37,10 @@
 }
 
 .textarea {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 5px 10px;
-  color: var(--color-white);
-  background-color: transparent;
-  border: 2px solid var(--color-gray);
-  border-radius: 10px;
-  resize: vertical;
-}
-
-.textarea:focus {
-  border: 2px solid var(--color-orange);
-  outline: none;
+  height: 100%;
+  padding-top: 10px;
+  border-radius: 20px;
+  resize: none;
 }
 
 .span {

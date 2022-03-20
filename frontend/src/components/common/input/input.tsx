@@ -33,22 +33,26 @@ const Input: FC<Props> = ({
   const hasError = Boolean(errors[name]);
   const isTextarea = Boolean(rows);
 
-  return isTextarea ? (
-    <textarea
-      {...field}
-      rows={rows}
-      placeholder={placeholder}
-      className={styles.textarea}
-    />
-  ) : (
+  return (
     <label className={styles.inputLabel}>
       <span className={styles.span}>{label}</span>
-      <input
-        {...field}
-        type={type}
-        placeholder={placeholder}
-        className={getValidClasses(hasError ? styles.inputError : styles.input)}
-      />
+      {isTextarea ? (
+        <textarea
+          {...field}
+          rows={rows}
+          placeholder={placeholder}
+          className={`${styles.input} ${styles.textarea}`}
+        />
+      ) : (
+        <input
+          {...field}
+          type={type}
+          placeholder={placeholder}
+          className={getValidClasses(
+            hasError ? styles.inputError : styles.input,
+          )}
+        />
+      )}
       <span className={styles.error}>
         <ErrorMessage errors={errors} name={name} />
       </span>

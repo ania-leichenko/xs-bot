@@ -66,14 +66,16 @@ const CreateInstanceForm: FC = () => {
             />
           </div>
           <h3 className={styles.inputTitle}>User data</h3>
-          <Input
-            label=""
-            placeholder="(Optional)"
-            name={getNameOf<SCInstanceCreateRequestDto>('userData')}
-            control={control}
-            errors={errors}
-            rows={10}
-          />
+          <div className={styles.inputWrapper}>
+            <Input
+              label=""
+              placeholder="(Optional)"
+              name={getNameOf<SCInstanceCreateRequestDto>('userData')}
+              control={control}
+              errors={errors}
+              rows={10}
+            />
+          </div>
         </li>
       </ul>
       <div className={styles.buttons}>
