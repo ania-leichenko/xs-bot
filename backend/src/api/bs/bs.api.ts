@@ -13,7 +13,8 @@ import {
   BSSpaceCreateRequestDto,
   BSSpaceDeleteParamsDto,
   BSSpaceGetRequestParamsDto,
-  ObjectUploadParamsDto,
+  BSObjectDownloadParamsDto,
+  BSObjectUploadParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
@@ -96,13 +97,16 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   });
 
   fastify.route<{
-    Params: ObjectUploadParamsDto;
+    Params: BSObjectUploadParamsDto;
     File: File;
   }>({
     method: HttpMethod.POST,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
     preHandler: upload.single('file'),
-    async handler(req: FastifyRequest<{ Params: ObjectUploadParamsDto }>, rep) {
+    async handler(
+      req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
+      rep,
+    ) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
 
@@ -116,21 +120,21 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   });
 
   fastify.route<{
-    Params: { spaceId: string; objectId: string };
+    Params: BSObjectDownloadParamsDto;
   }>({
     method: HttpMethod.GET,
-    url: '/spaces/:spaceId/objects/:objectId',
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECT}`,
     async handler(req, rep) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { spaceId, objectId } = req.params;
 
-      const response = await bsObjectService.download({
+      const object = await bsObjectService.download({
         token,
         spaceId,
         objectId,
       });
 
-      return rep.send(response).status(HttpCode.OK);
+      return rep.send(object).status(HttpCode.OK);
     },
   });
 };
