@@ -1,4 +1,4 @@
-import { IconName } from './icon-name.enum';
+import { IconName } from 'common/enums/enums';
 import deleteIcon from 'assets/img/delete-icon.svg';
 import editIcon from 'assets/img/edit-icon.svg';
 import keyIcon from 'assets/img/key-icon.svg';
@@ -7,7 +7,7 @@ import successIcon from 'assets/img/success-icon.svg';
 import errorIcon from 'assets/img/error-icon.svg';
 import closeIcon from 'assets/img/close-icon.svg';
 
-const IconSource = {
+const iconNameToSrc = {
   [IconName.TRASH]: deleteIcon,
   [IconName.GEAR]: editIcon,
   [IconName.KEY]: keyIcon,
@@ -17,4 +17,4 @@ const IconSource = {
   [IconName.CLOSE]: closeIcon,
 } as const;
 
-export { IconSource };
+export { iconNameToSrc };

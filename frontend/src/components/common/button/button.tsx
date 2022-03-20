@@ -5,11 +5,11 @@ import {
   ButtonStyle,
   ButtonType,
   IconName,
-  IconSource,
 } from 'common/enums/enums';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Link } from '../link/link';
+import { iconNameToSrc } from 'common/maps/maps';
 
 type Props = {
   label: string;
@@ -42,7 +42,7 @@ const Button: FC<Props> = ({
 
   return isLink ? (
     <Link className={icon ? className : fullClassName} to={to as AppRoute}>
-      {icon ? <img src={IconSource[icon]} alt={label} /> : label}
+      {icon ? <img src={iconNameToSrc[icon]} alt={label} /> : label}
     </Link>
   ) : (
     <button
@@ -50,7 +50,7 @@ const Button: FC<Props> = ({
       onClick={onClick}
       type={type}
     >
-      {icon ? <img src={IconSource[icon]} alt={label} /> : label}
+      {icon ? <img src={iconNameToSrc[icon]} alt={label} /> : label}
     </button>
   );
 };

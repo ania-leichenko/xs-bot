@@ -23,7 +23,6 @@ export {
   InputType,
   ButtonColor,
   IconName,
-  IconSource,
   ChipStyle,
   ChipColor,
 } from './ui/ui';

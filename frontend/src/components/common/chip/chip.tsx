@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { ChipColor, ChipStyle, IconName, IconSource } from 'common/enums/enums';
+import { ChipColor, ChipStyle, IconName } from 'common/enums/enums';
 import { getValidClasses } from 'helpers/helpers';
-
 import styles from './styles.module.scss';
+import { iconNameToSrc } from 'common/maps/maps';
 
 type Props = {
   chipStyle?: ChipStyle;
@@ -25,7 +25,7 @@ const Chip: FC<Props> = ({
   return (
     <span className={fullClassName}>
       {icon && (
-        <img className={styles.icon} src={IconSource[icon]} alt={icon} />
+        <img className={styles.icon} src={iconNameToSrc[icon]} alt={icon} />
       )}
       {children}
     </span>
