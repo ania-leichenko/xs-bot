@@ -113,6 +113,7 @@ const EAMConfigurateWorker: FC = () => {
                 title="Groups"
                 columns={columns}
                 data={data}
+                placeholder="No groups to display"
               />
             </li>
           </ul>

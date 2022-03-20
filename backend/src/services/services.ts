@@ -11,6 +11,7 @@ import {
   permission as permissionRepository,
   space as spaceRepository,
   slcFunction as slcFunctionRepository,
+  bsObject as bsObjectRepository,
 } from '~/data/repositories/repositories';
 import { Master } from './master/master.service';
 import { Group } from './group/group.service';
@@ -22,6 +23,7 @@ import { Auth } from './auth/auth.service';
 import { EC2 } from './aws/ec2/ec2.service';
 import { KeyPair } from './key-pair/key-pair.service';
 import { OperationSystem } from './operation-system/operation-system.service';
+import { BSObject } from './bs-object/bs-object.service';
 import { Instance } from './instance/instance.service';
 import { Space } from './space/space.service';
 import { S3 } from './aws/s3/s3.service';
@@ -44,54 +46,6 @@ const master = new Master({
   tokenService: token,
   encryptService: encrypt,
   tenantService: tenant,
-});
-
-const worker = new Worker({
-  workerRepository,
-  tenantRepository,
-  encryptService: encrypt,
-  tokenService: token,
-  masterService: master,
-  tenantService: tenant,
-});
-
-const group = new Group({
-  groupRepository,
-});
-
-const auth = new Auth({
-  masterService: master,
-  workerService: worker,
-  tokenService: token,
-});
-
-const ec2 = new EC2({
-  region: ENV.AWS.REGION,
-  credentials: {
-    accessKeyId: ENV.AWS.ACCESS_KEY,
-    secretAccessKey: ENV.AWS.SECRET_KEY,
-  },
-});
-
-const keyPair = new KeyPair({
-  keyPairRepository,
-  ec2Service: ec2,
-});
-
-const operationSystem = new OperationSystem({
-  operationSystemRepository,
-});
-
-const instance = new Instance({
-  instanceRepository,
-  operationSystemService: operationSystem,
-  keyPairService: keyPair,
-  ec2Service: ec2,
-  tokenService: token,
-});
-
-const permission = new Permission({
-  permissionRepository,
 });
 
 const s3 = new S3({
@@ -119,9 +73,62 @@ const lambda = new Lambda({
 
 const slcFunction = new SLCFunction({
   slcFunctionRepository,
-  workerService: worker,
   tokenService: token,
   lambdaService: lambda,
+});
+
+const ec2 = new EC2({
+  region: ENV.AWS.REGION,
+  credentials: {
+    accessKeyId: ENV.AWS.ACCESS_KEY,
+    secretAccessKey: ENV.AWS.SECRET_KEY,
+  },
+});
+
+const keyPair = new KeyPair({
+  keyPairRepository,
+  ec2Service: ec2,
+});
+
+const operationSystem = new OperationSystem({
+  operationSystemRepository,
+});
+
+const instance = new Instance({
+  instanceRepository,
+  operationSystemService: operationSystem,
+  keyPairService: keyPair,
+  ec2Service: ec2,
+  tokenService: token,
+});
+
+const worker = new Worker({
+  workerRepository,
+  tenantRepository,
+  spaceRepository,
+  slcFunctionRepository,
+  instanceRepository,
+  encryptService: encrypt,
+  tokenService: token,
+  masterService: master,
+  tenantService: tenant,
+  instanceService: instance,
+  spaceService: space,
+  slcFunctionService: slcFunction,
+});
+
+const group = new Group({
+  groupRepository,
+});
+
+const auth = new Auth({
+  masterService: master,
+  workerService: worker,
+  tokenService: token,
+});
+
+const permission = new Permission({
+  permissionRepository,
 });
 
 const backgroundJob = new BackgroundJob({
@@ -129,6 +136,13 @@ const backgroundJob = new BackgroundJob({
   instanceService: instance,
   instanceRepository,
   ec2Service: ec2,
+});
+const bsObject = new BSObject({
+  bsObjectRepository,
+  s3Service: s3,
+  workerService: worker,
+  tokenService: token,
+  spaceService: space,
 });
 
 export {
@@ -149,4 +163,5 @@ export {
   lambda,
   slcFunction,
   backgroundJob,
+  bsObject,
 };
