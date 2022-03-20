@@ -25,7 +25,7 @@ const scInstanceCreate = Joi.object({
     .messages({
       'string.empty': SCInstanceValidationMessage.OPERATION_SYSTEM_REQUIRE,
     }),
-  [getNameOf<SCInstanceCreateRequestDto>('userData')]: Joi.string().trim(),
+  [getNameOf<SCInstanceCreateRequestDto>('userData')]: Joi.string().allow(''),
 });
 
 export { scInstanceCreate };

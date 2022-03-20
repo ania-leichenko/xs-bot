@@ -1,7 +1,7 @@
 type SCInstanceCreateRequestDto = {
   name: string;
   operationSystemId: string;
-  userData?: string;
+  userData: string;
 };
 
 export { type SCInstanceCreateRequestDto };

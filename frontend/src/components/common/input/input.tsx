@@ -8,7 +8,7 @@ import { useFormControl } from 'hooks/hooks';
 import { InputType } from 'common/enums/enums';
 import { ErrorMessage } from 'components/common/common';
 import { getValidClasses } from 'helpers/helpers';
-import styles from './input.module.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   label: string;
@@ -17,6 +17,7 @@ type Props = {
   errors: FormControlErrors;
   type?: InputType;
   placeholder?: string;
+  rows?: number;
 };
 
 const Input: FC<Props> = ({
@@ -26,12 +27,20 @@ const Input: FC<Props> = ({
   errors,
   placeholder = '',
   type = InputType.TEXT,
+  rows,
 }) => {
   const { field } = useFormControl({ name, control });
-
   const hasError = Boolean(errors[name]);
+  const isTextarea = Boolean(rows);
 
-  return (
+  return isTextarea ? (
+    <textarea
+      {...field}
+      rows={rows}
+      placeholder={placeholder}
+      className={styles.textarea}
+    />
+  ) : (
     <label className={styles.inputLabel}>
       <span className={styles.span}>{label}</span>
       <input
