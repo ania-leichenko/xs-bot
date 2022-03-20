@@ -7,3 +7,5 @@ extends:
 settings:
   react:
     version: '17'
+
+ignorePatterns: [table-config.d.ts]

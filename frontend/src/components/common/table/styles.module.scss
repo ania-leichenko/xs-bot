@@ -65,6 +65,21 @@
   text-overflow: ellipsis;
 }
 
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 15px;
+  height: 100%;
+  background-image: url("/assets/img/resize.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  user-select: none;
+  touch-action: none;
+}
+
 .placeholder {
   color: rgba(255 255 255 / 69%);
   font-style: italic;

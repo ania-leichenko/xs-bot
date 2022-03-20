@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { useTable, Column } from 'react-table';
+import {
+  Column,
+  useBlockLayout,
+  useResizeColumns,
+  useTable,
+} from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -20,10 +25,14 @@ const Table: FC<Props> = ({
   placeholder,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns: columns as Column<Record<string, string>>[],
-      data: data as Record<string, string>[],
-    });
+    useTable(
+      {
+        columns: columns as Column<Record<string, string>>[],
+        data: data as Record<string, string>[],
+      },
+      useBlockLayout,
+      useResizeColumns,
+    );
 
   const hasStrPlaceholder = Boolean(placeholder);
   const hasData = data.length !== 0;
@@ -50,6 +59,10 @@ const Table: FC<Props> = ({
                   className={styles.tableHeaderCell}
                 >
                   {column.render('Header')}
+                  <div
+                    className={`${styles.resizer}`}
+                    {...column.getResizerProps()}
+                  ></div>
                 </th>
               ))}
             </tr>
