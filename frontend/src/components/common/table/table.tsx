@@ -46,45 +46,47 @@ const Table: FC<Props> = ({
           {children}
         </header>
       )}
-      <table {...getTableProps()} className={styles.clientSideTable}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr
-              className={styles.tableHeaderRow}
-              {...headerGroup.getHeaderGroupProps()}
-            >
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className={styles.tableHeaderCell}
-                >
-                  {column.render('Header')}
-                  <div
-                    className={`${styles.resizer}`}
-                    {...column.getResizerProps()}
-                  ></div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr className={styles.tableRow} {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()} className={styles.tableCell}>
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
+      <div className={styles.tableContainer}>
+        <table {...getTableProps()} className={styles.clientSideTable}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr
+                className={styles.tableHeaderRow}
+                {...headerGroup.getHeaderGroupProps()}
+              >
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className={styles.tableHeaderCell}
+                  >
+                    {column.render('Header')}
+                    <div
+                      className={`${styles.resizer}`}
+                      {...column.getResizerProps()}
+                    ></div>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr className={styles.tableRow} {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()} className={styles.tableCell}>
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}

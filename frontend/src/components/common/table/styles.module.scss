@@ -33,17 +33,19 @@
 .tableCell,
 .placeholder {
   padding: 13px;
+  overflow: hidden;
   font-weight: lighter;
   font-size: 16px;
   font-style: normal;
   line-height: 20px;
   white-space: nowrap;
   text-align: left;
+  text-overflow: ellipsis;
 }
 
 .tableHeaderRow {
   background-color: var(--color-boltgun);
-  border-bottom: 2px solid #282828;
+  border-bottom: 2px solid var(--color-dark-gray);
 }
 
 .tableHeaderCell {
@@ -60,9 +62,7 @@
 }
 
 .tableCell {
-  overflow: hidden;
   color: var(--color-white);
-  text-overflow: ellipsis;
 }
 
 .resizer {
@@ -78,6 +78,10 @@
   background-size: contain;
   user-select: none;
   touch-action: none;
+}
+
+.tableContainer {
+  overflow-x: auto;
 }
 
 .placeholder {
