@@ -8,7 +8,7 @@ import {
 import { BSObject as BSObjectEntity } from './bs-object.entity';
 import { TokenPayload } from 'bws-shared/common/types/types';
 import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage } from '~/common/enums/enums';
+import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import { BsError } from '~/exceptions/exceptions';
 import { UploadPayload } from '~/common/types/types';
 import { GetObjectCommandOutput } from '@aws-sdk/client-s3';
@@ -48,6 +48,13 @@ class BSObject {
   }: UploadPayload): Promise<BSObjectEntity> {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
+    if (user.userRole !== UserRole.WORKER) {
+      throw new BsError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_OBJECT_UPLOAD,
+      });
+    }
+
     const space = await this.#spaceService.getSpaceById(id);
 
     const worker = await this.#workerService.getUserById(space.createdBy);
@@ -84,22 +91,38 @@ class BSObject {
   }
 
   public async download({
+    token,
     spaceId,
     objectId,
   }: {
+    token: string;
     spaceId: string;
     objectId: string;
   }): Promise<GetObjectCommandOutput> {
+    const user: TokenPayload = await this.#tokenService.decode(token);
+
+    if (user.userRole !== UserRole.WORKER) {
+      throw new BsError({
+        status: HttpCode.DENIED,
+        message: ExceptionMessage.MASTER_OBJECT_DOWNLOAD,
+      });
+    }
+
     const space = await this.#spaceService.getSpaceById(spaceId);
 
     const object = await this.#bsObjectRepository.getById(objectId);
 
-    const downloaded = await this.#s3Service.downloadObject({
-      bucket: space.name,
-      key: object ? object.name : 'null',
-    });
+    if (!object) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.OBJECT_NOT_FOUND,
+      });
+    }
 
-    return downloaded;
+    return this.#s3Service.downloadObject({
+      bucket: space.name,
+      key: object.name,
+    });
   }
 }
 

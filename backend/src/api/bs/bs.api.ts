@@ -121,9 +121,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.GET,
     url: '/spaces/:spaceId/objects/:objectId',
     async handler(req, rep) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { spaceId, objectId } = req.params;
 
       const response = await bsObjectService.download({
+        token,
         spaceId,
         objectId,
       });
