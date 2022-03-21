@@ -41,7 +41,10 @@ const Input: FC<Props> = ({
           {...field}
           rows={rows}
           placeholder={placeholder}
-          className={`${styles.input} ${styles.textarea}`}
+          className={getValidClasses([
+            styles.textarea,
+            hasError ? styles.inputError : styles.input,
+          ])}
         />
       ) : (
         <input
