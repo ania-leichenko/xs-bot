@@ -20,7 +20,10 @@ const ExceptionMessage = {
   MASTER_FUNCTION_UPDATE: 'Master is not able to edit function.',
   MASTER_SPACE_CREATE: 'Master is not able to create space.',
   MASTER_SPACE_DELETE: 'Master is not able to delete space',
+  MASTER_OBJECT_UPLOAD: 'Master is not able to upload object',
+  MASTER_OBJECT_DOWNLOAD: 'Master is not able to download object',
   SPACE_NOT_FOUND: 'Space not found.',
+  OBJECT_NOT_FOUND: 'Object not found, reload page and try again',
   MASTER_INSTANCE_CREATE: 'Master is not able to create instance',
   MASTER_DELETE: 'Master can not be deleted',
   FUNCTION_NAME_EXISTS: 'Function with this name already exists.',
@@ -37,6 +40,7 @@ const ExceptionMessage = {
   NOTHING_TO_UPDATE: 'Nothing to update',
   SPACE_EXISTS: 'Space with this name already exists',
   OBJECT_NOT_UPLOADED: 'Object is not uploaded',
+  OBJECT_ACCESS_DENIED: 'You do not have access to this object',
   OPERATION_SYSTEM_NOT_FOUND: 'Operation system not found',
 } as const;
 

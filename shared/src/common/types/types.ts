@@ -93,5 +93,6 @@ export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
 export {
   type ObjectUploadRequestDto,
-  type ObjectUploadParamsDto,
-} from './object-upload/object-upload';
+  type BSObjectUploadParamsDto,
+  type BSObjectDownloadParamsDto,
+} from '~/common/types/bs-object/bs-object';
