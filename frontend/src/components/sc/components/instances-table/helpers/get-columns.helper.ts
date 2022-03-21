@@ -23,6 +23,10 @@ const getColumns = (): Column[] => {
       accessor: InstancesTableAccessor.INSTANCE_STATE,
     },
     {
+      Header: InstancesTableHeader.OS,
+      accessor: InstancesTableAccessor.OS,
+    },
+    {
       Header: InstancesTableHeader.INSTANCE_TYPE,
       accessor: InstancesTableAccessor.INSTANCE_TYPE,
     },

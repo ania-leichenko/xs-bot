@@ -6,6 +6,7 @@ enum InstancesTableAccessor {
   PUBLIC_IPV4_ADDRESS = 'Public IPv4 address',
   CREATED_AT = 'Created at',
   ACTIONS = 'Actions',
+  OS = 'OS',
 }
 
 export { InstancesTableAccessor };
