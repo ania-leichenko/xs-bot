@@ -75,6 +75,7 @@ class Instance {
           hostname,
           keyPairId,
           state,
+          operationSystem,
         }) => ({
           name,
           id,
@@ -84,6 +85,7 @@ class Instance {
           publicIpAddress: hostname,
           keyPairId,
           state,
+          operationSystem,
         }),
       ),
     };
@@ -107,10 +109,13 @@ class Instance {
     }
 
     const keyPairId = await this.#keyPairService.create();
+    const imageId = await this.#operationSystemService.getImageId(
+      operationSystemId,
+    );
     const { instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairId,
-      imageId: await this.#operationSystemService.getImageId(operationSystemId),
+      imageId,
     });
 
     const instance = InstanceEntity.createNew({
@@ -123,7 +128,9 @@ class Instance {
       tenantId,
     });
 
-    const { id } = await this.#instanceRepository.create(instance);
+    const { id, operationSystem } = await this.#instanceRepository.create(
+      instance,
+    );
 
     (async (): Promise<void> => {
       await this.#ec2Service.waitUntilRunning(instanceId);
@@ -142,6 +149,7 @@ class Instance {
       publicIpAddress: null,
       state: instance.state,
       keyPairId: instance.keyPairId,
+      operationSystem,
     };
   }
 
@@ -187,6 +195,7 @@ class Instance {
       publicIpAddress: updateInstance.hostname,
       state: updateInstance.state,
       keyPairId: updateInstance.keyPairId,
+      operationSystem: updateInstance.operationSystem,
     };
   }
 

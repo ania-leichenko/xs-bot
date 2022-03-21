@@ -21,8 +21,11 @@ class Instance {
       state?: InstanceState;
       hostname?: string;
     },
-  ): Promise<InstanceEntity> {
-    return this.#InstanceModel.query().patchAndFetchById(id, data);
+  ): Promise<InstanceM> {
+    return this.#InstanceModel
+      .query()
+      .withGraphFetched('[operationSystem]')
+      .patchAndFetchById(id, data);
   }
 
   public async delete(id: string): Promise<number> {
@@ -58,17 +61,16 @@ class Instance {
   }: {
     filter: SCInstanceGetByTenantRequestParamsDto;
     tenantId: string;
-  }): Promise<InstanceEntity[]> {
+  }): Promise<InstanceM[]> {
     const { from: offset, count: limit } = filter;
-    const instances = await this.#InstanceModel
+    return this.#InstanceModel
       .query()
       .select()
       .where({ tenantId })
+      .withGraphFetched('[operationSystem]')
       .orderBy('createdAt', 'desc')
       .offset(offset)
       .limit(limit);
-
-    return instances.map(Instance.modelToEntity);
   }
 
   public async getInstancesByDate(date: string): Promise<InstanceM[]> {
@@ -89,19 +91,22 @@ class Instance {
       tenantId,
       state,
     } = instance;
-    return this.#InstanceModel.query().insert({
-      id,
-      name,
-      createdAt,
-      keyPairId,
-      username,
-      hostname,
-      operationSystemId,
-      createdBy,
-      awsInstanceId,
-      tenantId,
-      state,
-    });
+    return this.#InstanceModel
+      .query()
+      .insert({
+        id,
+        name,
+        createdAt,
+        keyPairId,
+        username,
+        hostname,
+        operationSystemId,
+        createdBy,
+        awsInstanceId,
+        tenantId,
+        state,
+      })
+      .withGraphFetched('[operationSystem]');
   }
 
   public static modelToEntity(model: InstanceM): InstanceEntity {

@@ -45,6 +45,7 @@ export {
   type SCInstanceUpdateParamsDto,
   type SCInstanceUpdateRequestDto,
   type SCInstanceUpdateResponseDto,
+  type SCInstanceRelatedItem,
 } from './sc-instance/sc-instance';
 export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
 export {
