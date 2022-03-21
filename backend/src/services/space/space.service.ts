@@ -77,9 +77,9 @@ class Space {
     token,
   }: {
     id: string;
-    token: string;
+    token?: string;
   }): Promise<void> {
-    const user: TokenPayload = await this.#tokenService.decode(token);
+    const user: TokenPayload = await this.#tokenService.decode(token as string);
 
     if (user.userRole !== UserRole.WORKER) {
       throw new BsError({

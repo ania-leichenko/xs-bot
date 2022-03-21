@@ -214,6 +214,15 @@ class Worker {
       throw new EAMError();
     }
 
+    const worker = await this.#workerRepository.getById(id);
+
+    if (!worker) {
+      throw new EAMError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.WORKER_NAME_EXISTS,
+      });
+    }
+
     const master = await this.#masterService.getMasterById(id);
 
     if (master) {
@@ -233,13 +242,13 @@ class Worker {
     await Promise.all(
       spaces.map((item) => {
         const id = item.id;
-        return this.#spaceService.delete({ id, token });
+        return this.#spaceService.delete({ id });
       }),
     );
     await Promise.all(
       slcFunctions.map((slcFunction) => {
         const id = slcFunction.id;
-        return this.#slcFunctionService.delete({ id, token });
+        return this.#slcFunctionService.delete({ id });
       }),
     );
 

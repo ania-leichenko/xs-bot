@@ -14,6 +14,7 @@ const ExceptionMessage = {
   UNAUTHORIZED_USER: 'Unauthorized user.',
   WORKER_NAME_EXISTS: 'Worker with this name is exist',
   WORKER_DELETE_WORKER: 'Worker is not able to delete another worker',
+  WORKER_NOT_FOUND: 'Worker not Found',
   MASTER_NOT_FOUND: 'Master not Found',
   MASTER_FUNCTION_CREATE: 'Master is not able to create function.',
   MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',

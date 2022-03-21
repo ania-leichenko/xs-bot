@@ -118,9 +118,11 @@ class SLCFunction {
     token,
   }: {
     id: string;
-    token: string;
+    token?: string;
   }): Promise<void> {
-    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
+    const { userRole } = this.#tokenService.decode<TokenPayload>(
+      token as string,
+    );
 
     if (userRole !== UserRole.WORKER) {
       throw new SLCError({
