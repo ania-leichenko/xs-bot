@@ -12,6 +12,7 @@ type State = {
   workers: EAMWorkerGetAllItemResponseDto[];
   groupsDataStatus: DataStatus;
   groups: EAMGroupGetByTenantResponseItemDto[];
+  countItems: number;
 };
 
 const initialState: State = {
@@ -19,6 +20,7 @@ const initialState: State = {
   groupsDataStatus: DataStatus.IDLE,
   groups: [],
   workers: [],
+  countItems: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -28,6 +30,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadWorkers.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;
+    state.countItems = action.payload.countItems;
   });
   builder.addCase(loadWorkers.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

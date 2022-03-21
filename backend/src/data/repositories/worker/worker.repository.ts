@@ -58,6 +58,19 @@ class Worker {
     return workers;
   }
 
+  public async getCount(
+    param: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<number> {
+    const { tenantId } = param;
+
+    const workers = await this.#WorkerModel
+      .query()
+      .select('id', 'name', 'createdAt')
+      .where({ tenantId });
+    const countItems = workers.length;
+    return countItems;
+  }
+
   public async deleteWorker(workerId: string): Promise<number> {
     return this.#WorkerModel.query().deleteById(workerId);
   }

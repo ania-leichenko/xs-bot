@@ -1,17 +1,28 @@
 import { FC } from 'react';
 import { Button, IconButton } from 'components/common/common';
 import { AppRoute, IconName } from 'common/enums/enums';
-import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useEffect,
+  useState,
+} from 'hooks/hooks';
 import { eam as eamActions } from 'store/actions';
 import { GroupsTable, WorkersTable, Tenant } from './components/components';
 import styles from './styles.module.scss';
 
 const EAM: FC = () => {
   const dispatch = useAppDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [from, setFrom] = useState(0);
 
-  const { id: tenantId } = useAppSelector(({ app }) => ({
-    id: app.tenant?.id,
-  }));
+  const { id: tenantId, countItems: countItems } = useAppSelector(
+    ({ app, eam }) => ({
+      id: app.tenant?.id,
+      countItems: eam.countItems,
+    }),
+  );
+  const allPage = Math.ceil(countItems / 5);
 
   useEffect(() => {
     if (!tenantId) {
@@ -58,6 +69,37 @@ const EAM: FC = () => {
     );
   };
 
+  const handleForwardPage = (): void => {
+    const forwardPage = currentPage - 1;
+    if (forwardPage !== 0) {
+      setCurrentPage(forwardPage);
+      const forwardFrom = from - 5;
+      setFrom(forwardFrom);
+      dispatch(
+        eamActions.loadWorkers({
+          tenantId: tenantId as string,
+          from: forwardFrom,
+          count: 5,
+        }),
+      );
+    }
+  };
+  const handleNextPage = (): void => {
+    const nextPage = currentPage + 1;
+    if (nextPage <= allPage) {
+      setCurrentPage(nextPage);
+      const nextForm = from + 5;
+      setFrom(nextForm);
+      dispatch(
+        eamActions.loadWorkers({
+          tenantId: tenantId as string,
+          from: nextForm,
+          count: 5,
+        }),
+      );
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -80,9 +122,21 @@ const EAM: FC = () => {
             />
           </div>
           <div className={styles.pagination}>
-            <div>{' < '}</div>
-            <div>1</div>
-            <div>{' > '}</div>
+            <div className={styles.count}>{countItems + 'results'}</div>
+            <div className={styles.currentPage}>
+              <IconButton
+                onClick={handleForwardPage}
+                icon={IconName.ARROW_LEFT}
+                label="ArrowRight"
+              />
+              <div>{currentPage}</div>
+              <div className={styles.count}>of {allPage}</div>
+              <IconButton
+                onClick={handleNextPage}
+                icon={IconName.ARROW_RIGHT}
+                label="ArrowRight"
+              />
+            </div>
           </div>
         </WorkersTable>
       </div>

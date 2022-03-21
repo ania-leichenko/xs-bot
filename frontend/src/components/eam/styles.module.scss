@@ -30,6 +30,7 @@
 }
 
 .tableWrapper {
+  position: relative;
   margin: 0 0 50px;
 }
 
@@ -46,9 +47,19 @@
 }
 
 .pagination {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+}
+
+.currentPage {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--color-orange);
-  font-size: 15px;
+  margin-left: 500px;
+}
+
+.count {
+  margin-left: 4px;
+  color: var(--color-text);
 }
