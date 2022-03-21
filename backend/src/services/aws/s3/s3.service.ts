@@ -3,6 +3,10 @@ import {
   CreateBucketOutput,
   DeleteBucketCommand,
   DeleteBucketCommandOutput,
+  GetObjectCommand,
+  GetObjectCommandOutput,
+  PutObjectCommand,
+  PutObjectCommandOutput,
   S3Client,
 } from '@aws-sdk/client-s3';
 import { BsError } from '~/exceptions/exceptions';
@@ -42,8 +46,45 @@ class S3 {
   }
 
   public async deleteBucket(name: string): Promise<DeleteBucketCommandOutput> {
-    return this.#s3Client.send(new DeleteBucketCommand({ Bucket: name }));
+    return this.#s3Client
+      .send(new DeleteBucketCommand({ Bucket: name }))
+      .catch((err) => {
+        throw new BsError({
+          status: err.$response.statusCode,
+          message: err.message,
+        });
+      });
+  }
+
+  public async uploadObject({
+    spaceName,
+    file,
+    fileName,
+  }: {
+    spaceName: string;
+    file: Buffer;
+    fileName: string;
+  }): Promise<PutObjectCommandOutput> {
+    return this.#s3Client.send(
+      new PutObjectCommand({ Bucket: spaceName, Body: file, Key: fileName }),
+    );
+  }
+
+  public async downloadObject({
+    bucket,
+    key,
+  }: {
+    bucket: string;
+    key: string;
+  }): Promise<GetObjectCommandOutput> {
+    return this.#s3Client
+      .send(new GetObjectCommand({ Bucket: bucket, Key: key }))
+      .then((res) => {
+        return res.Body;
+      })
+      .catch((err) => {
+        return err;
+      });
   }
 }
-
 export { S3 };

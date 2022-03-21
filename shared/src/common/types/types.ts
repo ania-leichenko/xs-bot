@@ -90,3 +90,8 @@ export {
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
+export {
+  type ObjectUploadRequestDto,
+  type BSObjectUploadParamsDto,
+  type BSObjectDownloadParamsDto,
+} from '~/common/types/bs-object/bs-object';
