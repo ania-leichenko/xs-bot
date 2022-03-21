@@ -2,7 +2,7 @@ enum SpacesApiPath {
   ROOT = '/',
   $ID = '/:id',
   $ID_OBJECTS = '/:id/objects',
-  $ID_OBJECT = '/:spaceId/objects/:objectId',
+  $SPACEID_OBJECTS_$OBJECTID = '/:spaceId/objects/:objectId',
 }
 
 export { SpacesApiPath };

@@ -123,7 +123,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     Params: BSObjectDownloadParamsDto;
   }>({
     method: HttpMethod.GET,
-    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECT}`,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
     async handler(req, rep) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { spaceId, objectId } = req.params;

@@ -87,3 +87,4 @@ export {
   type BSObjectDownloadParamsDto,
 } from './bs-object/bs-object-params';
 export { type UploadPayload } from './bs-object/bs-object';
+export { type GetObjectCommandOutput } from './bs-object/bs-get-object-command-output.type';

@@ -6,12 +6,14 @@ import {
   worker as workerServ,
 } from '~/services/services';
 import { BSObject as BSObjectEntity } from './bs-object.entity';
-import { TokenPayload } from 'bws-shared/common/types/types';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import { BsError } from '~/exceptions/exceptions';
-import { UploadPayload } from '~/common/types/types';
-import { GetObjectCommandOutput } from '@aws-sdk/client-s3';
+import {
+  UploadPayload,
+  TokenPayload,
+  GetObjectCommandOutput,
+} from '~/common/types/types';
 
 type Constructor = {
   bsObjectRepository: typeof bsObjectRep;
