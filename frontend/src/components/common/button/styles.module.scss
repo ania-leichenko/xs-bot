@@ -15,6 +15,10 @@
   transition-duration: 0.4s;
 }
 
+.btn:disabled {
+  opacity: 0.5;
+}
+
 .btnStyleFilled.btnColorOrange {
   color: var(--color-white);
   background-color: var(--color-orange);

@@ -72,6 +72,7 @@ class Worker {
   }
 
   public async deleteWorker(workerId: string): Promise<number> {
+    await this.#UsersGroupsModel.query().where({ 'userId': workerId }).delete();
     return this.#WorkerModel.query().deleteById(workerId);
   }
 
