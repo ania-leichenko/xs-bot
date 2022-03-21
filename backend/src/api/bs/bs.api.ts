@@ -2,32 +2,42 @@ import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import {
   space as spaceServ,
   bsObject as bsObjectServ,
+  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
   HttpMethod,
   BSApiPath,
   SpacesApiPath,
+  UserRole,
+  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
   BSSpaceDeleteParamsDto,
   BSSpaceGetRequestParamsDto,
   ObjectUploadParamsDto,
+  TokenPayload,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 import { upload } from '~/middlewares/middlewares';
+import { BsError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
     space: typeof spaceServ;
     bsObject: typeof bsObjectServ;
+    token: typeof tokenServ;
   };
 };
 
 const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { space: spaceService, bsObject: bsObjectService } = opts.services;
+  const {
+    space: spaceService,
+    bsObject: bsObjectService,
+    token: tokenService,
+  } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -85,11 +95,16 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
+      const user: TokenPayload = await tokenService.decode(token);
 
-      await spaceService.delete({
-        id,
-        token,
-      });
+      if (user.userRole !== UserRole.WORKER) {
+        throw new BsError({
+          status: HttpCode.DENIED,
+          message: ExceptionMessage.MASTER_SPACE_DELETE,
+        });
+      }
+
+      await spaceService.delete(id);
 
       return rep.send(true).status(HttpCode.OK);
     },

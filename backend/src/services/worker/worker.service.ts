@@ -242,13 +242,13 @@ class Worker {
     await Promise.all(
       spaces.map((item) => {
         const id = item.id;
-        return this.#spaceService.delete({ id });
+        return this.#spaceService.delete(id);
       }),
     );
     await Promise.all(
       slcFunctions.map((slcFunction) => {
         const id = slcFunction.id;
-        return this.#slcFunctionService.delete({ id });
+        return this.#slcFunctionService.delete(id);
       }),
     );
 
