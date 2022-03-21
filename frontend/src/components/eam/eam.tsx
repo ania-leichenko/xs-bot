@@ -10,6 +10,12 @@ import {
 import { eam as eamActions } from 'store/actions';
 import { GroupsTable, WorkersTable, Tenant } from './components/components';
 import styles from './styles.module.scss';
+import {
+  WORKERS_PER_PAGE,
+  WORKER_BACK_PAGE,
+  WORKER_NEXT_PAGE,
+  WORKER_CURRENT_PAGE,
+} from 'common/constants/workers.constants';
 
 const EAM: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +28,7 @@ const EAM: FC = () => {
       countItems: eam.countItems,
     }),
   );
-  const allPage = Math.ceil(countItems / 5);
+  const allPage = Math.ceil(countItems / WORKERS_PER_PAGE);
 
   useEffect(() => {
     if (!tenantId) {
@@ -69,34 +75,32 @@ const EAM: FC = () => {
     );
   };
 
+  const handleLoadWorkers = (from: number): void => {
+    dispatch(
+      eamActions.loadWorkers({
+        tenantId: tenantId as string,
+        from: from,
+        count: 5,
+      }),
+    );
+  };
+
   const handleBackPage = (): void => {
-    const forwardPage = currentPage - 1;
-    if (forwardPage !== 0) {
-      setCurrentPage(forwardPage);
-      const forwardFrom = from - 5;
-      setFrom(forwardFrom);
-      dispatch(
-        eamActions.loadWorkers({
-          tenantId: tenantId as string,
-          from: forwardFrom,
-          count: 5,
-        }),
-      );
+    const backPage = currentPage - WORKER_CURRENT_PAGE;
+    if (backPage !== 0) {
+      setCurrentPage(backPage);
+      const backFrom = from - WORKER_BACK_PAGE;
+      setFrom(backFrom);
+      handleLoadWorkers(from - WORKER_BACK_PAGE);
     }
   };
   const handleNextPage = (): void => {
-    const nextPage = currentPage + 1;
+    const nextPage = currentPage + WORKER_CURRENT_PAGE;
     if (nextPage <= allPage) {
       setCurrentPage(nextPage);
-      const nextForm = from + 5;
+      const nextForm = from + WORKER_NEXT_PAGE;
       setFrom(nextForm);
-      dispatch(
-        eamActions.loadWorkers({
-          tenantId: tenantId as string,
-          from: nextForm,
-          count: 5,
-        }),
-      );
+      handleLoadWorkers(from + WORKER_NEXT_PAGE);
     }
   };
 

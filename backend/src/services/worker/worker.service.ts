@@ -199,7 +199,7 @@ class Worker {
   ): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll(param);
     const countItems = await this.#workerRepository.getCount(param);
-    return { items: workers, countItems: countItems };
+    return { items: workers, countItems };
   }
 
   public async deleteWorker({
