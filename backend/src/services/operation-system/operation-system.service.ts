@@ -1,6 +1,8 @@
 import { operationSystem as OperationSystemRep } from '~/data/repositories/repositories';
 import { OperationSystem as OperationSystemEntity } from '~/services/operation-system/operation-system.entity';
 import { SCOperationSystemGetAllResponseDto } from '~/common/types/types';
+import { SCError } from '~/exceptions/sc-error/sc-error';
+import { HttpCode, ExceptionMessage } from '~/common/enums/enums';
 
 type Constructor = {
   operationSystemRepository: typeof OperationSystemRep;
@@ -13,11 +15,20 @@ class OperationSystem {
     this.#operationSystemRepository = operationSystemRepository;
   }
 
-  public async getImageId(operationSystemId: string): Promise<string> {
+  public async getOperationSystem(
+    operationSystemId: string,
+  ): Promise<OperationSystemEntity> {
     const operationSystem = await this.#operationSystemRepository.getById(
       operationSystemId,
     );
-    return (operationSystem as OperationSystemEntity).awsGenerationName;
+    if (!operationSystem) {
+      throw new SCError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.OPERATION_SYSTEM_NOT_FOUND,
+      });
+    }
+
+    return operationSystem;
   }
 
   public async getAll(): Promise<SCOperationSystemGetAllResponseDto> {

@@ -109,10 +109,12 @@ class Instance {
     }
 
     const keyPairId = await this.#keyPairService.create();
+    const operationSystem =
+      await this.#operationSystemService.getOperationSystem(operationSystemId);
     const { instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairId,
-      imageId: await this.#operationSystemService.getImageId(operationSystemId),
+      imageId: operationSystem.awsGenerationName,
     });
 
     const instance = InstanceEntity.createNew({
@@ -123,11 +125,13 @@ class Instance {
       createdBy: userId,
       awsInstanceId: instanceId,
       tenantId,
+      operationSystem: {
+        id: operationSystem.id,
+        name: operationSystem.name,
+      },
     });
 
-    const { id, operationSystem } = await this.#instanceRepository.create(
-      instance,
-    );
+    const { id } = await this.#instanceRepository.create(instance);
 
     (async (): Promise<void> => {
       await this.#ec2Service.waitUntilRunning(instanceId);
@@ -146,7 +150,10 @@ class Instance {
       publicIpAddress: null,
       state: instance.state,
       keyPairId: instance.keyPairId,
-      operationSystem,
+      operationSystem: {
+        id: operationSystem.id,
+        name: operationSystem.name,
+      },
     };
   }
 
@@ -166,7 +173,7 @@ class Instance {
       });
     }
 
-    const { name } = data;
+    const { name, state, hostname } = data;
 
     if (!Object.keys(data).length || name === instance.name) {
       throw new SCError({
@@ -182,7 +189,14 @@ class Instance {
       await this.#ec2Service.setInstanceName(awsInstanceId, name as string);
     }
 
-    const updateInstance = await this.#instanceRepository.updateById(id, data);
+    const updateInstance = {
+      ...instance,
+      name: name ? name : instance.name,
+      state: state ? state : instance.state,
+      hostname: hostname ? hostname : instance.hostname,
+    };
+
+    await this.#instanceRepository.updateById(updateInstance);
     return {
       id: updateInstance.id,
       awsInstanceId: updateInstance.awsInstanceId,

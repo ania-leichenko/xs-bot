@@ -1,7 +1,6 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
 import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
-import { InstanceState } from '~/common/enums/enums';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -14,18 +13,11 @@ class Instance {
     this.#InstanceModel = InstanceModel;
   }
 
-  public async updateById(
-    id: string,
-    data: {
-      name?: string;
-      state?: InstanceState;
-      hostname?: string;
-    },
-  ): Promise<InstanceM> {
+  public async updateById(instance: InstanceEntity): Promise<InstanceEntity> {
     return this.#InstanceModel
       .query()
       .withGraphFetched('[operationSystem]')
-      .patchAndFetchById(id, data);
+      .patchAndFetchById(instance.id, instance);
   }
 
   public async delete(id: string): Promise<number> {
@@ -61,7 +53,7 @@ class Instance {
   }: {
     filter: SCInstanceGetByTenantRequestParamsDto;
     tenantId: string;
-  }): Promise<InstanceM[]> {
+  }): Promise<InstanceEntity[]> {
     const { from: offset, count: limit } = filter;
     return this.#InstanceModel
       .query()
@@ -77,7 +69,7 @@ class Instance {
     return this.#InstanceModel.query().select().where('createdAt', '<', date);
   }
 
-  public async create(instance: InstanceEntity): Promise<InstanceM> {
+  public async create(instance: InstanceEntity): Promise<InstanceEntity> {
     const {
       id,
       name,
@@ -122,6 +114,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state,
+      operationSystem,
     } = model;
 
     return InstanceEntity.initialize({
@@ -136,6 +129,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state,
+      operationSystem,
     });
   }
 }

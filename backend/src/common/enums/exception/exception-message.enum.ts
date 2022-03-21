@@ -37,6 +37,7 @@ const ExceptionMessage = {
   NOTHING_TO_UPDATE: 'Nothing to update',
   SPACE_EXISTS: 'Space with this name already exists',
   OBJECT_NOT_UPLOADED: 'Object is not uploaded',
+  OPERATION_SYSTEM_NOT_FOUND: 'Operation system not found',
 } as const;
 
 export { ExceptionMessage };
