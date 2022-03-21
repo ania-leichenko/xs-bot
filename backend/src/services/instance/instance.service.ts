@@ -109,13 +109,10 @@ class Instance {
     }
 
     const keyPairId = await this.#keyPairService.create();
-    const imageId = await this.#operationSystemService.getImageId(
-      operationSystemId,
-    );
     const { instanceId } = await this.#ec2Service.createInstance({
       name,
       keyName: keyPairId,
-      imageId,
+      imageId: await this.#operationSystemService.getImageId(operationSystemId),
     });
 
     const instance = InstanceEntity.createNew({
