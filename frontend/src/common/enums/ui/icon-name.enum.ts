@@ -5,6 +5,9 @@ enum IconName {
   RELOAD = 'reload',
   ARROW_LEFT = 'arrow-left',
   ARROW_RIGHT = 'arrow-right',
+  SUCCESS = 'success',
+  ERROR = 'error',
+  CLOSE = 'close',
 }
 
 export { IconName };

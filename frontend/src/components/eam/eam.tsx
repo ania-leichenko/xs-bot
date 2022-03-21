@@ -69,7 +69,7 @@ const EAM: FC = () => {
     );
   };
 
-  const handleForwardPage = (): void => {
+  const handleBackPage = (): void => {
     const forwardPage = currentPage - 1;
     if (forwardPage !== 0) {
       setCurrentPage(forwardPage);
@@ -108,7 +108,29 @@ const EAM: FC = () => {
       </h2>
       <Tenant />
       <div className={styles.tableWrapper}>
-        <WorkersTable>
+        <WorkersTable
+          footer={
+            <div className={styles.pagination}>
+              <div className={styles.countItems}>
+                <div className={styles.count}>{countItems + 'results'}</div>
+              </div>
+              <div className={styles.currentPage}>
+                <IconButton
+                  onClick={handleBackPage}
+                  icon={IconName.ARROW_LEFT}
+                  label="ArrowRight"
+                />
+                <div>{currentPage}</div>
+                <div className={styles.count}>of {allPage}</div>
+                <IconButton
+                  onClick={handleNextPage}
+                  icon={IconName.ARROW_RIGHT}
+                  label="ArrowRight"
+                />
+              </div>
+            </div>
+          }
+        >
           <div className={styles.buttonsBlock}>
             <IconButton
               onClick={handleWorkersReload}
@@ -120,23 +142,6 @@ const EAM: FC = () => {
               to={AppRoute.EAM_CREATE_WORKER}
               label="Add Worker"
             />
-          </div>
-          <div className={styles.pagination}>
-            <div className={styles.count}>{countItems + 'results'}</div>
-            <div className={styles.currentPage}>
-              <IconButton
-                onClick={handleForwardPage}
-                icon={IconName.ARROW_LEFT}
-                label="ArrowRight"
-              />
-              <div>{currentPage}</div>
-              <div className={styles.count}>of {allPage}</div>
-              <IconButton
-                onClick={handleNextPage}
-                icon={IconName.ARROW_RIGHT}
-                label="ArrowRight"
-              />
-            </div>
           </div>
         </WorkersTable>
       </div>

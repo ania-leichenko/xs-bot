@@ -67,8 +67,7 @@ class Worker {
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId });
-    const countItems = workers.length;
-    return countItems;
+    return workers.length;
   }
 
   public async deleteWorker(workerId: string): Promise<number> {

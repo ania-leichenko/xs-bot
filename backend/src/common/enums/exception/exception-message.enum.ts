@@ -36,6 +36,7 @@ const ExceptionMessage = {
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
   SPACE_EXISTS: 'Space with this name already exists',
+  OBJECT_NOT_UPLOADED: 'Object is not uploaded',
 } as const;
 
 export { ExceptionMessage };

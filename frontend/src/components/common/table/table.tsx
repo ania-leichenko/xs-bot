@@ -9,6 +9,7 @@ type Props = {
   title?: string;
   className?: string;
   placeholder?: string;
+  footer?: React.ReactNode;
 };
 
 const Table: FC<Props> = ({
@@ -18,6 +19,7 @@ const Table: FC<Props> = ({
   children,
   className,
   placeholder,
+  footer,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -75,6 +77,7 @@ const Table: FC<Props> = ({
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}
+      {footer}
     </div>
   );
 };

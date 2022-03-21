@@ -9,12 +9,7 @@ import {
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Link } from '../link/link';
-import deleteIcon from 'assets/img/delete-icon.svg';
-import editIcon from 'assets/img/edit-icon.svg';
-import keyIcon from 'assets/img/key-icon.svg';
-import reloadIcon from 'assets/img/reload-icon.svg';
-import arrowLeftIcon from 'assets/img/arrow-left.svg';
-import arrowRightIcon from 'assets/img/arrow-right.svg';
+import { iconNameToSrc } from 'common/maps/maps';
 
 type Props = {
   label: string;
@@ -46,15 +41,6 @@ const Button: FC<Props> = ({
     styles[`btnStyle${btnStyle}`],
     className,
   );
-
-  const iconNameToSrc = {
-    [IconName.TRASH]: deleteIcon,
-    [IconName.GEAR]: editIcon,
-    [IconName.KEY]: keyIcon,
-    [IconName.RELOAD]: reloadIcon,
-    [IconName.ARROW_LEFT]: arrowLeftIcon,
-    [IconName.ARROW_RIGHT]: arrowRightIcon,
-  };
 
   return isLink ? (
     <Link className={icon ? className : fullClassName} to={to as AppRoute}>
