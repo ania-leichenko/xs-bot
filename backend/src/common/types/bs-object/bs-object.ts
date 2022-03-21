@@ -1,4 +1,4 @@
-import { File } from './bs-object-upload-payload.type';
+import { File } from 'fastify-multer/lib/interfaces';
 
 type UploadPayload = {
   token: string;
