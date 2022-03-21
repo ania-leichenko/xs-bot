@@ -81,6 +81,29 @@ class BSObject {
     });
     return this.#bsObjectRepository.create(objectUploadEntity);
   }
+
+  public async getObjects({
+    spaceId,
+    from,
+    count,
+    token,
+  }: {
+    spaceId: string;
+    from: number;
+    count: number;
+    token: string;
+  }): Promise<BSObjectEntity[]> {
+    const user: TokenPayload = await this.#tokenService.decode(token);
+
+    const filter = {
+      spaceId,
+      from,
+      count,
+      tenantId: user.tenantId,
+    };
+
+    return this.#bsObjectRepository.getObjects(filter);
+  }
 }
 
 export { BSObject };

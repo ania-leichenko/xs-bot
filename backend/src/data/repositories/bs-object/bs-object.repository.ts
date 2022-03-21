@@ -1,5 +1,6 @@
 import { BSObject as BSObjectM } from '~/data/models/models';
 import { BSObject as BSObjectEntity } from '~/services/bs-object/bs-object.entity';
+import { TableName } from '~/common/enums/db/table-name.enum';
 
 type Constructor = {
   BSObjectModel: typeof BSObjectM;
@@ -27,6 +28,34 @@ class BSObject {
     });
     return BSObject.modelToEntity(model);
   }
+
+  async getObjects(filter: {
+    spaceId: string;
+    from: number;
+    count: number;
+    tenantId: string;
+  }): Promise<BSObjectEntity[]> {
+    const { from: offset, count: limit, spaceId, tenantId } = filter;
+
+    const objects = await this.#BSObjectModel
+      .query()
+      .select(
+        `${TableName.OBJECTS}.id`,
+        `${TableName.OBJECTS}.name`,
+        `${TableName.OBJECTS}.createdAt`,
+        'sizeInBytes',
+      )
+      .join(TableName.WORKERS, 'uploadedBy', '=', `${TableName.WORKERS}.id`)
+      .where({ tenantId })
+      .andWhere({ spaceId })
+      .orderBy('createdAt', 'desc')
+      .limit(limit)
+      .offset(offset);
+    const result: BSObjectEntity[] = [];
+    objects.forEach((object) => result.push(BSObject.modelToEntity(object)));
+    return result;
+  }
+
   public static modelToEntity(model: BSObjectM): BSObjectEntity {
     const { id, name, sizeInBytes, spaceId, uploadedBy, awsObjectKey } = model;
 

@@ -114,6 +114,29 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       return rep.send(true).status(HttpCode.OK);
     },
   });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: { from: number; count: number };
+        Params: { id: string };
+      }>,
+      rep,
+    ) {
+      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+
+      const spaces = await bsObjectService.getObjects({
+        spaceId: req.params.id,
+        from: req.query.from,
+        count: req.query.count,
+        token,
+      });
+
+      return rep.send(spaces).status(HttpCode.OK);
+    },
+  });
 };
 
 export { initBsApi };
