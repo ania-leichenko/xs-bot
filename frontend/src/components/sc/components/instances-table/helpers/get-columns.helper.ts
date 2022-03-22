@@ -27,6 +27,8 @@ const getColumns = (): Column[] => {
     {
       Header: InstancesTableHeader.OS,
       accessor: InstancesTableAccessor.OS,
+      minWidth: 100,
+      width: 200,
     },
     {
       Header: InstancesTableHeader.INSTANCE_TYPE,
