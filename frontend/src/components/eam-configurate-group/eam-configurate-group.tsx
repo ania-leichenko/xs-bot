@@ -112,7 +112,7 @@ const EAMConfigurateGroup: FC = () => {
               <Button
                 className={styles.button}
                 type={ButtonType.SUBMIT}
-                label="Create"
+                label="Save"
               />
             </div>
           </div>

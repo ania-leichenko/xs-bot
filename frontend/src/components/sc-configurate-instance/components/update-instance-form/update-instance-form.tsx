@@ -86,7 +86,7 @@ const UpdateInstanceForm: FC<Props> = ({ id }) => {
           />
         </div>
         <div className={styles.button}>
-          <Button type={ButtonType.SUBMIT} label="Edit" />
+          <Button type={ButtonType.SUBMIT} label="Save" />
         </div>
       </div>
     </form>

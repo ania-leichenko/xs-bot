@@ -1,6 +1,6 @@
 enum PermissionsTableHeader {
   PERMISSIONS_NAME = 'Policy name',
-  CREATION_TIME = 'Created at',
+  CREATION_TIME = 'Created',
 }
 
 export { PermissionsTableHeader };

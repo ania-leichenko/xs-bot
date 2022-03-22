@@ -1,1 +1,4 @@
-export { type ObjectUploadParamsDto } from 'bws-shared/common/types/types';
+export {
+  type BSObjectUploadParamsDto,
+  type BSObjectDownloadParamsDto,
+} from 'bws-shared/common/types/types';

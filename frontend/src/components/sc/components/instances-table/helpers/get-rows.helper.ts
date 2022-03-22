@@ -8,6 +8,7 @@ type Row = {
   [InstancesTableAccessor.INSTANCE_ID]: string;
   [InstancesTableAccessor.INSTANCE_STATE]: string;
   [InstancesTableAccessor.INSTANCE_TYPE]: string;
+  [InstancesTableAccessor.OS]: string;
   [InstancesTableAccessor.CREATED_AT]: string;
   [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: string;
 };
@@ -31,6 +32,7 @@ const getRows = ({
       instanceType,
       id,
       keyPairId: keyId,
+      operationSystem,
     } = item;
 
     return {
@@ -38,6 +40,7 @@ const getRows = ({
       [InstancesTableAccessor.INSTANCE_ID]: awsInstanceId,
       [InstancesTableAccessor.INSTANCE_STATE]: state,
       [InstancesTableAccessor.INSTANCE_TYPE]: instanceType,
+      [InstancesTableAccessor.OS]: operationSystem.name.split('-').join(' '),
       [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress ?? '-',
       [InstancesTableAccessor.CREATED_AT]: getDistanceToDateNow(
         new Date(createdAt),

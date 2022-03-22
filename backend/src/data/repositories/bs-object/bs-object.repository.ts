@@ -27,6 +27,16 @@ class BSObject {
     });
     return BSObject.modelToEntity(model);
   }
+
+  async getById(id: string): Promise<BSObjectEntity | null> {
+    const object = await this.#BSObjectModel
+      .query()
+      .select()
+      .where({ id })
+      .first();
+    return object ? BSObject.modelToEntity(object) : null;
+  }
+
   public static modelToEntity(model: BSObjectM): BSObjectEntity {
     const { id, name, sizeInBytes, spaceId, uploadedBy, awsObjectKey } = model;
 
