@@ -8,7 +8,7 @@ import { useFormControl } from 'hooks/hooks';
 import { InputType } from 'common/enums/enums';
 import { ErrorMessage } from 'components/common/common';
 import { getValidClasses } from 'helpers/helpers';
-import styles from './input.module.scss';
+import styles from './styles.module.scss';
 
 type Props = {
   label: string;
@@ -17,6 +17,7 @@ type Props = {
   errors: FormControlErrors;
   type?: InputType;
   placeholder?: string;
+  rows?: number;
 };
 
 const Input: FC<Props> = ({
@@ -26,20 +27,35 @@ const Input: FC<Props> = ({
   errors,
   placeholder = '',
   type = InputType.TEXT,
+  rows,
 }) => {
   const { field } = useFormControl({ name, control });
-
   const hasError = Boolean(errors[name]);
+  const isTextarea = Boolean(rows);
 
   return (
     <label className={styles.inputLabel}>
       <span className={styles.span}>{label}</span>
-      <input
-        {...field}
-        type={type}
-        placeholder={placeholder}
-        className={getValidClasses(hasError ? styles.inputError : styles.input)}
-      />
+      {isTextarea ? (
+        <textarea
+          {...field}
+          rows={rows}
+          placeholder={placeholder}
+          className={getValidClasses([
+            styles.textarea,
+            hasError ? styles.inputError : styles.input,
+          ])}
+        />
+      ) : (
+        <input
+          {...field}
+          type={type}
+          placeholder={placeholder}
+          className={getValidClasses(
+            hasError ? styles.inputError : styles.input,
+          )}
+        />
+      )}
       <span className={styles.error}>
         <ErrorMessage errors={errors} name={name} />
       </span>

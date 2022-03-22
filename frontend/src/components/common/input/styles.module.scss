@@ -8,7 +8,7 @@
   text-indent: 20px;
   background-color: transparent;
   border-radius: 50px;
-  outline-offset: 5px;
+  outline: none;
   cursor: pointer;
 }
 
@@ -34,6 +34,13 @@
   flex-direction: column;
   width: 100%;
   color: var(--color-white);
+}
+
+.textarea {
+  height: 100%;
+  padding-top: 10px;
+  border-radius: 20px;
+  resize: none;
 }
 
 .span {
