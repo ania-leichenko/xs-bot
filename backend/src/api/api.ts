@@ -13,9 +13,10 @@ import {
   slcFunction,
   bsObject,
 } from '~/services/services';
-import { WHITE_ROUTES } from '~/common/constants/constants';
+import { WHITE_ROUTES, ROOT_ROUTE } from '~/common/constants/constants';
 import {
   authorization as authorizationPlugin,
+  permission as permissionPlugin,
   file as filePlugin,
 } from '~/plugins/plugins';
 import { initMastersApi } from './masters/masters.api';
@@ -32,6 +33,12 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       auth,
     },
     whiteRoutes: WHITE_ROUTES,
+  });
+  fastify.register(permissionPlugin, {
+    services: {
+      auth,
+    },
+    rootRoute: ROOT_ROUTE,
   });
   fastify.register(filePlugin);
   fastify.register(initAuthApi, {

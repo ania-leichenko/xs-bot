@@ -11,8 +11,6 @@ import {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
-  Permission,
-  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
@@ -27,8 +25,6 @@ import {
   eamWorkerCreateBackend as workerValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { checkHasPermission } from '~/helpers/helpers';
-import { EAMError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
@@ -41,7 +37,6 @@ type Options = {
 const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { group: groupService } = opts.services;
   const { worker: workerService } = opts.services;
-  const { auth: authService } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -97,29 +92,6 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const group = await groupService.create(req.body);
       return rep.send(group).status(HttpCode.CREATED);
-    },
-  });
-
-  fastify.route({
-    method: HttpMethod.GET,
-    url: EAMApiPath.ROOT,
-    async handler(req, rep) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
-      const user = await authService.getCurrentUser(token);
-      const hasPermission = await checkHasPermission(
-        [Permission.MANAGE_EAM],
-        user?.user.permissions ?? [],
-      );
-
-      if (!hasPermission) {
-        throw new EAMError({
-          status: HttpCode.DENIED,
-          message: ExceptionMessage.REQUIRED_PERMISSION,
-        });
-      }
-
-      return rep.send(true).status(HttpCode.OK);
     },
   });
 
