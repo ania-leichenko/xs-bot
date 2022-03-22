@@ -41,9 +41,7 @@ class BackgroundJob {
           oldDate,
         );
         await Promise.all(
-          oldInstances.map(
-            async (instance) => await instanceServ.delete(instance.id),
-          ),
+          oldInstances.map((instance) => instanceServ.delete(instance.id)),
         );
       }, INSTANCE_AUTO_DELETE_INTERVAL);
     }
