@@ -1,6 +1,6 @@
 import { getRandomId } from '~/helpers/helpers';
 import { InstanceState } from '~/common/enums/enums';
-import { SCInstanceRelatedItem } from '~/common/types/types';
+import { OperationSystem } from '~/common/types/types';
 
 class Instance {
   public id: string;
@@ -14,7 +14,7 @@ class Instance {
   public awsInstanceId: string;
   public tenantId: string;
   public state: InstanceState;
-  public operationSystem: SCInstanceRelatedItem;
+  public operationSystem: OperationSystem;
 
   private constructor({
     id,
@@ -41,7 +41,7 @@ class Instance {
     awsInstanceId: string;
     tenantId: string;
     state: InstanceState;
-    operationSystem: SCInstanceRelatedItem;
+    operationSystem: OperationSystem;
   }) {
     this.id = id;
     this.name = name;
@@ -82,7 +82,7 @@ class Instance {
     awsInstanceId: string;
     tenantId: string;
     state: InstanceState;
-    operationSystem: SCInstanceRelatedItem;
+    operationSystem: OperationSystem;
   }): Instance {
     return new Instance({
       id,
@@ -117,7 +117,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
-    operationSystem: SCInstanceRelatedItem;
+    operationSystem: OperationSystem;
   }): Instance {
     return new Instance({
       id: getRandomId(),

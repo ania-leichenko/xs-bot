@@ -47,7 +47,10 @@ export {
   type SCInstanceUpdateResponseDto,
   type SCInstanceRelatedItem,
 } from './sc-instance/sc-instance';
-export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
+export {
+  type SCOperationSystemGetAllResponseDto,
+  type OperationSystem,
+} from './sc-operation-system/operation-system';
 export {
   type SCSshKeyGetByIdParamsDto,
   type SCSshKeyGetByIdResponseDto,
