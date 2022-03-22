@@ -1,7 +1,7 @@
 import { operationSystem as OperationSystemRep } from '~/data/repositories/repositories';
 import { OperationSystem as OperationSystemEntity } from '~/services/operation-system/operation-system.entity';
 import { SCOperationSystemGetAllResponseDto } from '~/common/types/types';
-import { SCError } from '~/exceptions/sc-error/sc-error';
+import { SCError } from '~/exceptions/exceptions';
 import { HttpCode, ExceptionMessage } from '~/common/enums/enums';
 
 type Constructor = {
