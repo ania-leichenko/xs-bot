@@ -40,7 +40,9 @@ class BackgroundJob {
         const oldInstances = await this.#instanceRepository.getInstancesByDate(
           oldDate,
         );
-        oldInstances.forEach((instance) => instanceServ.delete(instance.id));
+        for (const instance of oldInstances) {
+          await instanceServ.delete(instance.id);
+        }
       }, INSTANCE_AUTO_DELETE_INTERVAL);
     }
   }
