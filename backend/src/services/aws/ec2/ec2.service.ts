@@ -69,10 +69,12 @@ class EC2 {
     name,
     keyName,
     imageId,
+    userData,
   }: {
     name: string;
     keyName: string;
     imageId: string;
+    userData: string;
   }): Promise<{
     instanceId: string;
   }> {
@@ -83,6 +85,7 @@ class EC2 {
         MinCount: 1,
         MaxCount: 1,
         KeyName: keyName,
+        UserData: userData,
       }),
     );
 

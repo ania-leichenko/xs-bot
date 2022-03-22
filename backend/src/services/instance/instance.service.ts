@@ -98,7 +98,7 @@ class Instance {
     instanceCredentials: SCInstanceCreateRequestDto;
     token: string;
   }): Promise<SCInstanceCreateResponseDto> {
-    const { name, operationSystemId } = instanceCredentials;
+    const { name, operationSystemId, userData } = instanceCredentials;
     const { userId, userRole, tenantId }: TokenPayload =
       await this.#tokenService.decode(token);
     if (userRole !== UserRole.WORKER) {
@@ -115,6 +115,7 @@ class Instance {
       name,
       keyName: keyPairId,
       imageId: operationSystem.awsGenerationName,
+      userData: userData ? Buffer.from(userData).toString('base64') : userData,
     });
 
     const instance = InstanceEntity.createNew({
