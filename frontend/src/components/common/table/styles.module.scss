@@ -59,6 +59,7 @@
 .tableRow:hover {
   background-color: var(--color-background);
   transition-duration: 500ms;
+  transition-property: background-color;
 }
 
 .tableCell {
