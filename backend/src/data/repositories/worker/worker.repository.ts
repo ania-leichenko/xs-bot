@@ -63,11 +63,11 @@ class Worker {
   ): Promise<number> {
     const { tenantId } = param;
 
-    const workers = await this.#WorkerModel
+    return this.#WorkerModel
       .query()
-      .select('id', 'name', 'createdAt')
-      .where({ tenantId });
-    return workers.length;
+      .select('id')
+      .where({ tenantId })
+      .resultSize();
   }
 
   public async deleteWorker(workerId: string): Promise<number> {

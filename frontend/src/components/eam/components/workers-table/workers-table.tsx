@@ -3,12 +3,7 @@ import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/table/table';
 import { getRows, getColumns } from './helpers/helpers';
 
-type Props = {
-  children?: React.ReactNode;
-  footer?: React.ReactNode;
-};
-
-const WorkersTable: FC<Props> = ({ children, footer }) => {
+const WorkersTable: FC = ({ children }) => {
   const { workers } = useAppSelector(({ eam }) => ({
     workers: eam.workers,
   }));
@@ -23,7 +18,6 @@ const WorkersTable: FC<Props> = ({ children, footer }) => {
       data={data}
       title="Workers"
       placeholder="No workers to display"
-      footer={footer}
     >
       {children}
     </Table>

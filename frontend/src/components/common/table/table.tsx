@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useTable, Column } from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
+import { Pagination } from 'components/pagination/pagination';
 
 type Props = {
   columns: Column[];
@@ -9,7 +10,6 @@ type Props = {
   title?: string;
   className?: string;
   placeholder?: string;
-  footer?: React.ReactNode;
 };
 
 const Table: FC<Props> = ({
@@ -19,7 +19,6 @@ const Table: FC<Props> = ({
   children,
   className,
   placeholder,
-  footer,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -77,7 +76,7 @@ const Table: FC<Props> = ({
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}
-      {footer}
+      <Pagination />
     </div>
   );
 };
