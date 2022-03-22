@@ -15,6 +15,7 @@ import {
   SLCFunctionUpdateParamsDto,
   SLCFunctionUpdateRequestDto,
   SLCFunctionLoadParamsDto,
+  SLCFunctionRunParamsDto,
 } from '~/common/types/types';
 
 type Options = {
@@ -54,6 +55,25 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   });
 
   fastify.route({
+    method: HttpMethod.POST,
+    url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{
+        Params: SLCFunctionRunParamsDto;
+      }>,
+      rep,
+    ) {
+      return rep
+        .send(
+          await slcFunctionService.runById({
+            id: req.params.id,
+          }),
+        )
+        .status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
     method: HttpMethod.GET,
     url: SLCApiPath.SLC_FUNCTIONS,
     async handler(
@@ -68,6 +88,25 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       return rep.send(slcFunctions).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{
+        Params: SLCFunctionLoadParamsDto;
+      }>,
+      rep,
+    ) {
+      return rep
+        .send(
+          await slcFunctionService.loadById({
+            id: req.params.id,
+          }),
+        )
+        .status(HttpCode.OK);
     },
   });
 
@@ -107,25 +146,6 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             id: req.params.id,
             sourceCode: req.body.sourceCode,
             token,
-          }),
-        )
-        .status(HttpCode.OK);
-    },
-  });
-
-  fastify.route({
-    method: HttpMethod.GET,
-    url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
-    async handler(
-      req: FastifyRequest<{
-        Params: SLCFunctionLoadParamsDto;
-      }>,
-      rep,
-    ) {
-      return rep
-        .send(
-          await slcFunctionService.loadById({
-            id: req.params.id,
           }),
         )
         .status(HttpCode.OK);

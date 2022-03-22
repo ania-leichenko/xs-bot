@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { useTable, Column } from 'react-table';
+import {
+  Column,
+  useBlockLayout,
+  useResizeColumns,
+  useTable,
+} from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 
@@ -20,10 +25,14 @@ const Table: FC<Props> = ({
   placeholder,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns: columns as Column<Record<string, string>>[],
-      data: data as Record<string, string>[],
-    });
+    useTable(
+      {
+        columns: columns as Column<Record<string, string>>[],
+        data: data as Record<string, string>[],
+      },
+      useBlockLayout,
+      useResizeColumns,
+    );
 
   const hasStrPlaceholder = Boolean(placeholder);
   const hasData = data.length !== 0;
@@ -37,41 +46,47 @@ const Table: FC<Props> = ({
           {children}
         </header>
       )}
-      <table {...getTableProps()} className={styles.clientSideTable}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr
-              className={styles.tableHeaderRow}
-              {...headerGroup.getHeaderGroupProps()}
-            >
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps()}
-                  className={styles.tableHeaderCell}
-                >
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr className={styles.tableRow} {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()} className={styles.tableCell}>
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
+      <div className={styles.tableContainer}>
+        <table {...getTableProps()} className={styles.clientSideTable}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr
+                className={styles.tableHeaderRow}
+                {...headerGroup.getHeaderGroupProps()}
+              >
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className={styles.tableHeaderCell}
+                  >
+                    {column.render('Header')}
+                    <div
+                      className={`${styles.resizer}`}
+                      {...column.getResizerProps()}
+                    ></div>
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr className={styles.tableRow} {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td {...cell.getCellProps()} className={styles.tableCell}>
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}

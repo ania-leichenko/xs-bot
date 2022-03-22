@@ -6,9 +6,12 @@ import {
   DeleteFunctionCommandOutput,
   UpdateFunctionCodeCommand,
   UpdateFunctionCodeCommandOutput,
+  InvokeCommand,
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
 import { LambdaDefaultParam } from '~/common/enums/enums';
+import { toUtf8 } from '@aws-sdk/util-utf8-node';
+import { SLCError } from '~/exceptions/exceptions';
 
 type Constructor = {
   region: string;
@@ -91,6 +94,27 @@ class Lambda {
         FunctionName: name,
         ZipFile: sendZipArchive,
       }),
+    );
+  }
+
+  public async runFunction(name: string): Promise<string> {
+    const { Payload } = await this.#lambdaClient
+      .send(
+        new InvokeCommand({
+          FunctionName: name,
+        }),
+      )
+      .catch((err) => {
+        throw new SLCError({
+          status: err.$response.statusCode,
+          message: err.message,
+        });
+      });
+
+    return JSON.stringify(
+      JSON.parse(toUtf8(Payload as Uint8Array)),
+      null,
+      '\t',
     );
   }
 }

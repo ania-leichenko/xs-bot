@@ -113,6 +113,7 @@ const EAMConfigurateWorker: FC = () => {
                 title="Groups"
                 columns={columns}
                 data={data}
+                placeholder="No groups to display"
               />
             </li>
           </ul>
@@ -137,7 +138,7 @@ const EAMConfigurateWorker: FC = () => {
                 />
               </div>
               <div className={styles.button}>
-                <Button type={ButtonType.SUBMIT} label="Create" />
+                <Button type={ButtonType.SUBMIT} label="Save" />
               </div>
             </div>
           </div>
