@@ -15,6 +15,7 @@ import {
   BSSpaceGetRequestParamsDto,
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
+  BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
@@ -143,7 +144,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
     async handler(
       req: FastifyRequest<{
-        Querystring: { from: number; count: number };
+        Querystring: BSObjectGetRequestParamsDto;
         Params: { id: string };
       }>,
       rep,

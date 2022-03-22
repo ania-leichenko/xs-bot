@@ -1,6 +1,10 @@
 import { BSObject as BSObjectM } from '~/data/models/models';
 import { BSObject as BSObjectEntity } from '~/services/bs-object/bs-object.entity';
 import { TableName } from '~/common/enums/db/table-name.enum';
+import {
+  BSObjectGetFilter,
+  BSObjectGetResponseItemDto,
+} from '~/common/types/types';
 
 type Constructor = {
   BSObjectModel: typeof BSObjectM;
@@ -38,15 +42,12 @@ class BSObject {
     return object ? BSObject.modelToEntity(object) : null;
   }
 
-  async getObjects(filter: {
-    spaceId: string;
-    from: number;
-    count: number;
-    tenantId: string;
-  }): Promise<BSObjectEntity[]> {
+  async getObjects(
+    filter: BSObjectGetFilter,
+  ): Promise<BSObjectGetResponseItemDto[]> {
     const { from: offset, count: limit, spaceId, tenantId } = filter;
 
-    const objects = await this.#BSObjectModel
+    return this.#BSObjectModel
       .query()
       .select(
         `${TableName.OBJECTS}.id`,
@@ -60,9 +61,6 @@ class BSObject {
       .orderBy('createdAt', 'desc')
       .limit(limit)
       .offset(offset);
-    const result: BSObjectEntity[] = [];
-    objects.forEach((object) => result.push(BSObject.modelToEntity(object)));
-    return result;
   }
 
   public static modelToEntity(model: BSObjectM): BSObjectEntity {
