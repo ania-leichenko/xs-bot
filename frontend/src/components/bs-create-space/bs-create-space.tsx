@@ -61,7 +61,7 @@ const BSCreateSpace: FC = () => {
               />
             </div>
             <div className={styles.button}>
-              <Button type={ButtonType.SUBMIT} label="Create" />
+              <Button type={ButtonType.SUBMIT} label="Save" />
             </div>
           </div>
         </form>

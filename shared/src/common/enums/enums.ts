@@ -36,3 +36,4 @@ export {
 export { Permission } from './permissions/permissions';
 export { UserRole } from './roles/roles';
 export { DateFormat } from './date/date-format.enum';
+export { InstanceState } from './instance-states/instance-states';

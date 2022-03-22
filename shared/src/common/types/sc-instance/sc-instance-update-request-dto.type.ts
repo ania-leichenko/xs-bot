@@ -1,5 +1,5 @@
 type SCInstanceUpdateRequestDto = {
-  name?: string;
+  name: string;
 };
 
 export { type SCInstanceUpdateRequestDto };

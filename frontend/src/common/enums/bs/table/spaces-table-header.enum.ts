@@ -1,6 +1,6 @@
 enum SpacesTableHeader {
   SPACE_NAME = 'Name',
-  CREATED_AT = 'Created at',
+  CREATED_AT = 'Created',
   ACTIONS = 'Actions',
 }
 

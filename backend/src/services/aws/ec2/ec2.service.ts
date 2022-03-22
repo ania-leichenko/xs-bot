@@ -69,12 +69,13 @@ class EC2 {
     name,
     keyName,
     imageId,
+    userData,
   }: {
     name: string;
     keyName: string;
     imageId: string;
+    userData: string;
   }): Promise<{
-    hostname: string;
     instanceId: string;
   }> {
     const data = await this.#ec2Client.send(
@@ -84,6 +85,7 @@ class EC2 {
         MinCount: 1,
         MaxCount: 1,
         KeyName: keyName,
+        UserData: userData,
       }),
     );
 
@@ -92,28 +94,32 @@ class EC2 {
 
     await this.setInstanceName(instanceId as string, name);
 
+    return {
+      instanceId: instanceId as string,
+    };
+  }
+
+  public async waitUntilRunning(instanceId: string): Promise<void> {
     await waitUntilInstanceRunning(
       {
         client: this.#ec2Client,
         maxWaitTime: InstanceDefaultParam.MAX_WAITING_TIME as number,
       },
       {
-        InstanceIds: [instanceId as string],
+        InstanceIds: [instanceId],
       },
     );
+  }
 
-    const dataWithPublicIpAddress = await this.#ec2Client.send(
-      new DescribeInstancesCommand({ InstanceIds: [instanceId as string] }),
+  public async getPublicIpAddress(instanceId: string): Promise<string> {
+    const instanceData = await this.#ec2Client.send(
+      new DescribeInstancesCommand({ InstanceIds: [instanceId] }),
     );
-
-    const [reservation] = dataWithPublicIpAddress.Reservations as Reservation[];
+    const [reservation] = instanceData.Reservations as Reservation[];
     const [instanceIpAddress] = reservation.Instances as Instance[];
     const { PublicIpAddress: publicIpAddress } = instanceIpAddress;
 
-    return {
-      instanceId: instanceId as string,
-      hostname: publicIpAddress as string,
-    };
+    return publicIpAddress as string;
   }
 
   public async deleteInstance(instanceId: string): Promise<void> {
