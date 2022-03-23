@@ -148,7 +148,7 @@ class Instance {
       await this.#ec2Service.deleteKeyPair(keyPairId);
       await this.#keyPairService.delete(keyPairId);
       throw new SCError({
-        status: HttpCode.NOT_IMPLEMENTED,
+        status: HttpCode.BAD_REQUEST,
         message: ExceptionMessage.FAILED_TO_CREATE,
       });
     }
