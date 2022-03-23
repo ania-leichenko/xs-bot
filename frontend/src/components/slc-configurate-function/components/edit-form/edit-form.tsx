@@ -41,7 +41,17 @@ const EditForm: FC<Props> = ({ id }) => {
   }, [loadFunction]);
 
   const handleRun = (): void => {
-    dispatch(SLCFunctionActions.runFunction({ id }));
+    const payload =
+      prompt(
+        'Enter your arguments in JSON format.\nExample: { "key": "value" }',
+        '{ "key": "value" }',
+      ) ?? '';
+    dispatch(
+      SLCFunctionActions.runFunction({
+        params: { id },
+        payload: { payload },
+      }),
+    );
   };
 
   const handleSaveCode = (): void => {
