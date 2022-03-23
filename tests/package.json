@@ -5,7 +5,7 @@
   "description": "bws-testing",
   "scripts": {
     "test": "npm run wdio",
-    "wdio": "wdio run test/wdio.conf.ts"
+    "wdio": "wdio run wdio.conf.js"
   },
   "repository": {
     "type": "git",

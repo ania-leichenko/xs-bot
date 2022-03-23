@@ -24,7 +24,7 @@ exports.config = {
     //
     specs: [
       //  './test/specs/**/*.ts'
-        './test/specs/**/test.ts'
+        './specs/**/*.ts',
     ],
     // Patterns to exclude.
     exclude: [
