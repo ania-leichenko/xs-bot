@@ -56,3 +56,13 @@ select {
   clip: rect(0 0 0 0);
   clip-path: inset(100%);
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-orange);
+  border-radius: 10px;
+}
