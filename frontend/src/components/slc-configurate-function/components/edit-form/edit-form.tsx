@@ -45,7 +45,7 @@ const EditForm: FC<Props> = ({ id }) => {
       prompt(
         'Enter your arguments in JSON format.\nExample: { "key": "value" }',
         '{ "key": "value" }',
-      ) ?? '';
+      ) ?? undefined;
     dispatch(
       SLCFunctionActions.runFunction({
         params: { id },
