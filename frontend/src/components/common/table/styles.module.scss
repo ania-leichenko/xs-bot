@@ -33,17 +33,19 @@
 .tableCell,
 .placeholder {
   padding: 13px;
+  overflow: hidden;
   font-weight: lighter;
   font-size: 16px;
   font-style: normal;
   line-height: 20px;
   white-space: nowrap;
   text-align: left;
+  text-overflow: ellipsis;
 }
 
 .tableHeaderRow {
   background-color: var(--color-boltgun);
-  border-bottom: 2px solid #282828;
+  border-bottom: 2px solid var(--color-dark-gray);
 }
 
 .tableHeaderCell {
@@ -57,12 +59,30 @@
 .tableRow:hover {
   background-color: var(--color-background);
   transition-duration: 500ms;
+  transition-property: background-color;
 }
 
 .tableCell {
-  overflow: hidden;
   color: var(--color-white);
-  text-overflow: ellipsis;
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  width: 15px;
+  height: 100%;
+  background-image: url("/assets/img/resize.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  user-select: none;
+  touch-action: none;
+}
+
+.tableContainer {
+  overflow-x: auto;
 }
 
 .placeholder {
