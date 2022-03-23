@@ -38,6 +38,18 @@ const styles: StylesConfig = {
       },
     };
   },
+  menuList: (provided: CSSObject): CSSObject => {
+    return {
+      ...provided,
+      '::-webkit-scrollbar': {
+        width: '5px',
+      },
+      '::-webkit-scrollbar-thumb': {
+        background: 'var(--color-orange)',
+        borderRadius: '10px',
+      },
+    };
+  },
   singleValue: (provided: CSSObject): CSSObject => {
     return {
       ...provided,
