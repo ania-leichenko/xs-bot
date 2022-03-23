@@ -46,13 +46,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       };
     },
     async handler(req: FastifyRequest<{ Body: BSSpaceCreateRequestDto }>, rep) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       return rep
         .send(
           await spaceService.create({
             name: req.body.name,
-            token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -66,11 +64,9 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       const spaces = await spaceService.getSpacesByTenant({
         query: req.query,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(spaces).status(HttpCode.OK);
@@ -84,12 +80,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
 
       await spaceService.delete({
         id,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(true).status(HttpCode.OK);
@@ -107,14 +102,14 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
 
       await bsObjectService.upload({
-        token,
+        token: req.user?.token as string,
         file: req.file,
         id,
       });
+
       return rep.send(true).status(HttpCode.OK);
     },
   });
@@ -125,11 +120,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.GET,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
     async handler(req, rep) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { spaceId, objectId } = req.params;
 
       const object = await bsObjectService.download({
-        token,
+        token: req.user?.token as string,
         spaceId,
         objectId,
       });
