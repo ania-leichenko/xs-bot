@@ -38,6 +38,7 @@ const ExceptionMessage = {
   INSTANCE_NOT_FOUND: 'Instance not found',
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
+  FAILED_TO_CREATE: 'Failed to create instance',
   SPACE_EXISTS: 'Space with this name already exists',
   OBJECT_NOT_UPLOADED: 'Object is not uploaded',
   OBJECT_ACCESS_DENIED: 'You do not have access to this object',
