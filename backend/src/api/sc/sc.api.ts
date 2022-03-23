@@ -72,10 +72,9 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const instances = await instanceService.getByTenantId({
         requestParams: req.query,
-        token,
+        token: req.user.token,
       });
       return rep.send(instances).status(HttpCode.OK);
     },
@@ -141,10 +140,9 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: SCInstanceCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const instance = await instanceService.create({
         instanceCredentials: req.body,
-        token,
+        token: req.user.token,
       });
       return rep.send(instance).status(HttpCode.CREATED);
     },
