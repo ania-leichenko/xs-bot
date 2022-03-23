@@ -10,5 +10,6 @@ export {
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from 'bws-shared/common/types/types';

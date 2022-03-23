@@ -82,6 +82,7 @@ export {
   type SLCFunctionLoadParamsDto,
   type SLCFunctionLoadResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

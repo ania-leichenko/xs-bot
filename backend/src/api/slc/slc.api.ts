@@ -16,6 +16,7 @@ import {
   SLCFunctionUpdateRequestDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionRunParamsDto,
+  SLCFunctionRunRequestDto,
 } from '~/common/types/types';
 
 type Options = {
@@ -60,6 +61,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionRunParamsDto;
+        Body: SLCFunctionRunRequestDto;
       }>,
       rep,
     ) {
@@ -67,6 +69,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         .send(
           await slcFunctionService.runById({
             id: req.params.id,
+            payload: req.body.payload,
           }),
         )
         .status(HttpCode.OK);
