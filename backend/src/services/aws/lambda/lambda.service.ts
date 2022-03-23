@@ -10,7 +10,7 @@ import {
 } from '@aws-sdk/client-lambda';
 import AdmZip from 'adm-zip';
 import { LambdaDefaultParam } from '~/common/enums/enums';
-import { toUtf8 } from '@aws-sdk/util-utf8-node';
+import { fromUtf8, toUtf8 } from '@aws-sdk/util-utf8-node';
 import { SLCError } from '~/exceptions/exceptions';
 
 type Constructor = {
@@ -97,11 +97,13 @@ class Lambda {
     );
   }
 
-  public async runFunction(name: string): Promise<string> {
+  public async runFunction(name: string, payload?: string): Promise<string> {
+    const sendPayload = fromUtf8(payload ?? '');
     const { Payload } = await this.#lambdaClient
       .send(
         new InvokeCommand({
           FunctionName: name,
+          Payload: sendPayload,
         }),
       )
       .catch((err) => {
