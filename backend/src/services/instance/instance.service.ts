@@ -111,12 +111,16 @@ class Instance {
     const keyPairId = await this.#keyPairService.create();
     const operationSystem =
       await this.#operationSystemService.getOperationSystem(operationSystemId);
-    const { instanceId } = await this.#ec2Service.createInstance({
-      name,
-      keyName: keyPairId,
-      imageId: operationSystem.awsGenerationName,
-      userData: userData ? Buffer.from(userData).toString('base64') : userData,
-    });
+    const { instanceId: awsInstanceId } = await this.#ec2Service.createInstance(
+      {
+        name,
+        keyName: keyPairId,
+        imageId: operationSystem.awsGenerationName,
+        userData: userData
+          ? Buffer.from(userData).toString('base64')
+          : userData,
+      },
+    );
 
     const instance = InstanceEntity.createNew({
       name,
@@ -124,7 +128,7 @@ class Instance {
       username: InstanceDefaultParam.USERNAME as string,
       operationSystemId,
       createdBy: userId,
-      awsInstanceId: instanceId,
+      awsInstanceId,
       tenantId,
       operationSystem: {
         id: operationSystem.id,
@@ -132,12 +136,27 @@ class Instance {
       },
     });
 
-    const { id } = await this.#instanceRepository.create(instance);
+    let id;
+
+    try {
+      const { id: instanceId } = await this.#instanceRepository.create(
+        instance,
+      );
+      id = instanceId;
+    } catch {
+      await this.#ec2Service.deleteInstance(awsInstanceId);
+      await this.#ec2Service.deleteKeyPair(keyPairId);
+      await this.#keyPairService.delete(keyPairId);
+      throw new SCError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.FAILED_TO_CREATE,
+      });
+    }
 
     (async (): Promise<void> => {
-      await this.#ec2Service.waitUntilRunning(instanceId);
-      await this.update(id, {
-        hostname: await this.#ec2Service.getPublicIpAddress(instanceId),
+      await this.#ec2Service.waitUntilRunning(awsInstanceId);
+      await this.update(id as string, {
+        hostname: await this.#ec2Service.getPublicIpAddress(awsInstanceId),
         state: InstanceState.ACTIVE,
       });
     })();
