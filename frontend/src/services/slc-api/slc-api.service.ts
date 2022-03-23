@@ -130,7 +130,7 @@ class SLCApi {
       {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
-        payload: JSON.stringify(payload.payload),
+        payload: JSON.stringify(payload),
       },
     );
   }
