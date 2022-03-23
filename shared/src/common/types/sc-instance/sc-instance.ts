@@ -8,3 +8,4 @@ export { type SCInstanceDeleteParamsDto } from './sc-instance-delete-params-dto.
 export { type SCInstanceUpdateParamsDto } from './sc-instance-update-params-dto.type';
 export { type SCInstanceUpdateRequestDto } from './sc-instance-update-request-dto.type';
 export { type SCInstanceUpdateResponseDto } from './sc-instance-update-response-dto.type';
+export { type SCInstanceRelatedItem } from './sc-instance-related-item.type';
