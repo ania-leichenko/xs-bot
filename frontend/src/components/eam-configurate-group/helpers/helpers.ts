@@ -1,1 +1,1 @@
-export { SelectRowCell } from './cells/cells';
+export { ActionCell } from './cells/cells';

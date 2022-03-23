@@ -1,6 +1,7 @@
 import { UsersTableAccessor } from 'common/enums/enums';
 import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/helpers';
+import { ActionCell } from '../../../helpers/helpers';
 
 type Row = {
   [UsersTableAccessor.USERNAME]: string;
@@ -8,7 +9,12 @@ type Row = {
   [UsersTableAccessor.CREATION_TIME]: string;
 };
 
-const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
+const getRows = (
+  workers: EAMWorkerGetAllItemResponseDto[],
+  handleAddId: (id: string) => void,
+  handleRemoveId: (id: string) => void,
+  handleIsCheckedId: (id: string) => boolean,
+): Row[] => {
   return workers.map((item: EAMWorkerGetAllItemResponseDto) => {
     const { id, name, groups, createdAt } = item;
 
@@ -20,6 +26,12 @@ const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
       [UsersTableAccessor.GROUPS]: groupsName,
       [UsersTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),
+      ),
+      [UsersTableAccessor.ACTION]: ActionCell(
+        id,
+        handleAddId,
+        handleRemoveId,
+        handleIsCheckedId,
       ),
     };
   });

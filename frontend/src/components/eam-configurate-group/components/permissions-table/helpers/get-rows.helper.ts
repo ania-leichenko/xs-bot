@@ -1,13 +1,19 @@
 import { PermissionsTableAccessor } from 'common/enums/enums';
 import { EAMPermissionGetAllItemResponseDto } from 'common/types/types';
 import { getDistanceToDateNow } from 'helpers/helpers';
+import { ActionCell } from '../../../helpers/cells/action-cell/action-cell';
 
 type Row = {
   [PermissionsTableAccessor.ID]: string;
   [PermissionsTableAccessor.PERMISSION_NAME]: string;
 };
 
-const getRows = (permissions: EAMPermissionGetAllItemResponseDto[]): Row[] => {
+const getRows = (
+  permissions: EAMPermissionGetAllItemResponseDto[],
+  handleAddId: (id: string) => void,
+  handleRemoveId: (id: string) => void,
+  handleIsCheckedId: (id: string) => boolean,
+): Row[] => {
   return permissions.map((item: EAMPermissionGetAllItemResponseDto) => {
     const { id, name, createdAt } = item;
 
@@ -16,6 +22,12 @@ const getRows = (permissions: EAMPermissionGetAllItemResponseDto[]): Row[] => {
       [PermissionsTableAccessor.PERMISSION_NAME]: name,
       [PermissionsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
         new Date(createdAt),
+      ),
+      [PermissionsTableAccessor.ACTION]: ActionCell(
+        id,
+        handleAddId,
+        handleRemoveId,
+        handleIsCheckedId,
       ),
     };
   });

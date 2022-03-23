@@ -43,6 +43,8 @@ const EAMConfigurateGroup: FC = () => {
     }),
   );
 
+  const hasGroup = Boolean(group);
+
   useEffect(() => {
     if (!tenantId) {
       return;
@@ -67,17 +69,17 @@ const EAMConfigurateGroup: FC = () => {
   const selectedPermissions = useSelectedItems<string>([]);
 
   useEffect(() => {
-    if (group) {
-      handleReset({ name: group.name });
-      selectedWorkers.handleReset(group.workersIds);
-      selectedPermissions.handleReset(group.permissionsIds);
+    if (hasGroup) {
+      handleReset({ name: group!.name });
+      selectedWorkers.handleReset(group!.workersIds);
+      selectedPermissions.handleReset(group!.permissionsIds);
     }
   }, [group]);
 
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
-    if (group) {
+    if (hasGroup) {
       const newPayload: EAMGroupUpdateRequestDto = {
-        id: group.id,
+        id: group!.id,
         name: payload.name,
         workersIds: selectedWorkers.selectedItems,
         permissionsIds: selectedPermissions.selectedItems,
@@ -145,7 +147,7 @@ const EAMConfigurateGroup: FC = () => {
               <Button
                 className={styles.button}
                 type={ButtonType.SUBMIT}
-                label={group ? 'Save' : 'Create'}
+                label={hasGroup ? 'Save' : 'Create'}
               />
             </div>
           </div>
