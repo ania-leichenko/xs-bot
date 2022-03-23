@@ -3,10 +3,6 @@ import { FastifyPluginAsync } from 'fastify';
 import { ControllerHook, ExceptionMessage } from '~/common/enums/enums';
 import { InvalidCredentialsError } from '~/exceptions/exceptions';
 import { auth as authServ } from '~/services/services';
-import {
-  EAMMasterSignInResponseDto,
-  EAMWorkerSignInResponseDto,
-} from '~/common/types/types';
 
 type Options = {
   whiteRoutes: string[];
@@ -14,12 +10,6 @@ type Options = {
     auth: typeof authServ;
   };
 };
-
-declare module 'fastify' {
-  interface FastifyRequest {
-    user: EAMMasterSignInResponseDto | EAMWorkerSignInResponseDto;
-  }
-}
 
 const authorization: FastifyPluginAsync<Options> = fp(async (fastify, opts) => {
   const { whiteRoutes, services } = opts;

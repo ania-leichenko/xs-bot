@@ -50,7 +50,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         .send(
           await spaceService.create({
             name: req.body.name,
-            token: req.user.token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -66,7 +66,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const spaces = await spaceService.getSpacesByTenant({
         query: req.query,
-        token: req.user.token,
+        token: req.user?.token as string,
       });
 
       return rep.send(spaces).status(HttpCode.OK);
@@ -84,7 +84,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
       await spaceService.delete({
         id,
-        token: req.user.token,
+        token: req.user?.token as string,
       });
 
       return rep.send(true).status(HttpCode.OK);
@@ -105,7 +105,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const { id } = req.params;
 
       await bsObjectService.upload({
-        token: req.user.token,
+        token: req.user?.token as string,
         file: req.file,
         id,
       });
@@ -123,7 +123,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const { spaceId, objectId } = req.params;
 
       const object = await bsObjectService.download({
-        token: req.user.token,
+        token: req.user?.token as string,
         spaceId,
         objectId,
       });

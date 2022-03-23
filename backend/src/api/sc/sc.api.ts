@@ -74,7 +74,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const instances = await instanceService.getByTenantId({
         requestParams: req.query,
-        token: req.user.token,
+        token: req.user?.token as string,
       });
       return rep.send(instances).status(HttpCode.OK);
     },
@@ -142,7 +142,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const instance = await instanceService.create({
         instanceCredentials: req.body,
-        token: req.user.token,
+        token: req.user?.token as string,
       });
       return rep.send(instance).status(HttpCode.CREATED);
     },

@@ -61,7 +61,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token: req.user.token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -153,7 +153,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
       await workerService.deleteWorker({
         id,
-        token: req.user.token,
+        token: req.user?.token as string,
       });
 
       return rep.send(true).status(HttpCode.OK);
