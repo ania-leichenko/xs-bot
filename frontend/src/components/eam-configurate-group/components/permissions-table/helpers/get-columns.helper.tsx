@@ -7,7 +7,7 @@ import { Column } from 'react-table';
 const getColumns = (): Column[] => {
   return [
     {
-      Header: PermissionsTableHeader.ACTION,
+      Header: '',
       accessor: PermissionsTableAccessor.ACTION,
       minWidth: 30,
       width: 50,
