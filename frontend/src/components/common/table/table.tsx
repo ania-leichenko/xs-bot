@@ -3,6 +3,7 @@ import { useTable, Column } from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Pagination } from 'components/pagination/pagination';
+import { usePagination } from 'hooks/hooks';
 
 type Props = {
   columns: Column[];
@@ -10,6 +11,11 @@ type Props = {
   title?: string;
   className?: string;
   placeholder?: string;
+  pagination?: {
+    perPage: number;
+    countItems: number;
+    handleLoad: (from: number) => void;
+  };
 };
 
 const Table: FC<Props> = ({
@@ -19,6 +25,7 @@ const Table: FC<Props> = ({
   children,
   className,
   placeholder,
+  pagination,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
@@ -29,6 +36,8 @@ const Table: FC<Props> = ({
   const hasStrPlaceholder = Boolean(placeholder);
   const hasData = data.length !== 0;
   const hasPlaceholder = hasStrPlaceholder && !hasData;
+  const hasPagination = Boolean(pagination);
+  const paginationProps = usePagination(pagination);
 
   return (
     <div className={getValidClasses(styles.tableWrapper, className)}>
@@ -76,7 +85,15 @@ const Table: FC<Props> = ({
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}
-      <Pagination />
+      {hasPagination && (
+        <Pagination
+          countItems={paginationProps?.countItems}
+          currentPage={paginationProps?.currentPage}
+          allPage={paginationProps?.allPage}
+          handleBackPage={paginationProps?.handleBackPage}
+          handleNextPage={paginationProps?.handleNextPage}
+        />
+      )}
     </div>
   );
 };
