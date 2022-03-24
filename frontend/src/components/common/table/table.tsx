@@ -91,7 +91,7 @@ const Table: FC<Props> = ({
             })}
           </tbody>
           {hasPlaceholder && (
-            <div className={styles.placeholder}>{placeholder}</div>
+            <tr className={styles.placeholder}>{placeholder}</tr>
           )}
         </table>
       </div>
