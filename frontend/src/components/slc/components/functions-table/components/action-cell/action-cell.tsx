@@ -12,7 +12,7 @@ const ActionCell = (
     onFunctionDelete(id);
   };
   return (
-    <div className={styles.actionsWrapper}>
+    <div className={styles.wrapper}>
       <IconButton icon={IconName.GEAR} label="Edit" to={url as AppRoute} />
       <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
     </div>
