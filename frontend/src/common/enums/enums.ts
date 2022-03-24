@@ -25,6 +25,7 @@ export {
   IconName,
   ChipStyle,
   ChipColor,
+  EditorColor,
 } from './ui/ui';
 export {
   GroupsTableHeader,

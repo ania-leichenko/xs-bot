@@ -9,18 +9,26 @@ const getColumns = (): Column[] => {
     {
       Header: FunctionsTableHeader.FUNCTION_NAME,
       accessor: FunctionsTableAccessor.FUNCTION_NAME,
+      minWidth: 200,
+      width: 400,
     },
     {
       Header: FunctionsTableHeader.CREATION_TIME,
       accessor: FunctionsTableAccessor.CREATION_TIME,
+      minWidth: 150,
+      width: 300,
     },
     {
       Header: FunctionsTableHeader.UPDATION_TIME,
       accessor: FunctionsTableAccessor.UPDATION_TIME,
+      minWidth: 150,
+      width: 300,
     },
     {
       Header: FunctionsTableHeader.ACTIONS,
       accessor: FunctionsTableAccessor.ACTIONS,
+      minWidth: 100,
+      width: 100,
     },
   ];
 };

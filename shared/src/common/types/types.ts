@@ -49,6 +49,7 @@ export {
   type SCInstanceUpdateParamsDto,
   type SCInstanceUpdateRequestDto,
   type SCInstanceUpdateResponseDto,
+  type SCInstanceRelatedItem,
 } from './sc-instance/sc-instance';
 export {
   type SCOperationSystemGetAllResponseDto,
@@ -86,11 +87,13 @@ export {
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
 export {
   type ObjectUploadRequestDto,
-  type ObjectUploadParamsDto,
-} from './object-upload/object-upload';
+  type BSObjectUploadParamsDto,
+  type BSObjectDownloadParamsDto,
+} from '~/common/types/bs-object/bs-object';

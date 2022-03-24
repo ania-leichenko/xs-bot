@@ -16,6 +16,7 @@ import {
   SLCFunctionUpdateRequestDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionRunParamsDto,
+  SLCFunctionRunRequestDto,
 } from '~/common/types/types';
 
 type Options = {
@@ -46,10 +47,13 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: SLCFunctionCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       return rep
-        .send(await slcFunctionService.create({ name: req.body.name, token }))
+        .send(
+          await slcFunctionService.create({
+            name: req.body.name,
+            token: req.user?.token as string,
+          }),
+        )
         .status(HttpCode.CREATED);
     },
   });
@@ -60,6 +64,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionRunParamsDto;
+        Body: SLCFunctionRunRequestDto;
       }>,
       rep,
     ) {
@@ -67,6 +72,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         .send(
           await slcFunctionService.runById({
             id: req.params.id,
+            payload: req.body.payload,
           }),
         )
         .status(HttpCode.OK);
@@ -80,11 +86,9 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Querystring: SLCFunctionGetRequestParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       const slcFunctions = await slcFunctionService.getSLCFunctionsByTenant({
         query: req.query,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(slcFunctions).status(HttpCode.OK);
@@ -117,11 +121,9 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       await slcFunctionService.delete({
         id: req.params.id,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(true).status(HttpCode.OK);
@@ -138,14 +140,12 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       return rep
         .send(
           await slcFunctionService.updateById({
             id: req.params.id,
             sourceCode: req.body.sourceCode,
-            token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.OK);

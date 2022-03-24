@@ -30,7 +30,7 @@ const authorization: FastifyPluginAsync<Options> = fp(async (fastify, opts) => {
       });
     }
 
-    await auth.getCurrentUser(token);
+    request.user = await auth.getCurrentUser(token);
   });
 });
 
