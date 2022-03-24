@@ -90,10 +90,10 @@ const Table: FC<Props> = ({
               );
             })}
           </tbody>
+          {hasPlaceholder && (
+            <div className={styles.placeholder}>{placeholder}</div>
+          )}
         </table>
-        {hasPlaceholder && (
-          <div className={styles.placeholder}>{placeholder}</div>
-        )}
       </div>
     </div>
   );
