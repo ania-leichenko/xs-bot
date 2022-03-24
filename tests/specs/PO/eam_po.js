@@ -10,7 +10,8 @@ class EAM {
     get SaveCSV_Button () {return $('.styles_saveBtn__jQ6gL')}
     get LastWorker () {return $$('.styles_tableCell__C6dnh')}
     get Permissions () {return $$('.styles_inputGroups__bgqt2 li:last-child .checkbox_span__Kuugs')}
-    get Table () {return $$('//div[@class=“styles_tableContainer__q-U43”])')[1].$('//table/tbody/tr/td')}
-
+    get LastGroup () {return $$('div[data-testid="eam-group-table"] .styles_tableCell__C6dnh')}
+    get ReloadGroup_Button () {return $('div[data-testid="eam-group-table"] img[alt="Reload"]')};
+    get DeleteGroup_Button () {return $('div[data-testid="eam-group-table"] img[alt="Delete"]')};
 }
 module.exports = EAM;
