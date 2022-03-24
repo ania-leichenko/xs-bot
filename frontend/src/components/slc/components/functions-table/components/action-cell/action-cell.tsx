@@ -12,7 +12,7 @@ const ActionCell = (
     onFunctionDelete(id);
   };
   return (
-    <div className={styles.actionsWrapper}>
+    <div className={styles.wrapper}>
       <IconButton
         title="Edit"
         icon={IconName.GEAR}
