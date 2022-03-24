@@ -23,7 +23,9 @@ const Modal: FC<Props> = ({ children, isOpen, onClose }) => {
   const handleKeyDown = ({ key }: KeyboardEvent): void => {
     const isEscapeKey = key === KeydownKey.ESCAPE;
 
-    isEscapeKey && onClose();
+    if (isEscapeKey) {
+      onClose();
+    }
   };
 
   const handleOverlayCheck = ({
@@ -32,7 +34,9 @@ const Modal: FC<Props> = ({ children, isOpen, onClose }) => {
   }: React.MouseEvent<HTMLElement>): void => {
     const isOverlay = target === currentTarget;
 
-    isOverlay && onClose();
+    if (isOverlay) {
+      onClose();
+    }
   };
 
   return (
