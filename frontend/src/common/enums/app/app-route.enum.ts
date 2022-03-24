@@ -7,6 +7,8 @@ enum AppRoute {
   EAM_CONFIGURATE_GROUP = '/eam/configurate-group',
   BS = '/bs',
   BS_CREATE_SPACE = '/bs/create-space',
+  BS_SPACE = '/bs/spaces',
+  BS_SPACE_$ID = '/bs/spaces/:id',
   SC = '/sc',
   SC_CONFIGURATE_INSTANCE = '/sc/configurate-instance',
   SC_CONFIGURATE_INSTANCE_$ID = '/sc/configurate-instance/:id',

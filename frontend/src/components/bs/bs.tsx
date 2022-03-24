@@ -22,7 +22,7 @@ const BS: FC = () => {
     dispatch(bsActions.deleteSpace(id));
   };
 
-  const handleWorkersReload = (): void => {
+  const handleSpacesReload = (): void => {
     dispatch(
       bsActions.loadSpaces({
         from: 0,
@@ -41,7 +41,7 @@ const BS: FC = () => {
         <SpacesTable onSpaceDelete={handleSpaceDelete}>
           <div className={styles.buttonsBlock}>
             <IconButton
-              onClick={handleWorkersReload}
+              onClick={handleSpacesReload}
               icon={IconName.RELOAD}
               label="Reload"
             />

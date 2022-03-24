@@ -6,6 +6,8 @@ import {
   SpacesApiPath,
 } from 'common/enums/enums';
 import {
+  BSObjectGetRequestParamsDto,
+  BSObjectGetResponseDto,
   BSSpaceCreateRequestDto,
   BSSpaceCreateResponseDto,
   BSSpaceGetRequestParamsDto,
@@ -64,6 +66,26 @@ class BSApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public loadObjects(
+    filter: BSObjectGetRequestParamsDto,
+    params: { id: string },
+  ): Promise<BSObjectGetResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        params.id,
+        SpacesApiPath.OBJECTS,
+      ),
+      {
+        method: HttpMethod.GET,
+        params: filter,
       },
     );
   }
