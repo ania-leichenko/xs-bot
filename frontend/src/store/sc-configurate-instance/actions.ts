@@ -32,9 +32,9 @@ const createInstance = createAsyncThunk<
 >(ActionType.CREATE_INSTANCE, async (payload, { extra }) => {
   const { scApi, navigation, notification } = extra;
 
-  navigation.push(AppRoute.SC);
-
   const instance = await scApi.createInstance(payload);
+
+  navigation.push(AppRoute.SC);
 
   notification.success(
     NotificationTitle.SUCCESS,
