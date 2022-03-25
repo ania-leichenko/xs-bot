@@ -112,22 +112,7 @@ class SLCFunction {
     return { items: slcFunctions };
   }
 
-  public async delete({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
-
-    if (userRole !== UserRole.WORKER) {
-      throw new SLCError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
-      });
-    }
-
+  public async delete(id: string): Promise<void> {
     const slcFunction = await this.#slcFunctionRepository.getById(id);
 
     if (!slcFunction) {

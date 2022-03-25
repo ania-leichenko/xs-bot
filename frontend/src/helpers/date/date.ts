@@ -1,1 +1,1 @@
-export { getDistanceToDateNow } from 'bws-shared/helpers/helpers';
+export { getDateDecoratedWithAgo } from 'bws-shared/helpers/helpers';
