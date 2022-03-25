@@ -6,12 +6,12 @@ import {
 } from '~/services/services';
 import { slcFunctionCreate as slcFunctionCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 import {
-  ExceptionMessage,
   HttpCode,
   HttpMethod,
   SLCApiPath,
   SLCFunctionApiPath,
   UserRole,
+  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   SLCFunctionCreateRequestDto,
@@ -141,10 +141,19 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
       rep,
     ) {
-      await slcFunctionService.delete({
-        id: req.params.id,
-        token: req.user?.token as string,
-      });
+      const { id } = req.params;
+      const { userRole } = tokenService.decode<TokenPayload>(
+        req.user?.token as string,
+      );
+
+      if (userRole !== UserRole.WORKER) {
+        throw new SLCError({
+          status: HttpCode.DENIED,
+          message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+        });
+      }
+
+      await slcFunctionService.delete(id);
 
       return rep.send(true).status(HttpCode.OK);
     },
