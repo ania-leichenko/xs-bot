@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   group as groupServ,
   worker as workerServ,
@@ -11,6 +11,7 @@ import {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  Permission,
 } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
@@ -25,6 +26,7 @@ import {
   eamWorkerCreateBackend as workerValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
+import { checkHasPermissions } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -97,11 +99,12 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.WORKERS}${WorkersApiPath.ROOT}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{
         Querystring: EAMWorkerGetByTenantRequestParamsDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const workers = await workerService.getAll(req.query);
       return rep.send(workers).status(HttpCode.OK);
@@ -111,9 +114,10 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.GROUPS}${GroupsApiPath.ROOT}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const groups = await groupService.getGroupsByTenant(req.query);
       return rep.send(groups).status(HttpCode.OK);
@@ -123,6 +127,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: EAMApiPath.PERMISSION,
+    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);

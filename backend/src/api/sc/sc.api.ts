@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   instance as InstanceServ,
   operationSystem as OperationSystemServ,
@@ -10,6 +10,7 @@ import {
   SCApiPath,
   InstancesApiPath,
   SshKeysApiPath,
+  Permission,
 } from '~/common/enums/enums';
 import {
   SCInstanceCreateRequestDto,
@@ -24,6 +25,7 @@ import {
   scInstanceCreate as scInstanceCreateValidationSchema,
   scInstanceUpdate as scInstanceUpdateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
+import { checkHasPermissions } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -43,6 +45,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SCApiPath.OPERATION_SYSTEMS,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     async handler(req, rep) {
       const operationSystems = await operationSystemService.getAll();
       return rep.send(operationSystems).status(HttpCode.OK);
@@ -52,11 +55,12 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${SCApiPath.SSH_KEYS}${SshKeysApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Params: SCSshKeyGetByIdParamsDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const sshKey = await keyPairService.getSshKeyById(req.params.id);
       return rep.send(sshKey).status(HttpCode.OK);
@@ -66,11 +70,12 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SCApiPath.ROOT,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Querystring: SCInstanceGetByTenantRequestParamsDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const instances = await instanceService.getByTenantId({
         requestParams: req.query,
@@ -83,11 +88,12 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Params: SCInstanceDeleteParamsDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       await instanceService.delete(req.params.id);
       return rep.send(true).status(HttpCode.OK);
@@ -97,6 +103,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.PUT,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     schema: {
       body: scInstanceUpdateValidationSchema,
     },
@@ -114,7 +121,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         Params: SCInstanceUpdateParamsDto;
         Body: SCInstanceUpdateRequestDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const instance = await instanceService.update(req.params.id, req.body);
       return rep.send(instance).status(HttpCode.OK);
@@ -124,6 +131,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: SCApiPath.ROOT,
+    preHandler: checkHasPermissions(Permission.MANAGE_SC),
     schema: {
       body: scInstanceCreateValidationSchema,
     },
@@ -138,7 +146,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{ Body: SCInstanceCreateRequestDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const instance = await instanceService.create({
         instanceCredentials: req.body,

@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import {
   slcFunction as slcFunctionServ,
@@ -12,6 +12,7 @@ import {
   SLCApiPath,
   SLCFunctionApiPath,
   UserRole,
+  Permission,
 } from '~/common/enums/enums';
 import {
   SLCFunctionCreateRequestDto,
@@ -25,6 +26,7 @@ import {
   TokenPayload,
 } from '~/common/types/types';
 import { SLCError } from '~/exceptions/exceptions';
+import { checkHasPermissions } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -40,6 +42,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: SLCApiPath.SLC_FUNCTIONS,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     schema: {
       body: slcFunctionCreateValidationSchema,
     },
@@ -54,7 +57,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{ Body: SLCFunctionCreateRequestDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       return rep
         .send(
@@ -70,12 +73,13 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionRunParamsDto;
         Body: SLCFunctionRunRequestDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const { userRole } = tokenService.decode<TokenPayload>(
         req.user?.token as string,
@@ -102,9 +106,10 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SLCApiPath.SLC_FUNCTIONS,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{ Querystring: SLCFunctionGetRequestParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const slcFunctions = await slcFunctionService.getSLCFunctionsByTenant({
         query: req.query,
@@ -118,11 +123,12 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionLoadParamsDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       return rep
         .send(
@@ -137,9 +143,10 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       await slcFunctionService.delete({
         id: req.params.id,
@@ -153,12 +160,13 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.PUT,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
+    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionUpdateParamsDto;
         Body: SLCFunctionUpdateRequestDto;
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       return rep
         .send(
