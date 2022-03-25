@@ -6,7 +6,7 @@ import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
 import cors from 'fastify-cors';
 import { backgroundJob } from '~/services/services';
-import { upload } from './middlewares/middlewares';
+import { upload } from './hooks/hooks';
 
 const app = Fastify({
   logger: {
