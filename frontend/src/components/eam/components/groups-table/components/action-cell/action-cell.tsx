@@ -11,7 +11,12 @@ const ActionCell = (
   };
   return (
     <div className={styles.wrapper}>
-      <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
+      <IconButton
+        title="Delete"
+        icon={IconName.TRASH}
+        label="Delete"
+        onClick={handleDelete}
+      />
     </div>
   );
 };
