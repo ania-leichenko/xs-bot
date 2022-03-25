@@ -91,21 +91,17 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep,
     ) {
       const { id } = req.params;
-      const user: TokenPayload = await tokenService.decode(
-        req.user?.token as string,
-      );
+      const token = req.user?.token as string;
+      const { userRole } = tokenService.decode<TokenPayload>(token);
 
-      if (user.userRole !== UserRole.WORKER) {
+      if (userRole !== UserRole.WORKER) {
         throw new BsError({
           status: HttpCode.DENIED,
           message: ExceptionMessage.MASTER_SPACE_DELETE,
         });
       }
 
-      await spaceService.delete({
-        id,
-        token: req.user?.token as string,
-      });
+      await spaceService.delete(id);
 
       return rep.send(true).status(HttpCode.OK);
     },

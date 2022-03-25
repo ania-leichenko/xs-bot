@@ -201,19 +201,7 @@ class Worker {
     return { items: workers };
   }
 
-  public async deleteWorker({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const user: TokenPayload = await this.#tokenService.decode(token);
-
-    if (user.userRole !== UserRole.MASTER) {
-      throw new EAMError();
-    }
-
+  public async deleteWorker(id: string): Promise<void> {
     const worker = await this.#workerRepository.getById(id);
 
     if (!worker) {
