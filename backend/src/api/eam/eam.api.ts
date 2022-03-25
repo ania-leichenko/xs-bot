@@ -26,7 +26,7 @@ import {
   eamWorkerCreateBackend as workerValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { checkHasPermissions } from '~/hooks/hooks';
+import { checkHasPermissions as checkHasPermissionsHook } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -99,7 +99,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.WORKERS}${WorkersApiPath.ROOT}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{
         Querystring: EAMWorkerGetByTenantRequestParamsDto;
@@ -114,7 +114,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.GROUPS}${GroupsApiPath.ROOT}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{ Querystring: EAMGroupGetByTenantRequestParamsDto }>,
       rep: FastifyReply,
@@ -127,7 +127,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: EAMApiPath.PERMISSION,
-    preHandler: checkHasPermissions(Permission.MANAGE_EAM),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     async handler(req, rep) {
       const permission = await permissionServ.getAll();
       return rep.send(permission).status(HttpCode.OK);

@@ -19,7 +19,10 @@ import {
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { upload, checkHasPermissions } from '~/hooks/hooks';
+import {
+  upload as uploadHook,
+  checkHasPermissions as checkHasPermissionsHook,
+} from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -34,7 +37,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: BSApiPath.SPACES,
-    preHandler: checkHasPermissions(Permission.MANAGE_BS),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     schema: {
       body: bsSpaceCreateValidationSchema,
     },
@@ -65,7 +68,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: BSApiPath.SPACES,
-    preHandler: checkHasPermissions(Permission.MANAGE_BS),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
       rep: FastifyReply,
@@ -82,7 +85,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_BS),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
       rep: FastifyReply,
@@ -105,8 +108,8 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.POST,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
     preHandler: [
-      upload.single('file'),
-      checkHasPermissions(Permission.MANAGE_BS),
+      uploadHook.single('file'),
+      checkHasPermissionsHook(Permission.MANAGE_BS),
     ],
     async handler(
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
@@ -129,7 +132,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.GET,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_BS),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(req, rep) {
       const { spaceId, objectId } = req.params;
 

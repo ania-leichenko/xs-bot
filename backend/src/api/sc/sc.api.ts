@@ -25,7 +25,7 @@ import {
   scInstanceCreate as scInstanceCreateValidationSchema,
   scInstanceUpdate as scInstanceUpdateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { checkHasPermissions } from '~/hooks/hooks';
+import { checkHasPermissions as checkHasPermissionsHook } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -45,7 +45,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SCApiPath.OPERATION_SYSTEMS,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     async handler(req, rep) {
       const operationSystems = await operationSystemService.getAll();
       return rep.send(operationSystems).status(HttpCode.OK);
@@ -55,7 +55,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${SCApiPath.SSH_KEYS}${SshKeysApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Params: SCSshKeyGetByIdParamsDto;
@@ -70,7 +70,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SCApiPath.ROOT,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Querystring: SCInstanceGetByTenantRequestParamsDto;
@@ -88,7 +88,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     async handler(
       req: FastifyRequest<{
         Params: SCInstanceDeleteParamsDto;
@@ -103,7 +103,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.PUT,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     schema: {
       body: scInstanceUpdateValidationSchema,
     },
@@ -131,7 +131,7 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: SCApiPath.ROOT,
-    preHandler: checkHasPermissions(Permission.MANAGE_SC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
     schema: {
       body: scInstanceCreateValidationSchema,
     },
