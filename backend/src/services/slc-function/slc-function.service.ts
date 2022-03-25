@@ -5,7 +5,6 @@ import {
   SLCFunctionUpdateResponseDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionLoadResponseDto,
-  SLCFunctionRunParamsDto,
   SLCFunctionRunResponseDto,
   TokenPayload,
 } from '~/common/types/types';
@@ -199,7 +198,11 @@ class SLCFunction {
 
   public async runById({
     id,
-  }: SLCFunctionRunParamsDto): Promise<SLCFunctionRunResponseDto> {
+    payload,
+  }: {
+    id: string;
+    payload?: string;
+  }): Promise<SLCFunctionRunResponseDto> {
     const slcFunction = await this.#slcFunctionRepository.getById(id);
 
     if (!slcFunction) {
@@ -209,9 +212,12 @@ class SLCFunction {
       });
     }
 
-    const payload = await this.#lambdaService.runFunction(slcFunction.name);
+    const responsePayload = await this.#lambdaService.runFunction(
+      slcFunction.name,
+      payload,
+    );
 
-    return { payload };
+    return { payload: responsePayload };
   }
 }
 

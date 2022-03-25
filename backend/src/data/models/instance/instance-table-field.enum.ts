@@ -8,6 +8,7 @@ enum InstanceTableField {
   AWS_INSTANCE_ID = 'awsInstanceId',
   TENANT_ID = 'tenantId',
   STATE = 'state',
+  OPERATION_SYSTEM = 'operationSystem',
 }
 
 export { InstanceTableField };

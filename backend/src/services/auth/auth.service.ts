@@ -44,7 +44,7 @@ class Auth {
 
   public async getCurrentUser(
     token: string,
-  ): Promise<null | EAMMasterSignInResponseDto | EAMWorkerSignInResponseDto> {
+  ): Promise<EAMMasterSignInResponseDto | EAMWorkerSignInResponseDto> {
     try {
       const { userId, userRole } =
         this.#tokenService.decode<TokenPayload>(token);
