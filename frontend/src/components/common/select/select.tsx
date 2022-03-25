@@ -35,8 +35,8 @@ const Select: FC<Props> = ({
   };
 
   return (
-    <div className={styles.reactSelectContainer}>
-      <span>{label}</span>
+    <label className={styles.selectLabel}>
+      <span className={styles.span}>{label}</span>
       <ReactSelect
         {...field}
         placeholder={placeholder}
@@ -48,7 +48,7 @@ const Select: FC<Props> = ({
       <span className={styles.error}>
         <ErrorMessage errors={errors} name={name} />
       </span>
-    </div>
+    </label>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Checkbox } from 'components/common/common';
 
-const ActionCell = (
+const SelectRowCell = (
   id: string,
   handleAddId: (id: string) => void,
   handleRemoveId: (id: string) => void,
@@ -24,4 +24,4 @@ const ActionCell = (
   );
 };
 
-export { ActionCell };
+export { SelectRowCell };

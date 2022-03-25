@@ -1,6 +1,5 @@
 import { IconButton } from 'components/common/common';
 import { AppRoute, IconName } from 'common/enums/enums';
-import { Link } from 'react-router-dom';
 import styles from './styles.module.scss';
 
 const ActionCell = (
@@ -18,9 +17,13 @@ const ActionCell = (
         label="Delete"
         onClick={handleDelete}
       />
-      <Link to={`${AppRoute.EAM_CONFIGURATE_GROUP}?id=${id}`}>
-        <div className={styles.edit} />
-      </Link>
+      <IconButton
+        icon={IconName.GEAR}
+        label={'edit'}
+        to={
+          `${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute.EAM_CONFIGURATE_GROUP_$ID
+        }
+      />
     </div>
   );
 };
