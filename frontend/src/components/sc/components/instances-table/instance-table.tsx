@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
+import { DataStatus } from '../../../../common/enums/app/data-status.enum';
 
 type Props = {
   onInstanceDelete: (id: string) => void;
@@ -13,9 +14,11 @@ const InstancesTable: FC<Props> = ({
   onInstanceDelete,
   onKeyClick,
 }) => {
-  const { instances } = useAppSelector(({ sc }) => ({
+  const { instances, dataStatus } = useAppSelector(({ sc }) => ({
     instances: sc.instances,
+    dataStatus: sc.dataStatus,
   }));
+  const isLoading = dataStatus === DataStatus.PENDING;
 
   const data = useMemo(
     () => getRows({ instances, onInstanceDelete, onKeyClick }),
@@ -30,6 +33,7 @@ const InstancesTable: FC<Props> = ({
       data={data}
       title="Instances"
       placeholder="No instances to display"
+      isLoading={isLoading}
     >
       {children}
     </Table>
