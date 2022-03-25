@@ -52,6 +52,7 @@ export {
   type SCInstanceUpdateParamsDto,
   type SCInstanceUpdateRequestDto,
   type SCInstanceUpdateResponseDto,
+  type SCInstanceRelatedItem,
 } from './sc-instance/sc-instance';
 export {
   type SCOperationSystemGetAllResponseDto,
@@ -89,6 +90,7 @@ export {
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type ValidationSchema } from './validation/validation';

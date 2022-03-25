@@ -57,14 +57,13 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       return rep
         .send(
           await workerService.create({
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -196,12 +195,11 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: EAMWorkerDeleteRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
 
       await workerService.deleteWorker({
         id,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(true).status(HttpCode.OK);

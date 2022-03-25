@@ -1,5 +1,4 @@
 .clientSideTable {
-  width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
 }
@@ -59,6 +58,7 @@
 .tableRow:hover {
   background-color: var(--color-background);
   transition-duration: 500ms;
+  transition-property: background-color;
 }
 
 .tableCell {
@@ -85,6 +85,7 @@
 }
 
 .placeholder {
+  display: block;
   color: rgba(255 255 255 / 69%);
   font-style: italic;
   text-align: center;

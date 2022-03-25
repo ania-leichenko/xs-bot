@@ -11,8 +11,13 @@ const ActionCell = (
     onGroupDelete(id);
   };
   return (
-    <div className={styles.actions}>
-      <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
+    <div className={styles.wrapper}>
+      <IconButton
+        title="Delete"
+        icon={IconName.TRASH}
+        label="Delete"
+        onClick={handleDelete}
+      />
       <Link to={`${AppRoute.EAM_CONFIGURATE_GROUP}?id=${id}`}>
         <div className={styles.edit} />
       </Link>

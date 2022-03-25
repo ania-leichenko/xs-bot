@@ -18,6 +18,7 @@ const ExceptionMessage = {
   MASTER_FUNCTION_CREATE: 'Master is not able to create function.',
   MASTER_FUNCTION_DELETE: 'Master is not able to delete function.',
   MASTER_FUNCTION_UPDATE: 'Master is not able to edit function.',
+  MASTER_FUNCTION_RUN: 'Master is not able to run function.',
   MASTER_SPACE_CREATE: 'Master is not able to create space.',
   MASTER_SPACE_DELETE: 'Master is not able to delete space',
   MASTER_OBJECT_UPLOAD: 'Master is not able to upload object',
@@ -38,9 +39,11 @@ const ExceptionMessage = {
   INSTANCE_NOT_FOUND: 'Instance not found',
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
   NOTHING_TO_UPDATE: 'Nothing to update',
+  FAILED_TO_CREATE: 'Failed to create instance',
   SPACE_EXISTS: 'Space with this name already exists',
   OBJECT_NOT_UPLOADED: 'Object is not uploaded',
   OBJECT_ACCESS_DENIED: 'You do not have access to this object',
+  OPERATION_SYSTEM_NOT_FOUND: 'Operation system not found',
 } as const;
 
 export { ExceptionMessage };
