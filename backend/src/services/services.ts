@@ -105,16 +105,9 @@ const instance = new Instance({
 const worker = new Worker({
   workerRepository,
   tenantRepository,
-  spaceRepository,
-  slcFunctionRepository,
-  instanceRepository,
   encryptService: encrypt,
   tokenService: token,
   masterService: master,
-  tenantService: tenant,
-  instanceService: instance,
-  spaceService: space,
-  slcFunctionService: slcFunction,
 });
 
 const group = new Group({

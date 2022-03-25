@@ -33,6 +33,7 @@ type Options = {
   services: {
     group: typeof groupServ;
     worker: typeof workerServ;
+    permission: typeof permissionServ;
     token: typeof tokenServ;
   };
 };
@@ -41,6 +42,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const {
     group: groupService,
     worker: workerService,
+    permission: permissionService,
     token: tokenService,
   } = opts.services;
 
@@ -130,7 +132,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.GET,
     url: EAMApiPath.PERMISSION,
     async handler(req, rep) {
-      const permission = await permissionServ.getAll();
+      const permission = await permissionService.getAll();
       return rep.send(permission).status(HttpCode.OK);
     },
   });

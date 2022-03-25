@@ -1,9 +1,6 @@
 import {
   worker as workerRep,
   tenant as tenantRep,
-  space as spaceRep,
-  slcFunction as slcFunctionRep,
-  instance as instanceRep,
 } from '~/data/repositories/repositories';
 import {
   EAMWorkerCreateRequestDto,
@@ -21,68 +18,36 @@ import {
   encrypt as encryptServ,
   master as masterServ,
   token as tokenServ,
-  tenant as tenantServ,
-  instance as instanceServ,
-  space as spaceServ,
-  slcFunction as slcFunctionServ,
 } from '~/services/services';
 import { InvalidCredentialsError, EAMError } from '~/exceptions/exceptions';
 
 type Constructor = {
   workerRepository: typeof workerRep;
   tenantRepository: typeof tenantRep;
-  spaceRepository: typeof spaceRep;
-  slcFunctionRepository: typeof slcFunctionRep;
-  instanceRepository: typeof instanceRep;
   encryptService: typeof encryptServ;
   tokenService: typeof tokenServ;
   masterService: typeof masterServ;
-  tenantService: typeof tenantServ;
-  instanceService: typeof instanceServ;
-  spaceService: typeof spaceServ;
-  slcFunctionService: typeof slcFunctionServ;
 };
 
 class Worker {
   #workerRepository: typeof workerRep;
   #tenantRepository: typeof tenantRep;
-  #spaceRepository: typeof spaceRep;
-  #slcFunctionRepository: typeof slcFunctionRep;
-  #instanceRepository: typeof instanceRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
   #masterService: typeof masterServ;
-  #tenantService: typeof tenantServ;
-  #instanceService: typeof instanceServ;
-  #spaceService: typeof spaceServ;
-  #slcFunctionService: typeof slcFunctionServ;
 
   constructor({
     workerRepository,
     tenantRepository,
-    spaceRepository,
-    slcFunctionRepository,
-    instanceRepository,
     encryptService,
     tokenService,
     masterService,
-    tenantService,
-    instanceService,
-    spaceService,
-    slcFunctionService,
   }: Constructor) {
     this.#workerRepository = workerRepository;
     this.#tenantRepository = tenantRepository;
-    this.#spaceRepository = spaceRepository;
-    this.#slcFunctionRepository = slcFunctionRepository;
-    this.#instanceRepository = instanceRepository;
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
     this.#masterService = masterService;
-    this.#tenantService = tenantService;
-    this.#instanceService = instanceService;
-    this.#spaceService = spaceService;
-    this.#slcFunctionService = slcFunctionService;
   }
 
   public async login(id: string): Promise<EAMWorkerSignInResponseDto> {
@@ -207,7 +172,7 @@ class Worker {
     if (!worker) {
       throw new EAMError({
         status: HttpCode.NOT_FOUND,
-        message: ExceptionMessage.WORKER_NAME_EXISTS,
+        message: ExceptionMessage.WORKER_NOT_FOUND,
       });
     }
 
@@ -219,26 +184,6 @@ class Worker {
         message: ExceptionMessage.MASTER_DELETE,
       });
     }
-
-    const instances = await this.#instanceRepository.getByWorkerId(id);
-    const spaces = await this.#spaceRepository.getByWorkerId(id);
-    const slcFunctions = await this.#slcFunctionRepository.getByWorkerId(id);
-
-    await Promise.all(
-      instances.map((instance) => this.#instanceService.delete(instance.id)),
-    );
-    await Promise.all(
-      spaces.map((item) => {
-        const id = item.id;
-        return this.#spaceService.delete(id);
-      }),
-    );
-    await Promise.all(
-      slcFunctions.map((slcFunction) => {
-        const id = slcFunction.id;
-        return this.#slcFunctionService.delete(id);
-      }),
-    );
 
     await this.#workerRepository.deleteWorker(id);
   }
