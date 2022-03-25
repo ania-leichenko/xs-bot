@@ -7,7 +7,7 @@ const getColumns = (): Column[] => {
       Header: ObjectsTableHeader.OBJECT_NAME,
       accessor: ObjectsTableAccessor.OBJECT_NAME,
       minWidth: 100,
-      width: 650,
+      width: 450,
     },
     {
       Header: ObjectsTableHeader.CREATED_AT,

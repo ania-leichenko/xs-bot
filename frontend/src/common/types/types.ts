@@ -65,7 +65,6 @@ export {
 } from './bs-space/bs-space';
 export {
   type BSObjectDownloadParamsDto,
-  type BSObjectGetFilter,
   type BSObjectGetRequestParamsDto,
   type BSObjectGetResponseItemDto,
   type BSObjectGetResponseDto,

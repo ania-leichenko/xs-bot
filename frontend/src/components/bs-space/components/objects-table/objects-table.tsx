@@ -4,15 +4,15 @@ import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
 
 type Props = {
-  // onObjectDelete: (id: string) => void;
+  onObjectDownload: (objectId: string) => void;
 };
 
-const ObjectsTable: FC<Props> = ({ children }) => {
+const ObjectsTable: FC<Props> = ({ children, onObjectDownload }) => {
   const { objects } = useAppSelector(({ BSSpace }) => ({
     objects: BSSpace.objects,
   }));
 
-  const data = useMemo(() => getRows({ objects }), [objects]);
+  const data = useMemo(() => getRows({ objects, onObjectDownload }), [objects]);
 
   const columns = useMemo(() => getColumns(), []);
 

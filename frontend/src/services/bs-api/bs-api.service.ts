@@ -6,6 +6,7 @@ import {
   SpacesApiPath,
 } from 'common/enums/enums';
 import {
+  BSObjectDownloadParamsDto,
   BSObjectGetRequestParamsDto,
   BSObjectGetResponseDto,
   BSSpaceCreateRequestDto,
@@ -86,6 +87,41 @@ class BSApi {
       {
         method: HttpMethod.GET,
         params: filter,
+      },
+    );
+  }
+
+  public downloadObject(params: BSObjectDownloadParamsDto): Promise<Blob> {
+    return this.#http.loadObject(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        params.spaceId,
+        SpacesApiPath.OBJECTS,
+        '/',
+        params.objectId,
+      ),
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public uploadObject(id: string, file: FormData): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        id,
+        SpacesApiPath.OBJECTS,
+      ),
+      {
+        method: HttpMethod.POST,
+        payload: JSON.stringify(file),
       },
     );
   }

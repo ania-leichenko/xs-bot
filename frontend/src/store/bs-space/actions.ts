@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
+  BSObjectDownloadParamsDto,
   BSObjectGetRequestParamsDto,
   BSObjectGetResponseDto,
 } from 'common/types/types';
@@ -19,4 +20,24 @@ const loadObjects = createAsyncThunk<
   return bsApi.loadObjects(filter, params);
 });
 
-export { loadObjects };
+const downloadObject = createAsyncThunk<
+  Blob,
+  BSObjectDownloadParamsDto,
+  AsyncThunkConfig
+>(ActionType.DOWNLOAD_OBJECT, async (params, { extra }) => {
+  const { bsApi } = extra;
+
+  return await bsApi.downloadObject(params);
+});
+
+const uploadObject = createAsyncThunk<
+  boolean,
+  { id: string; file: FormData },
+  AsyncThunkConfig
+>(ActionType.UPLOAD_OBJECT, async (payload, { extra }) => {
+  const { bsApi } = extra;
+
+  return bsApi.uploadObject(payload.id, payload.file);
+});
+
+export { loadObjects, downloadObject, uploadObject };

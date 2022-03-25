@@ -3,21 +3,16 @@ import { IconName } from 'common/enums/enums';
 
 const ActionCell = (
   id: string,
-  // onObjectDownload: (id: string) => void,
+  onObjectDownload: (objectId: string) => void,
 ): JSX.Element => {
-  // const handleDownload = (): void => {
-  //   onObjectDownload(id);
-  // };
+  const handleDownload = (): void => {
+    onObjectDownload(id);
+  };
   return (
     <IconButton
       icon={IconName.DOWNLOAD}
       label="Download"
-      onClick={
-        (): void => {
-          id;
-        }
-        // handleDownload
-      }
+      onClick={handleDownload}
     />
   );
 };

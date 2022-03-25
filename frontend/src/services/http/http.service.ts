@@ -43,6 +43,26 @@ class Http {
       .catch(this.throwError);
   }
 
+  loadObject(url: string, options: Partial<HttpOptions> = {}): Promise<Blob> {
+    const {
+      method = HttpMethod.GET,
+      payload = null,
+      contentType,
+      hasAuth = true,
+      params,
+    } = options;
+    const headers = this.getHeaders(contentType, hasAuth);
+
+    return fetch(this.getUrl(url, params), {
+      method,
+      headers,
+      body: payload,
+    })
+      .then(this.checkStatus)
+      .then((res) => res.blob())
+      .catch(this.throwError);
+  }
+
   private getHeaders(contentType?: ContentType, hasAuth?: boolean): Headers {
     const headers = new Headers();
 

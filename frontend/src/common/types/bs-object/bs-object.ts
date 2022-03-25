@@ -1,6 +1,7 @@
 export {
+  type ObjectUploadRequestDto,
+  type BSObjectUploadParamsDto,
   type BSObjectDownloadParamsDto,
-  type BSObjectGetFilter,
   type BSObjectGetRequestParamsDto,
   type BSObjectGetResponseItemDto,
   type BSObjectGetResponseDto,
