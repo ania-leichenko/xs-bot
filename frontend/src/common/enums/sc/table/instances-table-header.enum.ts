@@ -6,6 +6,7 @@ enum InstancesTableHeader {
   PUBLIC_IPV4_ADDRESS = 'Public IPv4 address',
   CREATED_AT = 'Created',
   ACTIONS = 'Actions',
+  OS = 'OS',
 }
 
 export { InstancesTableHeader };

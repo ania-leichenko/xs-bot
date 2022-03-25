@@ -45,8 +45,12 @@ export {
   type SCInstanceUpdateParamsDto,
   type SCInstanceUpdateRequestDto,
   type SCInstanceUpdateResponseDto,
+  type SCInstanceRelatedItem,
 } from './sc-instance/sc-instance';
-export { type SCOperationSystemGetAllResponseDto } from './sc-operation-system/sc-operation-system';
+export {
+  type SCOperationSystemGetAllResponseDto,
+  type OperationSystem,
+} from './sc-operation-system/operation-system';
 export {
   type SCSshKeyGetByIdParamsDto,
   type SCSshKeyGetByIdResponseDto,
@@ -78,6 +82,7 @@ export {
   type SLCFunctionLoadParamsDto,
   type SLCFunctionLoadResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export { type TokenPayload } from './token/token';

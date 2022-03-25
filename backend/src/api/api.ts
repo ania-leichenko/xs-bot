@@ -12,6 +12,7 @@ import {
   keyPair,
   slcFunction,
   bsObject,
+  token,
 } from '~/services/services';
 import { WHITE_ROUTES, ROOT_ROUTE } from '~/common/constants/constants';
 import {
@@ -85,6 +86,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initSLCApi, {
     services: {
       slcFunction,
+      token,
     },
     prefix: ApiPath.SLC,
   });

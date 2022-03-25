@@ -49,7 +49,7 @@ const CreateInstanceForm: FC = () => {
             <Input
               type={InputType.TEXT}
               label=""
-              placeholder=""
+              placeholder="Name..."
               name={getNameOf<SCInstanceCreateRequestDto>('name')}
               control={control}
               errors={errors}
@@ -59,10 +59,22 @@ const CreateInstanceForm: FC = () => {
           <div className={styles.inputWrapper}>
             <Select
               label=""
+              placeholder="Select OS..."
               options={getOperationSystemOptions(operationSystems)}
               name={getNameOf<SCInstanceCreateRequestDto>('operationSystemId')}
               control={control}
               errors={errors}
+            />
+          </div>
+          <h3 className={styles.inputTitle}>User data</h3>
+          <div className={styles.inputWrapper}>
+            <Input
+              label=""
+              placeholder="Additional commands (optional)..."
+              name={getNameOf<SCInstanceCreateRequestDto>('userData')}
+              control={control}
+              errors={errors}
+              rows={10}
             />
           </div>
         </li>
