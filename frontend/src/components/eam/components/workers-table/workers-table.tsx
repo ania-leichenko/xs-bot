@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/table/table';
 import { getRows, getColumns } from './helpers/helpers';
-import { DataStatus } from '../../../../common/enums/app/data-status.enum';
+import { DataStatus } from 'common/enums/enums';
 
 const WorkersTable: FC = ({ children }) => {
   const { workers, workersDataStatus } = useAppSelector(({ eam }) => ({
