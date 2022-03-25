@@ -1,6 +1,6 @@
 import { UsersTableAccessor } from 'common/enums/enums';
 import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [UsersTableAccessor.USERNAME]: string;
@@ -18,7 +18,7 @@ const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
       [UsersTableAccessor.ID]: id,
       [UsersTableAccessor.USERNAME]: name,
       [UsersTableAccessor.GROUPS]: groupsName,
-      [UsersTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+      [UsersTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
         new Date(createdAt),
       ),
     };
