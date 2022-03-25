@@ -1,6 +1,6 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [GroupsTableAccessor.ID]: string;
@@ -21,7 +21,7 @@ const getRows = (groups: EAMGroupGetByTenantResponseItemDto[]): Row[] => {
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: permissionsNames,
-      [GroupsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+      [GroupsTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
         new Date(createdAt),
       ),
     };
