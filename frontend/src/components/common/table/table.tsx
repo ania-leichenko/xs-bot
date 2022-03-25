@@ -8,7 +8,6 @@ import {
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Pagination } from 'components/pagination/pagination';
-import { usePagination } from 'hooks/hooks';
 
 type Props = {
   columns: Column[];
@@ -17,9 +16,11 @@ type Props = {
   className?: string;
   placeholder?: string;
   pagination?: {
-    perPage: number;
+    handleBackPage: () => void;
+    handleNextPage: () => void;
+    allPage: number;
+    currentPage: number;
     countItems: number;
-    handleLoad: (from: number) => void;
   };
   dataTestid?: string;
 };
@@ -48,7 +49,6 @@ const Table: FC<Props> = ({
   const hasData = data.length !== 0;
   const hasPlaceholder = hasStrPlaceholder && !hasData;
   const hasPagination = Boolean(pagination);
-  const paginationProps = usePagination(pagination);
 
   return (
     <div
@@ -107,11 +107,11 @@ const Table: FC<Props> = ({
       )}
       {hasPagination && (
         <Pagination
-          countItems={paginationProps?.countItems}
-          currentPage={paginationProps?.currentPage}
-          allPage={paginationProps?.allPage}
-          handleBackPage={paginationProps?.handleBackPage}
-          handleNextPage={paginationProps?.handleNextPage}
+          countItems={pagination?.countItems}
+          currentPage={pagination?.currentPage}
+          allPage={pagination?.allPage}
+          handleBackPage={pagination?.handleBackPage}
+          handleNextPage={pagination?.handleNextPage}
         />
       )}
     </div>

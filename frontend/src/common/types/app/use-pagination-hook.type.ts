@@ -4,6 +4,6 @@ type UsePaginationtemsHook = {
   allPage: number;
   currentPage: number;
   countItems: number;
-} | null;
+};
 
 export { type UsePaginationtemsHook };

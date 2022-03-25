@@ -47,4 +47,4 @@ export {
   NotificationMessage,
   NotificationType,
 } from './notification/notification';
-export { PaginationEnum } from './pagination/pagination.enum';
+export { Pagination } from './pagination/pagination.enum';
