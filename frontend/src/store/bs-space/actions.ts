@@ -22,7 +22,7 @@ const loadObjects = createAsyncThunk<
 
 const downloadObject = createAsyncThunk<
   Blob,
-  BSObjectDownloadParamsDto,
+  BSObjectDownloadParamsDto & { filename: string },
   AsyncThunkConfig
 >(ActionType.DOWNLOAD_OBJECT, async (params, { extra }) => {
   const { bsApi } = extra;

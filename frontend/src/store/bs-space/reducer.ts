@@ -9,6 +9,7 @@ type State = {
   objects: BSObjectGetResponseItemDto[];
   formData: FormData;
   blob: Blob | null;
+  filename: string;
 };
 
 const initialState: State = {
@@ -16,11 +17,13 @@ const initialState: State = {
   objects: [],
   formData: new FormData(),
   blob: null,
+  filename: '',
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(clearBlob, (state) => {
     state.blob = null;
+    state.filename = '';
   });
   builder.addCase(loadObjects.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
@@ -37,6 +40,7 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(downloadObject.fulfilled, (state, action) => {
     state.blob = action.payload;
+    state.filename = action.meta.arg.filename;
     state.dataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(downloadObject.rejected, (state) => {

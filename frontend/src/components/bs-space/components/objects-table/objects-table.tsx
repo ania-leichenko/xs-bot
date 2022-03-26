@@ -4,7 +4,7 @@ import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
 
 type Props = {
-  onObjectDownload: (objectId: string) => void;
+  onObjectDownload: (objectId: string, fileName: string) => void;
 };
 
 const ObjectsTable: FC<Props> = ({ children, onObjectDownload }) => {

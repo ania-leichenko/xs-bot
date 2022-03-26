@@ -15,6 +15,7 @@ const BSSpace: FC = () => {
   const dispatch = useAppDispatch();
   const blob = useAppSelector(({ BSSpace }) => BSSpace.blob);
   const formData = useAppSelector(({ BSSpace }) => BSSpace.formData);
+  const filename = useAppSelector(({ BSSpace }) => BSSpace.filename);
 
   const { id } = useParams();
 
@@ -47,27 +48,28 @@ const BSSpace: FC = () => {
   };
 
   useEffect(() => {
-    if (blob !== null) {
-      download(blob);
+    if (blob) {
+      download(blob, filename);
       dispatch(BSSpaceActions.clearBlob());
     }
   }, [blob]);
 
-  const handleObjectDownload = (objectId: string): void => {
+  const handleObjectDownload = (objectId: string, filename: string): void => {
     dispatch(
-      BSSpaceActions.downloadObject({ spaceId: id as string, objectId }),
+      BSSpaceActions.downloadObject({
+        filename,
+        spaceId: id as string,
+        objectId,
+      }),
     );
   };
 
-  const download = (
-    blob: Blob,
-    // filename: string
-  ): void => {
+  const download = (blob: Blob, filename: string): void => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = 'filename';
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
