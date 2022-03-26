@@ -41,26 +41,28 @@ const Input: FC<Props> = ({
       >
         {label}
       </span>
-      {isTextarea ? (
-        <textarea
-          {...field}
-          rows={rows}
-          placeholder={placeholder}
-          className={getValidClasses(
-            styles.textarea,
-            hasError ? styles.inputError : styles.input,
-          )}
-        />
-      ) : (
-        <input
-          {...field}
-          type={type}
-          placeholder={placeholder}
-          className={getValidClasses(
-            hasError ? styles.inputError : styles.input,
-          )}
-        />
-      )}
+      <span className={styles.inputWrapper}>
+        {isTextarea ? (
+          <textarea
+            {...field}
+            rows={rows}
+            placeholder={placeholder}
+            className={getValidClasses(
+              styles.textarea,
+              hasError ? styles.inputError : styles.input,
+            )}
+          />
+        ) : (
+          <input
+            {...field}
+            type={type}
+            placeholder={placeholder}
+            className={getValidClasses(
+              hasError ? styles.inputError : styles.input,
+            )}
+          />
+        )}
+      </span>
       <span className={styles.error}>
         <ErrorMessage errors={errors} name={name} />
       </span>
