@@ -35,7 +35,7 @@ const ExceptionMessage = {
   FUNCTION_NOT_UPDATED: 'Function code not updated.',
   GROUP_NOT_SELECTED: 'Please select any group or create a new one first',
   GROUP_NOT_EMPTY: 'The group with workers can not be deleted',
-  GROUP_DOES_NOT_EXIST: 'An error happened, reload page and try again',
+  GROUP_NOT_FOUND: 'Group not found',
   GROUP_EXISTS: 'Group with this name already exists',
   INSTANCE_NOT_FOUND: 'Instance not found',
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
