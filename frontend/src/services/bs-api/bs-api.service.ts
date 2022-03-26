@@ -121,7 +121,7 @@ class BSApi {
       ),
       {
         method: HttpMethod.POST,
-        payload: JSON.stringify(file),
+        payload: file,
       },
     );
   }
