@@ -9,8 +9,8 @@ import styles from './styles.module.scss';
 const EAM: FC = () => {
   const dispatch = useAppDispatch();
 
-  const { id: tenantId } = useAppSelector(({ app }) => ({
-    id: app.tenant?.id,
+  const { tenantId } = useAppSelector(({ app }) => ({
+    tenantId: app.tenant?.id,
   }));
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import { backgroundJob } from '~/services/services';
 import { upload } from './middlewares/middlewares';
 
 const app = Fastify({
+  bodyLimit: 6 * 1024 * 1024,
   logger: {
     prettyPrint: true,
   },
