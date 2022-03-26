@@ -37,10 +37,7 @@ const Input: FC<Props> = ({
   return (
     <label className={styles.inputLabel}>
       <span
-        className={getValidClasses(
-          styles.span,
-          !hasLabel && styles.visuallyHidden,
-        )}
+        className={getValidClasses(styles.span, !hasLabel && 'visually-hidden')}
       >
         {label}
       </span>
