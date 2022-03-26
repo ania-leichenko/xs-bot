@@ -34,20 +34,20 @@ const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
             'Enter your arguments in JSON format.(optional)\nExample: { "key": "value" }'
           }
           height={300}
-        ></Editor>
+        />
         <div className={styles.buttons}>
           <Button
             btnStyle={ButtonStyle.OUTLINED}
             className={styles.button}
             label="Cancel"
             onClick={onClose}
-          ></Button>
+          />
           <Button
             className={styles.button}
             btnStyle={ButtonStyle.FILLED}
             label="Run"
             onClick={handleOnRun}
-          ></Button>
+          />
         </div>
       </div>
     </Modal>
