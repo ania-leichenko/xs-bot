@@ -10,18 +10,21 @@
     "lint:fs": "ls-lint",
     "lint:shared:js": "cd shared && npm run lint:js",
     "lint:shared": "cd shared && npm run lint",
+    "lint:tests:js": "cd tests && npm run lint:js",
+    "lint:tests": "cd tests && npm run lint",
     "lint:backend:js": "cd backend && npm run lint:js",
     "lint:backend": "cd backend && npm run lint",
     "lint:frontend:css": "cd frontend && npm run lint:css",
     "lint:frontend:js": "cd frontend && npm run lint:js",
     "lint:frontend": "cd frontend && npm run lint",
     "lint:css": "npm run lint:frontend:css",
-    "lint:js": "npm run lint:shared:js && npm run lint:backend:js && npm run lint:frontend:js",
+    "lint:js": "npm run lint:shared:js && && npm run lint:tests:js && npm run lint:backend:js && npm run lint:frontend:js",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:css && npm run lint:js",
     "install:shared": "cd shared && npm install --production=false",
+    "install:tests": "cd tests && npm install --production=false",
     "install:frontend": "cd frontend && npm install --production=false",
     "install:backend": "cd backend && npm install --production=false",
-    "install:all": "npm install && npm run install:shared && npm run build:shared && npm run install:frontend && npm run install:backend",
+    "install:all": "npm install && npm run install:shared && npm run install:tests && npm run build:shared && npm run install:frontend && npm run install:backend",
     "build:shared": "cd shared && npm run build",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
@@ -30,11 +33,6 @@
   "devDependencies": {
     "@ls-lint/ls-lint": "1.10.0",
     "@typescript-eslint/eslint-plugin": "5.9.1",
-    "@wdio/cli": "^7.19.0",
-    "@wdio/local-runner": "^7.19.0",
-    "@wdio/mocha-framework": "^7.19.0",
-    "@wdio/spec-reporter": "^7.19.0",
-    "chromedriver": "^99.0.0",
     "editorconfig-checker": "4.0.2",
     "eslint": "8.6.0",
     "eslint-import-resolver-alias": "1.1.2",
@@ -43,10 +41,10 @@
     "simple-git-hooks": "2.7.0",
     "stylelint": "14.2.0",
     "stylelint-config-standard": "24.0.0",
-    "stylelint-order": "5.0.0",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.2",
-    "wdio-chromedriver-service": "^7.3.2"
+    "stylelint-order": "5.0.0"
+  },
+  "dependencies": {
+    "typescript": "4.5.4"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"

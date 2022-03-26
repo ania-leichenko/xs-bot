@@ -1,8 +1,8 @@
-const DashboardActions = require('../PA/dashboard_pa');
-const dashh = new DashboardActions();
+import { DashboardActions } from '../pa/dashboard-pa';
+import { RegistrationActions } from '../pa/registration-pa';
 
-const registrationActions = require('../PA/registration_pa');
-const regact = new registrationActions();
+const dashh = new DashboardActions();
+const regact = new RegistrationActions();
 
 describe('Master', async () => {
   it('can open EAM servise', async () => {

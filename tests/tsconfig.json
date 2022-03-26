@@ -1,4 +1,5 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "types": [
       "node",
@@ -6,6 +7,9 @@
       "@wdio/mocha-framework",
       "expect-webdriverio"
     ],
-    "target": "es2019"
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "module": "esnext"
   }
 }

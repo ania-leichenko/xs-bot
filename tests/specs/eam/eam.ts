@@ -1,14 +1,14 @@
-//const { browser } = require('webdriverio');
-const asserteam = require('assert');
-const RegisterActions = require('../PA/registration_pa');
-const regAct = new RegisterActions();
-const eamAct = require('../PA/eam_pa');
-const eamActions = new eamAct();
-const dashB = require('../PA/dashboard_pa');
-const checkEAM = new dashB();
-const testData = require('../test-data/register-data.json');
-const eam = require('../PO/eam_po');
-const EAM = new eam();
+import * as asserteam from 'assert';
+import { RegistrationActions } from '../pa/registration-pa';
+import { EAMActions } from '../pa/eam-pa';
+import { DashboardActions } from '../pa/dashboard-pa';
+import * as testData from '../test-data/register-data.json' assert { type: 'json' };
+import { EAM } from '../po/eam-po';
+
+const regAct = new RegistrationActions();
+const eamActions = new EAMActions();
+const checkEAM = new DashboardActions();
+const eam = new EAM();
 
 describe('MASTER', async () => {
   it('can open eam', async () => {
@@ -17,7 +17,7 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     /////////CHECK/////////////
-    let check = await EAM.AddWorker_Button.isExisting();
+    const check = await eam.AddWorker_Button.isExisting();
     asserteam.equal(check, true);
     await browser.reloadSession();
   });
@@ -34,7 +34,7 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     /////////CHECK and return previous value/////////////
-    let check = await EAM.Name_Field.getValue();
+    const check = await eam.Name_Field.getValue();
     asserteam.strictEqual(check, testData.NewTenantName);
     await eamActions.ChangeTenantName(testData.TenantName);
     await eamActions.ClickSaveButton();
@@ -46,13 +46,14 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddWorkerButton();
-    let NewWorker = new Date().getTime() / 1000 + 'dev';
+    const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await eamActions.ClickSaveCSV();
     /////////CHECK/////////////
     await checkEAM.OpenEAM();
-    let check = await EAM.LastWorker[0].getText();
+    const [checkElement] = await eam.LastWorker;
+    const check = await checkElement.getText();
     asserteam.strictEqual(check, NewWorker);
     await browser.reloadSession();
   });
@@ -62,12 +63,13 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddGroupButton();
-    let NewGroup = new Date().getTime() / 1000 + 'group';
+    const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
     ///////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let check = await EAM.LastGroup[0].getText();
+    const [checkElement] = await eam.LastGroup;
+    const check = await checkElement.getText();
     asserteam.strictEqual(check, NewGroup);
     await browser.reloadSession();
   });
@@ -77,11 +79,13 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.ClickReloadGroupButton();
-    let last = await EAM.LastGroup[5].getText();
+    const [, , , , , laseElement] = await eam.LastGroup;
+    const last = await laseElement.getText();
     await eamActions.ClickDeleteGroupButton();
     /////////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let newlast = await EAM.LastGroup[0].getText();
+    const [newLastElement] = await eam.LastGroup;
+    const newlast = await newLastElement.getText();
     asserteam.strictEqual(last, newlast);
     await browser.reloadSession();
   });
@@ -91,16 +95,18 @@ describe('MASTER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddWorkerButton();
-    let NewWorker = new Date().getTime() / 1000 + 'dev';
+    const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await checkEAM.OpenEAM();
     await eamActions.ClickReloadGroupButton();
-    let last = await EAM.LastGroup[0].getText();
+    const [lastElement] = await eam.LastGroup;
+    const last = await lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
     /////////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let newlast = await EAM.LastGroup[0].getText();
+    const [newLastElement] = await eam.LastGroup;
+    const newlast = await newLastElement.getText();
     asserteam.strictEqual(last, newlast);
     await browser.reloadSession();
   });
@@ -113,7 +119,7 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     /////////CHECK/////////////
-    let check = await EAM.AddWorker_Button.isExisting();
+    const check = await eam.AddWorker_Button.isExisting();
     asserteam.equal(check, true);
     await browser.reloadSession();
   });
@@ -130,7 +136,7 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     /////////CHECK and return previous value/////////////
-    let check = await EAM.Name_Field.getValue();
+    const check = await eam.Name_Field.getValue();
     asserteam.strictEqual(check, testData.NewTenantName);
     await eamActions.ChangeTenantName(testData.TenantName);
     await eamActions.ClickSaveButton();
@@ -142,13 +148,14 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddWorkerButton();
-    let NewWorker = new Date().getTime() / 1000 + 'dev';
+    const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await eamActions.ClickSaveCSV();
     /////////CHECK/////////////
     await checkEAM.OpenEAM();
-    let check = await EAM.LastWorker[0].getText();
+    const [checkElement] = await eam.LastWorker;
+    const check = await checkElement.getText();
     asserteam.strictEqual(check, NewWorker);
     await browser.reloadSession();
   });
@@ -158,12 +165,13 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddGroupButton();
-    let NewGroup = new Date().getTime() / 1000 + 'group';
+    const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
     ///////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let check = await EAM.LastGroup[0].getText();
+    const [checkElement] = await eam.LastGroup;
+    const check = await checkElement.getText();
     asserteam.strictEqual(check, NewGroup);
     await browser.reloadSession();
   });
@@ -173,11 +181,13 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.ClickReloadGroupButton();
-    let last = await EAM.LastGroup[5].getText();
+    const [, , , , , lastElement] = await eam.LastGroup;
+    const last = lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
     /////////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let newlast = await EAM.LastGroup[0].getText();
+    const [newLastElement] = await eam.LastGroup;
+    const newlast = await newLastElement.getText();
     asserteam.strictEqual(last, newlast);
     await browser.reloadSession();
   });
@@ -187,16 +197,18 @@ describe('WORKER', async () => {
     await regAct.Sign();
     await checkEAM.OpenEAM();
     await eamActions.AddWorkerButton();
-    let NewWorker = new Date().getTime() / 1000 + 'dev';
+    const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await checkEAM.OpenEAM();
     await eamActions.ClickReloadGroupButton();
-    let last = await EAM.LastGroup[0].getText();
+    const [lastElement] = await eam.LastGroup;
+    const last = lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
     /////////CHECK/////////////
     await eamActions.ClickReloadGroupButton();
-    let newlast = await EAM.LastGroup[0].getText();
+    const [newLastElement] = await eam.LastGroup;
+    const newlast = await newLastElement.getText();
     asserteam.strictEqual(last, newlast);
     await browser.reloadSession();
   });

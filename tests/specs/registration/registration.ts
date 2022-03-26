@@ -1,8 +1,9 @@
-const assert = require('assert');
-const RegistrationActions = require('../PA/registration_pa');
+import * as assert from 'assert';
+import { RegistrationActions } from '../pa/registration-pa';
+import { Dashboard } from '../po/dashboard-po';
+
 const act = new RegistrationActions();
-const dashboard = require('../PO/dashboard_po');
-const check = new dashboard();
+const check = new Dashboard();
 
 describe('User', async () => {
   it('can sign up', async () => {
@@ -10,8 +11,10 @@ describe('User', async () => {
     await act.SignUp();
     await act.Sign();
     /////////CHECK//////////
-    await check.EAM.waitForExist(2000);
-    let eamCheck = await check.EAM.isExisting();
+    await check.EAM.waitForExist({
+      timeout: 2000,
+    });
+    const eamCheck = await check.EAM.isExisting();
     await assert.equal(eamCheck, true);
     await browser.reloadSession();
   });
@@ -21,8 +24,10 @@ describe('User', async () => {
     await act.SignInAsMaster();
     await act.Sign();
     /////////CHECK//////////
-    await check.EAM.waitForExist(2000);
-    let eamCheck = await check.EAM.isExisting();
+    await check.EAM.waitForExist({
+      timeout: 2000,
+    });
+    const eamCheck = await check.EAM.isExisting();
     await assert.equal(eamCheck, true);
     await browser.reloadSession();
   });
@@ -32,8 +37,10 @@ describe('User', async () => {
     await act.FillWorkerSignInForm();
     await act.Sign();
     /////////CHECK//////////
-    await check.EAM.waitForExist(2000);
-    let eamCheck = await check.EAM.isExisting();
+    await check.EAM.waitForExist({
+      timeout: 2000,
+    });
+    const eamCheck = await check.EAM.isExisting();
     await assert.equal(eamCheck, true);
     //        await browser.reloadSession();
   });
