@@ -41,5 +41,6 @@ const uploadObject = createAsyncThunk<
 });
 
 const clearBlob = createAction<void>(ActionType.CLEAR_BLOB);
+const clearFormData = createAction<void>(ActionType.CLEAR_FORM_DATA);
 
-export { loadObjects, downloadObject, uploadObject, clearBlob };
+export { loadObjects, downloadObject, uploadObject, clearBlob, clearFormData };

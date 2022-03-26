@@ -1,5 +1,5 @@
 import { IconName } from 'common/enums/enums';
-import { Button, IconButton } from 'components/common/common';
+import { IconButton } from 'components/common/common';
 import {
   useAppDispatch,
   useAppSelector,
@@ -33,6 +33,13 @@ const BSSpace: FC = () => {
     );
   }, [dispatch]);
 
+  useEffect(() => {
+    if (blob) {
+      download(blob, filename);
+      dispatch(BSSpaceActions.clearBlob());
+    }
+  }, [blob]);
+
   const handleObjectsReload = (): void => {
     dispatch(
       BSSpaceActions.loadObjects({
@@ -46,13 +53,6 @@ const BSSpace: FC = () => {
       }),
     );
   };
-
-  useEffect(() => {
-    if (blob) {
-      download(blob, filename);
-      dispatch(BSSpaceActions.clearBlob());
-    }
-  }, [blob]);
 
   const handleObjectDownload = (objectId: string, filename: string): void => {
     dispatch(
@@ -76,15 +76,13 @@ const BSSpace: FC = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const handleFileStoring = (e: React.FormEvent<HTMLInputElement>): void => {
+  const handleUploading = (e: React.FormEvent<HTMLInputElement>): void => {
     const files = e.currentTarget.files;
     if (files) {
       formData.append('file', files[0]);
     }
-  };
-
-  const handleUploading = (): void => {
     dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
+    dispatch(BSSpaceActions.clearFormData());
   };
 
   return (
@@ -102,11 +100,14 @@ const BSSpace: FC = () => {
               label="Reload"
             />
             <input
-              placeholder={'Upload file'}
-              type={'file'}
-              onChange={handleFileStoring}
+              id="file-input"
+              className={styles.hideDefaultInput}
+              type="file"
+              onChange={handleUploading}
             />
-            <Button label={'Upload'} onClick={handleUploading} />
+            <label className={styles.fileInput} htmlFor="file-input">
+              Upload
+            </label>
           </div>
         </ObjectsTable>
       </div>

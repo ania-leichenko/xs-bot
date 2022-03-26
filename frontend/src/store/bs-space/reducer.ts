@@ -1,7 +1,12 @@
 import { BSObjectGetResponseItemDto } from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { clearBlob, downloadObject, loadObjects } from './actions';
+import {
+  clearBlob,
+  downloadObject,
+  loadObjects,
+  clearFormData,
+} from './actions';
 import { logOut } from 'store/auth/actions';
 
 type State = {
@@ -24,6 +29,9 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(clearBlob, (state) => {
     state.blob = null;
     state.filename = '';
+  });
+  builder.addCase(clearFormData, (state) => {
+    state.formData = new FormData();
   });
   builder.addCase(loadObjects.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
