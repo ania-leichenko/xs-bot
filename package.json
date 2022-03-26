@@ -18,7 +18,7 @@
     "lint:frontend:js": "cd frontend && npm run lint:js",
     "lint:frontend": "cd frontend && npm run lint",
     "lint:css": "npm run lint:frontend:css",
-    "lint:js": "npm run lint:shared:js && && npm run lint:tests:js && npm run lint:backend:js && npm run lint:frontend:js",
+    "lint:js": "npm run lint:shared:js && npm run lint:tests:js && npm run lint:backend:js && npm run lint:frontend:js",
     "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:css && npm run lint:js",
     "install:shared": "cd shared && npm install --production=false",
     "install:tests": "cd tests && npm install --production=false",
