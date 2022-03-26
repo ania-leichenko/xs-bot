@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { AppRoute, ButtonStyle, DataStatus } from 'common/enums/enums';
+import {
+  AppRoute,
+  ButtonStyle,
+  DataStatus,
+  EditorLang,
+} from 'common/enums/enums';
 import { Button, Editor, Loader, Navigate } from 'components/common/common';
 import {
   useAppDispatch,
@@ -76,7 +81,7 @@ const EditForm: FC<Props> = ({ id }) => {
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
       <div className={styles.wrapper}>
-        <h4 className={styles.title}>{loadFunction?.name ?? ''}</h4>
+        <h4 className={styles.title}>{loadFunction?.name as string}</h4>
         <div className={styles.buttons}>
           <Button
             className={styles.button}
@@ -102,16 +107,20 @@ const EditForm: FC<Props> = ({ id }) => {
       {hasCodeLoading ? (
         <Loader />
       ) : (
-        <Editor value={editCode} onChangeValue={handleOnChangeValue} />
+        <Editor
+          value={editCode}
+          onChangeValue={handleOnChangeValue}
+          lang={EditorLang.JAVASCRIPT}
+          placeholder="Source code can't be empty."
+        />
       )}
       <div className={styles.buttons}>
-        <div className={styles.button}>
-          <Button
-            btnStyle={ButtonStyle.OUTLINED}
-            label="Cancel"
-            onClick={handleCancel}
-          />
-        </div>
+        <Button
+          className={styles.button}
+          btnStyle={ButtonStyle.OUTLINED}
+          label="Cancel"
+          onClick={handleCancel}
+        />
       </div>
     </>
   );
