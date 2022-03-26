@@ -61,7 +61,7 @@ class Group {
     if (!group) {
       throw new EAMError({
         status: HttpCode.NOT_FOUND,
-        message: ExceptionMessage.GROUP_DOES_NOT_EXIST,
+        message: ExceptionMessage.GROUP_NOT_FOUND,
       });
     }
     const hasUsers = Boolean(group.users.length);
