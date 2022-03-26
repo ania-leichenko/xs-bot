@@ -69,13 +69,13 @@
   position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
   display: inline-block;
-  width: 15px;
-  height: 100%;
-  background-image: url("/assets/img/resize.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  width: 3px;
+  height: 90%;
+  margin: auto 0;
+  background-color: var(--color-orange);
+  border-radius: 10px;
   user-select: none;
   touch-action: none;
 }

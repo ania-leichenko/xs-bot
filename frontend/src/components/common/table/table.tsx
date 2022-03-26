@@ -81,7 +81,7 @@ const Table: FC<Props> = ({
                     >
                       {column.render('Header')}
                       <div
-                        className={`${styles.resizer}`}
+                        className={styles.resizer}
                         {...column.getResizerProps()}
                       ></div>
                     </th>
@@ -115,9 +115,6 @@ const Table: FC<Props> = ({
         )}
         ;
       </div>
-      {hasPlaceholder && (
-        <div className={styles.placeholder}>{placeholder}</div>
-      )}
       {pagination && (
         <Pagination
           countItems={pagination.countItems}
