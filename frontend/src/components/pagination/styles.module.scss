@@ -1,0 +1,25 @@
+.pagination {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 33px;
+  color: var(--color-white);
+}
+
+.currentPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.countItems {
+  position: absolute;
+  left: 0;
+}
+
+.count {
+  margin-right: auto;
+  margin-left: 4px;
+  color: var(--color-text);
+}
