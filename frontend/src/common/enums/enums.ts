@@ -26,6 +26,7 @@ export {
   ChipStyle,
   ChipColor,
   EditorColor,
+  EditorLang,
 } from './ui/ui';
 export {
   GroupsTableHeader,
