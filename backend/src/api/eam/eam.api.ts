@@ -1,8 +1,10 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import {
   group as groupServ,
   worker as workerServ,
   permission as permissionServ,
+  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
@@ -10,6 +12,7 @@ import {
   EAMApiPath,
   GroupsApiPath,
   WorkersApiPath,
+  UserRole,
 } from '~/common/enums/enums';
 import {
   EAMGroupCreateRequestDto,
@@ -18,23 +21,28 @@ import {
   EAMWorkerCreateRequestDto,
   EAMGroupDeleteParamsDto,
   EAMWorkerDeleteRequestDto,
+  TokenPayload,
 } from '~/common/types/types';
 import {
   eamGroupCreate as groupCreateValidationSchema,
   eamWorkerCreateBackend as workerValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { FastifyRouteSchemaDef } from 'fastify/types/schema';
+import { EAMError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
     group: typeof groupServ;
     worker: typeof workerServ;
+    token: typeof tokenServ;
   };
 };
 
 const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { group: groupService } = opts.services;
-  const { worker: workerService } = opts.services;
+  const {
+    group: groupService,
+    worker: workerService,
+    token: tokenService,
+  } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -55,14 +63,13 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       return rep
         .send(
           await workerService.create({
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -150,13 +157,16 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: EAMWorkerDeleteRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
+      const { userRole } = tokenService.decode<TokenPayload>(
+        req.user?.token as string,
+      );
 
-      await workerService.deleteWorker({
-        id,
-        token,
-      });
+      if (userRole !== UserRole.MASTER) {
+        throw new EAMError();
+      }
+
+      await workerService.deleteWorker(id);
 
       return rep.send(true).status(HttpCode.OK);
     },
