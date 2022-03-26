@@ -81,7 +81,7 @@ const Table: FC<Props> = ({
                     >
                       {column.render('Header')}
                       <div
-                        className={`${styles.resizer}`}
+                        className={styles.resizer}
                         {...column.getResizerProps()}
                       ></div>
                     </th>
