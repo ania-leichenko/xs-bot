@@ -159,13 +159,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       const objects = await bsObjectService.getObjects({
         spaceId: req.params.id,
         from: req.query.from,
         count: req.query.count,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(objects).status(HttpCode.OK);
