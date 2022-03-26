@@ -14,6 +14,8 @@ import {
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
 import { debounce } from 'helpers/helpers';
+import { SLCPopup } from './components/components';
+
 import styles from './styles.module.scss';
 
 interface Props {
@@ -36,6 +38,7 @@ const EditForm: FC<Props> = ({ id }) => {
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleSave = !hasSave && !hasCodeLoading;
   const hasResponse = Boolean(response);
+  const [isVisibleSLCPopup, setVisibleSLCPopup] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -45,12 +48,15 @@ const EditForm: FC<Props> = ({ id }) => {
     setEditCode(loadFunction?.sourceCode ?? '');
   }, [loadFunction]);
 
-  const handleRun = (): void => {
-    const payload =
-      prompt(
-        'Enter your arguments in JSON format.\nExample: { "key": "value" }',
-        '{ "key": "value" }',
-      ) ?? undefined;
+  const handleOpenSLCPopup = (): void => {
+    setVisibleSLCPopup(true);
+  };
+
+  const handleCloseSLCPopup = (): void => {
+    setVisibleSLCPopup(false);
+  };
+
+  const handleRun = (payload?: string): void => {
     dispatch(
       SLCFunctionActions.runFunction({
         params: { id },
@@ -87,7 +93,7 @@ const EditForm: FC<Props> = ({ id }) => {
             className={styles.button}
             btnStyle={ButtonStyle.FILLED}
             label="Run"
-            onClick={handleRun}
+            onClick={handleOpenSLCPopup}
           />
           <Button
             className={styles.button}
@@ -122,6 +128,13 @@ const EditForm: FC<Props> = ({ id }) => {
           onClick={handleCancel}
         />
       </div>
+      {isVisibleSLCPopup && (
+        <SLCPopup
+          isOpen={isVisibleSLCPopup}
+          onClose={handleCloseSLCPopup}
+          onRun={handleRun}
+        />
+      )}
     </>
   );
 };
