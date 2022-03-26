@@ -1,7 +1,7 @@
 import { ObjectsTableAccessor } from 'common/enums/enums';
 import { BSObjectGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [ObjectsTableAccessor.OBJECT_NAME]: string;
@@ -22,7 +22,7 @@ const getRows = ({
 
     return {
       [ObjectsTableAccessor.OBJECT_NAME]: name,
-      [ObjectsTableAccessor.CREATED_AT]: getDistanceToDateNow(
+      [ObjectsTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
         new Date(createdAt),
       ),
       [ObjectsTableAccessor.SIZE]: sizeInBytes,
