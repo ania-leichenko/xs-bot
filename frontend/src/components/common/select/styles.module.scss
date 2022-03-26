@@ -1,8 +1,14 @@
-.reactSelectContainer {
+.selectLabel {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  margin: 0 0 5px;
   color: var(--color-white);
+}
+
+.span {
+  margin: 0 0 5px;
+  font-size: 12px;
 }
 
 .error {

@@ -44,6 +44,7 @@ const BS: FC = () => {
               onClick={handleSpacesReload}
               icon={IconName.RELOAD}
               label="Reload"
+              title="Refresh"
             />
             <Button
               className={styles.addSpaceBtn}

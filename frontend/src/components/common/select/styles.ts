@@ -15,6 +15,7 @@ const styles: StylesConfig = {
     return {
       ...provided,
       minHeight: '45px',
+      marginBottom: '10px',
       paddingLeft: '13px',
       background: 'var(--color-boltgun)',
       border: state.menuIsOpen

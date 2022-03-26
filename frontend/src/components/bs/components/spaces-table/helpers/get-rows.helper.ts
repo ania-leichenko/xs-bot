@@ -1,7 +1,7 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { getDateDecoratedWithAgo } from 'helpers/helpers';
 import { makeLink } from './helpers';
 
 type Row = {
@@ -22,7 +22,7 @@ const getRows = ({
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: makeLink(name, id),
-      [SpacesTableAccessor.CREATED_AT]: getDistanceToDateNow(
+      [SpacesTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
         new Date(createdAt),
       ),
       [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),

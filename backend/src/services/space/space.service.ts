@@ -72,22 +72,7 @@ class Space {
     return this.#spaceRepository.create(space);
   }
 
-  public async delete({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const user: TokenPayload = await this.#tokenService.decode(token);
-
-    if (user.userRole !== UserRole.WORKER) {
-      throw new BsError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_SPACE_DELETE,
-      });
-    }
-
+  public async delete(id: string): Promise<void> {
     const space = await this.#spaceRepository.getSpaceById(id);
 
     if (!space) {

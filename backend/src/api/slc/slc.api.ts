@@ -1,12 +1,17 @@
 import { FastifyPluginAsync, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { slcFunction as slcFunctionServ } from '~/services/services';
+import {
+  slcFunction as slcFunctionServ,
+  token as tokenServ,
+} from '~/services/services';
 import { slcFunctionCreate as slcFunctionCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 import {
   HttpCode,
   HttpMethod,
   SLCApiPath,
   SLCFunctionApiPath,
+  UserRole,
+  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   SLCFunctionCreateRequestDto,
@@ -16,16 +21,21 @@ import {
   SLCFunctionUpdateRequestDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionRunParamsDto,
+  SLCFunctionRunRequestDto,
+  TokenPayload,
 } from '~/common/types/types';
+import { SLCError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
     slcFunction: typeof slcFunctionServ;
+    token: typeof tokenServ;
   };
 };
 
 const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { slcFunction: slcFunctionService } = opts.services;
+  const { slcFunction: slcFunctionService, token: tokenService } =
+    opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -46,10 +56,13 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: SLCFunctionCreateRequestDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       return rep
-        .send(await slcFunctionService.create({ name: req.body.name, token }))
+        .send(
+          await slcFunctionService.create({
+            name: req.body.name,
+            token: req.user?.token as string,
+          }),
+        )
         .status(HttpCode.CREATED);
     },
   });
@@ -60,13 +73,26 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionRunParamsDto;
+        Body: SLCFunctionRunRequestDto;
       }>,
       rep,
     ) {
+      const { userRole } = tokenService.decode<TokenPayload>(
+        req.user?.token as string,
+      );
+
+      if (userRole !== UserRole.WORKER) {
+        throw new SLCError({
+          status: HttpCode.DENIED,
+          message: ExceptionMessage.MASTER_FUNCTION_RUN,
+        });
+      }
+
       return rep
         .send(
           await slcFunctionService.runById({
             id: req.params.id,
+            payload: req.body.payload,
           }),
         )
         .status(HttpCode.OK);
@@ -80,11 +106,9 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Querystring: SLCFunctionGetRequestParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       const slcFunctions = await slcFunctionService.getSLCFunctionsByTenant({
         query: req.query,
-        token,
+        token: req.user?.token as string,
       });
 
       return rep.send(slcFunctions).status(HttpCode.OK);
@@ -117,12 +141,19 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
+      const { id } = req.params;
+      const { userRole } = tokenService.decode<TokenPayload>(
+        req.user?.token as string,
+      );
 
-      await slcFunctionService.delete({
-        id: req.params.id,
-        token,
-      });
+      if (userRole !== UserRole.WORKER) {
+        throw new SLCError({
+          status: HttpCode.DENIED,
+          message: ExceptionMessage.MASTER_FUNCTION_DELETE,
+        });
+      }
+
+      await slcFunctionService.delete(id);
 
       return rep.send(true).status(HttpCode.OK);
     },
@@ -138,14 +169,12 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       }>,
       rep,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       return rep
         .send(
           await slcFunctionService.updateById({
             id: req.params.id,
             sourceCode: req.body.sourceCode,
-            token,
+            token: req.user?.token as string,
           }),
         )
         .status(HttpCode.OK);

@@ -92,6 +92,7 @@ export {
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export {
