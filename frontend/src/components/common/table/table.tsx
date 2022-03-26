@@ -8,6 +8,7 @@ import {
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
 import { Pagination } from 'components/pagination/pagination';
+import { Loader } from 'components/common/common';
 
 type Props = {
   columns: Column[];
@@ -23,6 +24,7 @@ type Props = {
     countItems: number;
   };
   dataTestid?: string;
+  isLoading?: boolean;
 };
 
 const Table: FC<Props> = ({
@@ -34,6 +36,7 @@ const Table: FC<Props> = ({
   placeholder,
   pagination,
   dataTestid,
+  isLoading,
 }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -61,48 +64,56 @@ const Table: FC<Props> = ({
         </header>
       )}
       <div className={styles.tableContainer}>
-        <table {...getTableProps()} className={styles.clientSideTable}>
-          <thead>
-            {headerGroups.map((headerGroup) => (
-              <tr
-                className={styles.tableHeaderRow}
-                {...headerGroup.getHeaderGroupProps()}
-              >
-                {headerGroup.headers.map((column) => (
-                  <th
-                    {...column.getHeaderProps()}
-                    className={styles.tableHeaderCell}
-                  >
-                    {column.render('Header')}
-                    <div
-                      className={`${styles.resizer}`}
-                      {...column.getResizerProps()}
-                    ></div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr className={styles.tableRow} {...row.getRowProps()}>
-                  {row.cells.map((cell) => {
-                    return (
-                      <td {...cell.getCellProps()} className={styles.tableCell}>
-                        {cell.render('Cell')}
-                      </td>
-                    );
-                  })}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <table {...getTableProps()} className={styles.clientSideTable}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr
+                  className={styles.tableHeaderRow}
+                  {...headerGroup.getHeaderGroupProps()}
+                >
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps()}
+                      className={styles.tableHeaderCell}
+                    >
+                      {column.render('Header')}
+                      <div
+                        className={`${styles.resizer}`}
+                        {...column.getResizerProps()}
+                      ></div>
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-          {hasPlaceholder && (
-            <tr className={styles.placeholder}>{placeholder}</tr>
-          )}
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr className={styles.tableRow} {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          className={styles.tableCell}
+                        >
+                          {cell.render('Cell')}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+            {hasPlaceholder && (
+              <tr className={styles.placeholder}>{placeholder}</tr>
+            )}
+          </table>
+        )}
+        ;
       </div>
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
