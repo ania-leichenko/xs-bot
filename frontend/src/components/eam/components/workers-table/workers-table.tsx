@@ -2,11 +2,15 @@ import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/table/table';
 import { getRows, getColumns } from './helpers/helpers';
+import { DataStatus } from 'common/enums/enums';
 
 const WorkersTable: FC = ({ children }) => {
-  const { workers } = useAppSelector(({ eam }) => ({
+  const { workers, workersDataStatus } = useAppSelector(({ eam }) => ({
     workers: eam.workers,
+    workersDataStatus: eam.workersDataStatus,
   }));
+
+  const isLoading = workersDataStatus === DataStatus.PENDING;
 
   const data = useMemo(() => getRows(workers), [workers]);
 
@@ -18,6 +22,7 @@ const WorkersTable: FC = ({ children }) => {
       data={data}
       title="Workers"
       placeholder="No workers to display"
+      isLoading={isLoading}
     >
       {children}
     </Table>
