@@ -7,6 +7,7 @@ import {
 } from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
 import styles from './styles.module.scss';
+import { Pagination } from 'components/pagination/pagination';
 import { Loader } from 'components/common/common';
 
 type Props = {
@@ -15,6 +16,13 @@ type Props = {
   title?: string;
   className?: string;
   placeholder?: string;
+  pagination?: {
+    onBackPage: () => void;
+    onNextPage: () => void;
+    allPage: number;
+    currentPage: number;
+    countItems: number;
+  };
   dataTestid?: string;
   isLoading?: boolean;
 };
@@ -26,6 +34,7 @@ const Table: FC<Props> = ({
   children,
   className,
   placeholder,
+  pagination,
   dataTestid,
   isLoading,
 }) => {
@@ -72,7 +81,7 @@ const Table: FC<Props> = ({
                     >
                       {column.render('Header')}
                       <div
-                        className={`${styles.resizer}`}
+                        className={styles.resizer}
                         {...column.getResizerProps()}
                       ></div>
                     </th>
@@ -106,6 +115,15 @@ const Table: FC<Props> = ({
         )}
         ;
       </div>
+      {pagination && (
+        <Pagination
+          countItems={pagination.countItems}
+          currentPage={pagination.currentPage}
+          allPage={pagination.allPage}
+          handleBackPage={pagination.onBackPage}
+          handleNextPage={pagination.onNextPage}
+        />
+      )}
     </div>
   );
 };
