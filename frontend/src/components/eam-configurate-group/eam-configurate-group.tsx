@@ -6,6 +6,7 @@ import {
   useAppSelector,
   useEffect,
   useSelectedItems,
+  useParams,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import {
@@ -27,8 +28,7 @@ import { WorkersTable, PermissionsTable } from './components/components';
 const EAMConfigurateGroup: FC = () => {
   const dispatch = useAppDispatch();
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('id');
+  const { id } = useParams();
 
   useEffect(() => {
     if (id) {

@@ -19,7 +19,7 @@ const ActionCell = (
       />
       <IconButton
         icon={IconName.GEAR}
-        label={'edit'}
+        label="Edit"
         to={
           `${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute.EAM_CONFIGURATE_GROUP_$ID
         }
