@@ -115,9 +115,6 @@ const Table: FC<Props> = ({
         )}
         ;
       </div>
-      {hasPlaceholder && (
-        <div className={styles.placeholder}>{placeholder}</div>
-      )}
       {pagination && (
         <Pagination
           countItems={pagination.countItems}
