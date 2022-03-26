@@ -31,23 +31,29 @@ const Input: FC<Props> = ({
 }) => {
   const { field } = useFormControl({ name, control });
   const hasError = Boolean(errors[name]);
+  const hasLabel = Boolean(label);
   const isTextarea = Boolean(rows);
 
   return (
     <label className={styles.inputLabel}>
-      <span className={styles.span}>{label}</span>
+      <span
+        className={getValidClasses(
+          styles.span,
+          !hasLabel && styles.visuallyHidden,
+        )}
+      >
+        {label}
+      </span>
       {isTextarea ? (
-        <div className={styles.textareaWrapper}>
-          <textarea
-            {...field}
-            rows={rows}
-            placeholder={placeholder}
-            className={getValidClasses([
-              styles.textarea,
-              hasError ? styles.inputError : styles.input,
-            ])}
-          />
-        </div>
+        <textarea
+          {...field}
+          rows={rows}
+          placeholder={placeholder}
+          className={getValidClasses(
+            styles.textarea,
+            hasError ? styles.inputError : styles.input,
+          )}
+        />
       ) : (
         <input
           {...field}

@@ -34,7 +34,13 @@
   flex-direction: column;
   width: 100%;
   margin: 0 0 5px;
+  overflow: hidden;
   color: var(--color-white);
+  border-radius: 20px;
+}
+
+.visuallyHidden {
+  display: none;
 }
 
 .textarea {
@@ -43,13 +49,6 @@
   padding-top: 10px;
   border-radius: 20px;
   resize: none;
-}
-
-.textareaWrapper {
-  display: flex;
-  height: auto;
-  overflow: hidden;
-  border-radius: 20px;
 }
 
 .span {
