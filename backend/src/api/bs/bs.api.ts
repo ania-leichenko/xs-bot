@@ -19,6 +19,7 @@ import {
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
   TokenPayload,
+  BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
@@ -145,6 +146,27 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       return rep.send(object).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: BSObjectGetRequestParamsDto;
+        Params: { id: string };
+      }>,
+      rep,
+    ) {
+      const objects = await bsObjectService.getObjects({
+        spaceId: req.params.id,
+        from: req.query.from,
+        count: req.query.count,
+        token: req.user?.token as string,
+      });
+
+      return rep.send(objects).status(HttpCode.OK);
     },
   });
 };
