@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import { ButtonStyle, EditorLang } from 'common/enums/enums';
 import { Button, Editor, Modal } from 'components/common/common';
 import { useState } from 'hooks/hooks';
+import { debounce } from 'helpers/helpers';
 
 interface Props {
   isOpen: boolean;
@@ -10,8 +11,12 @@ interface Props {
   onRun: (payload?: string) => void;
 }
 
+const TIMEOUT = 500;
+
 const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
   const [value, setValue] = useState<string>('');
+
+  const handleOnChangeValue = debounce(setValue, TIMEOUT);
 
   const handleOnRun = (): void => {
     onRun(value);
@@ -23,7 +28,7 @@ const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
         <h4 className={styles.title}>{'Pass function arguments'}</h4>
         <Editor
           value={value}
-          onChangeValue={setValue}
+          onChangeValue={handleOnChangeValue}
           lang={EditorLang.JSON}
           placeholder={
             'Enter your arguments in JSON format.(optional)\nExample: { "key": "value" }'
