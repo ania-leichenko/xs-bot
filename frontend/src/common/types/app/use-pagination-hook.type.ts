@@ -1,6 +1,6 @@
 type UsePaginationtemsHook = {
-  handleBackPage: () => void;
-  handleNextPage: () => void;
+  onBackPage: () => void;
+  onNextPage: () => void;
   allPage: number;
   currentPage: number;
   countItems: number;

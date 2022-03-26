@@ -47,6 +47,6 @@ export {
   NotificationMessage,
   NotificationType,
 } from './notification/notification';
-export { Pagination } from './pagination/pagination.enum';
+export { Pagination } from './pagination/pagination';
 export { InstanceState } from './instance-states/instance-states';
 export { KeydownKey } from './event/event';

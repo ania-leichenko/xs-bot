@@ -4,11 +4,11 @@ import { IconName } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  handleBackPage?: () => void;
-  handleNextPage?: () => void;
-  allPage?: number;
-  currentPage?: number;
-  countItems?: number;
+  handleBackPage: () => void;
+  handleNextPage: () => void;
+  allPage: number;
+  currentPage: number;
+  countItems: number;
 };
 
 const Pagination: FC<Props> = ({

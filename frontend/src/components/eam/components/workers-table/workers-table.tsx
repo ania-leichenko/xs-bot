@@ -15,6 +15,7 @@ type Props = {
     perPage: number;
     countItems: number;
     handleLoad: (from: number) => void;
+    from: number;
   };
 };
 
@@ -31,20 +32,21 @@ const WorkersTable: FC<Props> = ({ children }) => {
     tenantId: app.tenant?.id,
   }));
 
-  const handleLoad = (from: number): void => {
+  const handleLoad = (from: number, count: number): void => {
     dispatch(
       eamActions.loadWorkers({
         tenantId: tenantId as string,
         from: from,
-        count: Pagination.PER_PAGE,
+        count: count,
       }),
     );
   };
 
   const workersPagination = usePagination({
-    perPage: Pagination.PER_PAGE,
+    perPageCount: Pagination.PER_PAGE,
     countItems,
     onLoad: handleLoad,
+    from: Pagination.INITIAL_FROM_COUNT,
   });
 
   const data = useMemo(() => getRows(workers), [workers]);

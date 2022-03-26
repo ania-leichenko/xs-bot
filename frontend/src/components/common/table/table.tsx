@@ -16,8 +16,8 @@ type Props = {
   className?: string;
   placeholder?: string;
   pagination?: {
-    handleBackPage: () => void;
-    handleNextPage: () => void;
+    onBackPage: () => void;
+    onNextPage: () => void;
     allPage: number;
     currentPage: number;
     countItems: number;
@@ -48,7 +48,6 @@ const Table: FC<Props> = ({
   const hasStrPlaceholder = Boolean(placeholder);
   const hasData = data.length !== 0;
   const hasPlaceholder = hasStrPlaceholder && !hasData;
-  const hasPagination = Boolean(pagination);
 
   return (
     <div
@@ -108,13 +107,13 @@ const Table: FC<Props> = ({
       {hasPlaceholder && (
         <div className={styles.placeholder}>{placeholder}</div>
       )}
-      {hasPagination && (
+      {pagination && (
         <Pagination
-          countItems={pagination?.countItems}
-          currentPage={pagination?.currentPage}
-          allPage={pagination?.allPage}
-          handleBackPage={pagination?.handleBackPage}
-          handleNextPage={pagination?.handleNextPage}
+          countItems={pagination.countItems}
+          currentPage={pagination.currentPage}
+          allPage={pagination.allPage}
+          handleBackPage={pagination.onBackPage}
+          handleNextPage={pagination.onNextPage}
         />
       )}
     </div>

@@ -3,42 +3,46 @@ import { Pagination } from 'common/enums/enums';
 import { useState } from 'hooks/hooks';
 
 type UsePaginationArgs = {
-  perPage: number;
+  perPageCount: number;
   countItems: number;
-  onLoad: (from: number) => void;
-  from?: number;
+  onLoad: (from: number, count: number) => void;
+  from: number;
   currentPage?: number;
 };
 
 const usePagination = (
   pagination: UsePaginationArgs,
 ): UsePaginationtemsHook => {
-  const [from, setFrom] = useState(pagination.from ?? 0);
-  const [currentPage, setCurrentPage] = useState(pagination.currentPage ?? 1);
-  const allPage = Math.ceil(pagination.countItems / pagination.perPage);
+  const [from, setFrom] = useState(
+    pagination.from ?? Pagination.INITIAL_FROM_COUNT,
+  );
+  const [currentPage, setCurrentPage] = useState(
+    pagination.currentPage ?? Pagination.INITIAL_CURRENT_PAGE,
+  );
+  const allPage = Math.ceil(pagination.countItems / pagination.perPageCount);
 
   const handleBackPage = (): void => {
-    const backPage = currentPage - Pagination.CURRENT_PAGE;
+    const backPage = currentPage - Pagination.INCREMENT;
     if (backPage !== 0) {
       setCurrentPage(backPage);
-      const backFrom = from - Pagination.PER_PAGE;
+      const backFrom = from - pagination.perPageCount;
       setFrom(backFrom);
-      pagination.onLoad(from - Pagination.PER_PAGE);
+      pagination.onLoad(backFrom, pagination.perPageCount);
     }
   };
   const handleNextPage = (): void => {
-    const nextPage = currentPage + Pagination.CURRENT_PAGE;
+    const nextPage = currentPage + Pagination.INCREMENT;
     if (nextPage <= allPage) {
       setCurrentPage(nextPage);
-      const nextForm = from + Pagination.PER_PAGE;
+      const nextForm = from + pagination.perPageCount;
       setFrom(nextForm);
-      pagination.onLoad(from + Pagination.PER_PAGE);
+      pagination.onLoad(nextForm, pagination.perPageCount);
     }
   };
 
   return {
-    handleBackPage,
-    handleNextPage,
+    onBackPage: handleBackPage,
+    onNextPage: handleNextPage,
     allPage,
     currentPage,
     countItems: pagination.countItems,
