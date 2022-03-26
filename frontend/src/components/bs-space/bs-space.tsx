@@ -1,5 +1,5 @@
 import { IconName } from 'common/enums/enums';
-import { IconButton } from 'components/common/common';
+import { Button, IconButton } from 'components/common/common';
 import {
   useAppDispatch,
   useAppSelector,
@@ -14,6 +14,7 @@ import { BSSpace as BSSpaceActions } from 'store/actions';
 const BSSpace: FC = () => {
   const dispatch = useAppDispatch();
   const blob = useAppSelector(({ BSSpace }) => BSSpace.blob);
+  const formData = useAppSelector(({ BSSpace }) => BSSpace.formData);
 
   const { id } = useParams();
 
@@ -48,7 +49,7 @@ const BSSpace: FC = () => {
   useEffect(() => {
     if (blob !== null) {
       download(blob);
-      // clear state
+      dispatch(BSSpaceActions.clearBlob());
     }
   }, [blob]);
 
@@ -73,27 +74,14 @@ const BSSpace: FC = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  // const changeHandler = (e: React.FormEvent<HTMLInputElement>) => {
-  //   const formData = new FormData();
-  //   const files = e.currentTarget.files;
-  //   if (files) {
-  //     formData.append('file', files[0]);
-  //   }
-  //   fetch(`http://localhost:3001/api/v1/bs/spaces/${id as string}/objects`, {
-  //     method: 'POST',
-  //     headers: {
-  //       authorization: `Bearer ${localStorage.getItem('token')}`,
-  //     },
-  //     body: formData,
-  //   }).then((response) => console.log(response.json()));
-  // };
-
-  const logfile = (e: React.FormEvent<HTMLInputElement>): void => {
-    const formData = new FormData();
+  const handleFileStoring = (e: React.FormEvent<HTMLInputElement>): void => {
     const files = e.currentTarget.files;
     if (files) {
       formData.append('file', files[0]);
     }
+  };
+
+  const handleUploading = (): void => {
     dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
   };
 
@@ -114,9 +102,9 @@ const BSSpace: FC = () => {
             <input
               placeholder={'Upload file'}
               type={'file'}
-              name={'file'}
-              onChange={logfile}
+              onChange={handleFileStoring}
             />
+            <Button label={'Upload'} onClick={handleUploading} />
           </div>
         </ObjectsTable>
       </div>

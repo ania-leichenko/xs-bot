@@ -1,22 +1,27 @@
 import { BSObjectGetResponseItemDto } from 'common/types/types';
 import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
-import { downloadObject, loadObjects } from './actions';
+import { clearBlob, downloadObject, loadObjects } from './actions';
 import { logOut } from 'store/auth/actions';
 
 type State = {
   dataStatus: DataStatus;
   objects: BSObjectGetResponseItemDto[];
+  formData: FormData;
   blob: Blob | null;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   objects: [],
+  formData: new FormData(),
   blob: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
+  builder.addCase(clearBlob, (state) => {
+    state.blob = null;
+  });
   builder.addCase(loadObjects.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   AsyncThunkConfig,
   BSObjectDownloadParamsDto,
@@ -40,4 +40,6 @@ const uploadObject = createAsyncThunk<
   return bsApi.uploadObject(payload.id, payload.file);
 });
 
-export { loadObjects, downloadObject, uploadObject };
+const clearBlob = createAction<void>(ActionType.CLEAR_BLOB);
+
+export { loadObjects, downloadObject, uploadObject, clearBlob };
