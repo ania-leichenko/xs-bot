@@ -113,7 +113,6 @@ const Table: FC<Props> = ({
             )}
           </table>
         )}
-        ;
       </div>
       {pagination && (
         <Pagination
