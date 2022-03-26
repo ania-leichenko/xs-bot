@@ -1,1 +1,6 @@
-export { SpacesTableHeader, SpacesTableAccessor } from './table/table';
+export {
+  SpacesTableHeader,
+  SpacesTableAccessor,
+  ObjectsTableAccessor,
+  ObjectsTableHeader,
+} from './table/table';
