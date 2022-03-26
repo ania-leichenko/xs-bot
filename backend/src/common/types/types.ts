@@ -93,6 +93,6 @@ export {
   type BSObjectGetFilter,
   type BSObjectGetResponseItemDto,
   type BSObjectGetResponseDto,
-} from 'src/common/types/bs-object/bs-objec';
-export { type UploadPayload } from 'src/common/types/bs-object/bs-object-upload-payload.type';
+} from '~/common/types/bs-object/bs-object';
+export { type UploadPayload } from './bs-object/bs-object-upload-payload.type';
 export { type GetObjectCommandOutput } from './bs-object/bs-get-object-command-output.type';
