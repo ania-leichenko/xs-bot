@@ -37,15 +37,17 @@ const Input: FC<Props> = ({
     <label className={styles.inputLabel}>
       <span className={styles.span}>{label}</span>
       {isTextarea ? (
-        <textarea
-          {...field}
-          rows={rows}
-          placeholder={placeholder}
-          className={getValidClasses([
-            styles.textarea,
-            hasError ? styles.inputError : styles.input,
-          ])}
-        />
+        <div className={styles.textareaWrapper}>
+          <textarea
+            {...field}
+            rows={rows}
+            placeholder={placeholder}
+            className={getValidClasses([
+              styles.textarea,
+              hasError ? styles.inputError : styles.input,
+            ])}
+          />
+        </div>
       ) : (
         <input
           {...field}

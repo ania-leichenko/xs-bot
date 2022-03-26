@@ -39,9 +39,17 @@
 
 .textarea {
   height: 100%;
+  margin-bottom: 0;
   padding-top: 10px;
   border-radius: 20px;
   resize: none;
+}
+
+.textareaWrapper {
+  display: flex;
+  height: auto;
+  overflow: hidden;
+  border-radius: 20px;
 }
 
 .span {
