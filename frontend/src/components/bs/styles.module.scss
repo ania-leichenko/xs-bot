@@ -43,3 +43,12 @@
   gap: 14px;
   width: 250px;
 }
+
+.link {
+  color: var(--color-orange);
+  text-decoration: none;
+}
+
+.link:active {
+  color: var(--color-orange);
+}

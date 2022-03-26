@@ -6,6 +6,7 @@ import {
   BSObjectGetResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
+import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 
 const loadObjects = createAsyncThunk<
   BSObjectGetResponseDto,
@@ -25,9 +26,16 @@ const downloadObject = createAsyncThunk<
   BSObjectDownloadParamsDto & { filename: string },
   AsyncThunkConfig
 >(ActionType.DOWNLOAD_OBJECT, async (params, { extra }) => {
-  const { bsApi } = extra;
+  const { bsApi, notification } = extra;
 
-  return await bsApi.downloadObject(params);
+  const response = await bsApi.downloadObject(params);
+
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.BS_OBJECT_DOWNLOAD,
+  );
+
+  return response;
 });
 
 const uploadObject = createAsyncThunk<
@@ -35,9 +43,16 @@ const uploadObject = createAsyncThunk<
   { id: string; file: FormData },
   AsyncThunkConfig
 >(ActionType.UPLOAD_OBJECT, async (payload, { extra }) => {
-  const { bsApi } = extra;
+  const { bsApi, notification } = extra;
 
-  return bsApi.uploadObject(payload.id, payload.file);
+  const response = bsApi.uploadObject(payload.id, payload.file);
+
+  notification.success(
+    NotificationTitle.SUCCESS,
+    NotificationMessage.BS_OBJECT_UPLOAD,
+  );
+
+  return response;
 });
 
 const clearBlob = createAction<void>(ActionType.CLEAR_BLOB);

@@ -5,6 +5,8 @@ enum NotificationMessage {
   EAM_GROUP_DELETE = 'Group has been successfully deleted',
   BS_SPACE_CREATE = 'Space has been successfully created',
   BS_SPACE_DELETE = 'Space has been successfully deleted',
+  BS_OBJECT_UPLOAD = 'Object has been successfully uploaded',
+  BS_OBJECT_DOWNLOAD = 'Object has been successfully downloaded',
   SC_INSTANCE_CREATE = 'Instance has been successfully created',
   SC_INSTANCE_DELETE = 'Instance has been successfully deleted',
   SC_INSTANCE_UPDATE = 'Instance has been successfully updated',
