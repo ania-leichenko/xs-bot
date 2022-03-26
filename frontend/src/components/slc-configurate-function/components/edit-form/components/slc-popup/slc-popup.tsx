@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styles from './styles.module.scss';
 import { ButtonStyle, EditorLang } from 'common/enums/enums';
 import { Button, Editor, Modal } from 'components/common/common';
-import { useState } from 'hooks/hooks';
+import { useState, useEffect } from 'hooks/hooks';
 import { debounce } from 'helpers/helpers';
 
 interface Props {
@@ -15,6 +15,10 @@ const TIMEOUT = 500;
 
 const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
   const [value, setValue] = useState<string>('');
+
+  useEffect(() => {
+    setValue('');
+  }, [isOpen]);
 
   const handleOnChangeValue = debounce(setValue, TIMEOUT);
 

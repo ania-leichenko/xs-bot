@@ -121,20 +121,20 @@ const EditForm: FC<Props> = ({ id }) => {
         />
       )}
       <div className={styles.buttons}>
-        <Button
-          className={styles.button}
-          btnStyle={ButtonStyle.OUTLINED}
-          label="Cancel"
-          onClick={handleCancel}
-        />
+        <div>
+          <Button
+            className={styles.button}
+            btnStyle={ButtonStyle.OUTLINED}
+            label="Cancel"
+            onClick={handleCancel}
+          />
+        </div>
       </div>
-      {isVisibleSLCPopup && (
-        <SLCPopup
-          isOpen={isVisibleSLCPopup}
-          onClose={handleCloseSLCPopup}
-          onRun={handleRun}
-        />
-      )}
+      <SLCPopup
+        isOpen={isVisibleSLCPopup}
+        onClose={handleCloseSLCPopup}
+        onRun={handleRun}
+      />
     </>
   );
 };
