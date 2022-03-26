@@ -3,6 +3,7 @@ export {
   type AppDispatch,
   type AsyncThunkConfig,
   type UseSelectedItemsHook,
+  type UsePaginationtemsHook,
   type NotifyActionPayload,
 } from './app/app';
 export {

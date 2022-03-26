@@ -99,4 +99,8 @@ export {
   type ObjectUploadRequestDto,
   type BSObjectUploadParamsDto,
   type BSObjectDownloadParamsDto,
+  type BSObjectGetRequestParamsDto,
+  type BSObjectGetFilter,
+  type BSObjectGetResponseItemDto,
+  type BSObjectGetResponseDto,
 } from '~/common/types/bs-object/bs-object';

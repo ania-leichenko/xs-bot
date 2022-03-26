@@ -93,6 +93,10 @@ export { type ObjectUploadRequestDto } from './object-upload/object-upload';
 export {
   type BSObjectUploadParamsDto,
   type BSObjectDownloadParamsDto,
-} from './bs-object/bs-object-params';
-export { type UploadPayload } from './bs-object/bs-object';
+  type BSObjectGetRequestParamsDto,
+  type BSObjectGetFilter,
+  type BSObjectGetResponseItemDto,
+  type BSObjectGetResponseDto,
+} from './bs-object/bs-object';
+export { type UploadPayload } from './bs-object/bs-object-upload-payload.type';
 export { type GetObjectCommandOutput } from './bs-object/bs-get-object-command-output.type';
