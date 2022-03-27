@@ -6,3 +6,5 @@ export { getQueryString } from './http/http';
 export { getDateDecoratedWithAgo } from './date/date';
 export { checkHasPermission } from './permission/permission';
 export { debounce } from './timeout/timeout';
+export { downloadBlob } from './download-blob/download-blob.helper';
+export { getPrettyBytes } from './pretty-bytes/pretty-bytes.helper';

@@ -1,11 +1,6 @@
 import { IconName } from 'common/enums/enums';
 import { IconButton } from 'components/common/common';
-import {
-  useAppDispatch,
-  useAppSelector,
-  useEffect,
-  useParams,
-} from 'hooks/hooks';
+import { useAppDispatch, useEffect, useParams } from 'hooks/hooks';
 import { ObjectsTable } from './components/components';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
@@ -13,9 +8,6 @@ import { BSSpace as BSSpaceActions } from 'store/actions';
 
 const BSSpace: FC = () => {
   const dispatch = useAppDispatch();
-  const blob = useAppSelector(({ BSSpace }) => BSSpace.blob);
-  const formData = useAppSelector(({ BSSpace }) => BSSpace.formData);
-  const filename = useAppSelector(({ BSSpace }) => BSSpace.filename);
 
   const { id } = useParams();
 
@@ -32,13 +24,6 @@ const BSSpace: FC = () => {
       }),
     );
   }, [dispatch]);
-
-  useEffect(() => {
-    if (blob) {
-      download(blob, filename);
-      dispatch(BSSpaceActions.clearBlob());
-    }
-  }, [blob]);
 
   const handleObjectsReload = (): void => {
     dispatch(
@@ -64,25 +49,13 @@ const BSSpace: FC = () => {
     );
   };
 
-  const download = (blob: Blob, filename: string): void => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  };
-
   const handleUploading = (e: React.FormEvent<HTMLInputElement>): void => {
     const files = e.currentTarget.files;
+    const formData = new FormData();
     if (files) {
       formData.append('file', files[0]);
     }
     dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
-    dispatch(BSSpaceActions.clearFormData());
   };
 
   return (

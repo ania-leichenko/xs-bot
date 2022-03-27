@@ -1,9 +1,9 @@
 enum ActionType {
-  GET_OBJECTS = 'bs/get-objects',
-  DOWNLOAD_OBJECT = 'bs/download-object',
-  UPLOAD_OBJECT = 'bs/upload-object',
-  CLEAR_BLOB = 'bs/clear-blob',
-  CLEAR_FORM_DATA = 'bs/clear-form-data',
+  GET_OBJECTS = 'bs-space/get-objects',
+  DOWNLOAD_OBJECT = 'bs-space/download-object',
+  UPLOAD_OBJECT = 'bs-space/upload-object',
+  CLEAR_BLOB = 'bs-space/clear-blob',
+  CLEAR_FORM_DATA = 'bs-space/clear-form-data',
 }
 
 export { ActionType };

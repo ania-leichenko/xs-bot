@@ -43,7 +43,7 @@ class Http {
       .catch(this.throwError);
   }
 
-  loadObject(url: string, options: Partial<HttpOptions> = {}): Promise<Blob> {
+  downloadBlob(url: string, options: Partial<HttpOptions> = {}): Promise<Blob> {
     const {
       method = HttpMethod.GET,
       payload = null,

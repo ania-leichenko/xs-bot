@@ -16,6 +16,7 @@ import {
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
+import { ObjectsApiPath } from 'common/enums/api/api';
 
 type Constructor = {
   http: Http;
@@ -92,7 +93,7 @@ class BSApi {
   }
 
   public downloadObject(params: BSObjectDownloadParamsDto): Promise<Blob> {
-    return this.#http.loadObject(
+    return this.#http.downloadBlob(
       joinItems(
         this.#apiPrefix,
         ApiPath.BS,
@@ -100,7 +101,7 @@ class BSApi {
         SpacesApiPath.ROOT,
         params.spaceId,
         SpacesApiPath.OBJECTS,
-        '/',
+        ObjectsApiPath.ROOT,
         params.objectId,
       ),
       {

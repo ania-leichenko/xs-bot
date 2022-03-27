@@ -1,8 +1,7 @@
 import { ObjectsTableAccessor } from 'common/enums/enums';
 import { BSObjectGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
-import { getPrettyBytes } from './helpers';
+import { getDateDecoratedWithAgo, getPrettyBytes } from 'helpers/helpers';
 
 type Row = {
   [ObjectsTableAccessor.OBJECT_NAME]: string;

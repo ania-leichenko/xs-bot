@@ -12,3 +12,4 @@ export { SLCFunctionApiPath } from './slc-function-api-path.enum';
 export { SpacesApiPath } from './spaces-api-path.enum';
 export { InstancesApiPath } from './instances-api-path.enum';
 export { SshKeysApiPath } from './ssh-keys-api-path.enum';
+export { ObjectsApiPath } from './objects-api-path.enum';
