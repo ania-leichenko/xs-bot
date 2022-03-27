@@ -24,7 +24,6 @@ const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
 
   const handleOnRun = (): void => {
     onRun(value);
-    onClose();
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

@@ -62,7 +62,11 @@ const EditForm: FC<Props> = ({ id }) => {
         params: { id },
         payload: { payload },
       }),
-    );
+    )
+      .unwrap()
+      .then(() => {
+        handleCloseSLCPopup();
+      });
   };
 
   const handleSaveCode = (): void => {
