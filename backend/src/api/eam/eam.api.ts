@@ -21,11 +21,13 @@ import {
   EAMWorkerCreateRequestDto,
   EAMGroupDeleteParamsDto,
   EAMWorkerDeleteRequestDto,
+  EamGroupGetByIdRequestDto,
   TokenPayload,
 } from '~/common/types/types';
 import {
   eamGroupCreate as groupCreateValidationSchema,
   eamWorkerCreateBackend as workerValidationSchema,
+  eamGroupUpdate as groupUpdateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { EAMError } from '~/exceptions/exceptions';
 
@@ -97,6 +99,50 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const group = await groupService.create(req.body);
       return rep.send(group).status(HttpCode.CREATED);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.PUT,
+    url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
+    schema: {
+      body: groupUpdateValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof groupUpdateValidationSchema>) {
+      return (
+        data: EAMGroupCreateRequestDto,
+      ): ReturnType<typeof groupUpdateValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
+    async handler(
+      req: FastifyRequest<{
+        Querystring: EamGroupGetByIdRequestDto;
+        Body: EAMGroupCreateRequestDto;
+      }>,
+      rep,
+    ) {
+      const { id } = req.query;
+      const group = await groupService.update(id, req.body);
+
+      return rep.send(group).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: EamGroupGetByIdRequestDto;
+      }>,
+      rep,
+    ) {
+      const { id } = req.query;
+      const group = await groupService.getGroupById(id);
+      return rep.send(group).status(HttpCode.OK);
     },
   });
 
