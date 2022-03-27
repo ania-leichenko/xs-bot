@@ -15,24 +15,28 @@ const getColumns = (
         SelectRowCell(row, handleAddId, handleRemoveId, handleIsCheckedId),
       minWidth: 30,
       width: 50,
+      sortType: 'basic',
     },
     {
       Header: UsersTableHeader.USERNAME,
       accessor: UsersTableAccessor.USERNAME,
       minWidth: 150,
       width: 200,
+      sortType: 'basic',
     },
     {
       Header: UsersTableHeader.GROUPS,
       accessor: UsersTableAccessor.GROUPS,
       minWidth: 100,
       width: 250,
+      sortType: 'basic',
     },
     {
       Header: UsersTableHeader.CREATION_TIME,
       accessor: UsersTableAccessor.CREATION_TIME,
       minWidth: 120,
       width: 200,
+      sortType: 'basic',
     },
   ];
 };

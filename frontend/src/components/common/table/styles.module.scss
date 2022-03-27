@@ -91,3 +91,21 @@
   font-style: italic;
   text-align: center;
 }
+
+.sortIndicator {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.desc {
+  background-image: url("../../../assets/img/arrow-up.svg");
+}
+
+.asc {
+  background-image: url("../../../assets/img/arrow-down.svg");
+}
