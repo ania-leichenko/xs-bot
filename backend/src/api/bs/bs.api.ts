@@ -2,6 +2,7 @@ import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   space as spaceServ,
   bsObject as bsObjectServ,
+  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
@@ -9,6 +10,8 @@ import {
   BSApiPath,
   SpacesApiPath,
   Permission,
+  UserRole,
+  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
@@ -16,20 +19,28 @@ import {
   BSSpaceGetRequestParamsDto,
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
+  TokenPayload,
+  BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
 import { upload, checkHasPermissions } from '~/hooks/hooks';
+import { BsError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
     space: typeof spaceServ;
     bsObject: typeof bsObjectServ;
+    token: typeof tokenServ;
   };
 };
 
 const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { space: spaceService, bsObject: bsObjectService } = opts.services;
+  const {
+    space: spaceService,
+    bsObject: bsObjectService,
+    token: tokenService,
+  } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
@@ -88,11 +99,17 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep: FastifyReply,
     ) {
       const { id } = req.params;
+      const token = req.user?.token as string;
+      const { userRole } = tokenService.decode<TokenPayload>(token);
 
-      await spaceService.delete({
-        id,
-        token: req.user?.token as string,
-      });
+      if (userRole !== UserRole.WORKER) {
+        throw new BsError({
+          status: HttpCode.DENIED,
+          message: ExceptionMessage.MASTER_SPACE_DELETE,
+        });
+      }
+
+      await spaceService.delete(id);
 
       return rep.send(true).status(HttpCode.OK);
     },
@@ -140,6 +157,27 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       return rep.send(object).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: BSObjectGetRequestParamsDto;
+        Params: { id: string };
+      }>,
+      rep,
+    ) {
+      const objects = await bsObjectService.getObjects({
+        spaceId: req.params.id,
+        from: req.query.from,
+        count: req.query.count,
+        token: req.user?.token as string,
+      });
+
+      return rep.send(objects).status(HttpCode.OK);
     },
   });
 };

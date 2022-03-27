@@ -4,6 +4,7 @@ export {
   getFormattedISODate,
   getDistanceToDateNow,
   getSubHours,
+  getDateDecoratedWithAgo,
 } from './date/date';
 export { getRandomId } from './string/string';
 export { getNameOf } from './typescript/typescript';

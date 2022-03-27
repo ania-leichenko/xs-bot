@@ -1,24 +1,23 @@
 import { Checkbox } from 'components/common/common';
-import { Row } from 'react-table';
 
 const SelectRowCell = (
-  { original }: Row<Record<string, string>>,
+  id: string,
   handleAddId: (id: string) => void,
   handleRemoveId: (id: string) => void,
   handleIsCheckedId: (id: string) => boolean,
 ): JSX.Element => {
   const handleCheckbox = (): void => {
-    if (!handleIsCheckedId(original.id)) {
-      handleAddId(original.id);
+    if (!handleIsCheckedId(id)) {
+      handleAddId(id);
     } else {
-      handleRemoveId(original.id);
+      handleRemoveId(id);
     }
   };
   return (
     <div>
       <Checkbox
         label={''}
-        isChecked={handleIsCheckedId(original.id)}
+        isChecked={handleIsCheckedId(id)}
         onChange={handleCheckbox}
       />
     </div>

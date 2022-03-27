@@ -1,9 +1,10 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { getDateDecoratedWithAgo } from 'helpers/helpers';
 import { ActionCell, PermissionsCell } from '../components/components';
 
 type Row = {
+  [GroupsTableAccessor.ID]: string;
   [GroupsTableAccessor.GROUP_NAME]: string;
   [GroupsTableAccessor.WORKERS]: number;
   [GroupsTableAccessor.PERMISSIONS]: JSX.Element;
@@ -23,10 +24,11 @@ const getRows = ({
     const permissions = groupPermissions.map((item) => item.name);
 
     return {
+      [GroupsTableAccessor.ID]: id,
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: PermissionsCell(permissions),
-      [GroupsTableAccessor.CREATION_TIME]: getDistanceToDateNow(
+      [GroupsTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
         new Date(createdAt),
       ),
       [GroupsTableAccessor.ACTIONS]: ActionCell(id, onGroupDelete),

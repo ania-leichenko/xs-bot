@@ -14,6 +14,9 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
   type EAMGroupConfigurateRequestDto,
   type EAMGroupRelatedItem,
+  type EamGroupGetByIdRequestDto,
+  type EamGroupGetByIdResponseDto,
+  type EAMGroupUpdateRequestDto,
   type EAMGroupDeleteParamsDto,
   type EamGroupGetByIdItem,
 } from './eam-group/eam-group';
@@ -96,4 +99,8 @@ export {
   type ObjectUploadRequestDto,
   type BSObjectUploadParamsDto,
   type BSObjectDownloadParamsDto,
+  type BSObjectGetRequestParamsDto,
+  type BSObjectGetFilter,
+  type BSObjectGetResponseItemDto,
+  type BSObjectGetResponseDto,
 } from '~/common/types/bs-object/bs-object';

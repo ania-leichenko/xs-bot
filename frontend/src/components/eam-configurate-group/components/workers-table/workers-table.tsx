@@ -21,13 +21,19 @@ const WorkersTable: FC<Props> = ({
     workers: EAMGroupConfigurate.workers,
   }));
 
-  const data = useMemo(() => getRows(workers), [workers]);
-
-  const columns = useMemo(
+  const data = useMemo(
     () =>
-      getColumns(handleAddWorkerId, handleRemoveWorkerId, handleIsCheckedId),
-    [selectedWorkers],
+      getRows(
+        workers,
+        handleAddWorkerId,
+        handleRemoveWorkerId,
+        handleIsCheckedId,
+      ),
+    [workers, selectedWorkers],
   );
+
+  const columns = useMemo(() => getColumns(), []);
+
   return (
     <div>
       <h3 className={styles.inputGroupTitle}>

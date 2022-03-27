@@ -7,7 +7,6 @@ import { Group as GroupEntity } from '~/services/group/group.entity';
 import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseItemDto,
-  EamGroupGetByIdItem,
 } from '~/common/types/types';
 import { getRandomId } from '~/helpers/helpers';
 
@@ -61,16 +60,38 @@ class Group {
       return null;
     }
 
-    return Group.modelToEntity(group, [], []);
+    const workerIds = await this.getGroupWorkersById(group.id);
+    const permissionIds = await this.getGroupPermissionsById(group.id);
+
+    return Group.modelToEntity(group, workerIds, permissionIds);
   }
 
-  async getGroupById(id: string): Promise<EamGroupGetByIdItem | undefined> {
-    return this.#GroupModel
+  async getGroupWorkersById(id: string): Promise<string[]> {
+    const worker = await this.#UsersGroupsModel
       .query()
-      .select('id', 'name', 'createdAt')
-      .where({ id })
-      .withGraphFetched('[users, permissions]')
-      .first();
+      .select('userId')
+      .where({ groupId: id });
+    return worker.map((item) => item.userId);
+  }
+
+  async getGroupPermissionsById(id: string): Promise<string[]> {
+    const permissions = await this.#GroupsPermissionsModel
+      .query()
+      .select('permissionId')
+      .where({ groupId: id });
+    return permissions.map((item) => item.permissionId);
+  }
+
+  async getGroupById(id: string): Promise<GroupEntity | null> {
+    const group = await this.#GroupModel.query().select().where({ id }).first();
+
+    if (!group) {
+      return null;
+    }
+    const permissionIds = await this.getGroupPermissionsById(id);
+    const workerIds = await this.getGroupWorkersById(id);
+
+    return Group.modelToEntity(group, workerIds, permissionIds);
   }
 
   async create(group: GroupEntity): Promise<GroupEntity> {
@@ -89,24 +110,58 @@ class Group {
           id: getRandomId(),
           userId: workerId,
           groupId: id,
-          createdAt: createdAt,
+          createdAt: new Date().toISOString(),
         })),
       );
     }
-
     await this.#GroupsPermissionsModel.query().insert(
       permissionsIds.map((permissionId) => ({
         id: getRandomId(),
         groupId: id,
         permissionId: permissionId,
-        createdAt: createdAt,
+        createdAt: new Date().toISOString(),
       })),
     );
 
     return Group.modelToEntity(created, workersIds, permissionsIds);
   }
 
-  async delete(id: string): Promise<void> {
+  public async save(group: GroupEntity): Promise<GroupEntity | null> {
+    const { id, name, workersIds, permissionsIds } = group;
+    const groupModel = await this.#GroupModel
+      .query()
+      .patchAndFetchById(id, { name });
+    if (!groupModel) {
+      return null;
+    }
+
+    await this.#GroupsPermissionsModel
+      .query()
+      .delete()
+      .where({ 'groupId': id });
+    await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
+
+    await this.#UsersGroupsModel.query().insert(
+      workersIds.map((workerId) => ({
+        id: getRandomId(),
+        userId: workerId,
+        groupId: id,
+        createdAt: new Date().toISOString(),
+      })),
+    );
+
+    await this.#GroupsPermissionsModel.query().insert(
+      permissionsIds.map((permissionId) => ({
+        id: getRandomId(),
+        groupId: id,
+        permissionId: permissionId,
+        createdAt: new Date().toISOString(),
+      })),
+    );
+    return Group.modelToEntity(groupModel, workersIds, permissionsIds);
+  }
+
+  public async delete(id: string): Promise<void> {
     await this.#GroupsPermissionsModel.query().where({ groupId: id }).del();
     await this.#GroupModel.query().where({ id }).del();
   }
