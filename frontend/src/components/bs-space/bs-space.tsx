@@ -57,7 +57,7 @@ const BSSpace: FC = () => {
     );
   };
 
-  const handleUploading = (e: React.FormEvent<HTMLInputElement>): void => {
+  const handleObjectUpload = (e: React.FormEvent<HTMLInputElement>): void => {
     const files = e.currentTarget.files;
 
     if (!files) {
@@ -93,7 +93,7 @@ const BSSpace: FC = () => {
               id="file-input"
               className={styles.hideDefaultInput}
               type="file"
-              onChange={handleUploading}
+              onChange={handleObjectUpload}
             />
             <label className={styles.fileInput} htmlFor="file-input">
               Upload
