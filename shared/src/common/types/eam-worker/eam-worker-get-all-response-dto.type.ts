@@ -2,6 +2,7 @@ import { EAMWorkerGetAllItemResponseDto } from './eam-worker-get-all-item-respon
 
 type EAMWorkerGetAllResponseDto = {
   items: EAMWorkerGetAllItemResponseDto[];
+  countItems: number;
 };
 
 export { type EAMWorkerGetAllResponseDto };

@@ -13,6 +13,8 @@ import {
   UploadPayload,
   TokenPayload,
   GetObjectCommandOutput,
+  BSObjectGetResponseDto,
+  BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 
 type Constructor = {
@@ -136,6 +138,29 @@ class BSObject {
       bucket: space.name,
       key: object.name,
     });
+  }
+
+  public async getObjects({
+    spaceId,
+    from,
+    count,
+    token,
+  }: BSObjectGetRequestParamsDto & {
+    spaceId: string;
+    token: string;
+  }): Promise<BSObjectGetResponseDto> {
+    const user: TokenPayload = await this.#tokenService.decode(token);
+
+    const filter = {
+      spaceId,
+      from,
+      count,
+      tenantId: user.tenantId,
+    };
+
+    const objects = await this.#bsObjectRepository.getObjects(filter);
+
+    return { items: objects };
   }
 }
 

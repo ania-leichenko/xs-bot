@@ -3,6 +3,7 @@ export {
   type AppDispatch,
   type AsyncThunkConfig,
   type UseSelectedItemsHook,
+  type UsePaginationtemsHook,
   type NotifyActionPayload,
 } from './app/app';
 export {
@@ -32,6 +33,9 @@ export {
   type EAMGroupGetByTenantRequestParamsDto,
   type EAMGroupGetByTenantResponseDto,
   type EAMGroupGetByTenantResponseItemDto,
+  type EamGroupGetByIdRequestDto,
+  type EamGroupGetByIdResponseDto,
+  type EAMGroupUpdateRequestDto,
   type EAMGroupDeleteParamsDto,
 } from './eam-group/eam-group';
 export {

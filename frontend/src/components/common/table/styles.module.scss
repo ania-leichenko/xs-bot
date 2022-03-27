@@ -69,22 +69,29 @@
   position: absolute;
   top: 0;
   right: 0;
+  bottom: -2px;
   display: inline-block;
-  width: 15px;
+  width: 2px;
   height: 100%;
-  background-image: url("/assets/img/resize.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  margin: auto 0;
+  background-color: var(--color-dark-gray);
+  border-radius: 10px;
   user-select: none;
   touch-action: none;
 }
 
+.tableHeaderCell:last-child .resizer {
+  display: none;
+}
+
 .tableContainer {
+  min-height: 300px;
   overflow-x: auto;
 }
 
 .placeholder {
+  position: sticky;
+  left: 0;
   display: block;
   color: rgba(255 255 255 / 69%);
   font-style: italic;

@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   space as spaceServ,
   bsObject as bsObjectServ,
@@ -9,6 +9,7 @@ import {
   HttpMethod,
   BSApiPath,
   SpacesApiPath,
+  Permission,
   UserRole,
   ExceptionMessage,
 } from '~/common/enums/enums';
@@ -19,10 +20,14 @@ import {
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
   TokenPayload,
+  BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { upload } from '~/middlewares/middlewares';
+import {
+  upload as uploadHook,
+  checkHasPermissions as checkHasPermissionsHook,
+} from '~/hooks/hooks';
 import { BsError } from '~/exceptions/exceptions';
 
 type Options = {
@@ -43,6 +48,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: BSApiPath.SPACES,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     schema: {
       body: bsSpaceCreateValidationSchema,
     },
@@ -55,7 +61,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         return schema.validate(data);
       };
     },
-    async handler(req: FastifyRequest<{ Body: BSSpaceCreateRequestDto }>, rep) {
+    async handler(
+      req: FastifyRequest<{ Body: BSSpaceCreateRequestDto }>,
+      rep: FastifyReply,
+    ) {
       return rep
         .send(
           await spaceService.create({
@@ -70,9 +79,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: BSApiPath.SPACES,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const spaces = await spaceService.getSpacesByTenant({
         query: req.query,
@@ -86,9 +96,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID}`,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const { id } = req.params;
       const token = req.user?.token as string;
@@ -113,7 +124,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.POST,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
-    preHandler: upload.single('file'),
+    preHandler: [
+      uploadHook.single('file'),
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+    ],
     async handler(
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
       rep,
@@ -135,6 +149,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.GET,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(req, rep) {
       const { spaceId, objectId } = req.params;
 
@@ -145,6 +160,27 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       return rep.send(object).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
+    async handler(
+      req: FastifyRequest<{
+        Querystring: BSObjectGetRequestParamsDto;
+        Params: { id: string };
+      }>,
+      rep,
+    ) {
+      const objects = await bsObjectService.getObjects({
+        spaceId: req.params.id,
+        from: req.query.from,
+        count: req.query.count,
+        token: req.user?.token as string,
+      });
+
+      return rep.send(objects).status(HttpCode.OK);
     },
   });
 };

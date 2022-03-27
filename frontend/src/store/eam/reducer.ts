@@ -11,36 +11,41 @@ type State = {
   dataStatus: DataStatus;
   workers: EAMWorkerGetAllItemResponseDto[];
   groupsDataStatus: DataStatus;
+  workersDataStatus: DataStatus;
   groups: EAMGroupGetByTenantResponseItemDto[];
+  countItems: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   groupsDataStatus: DataStatus.IDLE,
+  workersDataStatus: DataStatus.IDLE,
   groups: [],
   workers: [],
+  countItems: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadWorkers.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.workersDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadWorkers.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.workersDataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;
+    state.countItems = action.payload.countItems;
   });
   builder.addCase(loadWorkers.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.workersDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadGroups.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.groupsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadGroups.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.groupsDataStatus = DataStatus.FULFILLED;
     state.groups = action.payload.items;
   });
   builder.addCase(loadGroups.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.groupsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(deleteGroup.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
