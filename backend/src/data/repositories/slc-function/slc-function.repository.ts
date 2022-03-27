@@ -90,6 +90,20 @@ class SLCFunction {
     });
   }
 
+  public async getCount(filter: SLCFunctionGetFilter): Promise<number> {
+    const { tenantId } = filter;
+
+    return await this.#SLCFunctionModel
+      .query()
+      .join(
+        TableName.WORKERS,
+        `${FunctionTableField.CREATED_BY}`,
+        `${TableName.WORKERS}.${AbstractTableField.ID}`,
+      )
+      .where({ tenantId })
+      .resultSize();
+  }
+
   public async getByWorkerId(workerId: string): Promise<SLCFunctionEntity[]> {
     const slcFunctions = await this.#SLCFunctionModel
       .query()

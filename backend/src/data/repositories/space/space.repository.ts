@@ -72,6 +72,17 @@ class Space {
       .limit(limit);
   }
 
+  public async getCount(filter: BSSpaceGetFilter): Promise<number> {
+    const { tenantId } = filter;
+
+    return this.#SpaceModel
+      .query()
+      .select(`${TableName.SPACES}.id`)
+      .join(TableName.WORKERS, 'createdBy', '=', `${TableName.WORKERS}.id`)
+      .where({ tenantId })
+      .resultSize();
+  }
+
   public static modelToEntity(model: SpaceM): SpaceEntity {
     return SpaceEntity.initialize({
       id: model.id,

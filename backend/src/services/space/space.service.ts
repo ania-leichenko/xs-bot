@@ -45,8 +45,8 @@ class Space {
     };
 
     const spaces = await this.#spaceRepository.getByTenantId(filter);
-
-    return { items: spaces };
+    const countItems = await this.#spaceRepository.getCount(filter);
+    return { items: spaces, countItems };
   }
 
   public async create({
