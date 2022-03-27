@@ -69,6 +69,7 @@ services:
       - bws_frontend_network
     volumes:
       - bws_frontend_auto_ssl_data:/etc/resty-auto-ssl
+      - ./:/etc/nginx/conf.d
     environment:
       ALLOWED_DOMAINS: 'development.bws-cloud.com'
       SITES: 'development.bws-cloud.com=bws_frontend:80'
