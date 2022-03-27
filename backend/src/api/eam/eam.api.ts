@@ -4,7 +4,6 @@ import {
   group as groupServ,
   worker as workerServ,
   permission as permissionServ,
-  auth as authServ,
   token as tokenServ,
 } from '~/services/services';
 import {
@@ -38,7 +37,6 @@ type Options = {
   services: {
     group: typeof groupServ;
     worker: typeof workerServ;
-    auth: typeof authServ;
     token: typeof tokenServ;
   };
 };

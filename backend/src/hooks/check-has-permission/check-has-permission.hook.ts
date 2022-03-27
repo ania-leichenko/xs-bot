@@ -1,12 +1,11 @@
 import { FastifyRequest } from 'fastify';
 import { HttpCode, ExceptionMessage, Permission } from '~/common/enums/enums';
+import {
+  EAMWorkerSignInResponseDto,
+  EAMMasterSignInResponseDto,
+} from '~/common/types/types';
 import { HttpError } from '~/exceptions/exceptions';
 import { checkHasPermission } from '~/helpers/helpers';
-import { EAMWorkerByIdResponseDto } from '~/common/types/types';
-
-type User = {
-  user: EAMWorkerByIdResponseDto;
-};
 
 const checkHasPermissions =
   (...permissions: Permission[]) =>
@@ -24,7 +23,8 @@ const checkHasPermissions =
 
     const hasUserPermission = checkHasPermission(
       permissions,
-      (<User>userData).user.permissions ?? [],
+      (userData as EAMMasterSignInResponseDto | EAMWorkerSignInResponseDto).user
+        .permissions ?? [],
     );
 
     if (!hasUserPermission) {
