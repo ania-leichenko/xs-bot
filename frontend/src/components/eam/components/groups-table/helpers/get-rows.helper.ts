@@ -4,6 +4,7 @@ import { getDateDecoratedWithAgo } from 'helpers/helpers';
 import { ActionCell, PermissionsCell } from '../components/components';
 
 type Row = {
+  [GroupsTableAccessor.ID]: string;
   [GroupsTableAccessor.GROUP_NAME]: string;
   [GroupsTableAccessor.WORKERS]: number;
   [GroupsTableAccessor.PERMISSIONS]: JSX.Element;
@@ -23,6 +24,7 @@ const getRows = ({
     const permissions = groupPermissions.map((item) => item.name);
 
     return {
+      [GroupsTableAccessor.ID]: id,
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: PermissionsCell(permissions),

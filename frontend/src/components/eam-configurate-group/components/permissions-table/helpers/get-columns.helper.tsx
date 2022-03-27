@@ -3,19 +3,12 @@ import {
   PermissionsTableHeader,
 } from 'common/enums/enums';
 import { Column } from 'react-table';
-import { SelectRowCell } from '../../../helpers/helpers';
 
-const getColumns = (
-  handleAddId: (id: string) => void,
-  handleRemoveId: (id: string) => void,
-  handleIsCheckedId: (id: string) => boolean,
-): Column[] => {
+const getColumns = (): Column[] => {
   return [
     {
       Header: '',
-      accessor: 'check',
-      Cell: ({ row }): JSX.Element =>
-        SelectRowCell(row, handleAddId, handleRemoveId, handleIsCheckedId),
+      accessor: PermissionsTableAccessor.ACTION,
       minWidth: 30,
       width: 50,
       sortType: 'basic',

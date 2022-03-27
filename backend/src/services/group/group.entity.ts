@@ -76,6 +76,18 @@ class Group {
       permissionsIds,
     });
   }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public setWorkersIds(workersIds: string[]): void {
+    this.workersIds = workersIds;
+  }
+
+  public setPermissionsIds(permissionsIds: string[]): void {
+    this.permissionsIds = permissionsIds;
+  }
 }
 
 export { Group };

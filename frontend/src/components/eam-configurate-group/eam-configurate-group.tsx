@@ -3,9 +3,10 @@ import { Button, Input } from 'components/common/common';
 import {
   useAppDispatch,
   useAppForm,
-  useEffect,
   useAppSelector,
+  useEffect,
   useSelectedItems,
+  useParams,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import {
@@ -17,22 +18,32 @@ import {
 import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './styles.module.scss';
-import { EAMGroupConfigurateRequestDto } from 'common/types/types';
+import {
+  EAMGroupConfigurateRequestDto,
+  EAMGroupUpdateRequestDto,
+} from 'common/types/types';
 import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
 
 const EAMConfigurateGroup: FC = () => {
-  const { control, errors, handleSubmit } =
-    useAppForm<EAMGroupConfigurateRequestDto>({
-      defaultValues: DEFAULT_GROUP_PAYLOAD,
-      validationSchema: eamGroupConfigurateValidationSchema,
-    });
-
-  const { tenantId } = useAppSelector(({ app }) => ({
-    tenantId: app.tenant?.id,
-  }));
-
   const dispatch = useAppDispatch();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(EAMGroupConfigurateActions.getGroupById({ id }));
+    }
+  }, [id]);
+
+  const { tenantId, group } = useAppSelector(
+    ({ app, EAMGroupConfigurate }) => ({
+      tenantId: app.tenant?.id,
+      group: id ? EAMGroupConfigurate.group : null,
+    }),
+  );
+
+  const hasGroup = Boolean(group);
 
   useEffect(() => {
     if (!tenantId) {
@@ -41,23 +52,47 @@ const EAMConfigurateGroup: FC = () => {
     dispatch(
       EAMGroupConfigurateActions.loadWorkers({
         from: 0,
-        count: 5,
+        count: 10,
         tenantId: tenantId as string,
       }),
     );
     dispatch(EAMGroupConfigurateActions.getPermission());
-  }, [dispatch, tenantId]);
+  }, [dispatch, tenantId, group]);
+
+  const { control, errors, handleSubmit, handleReset } =
+    useAppForm<EAMGroupConfigurateRequestDto>({
+      defaultValues: DEFAULT_GROUP_PAYLOAD,
+      validationSchema: eamGroupConfigurateValidationSchema,
+    });
 
   const selectedWorkers = useSelectedItems<string>([]);
   const selectedPermissions = useSelectedItems<string>([]);
 
+  useEffect(() => {
+    if (hasGroup) {
+      handleReset({ name: group!.name });
+      selectedWorkers.handleReset(group!.workersIds);
+      selectedPermissions.handleReset(group!.permissionsIds);
+    }
+  }, [group]);
+
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
-    const newPayload: EAMGroupConfigurateRequestDto = {
-      name: payload.name,
-      workersIds: selectedWorkers.selectedItems,
-      permissionsIds: selectedPermissions.selectedItems,
-    };
-    dispatch(EAMGroupConfigurateActions.create(newPayload));
+    if (hasGroup) {
+      const newPayload: EAMGroupUpdateRequestDto = {
+        id: group!.id,
+        name: payload.name,
+        workersIds: selectedWorkers.selectedItems,
+        permissionsIds: selectedPermissions.selectedItems,
+      };
+      dispatch(EAMGroupConfigurateActions.update(newPayload));
+    } else {
+      const newPayload: EAMGroupConfigurateRequestDto = {
+        name: payload.name,
+        workersIds: selectedWorkers.selectedItems,
+        permissionsIds: selectedPermissions.selectedItems,
+      };
+      dispatch(EAMGroupConfigurateActions.create(newPayload));
+    }
   };
 
   return (
@@ -112,7 +147,7 @@ const EAMConfigurateGroup: FC = () => {
               <Button
                 className={styles.button}
                 type={ButtonType.SUBMIT}
-                label="Save"
+                label={hasGroup ? 'Save' : 'Create'}
               />
             </div>
           </div>

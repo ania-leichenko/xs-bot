@@ -42,6 +42,7 @@ const ExceptionMessage = {
   NOTHING_TO_UPDATE: 'Nothing to update',
   FAILED_TO_CREATE: 'Failed to create instance',
   SPACE_EXISTS: 'Space with this name already exists',
+  PERMISSION_LACK: 'Permissions are required to access',
   OBJECT_NOT_UPLOADED: 'Object is not uploaded',
   OBJECT_ACCESS_DENIED: 'You do not have access to this object',
   OPERATION_SYSTEM_NOT_FOUND: 'Operation system not found',

@@ -3,6 +3,7 @@ enum UsersTableAccessor {
   USERNAME = 'username',
   GROUPS = 'groups',
   CREATION_TIME = 'createdAt',
+  ACTION = 'action',
 }
 
 export { UsersTableAccessor };
