@@ -11,14 +11,14 @@ import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
 const loadObjects = createAsyncThunk<
   BSObjectGetResponseDto,
   {
-    params: { id: string };
+    id: string;
     filter: BSObjectGetRequestParamsDto;
   },
   AsyncThunkConfig
->(ActionType.GET_OBJECTS, async ({ filter, params }, { extra }) => {
+>(ActionType.GET_OBJECTS, async ({ filter, id }, { extra }) => {
   const { bsApi } = extra;
 
-  return bsApi.loadObjects(filter, params);
+  return bsApi.loadObjects(filter, id);
 });
 
 const downloadObject = createAsyncThunk<
@@ -28,7 +28,21 @@ const downloadObject = createAsyncThunk<
 >(ActionType.DOWNLOAD_OBJECT, async (params, { extra }) => {
   const { bsApi, notification } = extra;
 
+  const saveBlob = (blob: Blob, filename: string): void => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
   const response = await bsApi.downloadObject(params);
+
+  (): void => saveBlob(response, params.filename);
 
   notification.success(
     NotificationTitle.SUCCESS,

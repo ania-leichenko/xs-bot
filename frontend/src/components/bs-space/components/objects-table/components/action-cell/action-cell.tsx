@@ -3,11 +3,10 @@ import { IconName } from 'common/enums/enums';
 
 const ActionCell = (
   id: string,
-  name: string,
-  onObjectDownload: (objectId: string, fileName: string) => void,
+  onObjectDownload: (objectId: string) => void,
 ): JSX.Element => {
   const handleDownload = (): void => {
-    onObjectDownload(id, name);
+    onObjectDownload(id);
   };
   return (
     <IconButton

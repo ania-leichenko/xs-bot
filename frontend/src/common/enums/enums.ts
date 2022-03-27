@@ -13,6 +13,7 @@ export {
   SpacesApiPath,
   InstancesApiPath,
   SshKeysApiPath,
+  ObjectsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey, Permission } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';

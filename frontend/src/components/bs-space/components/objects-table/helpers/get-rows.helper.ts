@@ -15,7 +15,7 @@ const getRows = ({
   onObjectDownload,
 }: {
   objects: BSObjectGetResponseItemDto[];
-  onObjectDownload: (objectId: string, fileName: string) => void;
+  onObjectDownload: (objectId: string) => void;
 }): Row[] => {
   return objects.map((item) => {
     const { name, createdAt, sizeInBytes, id } = item;
@@ -26,7 +26,7 @@ const getRows = ({
         new Date(createdAt),
       ),
       [ObjectsTableAccessor.SIZE]: getPrettyBytes(sizeInBytes),
-      [ObjectsTableAccessor.ACTIONS]: ActionCell(id, name, onObjectDownload),
+      [ObjectsTableAccessor.ACTIONS]: ActionCell(id, onObjectDownload),
     };
   });
 };

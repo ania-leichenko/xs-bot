@@ -4,6 +4,7 @@ import {
   ContentType,
   HttpMethod,
   SpacesApiPath,
+  ObjectsApiPath,
 } from 'common/enums/enums';
 import {
   BSObjectDownloadParamsDto,
@@ -16,7 +17,6 @@ import {
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
-import { ObjectsApiPath } from 'common/enums/api/api';
 
 type Constructor = {
   http: Http;
@@ -74,7 +74,7 @@ class BSApi {
 
   public loadObjects(
     filter: BSObjectGetRequestParamsDto,
-    params: { id: string },
+    id: string,
   ): Promise<BSObjectGetResponseDto> {
     return this.#http.load(
       joinItems(
@@ -82,7 +82,7 @@ class BSApi {
         ApiPath.BS,
         BSApiPath.SPACES,
         SpacesApiPath.ROOT,
-        params.id,
+        id,
         SpacesApiPath.OBJECTS,
       ),
       {

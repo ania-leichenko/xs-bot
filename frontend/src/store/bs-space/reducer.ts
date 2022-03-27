@@ -3,7 +3,6 @@ import { DataStatus } from 'common/enums/app/data-status.enum';
 import { createReducer } from '@reduxjs/toolkit';
 import { downloadObject, loadObjects, uploadObject } from './actions';
 import { logOut } from 'store/auth/actions';
-import { downloadBlob } from 'helpers/helpers';
 
 type State = {
   dataStatus: DataStatus;
@@ -29,8 +28,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(downloadObject.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
   });
-  builder.addCase(downloadObject.fulfilled, (state, action) => {
-    downloadBlob(action.payload, action.meta.arg.filename);
+  builder.addCase(downloadObject.fulfilled, (state) => {
     state.dataStatus = DataStatus.FULFILLED;
   });
   builder.addCase(downloadObject.rejected, (state) => {

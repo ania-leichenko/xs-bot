@@ -1,12 +1,18 @@
 import { IconName } from 'common/enums/enums';
 import { IconButton } from 'components/common/common';
-import { useAppDispatch, useEffect, useParams } from 'hooks/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useEffect,
+  useParams,
+} from 'hooks/hooks';
 import { ObjectsTable } from './components/components';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import { BSSpace as BSSpaceActions } from 'store/actions';
 
 const BSSpace: FC = () => {
+  const objects = useAppSelector((state) => state.BSSpace.objects);
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
@@ -18,9 +24,7 @@ const BSSpace: FC = () => {
           from: 0,
           count: 5,
         },
-        params: {
-          id: id as string,
-        },
+        id: id as string,
       }),
     );
   }, [dispatch]);
@@ -32,14 +36,18 @@ const BSSpace: FC = () => {
           from: 0,
           count: 5,
         },
-        params: {
-          id: id as string,
-        },
+        id: id as string,
       }),
     );
   };
 
-  const handleObjectDownload = (objectId: string, filename: string): void => {
+  const handleObjectDownload = (objectId: string): void => {
+    const filename = getFilenameById(objectId);
+
+    if (!filename) {
+      return;
+    }
+
     dispatch(
       BSSpaceActions.downloadObject({
         filename,
@@ -51,11 +59,20 @@ const BSSpace: FC = () => {
 
   const handleUploading = (e: React.FormEvent<HTMLInputElement>): void => {
     const files = e.currentTarget.files;
-    const formData = new FormData();
-    if (files) {
-      formData.append('file', files[0]);
+
+    if (!files) {
+      return;
     }
+
+    const formData = new FormData();
+    formData.append('file', files[0]);
+
     dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
+  };
+
+  const getFilenameById = (id: string): string => {
+    const object = objects.filter((obj) => obj.id === id);
+    return object[0].name;
   };
 
   return (
