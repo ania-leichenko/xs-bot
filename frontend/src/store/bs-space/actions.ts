@@ -7,6 +7,7 @@ import {
 } from 'common/types/types';
 import { ActionType } from './common';
 import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import { store } from 'store/store';
 
 const loadObjects = createAsyncThunk<
   BSObjectGetResponseDto,
@@ -22,34 +23,27 @@ const loadObjects = createAsyncThunk<
 });
 
 const downloadObject = createAsyncThunk<
-  Blob,
-  BSObjectDownloadParamsDto & { filename: string },
+  BSObjectDownloadParamsDto,
+  BSObjectDownloadParamsDto,
   AsyncThunkConfig
 >(ActionType.DOWNLOAD_OBJECT, async (params, { extra }) => {
-  const { bsApi, notification } = extra;
+  const { bsApi, notification, saver } = extra;
 
-  const saveBlob = (blob: Blob, filename: string): void => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  };
+  const { objects } = store.getState().BSSpace;
+
+  const object = objects.filter((obj) => obj.id === params.objectId);
+  const filename = object[0].name;
 
   const response = await bsApi.downloadObject(params);
 
-  (): void => saveBlob(response, params.filename);
+  saver.saveBlob(response, filename);
 
   notification.success(
     NotificationTitle.SUCCESS,
     NotificationMessage.BS_OBJECT_DOWNLOAD,
   );
 
-  return response;
+  return params;
 });
 
 const uploadObject = createAsyncThunk<

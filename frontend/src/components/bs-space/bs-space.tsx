@@ -1,18 +1,12 @@
 import { IconName } from 'common/enums/enums';
 import { IconButton } from 'components/common/common';
-import {
-  useAppDispatch,
-  useAppSelector,
-  useEffect,
-  useParams,
-} from 'hooks/hooks';
+import { useAppDispatch, useEffect, useParams } from 'hooks/hooks';
 import { ObjectsTable } from './components/components';
 import React, { FC } from 'react';
 import styles from './styles.module.scss';
 import { BSSpace as BSSpaceActions } from 'store/actions';
 
 const BSSpace: FC = () => {
-  const objects = useAppSelector((state) => state.BSSpace.objects);
   const dispatch = useAppDispatch();
 
   const { id } = useParams();
@@ -42,15 +36,8 @@ const BSSpace: FC = () => {
   };
 
   const handleObjectDownload = (objectId: string): void => {
-    const filename = getFilenameById(objectId);
-
-    if (!filename) {
-      return;
-    }
-
     dispatch(
       BSSpaceActions.downloadObject({
-        filename,
         spaceId: id as string,
         objectId,
       }),
@@ -58,21 +45,17 @@ const BSSpace: FC = () => {
   };
 
   const handleObjectUpload = (e: React.FormEvent<HTMLInputElement>): void => {
-    const files = e.currentTarget.files;
+    const [file] = e.currentTarget.files as FileList;
+    const hasFiles = Boolean(file);
 
-    if (!files) {
+    if (!hasFiles) {
       return;
     }
 
     const formData = new FormData();
-    formData.append('file', files[0]);
+    formData.append('file', file as File);
 
     dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
-  };
-
-  const getFilenameById = (id: string): string => {
-    const object = objects.filter((obj) => obj.id === id);
-    return object[0].name;
   };
 
   return (
@@ -89,14 +72,13 @@ const BSSpace: FC = () => {
               icon={IconName.RELOAD}
               label="Reload"
             />
-            <input
-              id="file-input"
-              className={styles.hideDefaultInput}
-              type="file"
-              onChange={handleObjectUpload}
-            />
-            <label className={styles.fileInput} htmlFor="file-input">
+            <label className={styles.fileInput}>
               Upload
+              <input
+                className={styles.hideDefaultInput}
+                type="file"
+                onChange={handleObjectUpload}
+              />
             </label>
           </div>
         </ObjectsTable>

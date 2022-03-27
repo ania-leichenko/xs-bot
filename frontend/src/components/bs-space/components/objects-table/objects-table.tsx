@@ -2,15 +2,18 @@ import { FC } from 'react';
 import { useAppSelector, useMemo } from 'hooks/hooks';
 import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
+import { DataStatus } from 'common/enums/enums';
 
 type Props = {
   onObjectDownload: (objectId: string) => void;
 };
 
 const ObjectsTable: FC<Props> = ({ children, onObjectDownload }) => {
-  const { objects } = useAppSelector(({ BSSpace }) => ({
+  const { objects, dataStatus } = useAppSelector(({ BSSpace }) => ({
     objects: BSSpace.objects,
+    dataStatus: BSSpace.dataStatus,
   }));
+  const isLoading = dataStatus === DataStatus.PENDING;
 
   const data = useMemo(() => getRows({ objects, onObjectDownload }), [objects]);
 
@@ -22,6 +25,7 @@ const ObjectsTable: FC<Props> = ({ children, onObjectDownload }) => {
       data={data}
       title="Objects"
       placeholder="No objects to display"
+      isLoading={isLoading}
     >
       {children}
     </Table>
