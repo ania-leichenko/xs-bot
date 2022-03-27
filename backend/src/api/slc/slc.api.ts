@@ -26,7 +26,7 @@ import {
   TokenPayload,
 } from '~/common/types/types';
 import { SLCError } from '~/exceptions/exceptions';
-import { checkHasPermissions } from '~/hooks/hooks';
+import { checkHasPermissions as checkHasPermissionsHook } from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -42,7 +42,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: SLCApiPath.SLC_FUNCTIONS,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     schema: {
       body: slcFunctionCreateValidationSchema,
     },
@@ -73,7 +73,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionRunParamsDto;
@@ -106,7 +106,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: SLCApiPath.SLC_FUNCTIONS,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{ Querystring: SLCFunctionGetRequestParamsDto }>,
       rep: FastifyReply,
@@ -123,7 +123,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionLoadParamsDto;
@@ -143,7 +143,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{ Params: SLCFunctionDeleteParamsDto }>,
       rep: FastifyReply,
@@ -169,7 +169,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.PUT,
     url: `${SLCApiPath.SLC_FUNCTIONS}${SLCFunctionApiPath.$ID}`,
-    preHandler: checkHasPermissions(Permission.MANAGE_SLC),
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_SLC),
     async handler(
       req: FastifyRequest<{
         Params: SLCFunctionUpdateParamsDto;

@@ -1,14 +1,19 @@
 import { FastifyRequest } from 'fastify';
-import { Permission, HttpCode, ExceptionMessage } from '~/common/enums/enums';
+import { HttpCode, ExceptionMessage, Permission } from '~/common/enums/enums';
 import { HttpError } from '~/exceptions/exceptions';
 import { checkHasPermission } from '~/helpers/helpers';
+import { EAMWorkerByIdResponseDto } from '~/common/types/types';
+
+type User = {
+  user: EAMWorkerByIdResponseDto;
+};
 
 const checkHasPermissions =
   (...permissions: Permission[]) =>
-  async (req: FastifyRequest): Promise<void> => {
-    const user = req.user;
+  async <T extends FastifyRequest>(req: T): Promise<void> => {
+    const { user: userData } = req;
 
-    const hasUser = Boolean(user);
+    const hasUser = Boolean(userData);
 
     if (!hasUser) {
       throw new HttpError({
@@ -19,7 +24,7 @@ const checkHasPermissions =
 
     const hasUserPermission = checkHasPermission(
       permissions,
-      user?.user.permissions ?? [],
+      (<User>userData).user.permissions ?? [],
     );
 
     if (!hasUserPermission) {
