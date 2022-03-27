@@ -2,7 +2,8 @@ import {
   PermissionsTableAccessor,
   PermissionsTableHeader,
 } from 'common/enums/enums';
-import { Column } from 'react-table';
+import { Column, Row } from 'react-table';
+import { sortCallback, getDateDecoratedWithAgo } from 'helpers/helpers';
 
 const getColumns = (): Column[] => {
   return [
@@ -22,10 +23,15 @@ const getColumns = (): Column[] => {
     },
     {
       Header: PermissionsTableHeader.CREATION_TIME,
-      accessor: PermissionsTableAccessor.CREATION_TIME,
+      accessor: PermissionsTableAccessor.CREATED_AT,
       minWidth: 120,
       width: 300,
-      sortType: 'basic',
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
   ];
 };

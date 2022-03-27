@@ -1,6 +1,5 @@
 import { GroupsTableAccessor } from 'common/enums/enums';
 import { EAMGroupGetByTenantResponseItemDto } from 'common/types/types';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
 import { ActionCell, PermissionsCell } from '../components/components';
 
 type Row = {
@@ -8,7 +7,7 @@ type Row = {
   [GroupsTableAccessor.GROUP_NAME]: string;
   [GroupsTableAccessor.WORKERS]: number;
   [GroupsTableAccessor.PERMISSIONS]: JSX.Element;
-  [GroupsTableAccessor.CREATION_TIME]: string;
+  [GroupsTableAccessor.CREATED_AT]: string;
   [GroupsTableAccessor.ACTIONS]: JSX.Element;
 };
 
@@ -28,9 +27,7 @@ const getRows = ({
       [GroupsTableAccessor.GROUP_NAME]: name,
       [GroupsTableAccessor.WORKERS]: users.length,
       [GroupsTableAccessor.PERMISSIONS]: PermissionsCell(permissions),
-      [GroupsTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [GroupsTableAccessor.CREATED_AT]: createdAt,
       [GroupsTableAccessor.ACTIONS]: ActionCell(id, onGroupDelete),
     };
   });

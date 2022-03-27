@@ -1,11 +1,10 @@
 import { WorkersTableAccessor } from 'common/enums/enums';
 import { EAMWorkerGetAllItemResponseDto } from 'common/types/types';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [WorkersTableAccessor.WORKER_NAME]: string;
   [WorkersTableAccessor.GROUPS]: string;
-  [WorkersTableAccessor.CREATION_TIME]: string;
+  [WorkersTableAccessor.CREATED_AT]: string;
 };
 
 const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
@@ -17,9 +16,7 @@ const getRows = (workers: EAMWorkerGetAllItemResponseDto[]): Row[] => {
     return {
       [WorkersTableAccessor.WORKER_NAME]: name,
       [WorkersTableAccessor.GROUPS]: groupsName,
-      [WorkersTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [WorkersTableAccessor.CREATED_AT]: createdAt,
     };
   });
 };

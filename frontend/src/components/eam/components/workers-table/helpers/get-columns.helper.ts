@@ -1,5 +1,6 @@
-import { Column } from 'react-table';
+import { Column, Row } from 'react-table';
 import { WorkersTableHeader, WorkersTableAccessor } from 'common/enums/enums';
+import { sortCallback, getDateDecoratedWithAgo } from 'helpers/helpers';
 
 const getColumns = (): Column[] => {
   return [
@@ -18,11 +19,16 @@ const getColumns = (): Column[] => {
       sortType: 'basic',
     },
     {
-      Header: WorkersTableHeader.CREATION_TIME,
-      accessor: WorkersTableAccessor.CREATION_TIME,
+      Header: WorkersTableHeader.CREATED_AT,
+      accessor: WorkersTableAccessor.CREATED_AT,
       minWidth: 120,
       width: 200,
-      sortType: 'basic',
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
     {
       Header: WorkersTableHeader.ACTIONS,

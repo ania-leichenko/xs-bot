@@ -104,14 +104,15 @@
   height: 20px;
   margin-left: 5px;
   background-repeat: no-repeat;
-  background-position: center;
   background-size: cover;
 }
 
 .desc {
   background-image: url("../../../assets/img/arrow-up.svg");
+  background-position: center 2px;
 }
 
 .asc {
   background-image: url("../../../assets/img/arrow-down.svg");
+  background-position: center 1px;
 }

@@ -1,6 +1,7 @@
 import { GroupsTableHeader, GroupsTableAccessor } from 'common/enums/enums';
-import { Column } from 'react-table';
+import { Column, Row } from 'react-table';
 import { SelectRowCell } from './cells/cells';
+import { sortCallback, getDateDecoratedWithAgo } from 'helpers/helpers';
 
 const getColumns = (
   handleAddGroupId: (id: string) => void,
@@ -44,11 +45,16 @@ const getColumns = (
       sortType: 'basic',
     },
     {
-      Header: GroupsTableHeader.CREATION_TIME,
-      accessor: GroupsTableAccessor.CREATION_TIME,
+      Header: GroupsTableHeader.CREATED_AT,
+      accessor: GroupsTableAccessor.CREATED_AT,
       minWidth: 150,
       width: 150,
-      sortType: 'basic',
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
   ];
 };

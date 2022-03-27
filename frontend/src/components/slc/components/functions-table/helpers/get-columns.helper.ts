@@ -1,8 +1,9 @@
-import { Column } from 'react-table';
+import { Column, Row } from 'react-table';
 import {
   FunctionsTableHeader,
   FunctionsTableAccessor,
 } from 'common/enums/enums';
+import { sortCallback, getDateDecoratedWithAgo } from 'helpers/helpers';
 
 const getColumns = (): Column[] => {
   return [
@@ -18,14 +19,24 @@ const getColumns = (): Column[] => {
       accessor: FunctionsTableAccessor.CREATION_TIME,
       minWidth: 150,
       width: 300,
-      sortType: 'basic',
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
     {
       Header: FunctionsTableHeader.UPDATION_TIME,
       accessor: FunctionsTableAccessor.UPDATION_TIME,
       minWidth: 150,
       width: 300,
-      sortType: 'basic',
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
     {
       Header: FunctionsTableHeader.ACTIONS,
