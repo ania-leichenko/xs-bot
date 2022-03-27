@@ -88,7 +88,7 @@ class Group {
         message: ExceptionMessage.GROUP_NOT_FOUND,
       });
     }
-    if (name && name != group.name) {
+    if (name !== group.name) {
       const groupByName = await this.#groupRepository.getGroupByNameAndTenant(
         name,
         tenantId,
