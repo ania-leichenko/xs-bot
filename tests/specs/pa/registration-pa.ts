@@ -1,5 +1,5 @@
 import { RegistrationPage } from '../po/registration-po';
-import * as testData from '../test-data/register-data.json' assert { type: 'json' };
+import { registerData } from '../test-data/register-data';
 
 const reg = new RegistrationPage();
 
@@ -35,34 +35,34 @@ class RegistrationActions {
   async FillMasterSignUpForm(): Promise<void> {
     const NewEmail = new Date().getTime() / 1000 + '@test.test';
     await reg.Email_Field.setValue(NewEmail);
-    await reg.Name_Field.setValue(testData.TenantName);
-    await reg.Password_Field.setValue(testData.MasterPassword);
+    await reg.Name_Field.setValue(registerData.TenantName);
+    await reg.Password_Field.setValue(registerData.MasterPassword);
   }
 
   async FillMasterSignInForm(): Promise<void> {
     await reg.Email_Field.waitForExist({
       timeout: 3000,
     });
-    await reg.Email_Field.setValue(testData.Email);
+    await reg.Email_Field.setValue(registerData.Email);
     await reg.Password_Field.waitForExist({
       timeout: 3000,
     });
-    await reg.Password_Field.setValue(testData.MasterPassword);
+    await reg.Password_Field.setValue(registerData.MasterPassword);
   }
 
   async FillWorkerSignInForm(): Promise<void> {
     await reg.TenantName_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.TenantName_Field.setValue(testData.TenantName);
+    await reg.TenantName_Field.setValue(registerData.TenantName);
     await reg.WorkerName_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.WorkerName_Field.setValue(testData.WorkerName);
+    await reg.WorkerName_Field.setValue(registerData.WorkerName);
     await reg.Password_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.Password_Field.setValue(testData.WorkerPassword);
+    await reg.Password_Field.setValue(registerData.WorkerPassword);
   }
 
   async Sign(): Promise<void> {

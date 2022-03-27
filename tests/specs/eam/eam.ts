@@ -2,7 +2,7 @@ import * as asserteam from 'assert';
 import { RegistrationActions } from '../pa/registration-pa';
 import { EAMActions } from '../pa/eam-pa';
 import { DashboardActions } from '../pa/dashboard-pa';
-import * as testData from '../test-data/register-data.json' assert { type: 'json' };
+import { registerData } from '../test-data/register-data';
 import { EAM } from '../po/eam-po';
 
 const regAct = new RegistrationActions();
@@ -26,7 +26,7 @@ describe('MASTER', async () => {
     await regAct.SignInAsMaster();
     await regAct.Sign();
     await checkEAM.OpenEAM();
-    await eamActions.ChangeTenantName(testData.NewTenantName);
+    await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
     await browser.reloadSession();
     await browser.url('/');
@@ -35,8 +35,8 @@ describe('MASTER', async () => {
     await checkEAM.OpenEAM();
     /////////CHECK and return previous value/////////////
     const check = await eam.Name_Field.getValue();
-    asserteam.strictEqual(check, testData.NewTenantName);
-    await eamActions.ChangeTenantName(testData.TenantName);
+    asserteam.strictEqual(check, registerData.NewTenantName);
+    await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
     await browser.reloadSession();
   });
@@ -128,7 +128,7 @@ describe('WORKER', async () => {
     await regAct.FillWorkerSignInForm();
     await regAct.Sign();
     await checkEAM.OpenEAM();
-    await eamActions.ChangeTenantName(testData.NewTenantName);
+    await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
     await browser.reloadSession();
     await browser.url('/');
@@ -137,8 +137,8 @@ describe('WORKER', async () => {
     await checkEAM.OpenEAM();
     /////////CHECK and return previous value/////////////
     const check = await eam.Name_Field.getValue();
-    asserteam.strictEqual(check, testData.NewTenantName);
-    await eamActions.ChangeTenantName(testData.TenantName);
+    asserteam.strictEqual(check, registerData.NewTenantName);
+    await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
     await browser.reloadSession();
   });

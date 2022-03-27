@@ -1,6 +1,11 @@
-import { Options } from '@wdio/types';
-
-const config: Options.Testrunner = {
+const config: WebdriverIO.Config = {
+  autoCompileOpts: {
+    autoCompile: true,
+    tsNodeOpts: {
+      transpileOnly: true,
+      project: './tsconfig.json',
+    },
+  },
   specs: ['./specs/**/*.ts'],
   exclude: [],
   maxInstances: 10,

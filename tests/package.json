@@ -7,7 +7,7 @@
   },
   "scripts": {
     "test": "npm run wdio",
-    "wdio": "wdio run wdio.conf.js",
+    "wdio": "wdio run wdio.conf.ts",
     "lint:js": "npx eslint \"specs/**/*.ts\"",
     "lint": "npm run lint:js"
   },
