@@ -10,8 +10,8 @@ const getColumns = (): Column[] => {
     {
       Header: '',
       accessor: PermissionsTableAccessor.ACTION,
-      minWidth: 30,
-      width: 50,
+      minWidth: 55,
+      width: 55,
       sortType: 'basic',
     },
     {
