@@ -7,3 +7,4 @@ export { getDateDecoratedWithAgo } from './date/date';
 export { checkHasPermission } from './permission/permission';
 export { debounce } from './timeout/timeout';
 export { sortCallback } from './sort/sort';
+export { getPrettyBytes } from './string/string';
