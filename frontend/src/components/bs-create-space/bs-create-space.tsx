@@ -9,7 +9,7 @@ import { Button, Input } from 'components/common/common';
 import { getNameOf } from 'helpers/helpers';
 import { useAppDispatch, useAppForm } from 'hooks/hooks';
 import { FC } from 'react';
-import { BSSpace as BSSpaceActions } from 'store/actions';
+import { BSSpaceCreate as BSSpaceActions } from 'store/actions';
 import { bsSpaceCreate as CreateSpaceValidationSchema } from 'validation-schemas/validation-schemas';
 import styles from './styles.module.scss';
 import { DEFAULT_PAYLOAD } from './common/constants';

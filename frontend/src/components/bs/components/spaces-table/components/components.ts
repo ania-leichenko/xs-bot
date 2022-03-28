@@ -1,1 +1,2 @@
-export { ActionCell } from 'components/bs/components/spaces-table/components/action-cell/action-cell';
+export { ActionCell } from './action-cell/action-cell';
+export { BsSpaceLink } from './space-link-cell/make-link.helper';

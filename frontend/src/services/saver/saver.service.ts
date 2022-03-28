@@ -10,6 +10,10 @@ class Saver {
     });
     saveAs(csvFile);
   }
+
+  public saveBlob(blob: Blob, filename: string): void {
+    saveAs(new File([blob], filename));
+  }
 }
 
 export { Saver };
