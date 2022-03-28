@@ -1,8 +1,6 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
-import { ActionCell } from '../components/components';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
-import { BsSpaceLink } from '../components/space-link-cell/make-link.helper';
+import { ActionCell, BsSpaceLink } from '../components/components';
 
 type Row = {
   [SpacesTableAccessor.SPACE_NAME]: JSX.Element;
@@ -22,9 +20,7 @@ const getRows = ({
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: BsSpaceLink(name, id),
-      [SpacesTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [SpacesTableAccessor.CREATED_AT]: createdAt,
       [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),
     };
   });

@@ -1,7 +1,7 @@
 import { ObjectsTableAccessor } from 'common/enums/enums';
 import { BSObjectGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDateDecoratedWithAgo, getPrettyBytes } from 'helpers/helpers';
+import { getPrettyBytes } from 'helpers/helpers';
 
 type Row = {
   [ObjectsTableAccessor.OBJECT_NAME]: string;
@@ -22,9 +22,7 @@ const getRows = ({
 
     return {
       [ObjectsTableAccessor.OBJECT_NAME]: name,
-      [ObjectsTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [ObjectsTableAccessor.CREATED_AT]: createdAt,
       [ObjectsTableAccessor.SIZE]: getPrettyBytes(sizeInBytes),
       [ObjectsTableAccessor.ACTIONS]: ActionCell(id, onObjectDownload),
     };
