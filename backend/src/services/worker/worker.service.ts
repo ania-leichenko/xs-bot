@@ -208,7 +208,7 @@ class Worker {
     if (!worker) {
       throw new EAMError({
         status: HttpCode.NOT_FOUND,
-        message: ExceptionMessage.WORKER_NAME_EXISTS,
+        message: ExceptionMessage.WORKER_NOT_FOUND,
       });
     }
 
