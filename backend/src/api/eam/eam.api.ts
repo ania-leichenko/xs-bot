@@ -123,12 +123,12 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{
-        Querystring: EamGroupGetByIdRequestDto;
+        Params: EamGroupGetByIdRequestDto;
         Body: EAMGroupCreateRequestDto;
       }>,
       rep,
     ) {
-      const { id } = req.query;
+      const { id } = req.params;
       const group = await groupService.update(id, req.body);
 
       return rep.send(group).status(HttpCode.OK);
@@ -137,14 +137,14 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
   fastify.route({
     method: HttpMethod.GET,
-    url: `${EAMApiPath.GROUP}${GroupsApiPath.$ID}`,
+    url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
     async handler(
       req: FastifyRequest<{
-        Querystring: EamGroupGetByIdRequestDto;
+        Params: EamGroupGetByIdRequestDto;
       }>,
       rep,
     ) {
-      const { id } = req.query;
+      const { id } = req.params;
       const group = await groupService.getGroupById(id);
       return rep.send(group).status(HttpCode.OK);
     },

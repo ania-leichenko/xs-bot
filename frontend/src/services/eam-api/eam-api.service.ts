@@ -71,12 +71,12 @@ class EAMApi {
       joinItems(
         this.#apiPrefix,
         ApiPath.EAM,
-        EAMApiPath.GROUP,
+        EAMApiPath.GROUPS,
         GroupsApiPath.ROOT,
+        id,
       ),
       {
         method: HttpMethod.PUT,
-        params: { id },
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
       },
@@ -90,12 +90,12 @@ class EAMApi {
       joinItems(
         this.#apiPrefix,
         ApiPath.EAM,
-        EAMApiPath.GROUP,
+        EAMApiPath.GROUPS,
         GroupsApiPath.ROOT,
+        params.id,
       ),
       {
         method: HttpMethod.GET,
-        params,
       },
     );
   }
