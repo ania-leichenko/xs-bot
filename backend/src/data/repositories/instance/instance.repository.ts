@@ -65,6 +65,14 @@ class Instance {
       .limit(limit);
   }
 
+  public getCount(tenantId: string): Promise<number> {
+    return this.#InstanceModel
+      .query()
+      .select()
+      .where({ tenantId })
+      .resultSize();
+  }
+
   public async getInstancesByDate(date: string): Promise<InstanceM[]> {
     return this.#InstanceModel.query().select().where('createdAt', '<', date);
   }

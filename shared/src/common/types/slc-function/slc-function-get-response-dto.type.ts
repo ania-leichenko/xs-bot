@@ -2,6 +2,7 @@ import { SLCFunctionGetResponseItemDto } from './slc-function-get-response-item-
 
 type SLCFunctionGetResponseDto = {
   items: SLCFunctionGetResponseItemDto[];
+  countItems: number;
 };
 
 export { type SLCFunctionGetResponseDto };

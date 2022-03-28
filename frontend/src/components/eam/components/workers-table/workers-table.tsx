@@ -7,9 +7,8 @@ import {
 } from 'hooks/hooks';
 import { Table } from 'components/common/table/table';
 import { getRows, getColumns } from './helpers/helpers';
-import { Pagination } from 'common/enums/enums';
 import { eam as eamActions } from 'store/actions';
-import { DataStatus } from 'common/enums/enums';
+import { DataStatus, Pagination } from 'common/enums/enums';
 
 type Props = {
   pagination?: {
@@ -23,17 +22,14 @@ type Props = {
 const WorkersTable: FC<Props> = ({ children }) => {
   const dispatch = useAppDispatch();
 
-  const {
-    workers,
-    countItems: countItems,
-    tenantId,
-    workersDataStatus,
-  } = useAppSelector(({ app, eam }) => ({
-    workers: eam.workers,
-    countItems: eam.countItems,
-    tenantId: app.tenant?.id,
-    workersDataStatus: eam.workersDataStatus,
-  }));
+  const { workers, countItems, tenantId, workersDataStatus } = useAppSelector(
+    ({ app, eam }) => ({
+      workers: eam.workers,
+      countItems: eam.workersCountAll,
+      tenantId: app.tenant?.id,
+      workersDataStatus: eam.workersDataStatus,
+    }),
+  );
 
   const isLoading = workersDataStatus === DataStatus.PENDING;
 

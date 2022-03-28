@@ -1,7 +1,6 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [SpacesTableAccessor.SPACE_NAME]: string;
@@ -21,9 +20,7 @@ const getRows = ({
 
     return {
       [SpacesTableAccessor.SPACE_NAME]: name,
-      [SpacesTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [SpacesTableAccessor.CREATED_AT]: createdAt,
       [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),
     };
   });
