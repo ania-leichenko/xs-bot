@@ -46,7 +46,7 @@ class Worker {
   ): Promise<EAMWorkerGetAllItemResponseDto[]> {
     const { from: offset, count: limit, tenantId } = param;
 
-    const workers = await this.#WorkerModel
+    return this.#WorkerModel
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
@@ -54,8 +54,6 @@ class Worker {
       .orderBy('createdAt', 'desc')
       .offset(offset)
       .limit(limit);
-
-    return workers;
   }
 
   public getCount(

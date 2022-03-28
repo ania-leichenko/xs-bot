@@ -13,6 +13,7 @@ export {
   SpacesApiPath,
   InstancesApiPath,
   SshKeysApiPath,
+  ObjectsApiPath,
 } from './api/api';
 export { AppRoute, ENV, DataStatus, StorageKey, Permission } from './app/app';
 export { HttpHeader, HttpMethod } from './http/http';
@@ -39,7 +40,12 @@ export {
   PermissionsTableHeader,
   EAMCreateWorkerCSVColumn,
 } from './eam/eam';
-export { SpacesTableHeader, SpacesTableAccessor } from './bs/bs';
+export {
+  SpacesTableHeader,
+  SpacesTableAccessor,
+  ObjectsTableAccessor,
+  ObjectsTableHeader,
+} from './bs/bs';
 export { InstancesTableHeader, InstancesTableAccessor } from './sc/sc';
 export { FunctionsTableHeader, FunctionsTableAccessor } from './slc/slc';
 export { UserRole } from './roles/roles';
@@ -51,3 +57,4 @@ export {
 export { Pagination } from './pagination/pagination';
 export { InstanceState } from './instance-states/instance-states';
 export { KeydownKey } from './event/event';
+export { FormDataCommonKey } from './form-data/form-data';

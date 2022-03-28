@@ -2,6 +2,7 @@ import { BSObjectGetResponseItemDto } from './bs-object-get-responce-item-dto.ty
 
 type BSObjectGetResponseDto = {
   items: BSObjectGetResponseItemDto[];
+  countItems: number;
 };
 
 export { type BSObjectGetResponseDto };
