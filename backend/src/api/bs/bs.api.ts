@@ -27,6 +27,7 @@ import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-sch
 import {
   upload as uploadHook,
   checkHasPermissions as checkHasPermissionsHook,
+  checkRole as checkRoleHook,
 } from '~/hooks/hooks';
 import { BsError } from '~/exceptions/exceptions';
 
@@ -48,7 +49,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: BSApiPath.SPACES,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkRoleHook(UserRole.WORKER),
+    ],
     schema: {
       body: bsSpaceCreateValidationSchema,
     },
