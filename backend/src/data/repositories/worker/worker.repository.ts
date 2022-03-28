@@ -58,7 +58,7 @@ class Worker {
     return workers;
   }
 
-  public async getCount(
+  public getCount(
     param: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<number> {
     const { tenantId } = param;

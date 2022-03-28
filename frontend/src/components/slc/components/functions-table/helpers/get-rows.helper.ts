@@ -1,7 +1,6 @@
 import { FunctionsTableAccessor } from 'common/enums/enums';
 import { SLCFunctionGetResponseItemDto } from 'common/types/types';
 import { ActionCell } from '../components/components';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
 
 type Row = {
   [FunctionsTableAccessor.FUNCTION_NAME]: string;
@@ -22,12 +21,8 @@ const getRows = ({
 
     return {
       [FunctionsTableAccessor.FUNCTION_NAME]: name,
-      [FunctionsTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
-      [FunctionsTableAccessor.UPDATION_TIME]: getDateDecoratedWithAgo(
-        new Date(updatedAt),
-      ),
+      [FunctionsTableAccessor.CREATION_TIME]: createdAt,
+      [FunctionsTableAccessor.UPDATION_TIME]: updatedAt,
       [FunctionsTableAccessor.ACTIONS]: ActionCell(id, onFunctionDelete),
     };
   });
