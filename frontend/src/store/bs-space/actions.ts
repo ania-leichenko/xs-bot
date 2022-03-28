@@ -6,7 +6,11 @@ import {
   BSObjectGetResponseDto,
 } from 'common/types/types';
 import { ActionType } from './common';
-import { NotificationMessage, NotificationTitle } from 'common/enums/enums';
+import {
+  FormDataCommonKey,
+  NotificationMessage,
+  NotificationTitle,
+} from 'common/enums/enums';
 import { store } from 'store/store';
 
 const loadObjects = createAsyncThunk<
@@ -48,12 +52,15 @@ const downloadObject = createAsyncThunk<
 
 const uploadObject = createAsyncThunk<
   boolean,
-  { id: string; file: FormData },
+  { id: string; file: File },
   AsyncThunkConfig
 >(ActionType.UPLOAD_OBJECT, async (payload, { extra }) => {
   const { bsApi, notification } = extra;
 
-  const response = await bsApi.uploadObject(payload.id, payload.file);
+  const formData = new FormData();
+  formData.append(FormDataCommonKey.FILE, payload.file as File);
+
+  const response = await bsApi.uploadObject(payload.id, formData);
 
   notification.success(
     NotificationTitle.SUCCESS,

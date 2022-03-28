@@ -44,18 +44,17 @@ const BSSpace: FC = () => {
     );
   };
 
-  const handleObjectUpload = (e: React.FormEvent<HTMLInputElement>): void => {
-    const [file] = e.currentTarget.files as FileList;
+  const handleObjectUpload = (evt: React.FormEvent<HTMLInputElement>): void => {
+    const [file] = evt.currentTarget.files ?? [];
     const hasFiles = Boolean(file);
 
     if (!hasFiles) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', file as File);
-
-    dispatch(BSSpaceActions.uploadObject({ id: id as string, file: formData }));
+    dispatch(
+      BSSpaceActions.uploadObject({ id: id as string, file: file as File }),
+    );
   };
 
   return (
