@@ -1,1 +1,1 @@
-export { sortCallback } from './sortCallback.helper';
+export { sortCallback } from './sort-callback.helper';
