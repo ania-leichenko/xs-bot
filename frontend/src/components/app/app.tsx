@@ -64,10 +64,6 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
         <Route
-          path={AppRoute.EAM_CONFIGURATE_GROUP_$ID}
-          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
-        />
-        <Route
           path={AppRoute.EAM}
           element={
             <AuthorizedRoute
@@ -79,6 +75,14 @@ const App: FC = () => {
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
           element={<AuthorizedRoute component={<EAMConfigurateWorker />} />}
+        />
+        <Route
+          path={AppRoute.EAM_CONFIGURATE_GROUP}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
+        />
+        <Route
+          path={AppRoute.EAM_CONFIGURATE_GROUP_$ID}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
         />
         <Route
           path={AppRoute.BS}
