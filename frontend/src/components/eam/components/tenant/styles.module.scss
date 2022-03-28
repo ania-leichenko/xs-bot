@@ -1,13 +1,12 @@
 .title {
-  margin-left: 140px;
   color: var(--color-white);
 }
 
 .wrapper {
   display: flex;
   justify-content: center;
+  align-items: flex-end;
   margin-bottom: 30px;
-  text-align: center;
 }
 
 .wrapperInput {
@@ -17,5 +16,6 @@
 .button {
   width: 150px;
   height: 50px;
+  margin-bottom: 13px;
   margin-left: 10px;
 }
