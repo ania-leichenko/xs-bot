@@ -8,6 +8,7 @@ enum IconName {
   SUCCESS = 'success',
   ERROR = 'error',
   CLOSE = 'close',
+  DOWNLOAD = 'download',
 }
 
 export { IconName };

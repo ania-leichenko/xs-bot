@@ -12,6 +12,7 @@ import {
   Permission,
   UserRole,
   ExceptionMessage,
+  FormDataCommonKey,
 } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
@@ -125,7 +126,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.POST,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
     preHandler: [
-      uploadHook.single('file'),
+      uploadHook.single(FormDataCommonKey.FILE),
       checkHasPermissionsHook(Permission.MANAGE_BS),
     ],
     async onError(req, rep, err) {
