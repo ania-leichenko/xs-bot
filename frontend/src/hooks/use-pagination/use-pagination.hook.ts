@@ -1,6 +1,6 @@
 import { UsePaginationtemsHook } from 'common/types/types';
 import { Pagination } from 'common/enums/enums';
-import { useState } from 'hooks/hooks';
+import { useState, useEffect } from 'hooks/hooks';
 
 type UsePaginationArgs = {
   perPageCount: number;
@@ -39,6 +39,23 @@ const usePagination = (
       pagination.onLoad(nextForm, pagination.perPageCount);
     }
   };
+
+  useEffect(() => {
+    if (allPage > 0 && allPage < currentPage) {
+      setCurrentPage(currentPage - Pagination.INCREMENT);
+      pagination.onLoad(
+        from - pagination.perPageCount,
+        pagination.perPageCount,
+      );
+    }
+  }, [
+    allPage,
+    currentPage,
+    setCurrentPage,
+    pagination.onLoad,
+    from,
+    pagination.perPageCount,
+  ]);
 
   return {
     onBackPage: handleBackPage,
