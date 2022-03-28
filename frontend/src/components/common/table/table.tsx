@@ -83,14 +83,14 @@ const Table: FC<Props> = ({
                     >
                       {column.render('Header')}
                       <span
-                        className={getValidClasses([
+                        className={getValidClasses(
                           styles.sortIndicator,
                           column.isSorted
                             ? column.isSortedDesc
                               ? styles.desc
                               : styles.asc
                             : null,
-                        ])}
+                        )}
                       />
                       <div
                         className={styles.resizer}
