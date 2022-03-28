@@ -18,6 +18,7 @@ const ActionCell = (
         onClick={handleDelete}
       />
       <IconButton
+        title="Edit"
         icon={IconName.GEAR}
         label="Edit"
         to={`${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute}
