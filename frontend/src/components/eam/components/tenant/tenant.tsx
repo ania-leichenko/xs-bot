@@ -48,12 +48,12 @@ const Tenant: FC = () => {
 
   return (
     <div>
-      <h3 className={styles.title}>Change Tenant Name</h3>
       <form
         className={styles.wrapper}
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className={styles.wrapperInput}>
+          <h3 className={styles.title}>Change Tenant Name</h3>
           <Input
             type={InputType.TEXT}
             label=""
