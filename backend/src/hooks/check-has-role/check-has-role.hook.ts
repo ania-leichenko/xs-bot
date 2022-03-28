@@ -4,7 +4,7 @@ import { TokenPayload } from '~/common/types/types';
 import { HttpError } from '~/exceptions/exceptions';
 import { token as tokenService } from '~/services/services';
 
-const checkRole =
+const checkHasRole =
   (...roles: UserRole[]) =>
   async (req: FastifyRequest, _rep: FastifyReply): Promise<void> => {
     const token = req.user?.token as string;
@@ -20,4 +20,4 @@ const checkRole =
     }
   };
 
-export { checkRole };
+export { checkHasRole };
