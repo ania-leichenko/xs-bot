@@ -4,6 +4,7 @@ import {
   BSObjectDownloadParamsDto,
   BSObjectGetRequestParamsDto,
   BSObjectGetResponseDto,
+  BSObjectGetResponseItemDto,
 } from 'common/types/types';
 import { ActionType } from './common';
 import {
@@ -35,12 +36,13 @@ const downloadObject = createAsyncThunk<
 
   const { objects } = store.getState().BSSpace;
 
-  const object = objects.filter((obj) => obj.id === params.objectId);
-  const filename = object[0].name;
+  const { name } = objects.find(
+    ({ id }) => id === params.objectId,
+  ) as BSObjectGetResponseItemDto;
 
   const response = await bsApi.downloadObject(params);
 
-  saver.saveBlob(response, filename);
+  saver.saveBlob(response, name);
 
   notification.success(
     NotificationTitle.SUCCESS,
