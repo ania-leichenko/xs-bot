@@ -1,6 +1,5 @@
 import { InstancesTableAccessor } from 'common/enums/enums';
 import { SCInstanceGetByTenantResponseItemDto } from 'common/types/types';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
 import { ActionCell, StateCell } from '../components/components';
 
 type Row = {
@@ -43,9 +42,7 @@ const getRows = ({
       [InstancesTableAccessor.INSTANCE_TYPE]: instanceType,
       [InstancesTableAccessor.OS]: operationSystem.name.split('-').join(' '),
       [InstancesTableAccessor.PUBLIC_IPV4_ADDRESS]: publicIpAddress ?? '-',
-      [InstancesTableAccessor.CREATED_AT]: getDateDecoratedWithAgo(
-        new Date(createdAt),
-      ),
+      [InstancesTableAccessor.CREATED_AT]: createdAt,
       [InstancesTableAccessor.ACTIONS]: ActionCell({
         id,
         keyId,

@@ -1,21 +1,30 @@
 import { PermissionsTableAccessor } from 'common/enums/enums';
 import { EAMPermissionGetAllItemResponseDto } from 'common/types/types';
-import { getDateDecoratedWithAgo } from 'helpers/helpers';
+import { SelectRowCell } from '../../components';
 
 type Row = {
   [PermissionsTableAccessor.ID]: string;
   [PermissionsTableAccessor.PERMISSION_NAME]: string;
 };
 
-const getRows = (permissions: EAMPermissionGetAllItemResponseDto[]): Row[] => {
+const getRows = (
+  permissions: EAMPermissionGetAllItemResponseDto[],
+  handleAddId: (id: string) => void,
+  handleRemoveId: (id: string) => void,
+  handleIsCheckedId: (id: string) => boolean,
+): Row[] => {
   return permissions.map((item: EAMPermissionGetAllItemResponseDto) => {
     const { id, name, createdAt } = item;
 
     return {
       [PermissionsTableAccessor.ID]: id,
       [PermissionsTableAccessor.PERMISSION_NAME]: name,
-      [PermissionsTableAccessor.CREATION_TIME]: getDateDecoratedWithAgo(
-        new Date(createdAt),
+      [PermissionsTableAccessor.CREATED_AT]: createdAt,
+      [PermissionsTableAccessor.ACTION]: SelectRowCell(
+        id,
+        handleAddId,
+        handleRemoveId,
+        handleIsCheckedId,
       ),
     };
   });
