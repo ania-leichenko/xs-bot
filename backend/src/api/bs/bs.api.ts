@@ -129,6 +129,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       uploadHook.single(FormDataCommonKey.FILE),
       checkHasPermissionsHook(Permission.MANAGE_BS),
     ],
+    async onError(req, rep, err) {
+      if (err) {
+        return rep.status(HttpCode.BAD_REQUEST);
+      }
+    },
     async handler(
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
       rep,
