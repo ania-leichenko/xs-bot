@@ -13,4 +13,5 @@ export {
   SpacesApiPath,
   InstancesApiPath,
   SshKeysApiPath,
+  ObjectsApiPath,
 } from 'bws-shared/common/enums/enums';
