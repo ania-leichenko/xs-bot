@@ -90,10 +90,10 @@ class SLCFunction {
     });
   }
 
-  public async getCount(filter: SLCFunctionGetFilter): Promise<number> {
+  public getCount(filter: SLCFunctionGetFilter): Promise<number> {
     const { tenantId } = filter;
 
-    return await this.#SLCFunctionModel
+    return this.#SLCFunctionModel
       .query()
       .join(
         TableName.WORKERS,

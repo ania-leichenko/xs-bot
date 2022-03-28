@@ -73,7 +73,7 @@ class Group {
       .first();
   }
 
-  public async getCount(
+  public getCount(
     filter: EAMGroupGetByTenantRequestParamsDto,
   ): Promise<number> {
     const { tenantId } = filter;

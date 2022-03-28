@@ -7,8 +7,7 @@ import {
 } from 'hooks/hooks';
 import { Table } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
-import { DataStatus } from 'common/enums/enums';
-import { Pagination } from 'common/enums/enums';
+import { DataStatus, Pagination } from 'common/enums/enums';
 import { eam as eamActions } from 'store/actions';
 
 type Props = {

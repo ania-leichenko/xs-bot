@@ -65,7 +65,7 @@ class Instance {
       .limit(limit);
   }
 
-  public async getCount(tenantId: string): Promise<number> {
+  public getCount(tenantId: string): Promise<number> {
     return this.#InstanceModel
       .query()
       .select()

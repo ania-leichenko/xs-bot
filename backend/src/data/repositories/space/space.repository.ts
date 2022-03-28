@@ -72,7 +72,7 @@ class Space {
       .limit(limit);
   }
 
-  public async getCount(filter: BSSpaceGetFilter): Promise<number> {
+  public getCount(filter: BSSpaceGetFilter): Promise<number> {
     const { tenantId } = filter;
 
     return this.#SpaceModel
