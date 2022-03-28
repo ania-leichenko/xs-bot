@@ -65,7 +65,10 @@ const BSSpace: FC = () => {
         Binary Storage
       </h2>
       <div className={styles.tableWrapper}>
-        <ObjectsTable onObjectDownload={handleObjectDownload}>
+        <ObjectsTable
+          spaceId={id as string}
+          onObjectDownload={handleObjectDownload}
+        >
           <div className={styles.buttonsBlock}>
             <IconButton
               onClick={handleObjectsReload}

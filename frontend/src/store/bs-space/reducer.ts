@@ -7,11 +7,13 @@ import { logOut } from 'store/auth/actions';
 type State = {
   dataStatus: DataStatus;
   objects: BSObjectGetResponseItemDto[];
+  countItems: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   objects: [],
+  countItems: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -21,6 +23,7 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadObjects.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.objects = action.payload.items;
+    state.countItems = action.payload.countItems;
   });
   builder.addCase(loadObjects.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;

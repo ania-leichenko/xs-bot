@@ -83,7 +83,7 @@ const Table: FC<Props> = ({
                       <div
                         className={styles.resizer}
                         {...column.getResizerProps()}
-                      ></div>
+                      />
                     </th>
                   ))}
                 </tr>
@@ -113,7 +113,6 @@ const Table: FC<Props> = ({
             )}
           </table>
         )}
-        ;
       </div>
       {pagination && (
         <Pagination
