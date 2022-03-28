@@ -108,8 +108,9 @@ class SLCFunction {
     const slcFunctions = await this.#slcFunctionRepository.getAllByTenant(
       filter,
     );
+    const countItems = await this.#slcFunctionRepository.getCount(filter);
 
-    return { items: slcFunctions };
+    return { items: slcFunctions, countItems };
   }
 
   public async delete(id: string): Promise<void> {

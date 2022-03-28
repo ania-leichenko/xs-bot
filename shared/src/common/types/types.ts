@@ -14,6 +14,9 @@ export {
   type EAMGroupGetByTenantResponseItemDto,
   type EAMGroupConfigurateRequestDto,
   type EAMGroupRelatedItem,
+  type EamGroupGetByIdRequestDto,
+  type EamGroupGetByIdResponseDto,
+  type EAMGroupUpdateRequestDto,
   type EAMGroupDeleteParamsDto,
   type EamGroupGetByIdItem,
 } from './eam-group/eam-group';

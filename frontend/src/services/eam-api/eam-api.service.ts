@@ -12,6 +12,7 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
   EAMPermissionGetAllResponseDto,
+  EamGroupGetByIdResponseDto,
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
 } from 'common/types/types';
@@ -62,6 +63,43 @@ class EAMApi {
     );
   }
 
+  public updateGroup(
+    id: string,
+    payload: EAMGroupCreateRequestDto,
+  ): Promise<EAMGroupCreateResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUP,
+        GroupsApiPath.ROOT,
+      ),
+      {
+        method: HttpMethod.PUT,
+        params: { id },
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getGroupById(params: {
+    id: string;
+  }): Promise<EamGroupGetByIdResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUP,
+        GroupsApiPath.ROOT,
+      ),
+      {
+        method: HttpMethod.GET,
+        params,
+      },
+    );
+  }
+
   public deleteGroup(id: string): Promise<boolean> {
     return this.#http.load(
       joinItems(
@@ -93,6 +131,7 @@ class EAMApi {
       },
     );
   }
+
   public getAllPermission(): Promise<EAMPermissionGetAllResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.PERMISSION),

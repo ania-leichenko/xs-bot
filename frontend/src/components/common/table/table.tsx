@@ -3,6 +3,7 @@ import {
   Column,
   useBlockLayout,
   useResizeColumns,
+  useSortBy,
   useTable,
 } from 'react-table';
 import { getValidClasses } from 'helpers/helpers';
@@ -44,6 +45,7 @@ const Table: FC<Props> = ({
         columns: columns as Column<Record<string, string>>[],
         data: data as Record<string, string>[],
       },
+      useSortBy,
       useBlockLayout,
       useResizeColumns,
     );
@@ -76,10 +78,20 @@ const Table: FC<Props> = ({
                 >
                   {headerGroup.headers.map((column) => (
                     <th
-                      {...column.getHeaderProps()}
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
                       className={styles.tableHeaderCell}
                     >
                       {column.render('Header')}
+                      <span
+                        className={getValidClasses(
+                          styles.sortIndicator,
+                          column.isSorted
+                            ? column.isSortedDesc
+                              ? styles.desc
+                              : styles.asc
+                            : null,
+                        )}
+                      />
                       <div
                         className={styles.resizer}
                         {...column.getResizerProps()}
@@ -108,10 +120,10 @@ const Table: FC<Props> = ({
                 );
               })}
             </tbody>
-            {hasPlaceholder && (
-              <tr className={styles.placeholder}>{placeholder}</tr>
-            )}
           </table>
+        )}
+        {hasPlaceholder && (
+          <div className={styles.placeholder}>{placeholder}</div>
         )}
       </div>
       {pagination && (

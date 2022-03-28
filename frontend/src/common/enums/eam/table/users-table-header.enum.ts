@@ -1,7 +1,7 @@
 enum UsersTableHeader {
   USERNAME = 'Worker name',
   GROUPS = 'Groups',
-  CREATION_TIME = 'Created',
+  CREATED_AT = 'Created',
 }
 
 export { UsersTableHeader };
