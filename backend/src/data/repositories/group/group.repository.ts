@@ -94,6 +94,18 @@ class Group {
     return Group.modelToEntity(group, workerIds, permissionIds);
   }
 
+  public getCount(
+    filter: EAMGroupGetByTenantRequestParamsDto,
+  ): Promise<number> {
+    const { tenantId } = filter;
+
+    return this.#GroupModel
+      .query()
+      .select('id')
+      .where({ tenantId })
+      .resultSize();
+  }
+
   async create(group: GroupEntity): Promise<GroupEntity> {
     const { id, name, tenantId, createdAt, workersIds, permissionsIds } = group;
 
