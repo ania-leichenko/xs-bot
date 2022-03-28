@@ -159,7 +159,6 @@ class BSObject {
     };
 
     const objects = await this.#bsObjectRepository.getObjects(filter);
-
     return { items: objects };
   }
 }
