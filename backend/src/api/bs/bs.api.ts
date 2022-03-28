@@ -130,7 +130,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ],
     async onError(req, rep, err) {
       if (err) {
-        return rep.status(400);
+        return rep.status(HttpCode.BAD_REQUEST);
       }
     },
     async handler(
