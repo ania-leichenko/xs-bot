@@ -10,6 +10,7 @@ const ActionCell = (
   };
   return (
     <IconButton
+      title="Download"
       icon={IconName.DOWNLOAD}
       label="Download"
       onClick={handleDownload}

@@ -70,6 +70,7 @@ const BSSpace: FC = () => {
         >
           <div className={styles.buttonsBlock}>
             <IconButton
+              title="Refresh"
               onClick={handleObjectsReload}
               icon={IconName.RELOAD}
               label="Reload"
