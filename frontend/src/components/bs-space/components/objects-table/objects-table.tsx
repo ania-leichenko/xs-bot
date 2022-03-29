@@ -15,6 +15,7 @@ import styles from './styles.module.scss';
 type Props = {
   spaceId: string;
   onObjectDownload: (objectId: string) => void;
+  onObjectDelete: (objectId: string) => void;
   pagination?: {
     perPage: number;
     countItems: number;
@@ -23,7 +24,11 @@ type Props = {
   };
 };
 
-const ObjectsTable: FC<Props> = ({ onObjectDownload, spaceId }) => {
+const ObjectsTable: FC<Props> = ({
+  onObjectDelete,
+  onObjectDownload,
+  spaceId,
+}) => {
   const dispatch = useAppDispatch();
 
   const { objects, dataStatus, countItems } = useAppSelector(({ BSSpace }) => ({
@@ -67,7 +72,10 @@ const ObjectsTable: FC<Props> = ({ onObjectDownload, spaceId }) => {
     objectsPagination.onReload();
   };
 
-  const data = useMemo(() => getRows({ objects, onObjectDownload }), [objects]);
+  const data = useMemo(
+    () => getRows({ objects, onObjectDownload, onObjectDelete }),
+    [objects],
+  );
 
   const columns = useMemo(() => getColumns(), []);
 
