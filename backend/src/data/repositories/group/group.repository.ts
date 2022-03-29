@@ -153,9 +153,9 @@ class Group {
       .where({ 'groupId': id });
     await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
 
-    const hasWorkers = workersIds.length === 0;
+    const hasWorkers = Boolean(workersIds.length);
 
-    if (!hasWorkers) {
+    if (hasWorkers) {
       await this.#UsersGroupsModel.query().insert(
         workersIds.map((workerId) => ({
           id: getRandomId(),
