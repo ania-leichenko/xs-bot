@@ -57,6 +57,15 @@ const BSSpace: FC = () => {
     );
   };
 
+  const handleObjectDelete = (objectId: string): void => {
+    dispatch(
+      BSSpaceActions.deleteObject({
+        spaceId: id as string,
+        objectId,
+      }),
+    );
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -66,6 +75,7 @@ const BSSpace: FC = () => {
       <div className={styles.tableWrapper}>
         <ObjectsTable
           spaceId={id as string}
+          onObjectDelete={handleObjectDelete}
           onObjectDownload={handleObjectDownload}
         >
           <div className={styles.buttonsBlock}>
