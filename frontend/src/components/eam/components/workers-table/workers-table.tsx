@@ -22,7 +22,7 @@ type Props = {
   };
 };
 
-const WorkersTable: FC<Props> = () => {
+const WorkersTable: FC<Props> = ({ onWorkerDelete }) => {
   const dispatch = useAppDispatch();
 
   const { workers, countItems, tenantId, workersDataStatus } = useAppSelector(
@@ -64,7 +64,7 @@ const WorkersTable: FC<Props> = () => {
     workersPagination.onReload();
   };
 
-  const data = useMemo(() => getRows(workers), [workers]);
+  const data = useMemo(() => getRows({ workers, onWorkerDelete }), [workers]);
 
   const columns = useMemo(() => getColumns(), []);
 
