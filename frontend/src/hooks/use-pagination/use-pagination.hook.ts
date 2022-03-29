@@ -40,6 +40,11 @@ const usePagination = (
     }
   };
 
+  const handleReload = (): void => {
+    setFrom(pagination.from ?? Pagination.INITIAL_FROM_COUNT);
+    setCurrentPage(pagination.currentPage ?? Pagination.INITIAL_CURRENT_PAGE);
+  };
+
   useEffect(() => {
     if (allPage > 0 && allPage < currentPage) {
       setCurrentPage(currentPage - Pagination.INCREMENT);
@@ -63,6 +68,7 @@ const usePagination = (
     allPage,
     currentPage,
     countItems: pagination.countItems,
+    onReload: handleReload,
   };
 };
 

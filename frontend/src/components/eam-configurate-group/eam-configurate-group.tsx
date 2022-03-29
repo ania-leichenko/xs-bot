@@ -52,7 +52,7 @@ const EAMConfigurateGroup: FC = () => {
     dispatch(
       EAMGroupConfigurateActions.loadWorkers({
         from: 0,
-        count: 10,
+        count: 5,
         tenantId: tenantId as string,
       }),
     );

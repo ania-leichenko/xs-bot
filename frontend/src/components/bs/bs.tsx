@@ -1,5 +1,3 @@
-import { AppRoute, IconName } from 'common/enums/enums';
-import { Button, IconButton } from 'components/common/common';
 import { useAppDispatch, useEffect } from 'hooks/hooks';
 import { SpacesTable } from './components/components';
 import { FC } from 'react';
@@ -22,15 +20,6 @@ const BS: FC = () => {
     dispatch(bsActions.deleteSpace(id));
   };
 
-  const handleSpacesReload = (): void => {
-    dispatch(
-      bsActions.loadSpaces({
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -38,21 +27,7 @@ const BS: FC = () => {
         Binary Storage
       </h2>
       <div className={styles.tableWrapper}>
-        <SpacesTable onSpaceDelete={handleSpaceDelete}>
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              onClick={handleSpacesReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-              title="Refresh"
-            />
-            <Button
-              className={styles.addSpaceBtn}
-              to={AppRoute.BS_CREATE_SPACE}
-              label="Add Space"
-            />
-          </div>
-        </SpacesTable>
+        <SpacesTable onSpaceDelete={handleSpaceDelete}></SpacesTable>
       </div>
     </div>
   );
