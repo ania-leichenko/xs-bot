@@ -61,7 +61,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         .send(
           await slcFunctionService.create({
             name: req.body.name,
-            token: req.user?.token as string,
+            token: req.userData?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -103,7 +103,7 @@ const initSLCApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const slcFunctions = await slcFunctionService.getSLCFunctionsByTenant({
         query: req.query,
-        token: req.user?.token as string,
+        token: req.userData?.token as string,
       });
 
       return rep.send(slcFunctions).status(HttpCode.OK);

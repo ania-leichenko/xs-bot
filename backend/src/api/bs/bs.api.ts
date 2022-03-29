@@ -73,7 +73,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         .send(
           await spaceService.create({
             name: req.body.name,
-            token: req.user?.token as string,
+            token: req.userData?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -90,7 +90,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const spaces = await spaceService.getSpacesByTenant({
         query: req.query,
-        token: req.user?.token as string,
+        token: req.userData?.token as string,
       });
 
       return rep.send(spaces).status(HttpCode.OK);
@@ -137,7 +137,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const { id } = req.params;
 
       await bsObjectService.upload({
-        token: req.user?.token as string,
+        token: req.userData?.token as string,
         file: req.file,
         id,
       });
@@ -159,7 +159,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const { spaceId, objectId } = req.params;
 
       const object = await bsObjectService.download({
-        token: req.user?.token as string,
+        token: req.userData?.token as string,
         spaceId,
         objectId,
       });
@@ -183,7 +183,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         spaceId: req.params.id,
         from: req.query.from,
         count: req.query.count,
-        token: req.user?.token as string,
+        token: req.userData?.token as string,
       });
 
       return rep.send(objects).status(HttpCode.OK);
@@ -202,7 +202,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep: FastifyReply,
     ) {
       const { spaceId, objectId } = req.params;
-      const token = req.user?.token as string;
+      const token = req.userData?.token as string;
       const { tenantId } = tokenService.decode<TokenPayload>(token);
 
       await bsObjectService.deleteObject(spaceId, objectId, tenantId);

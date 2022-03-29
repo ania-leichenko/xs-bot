@@ -10,7 +10,7 @@ import { checkHasPermission } from '~/helpers/helpers';
 const checkHasPermissions =
   (...permissions: Permission[]) =>
   async (req: FastifyRequest, _rep: FastifyReply): Promise<void> => {
-    const { user: userData } = req;
+    const { userData } = req;
 
     const hasUser = Boolean(userData);
 

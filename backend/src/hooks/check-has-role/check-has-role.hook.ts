@@ -7,7 +7,7 @@ import { token as tokenService } from '~/services/services';
 const checkHasRole =
   (...roles: UserRole[]) =>
   async (req: FastifyRequest, _rep: FastifyReply): Promise<void> => {
-    const token = req.user?.token as string;
+    const token = req.userData?.token as string;
     const { userRole } = tokenService.decode<TokenPayload>(token);
     const hasRole = Boolean(roles.length);
 

@@ -73,7 +73,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token: req.user?.token as string,
+            token: req.userData?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
