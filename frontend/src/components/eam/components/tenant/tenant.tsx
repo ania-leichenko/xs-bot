@@ -54,20 +54,22 @@ const Tenant: FC = () => {
       >
         <div className={styles.wrapperInput}>
           <h3 className={styles.title}>Change Tenant Name</h3>
-          <Input
-            type={InputType.TEXT}
-            label=""
-            placeholder=""
-            name={getNameOf<EAMTenantFormDto>('name')}
-            control={control}
-            errors={errors}
-          />
+          <div className={styles.blockInput}>
+            <Input
+              type={InputType.TEXT}
+              label=""
+              placeholder=""
+              name={getNameOf<EAMTenantFormDto>('name')}
+              control={control}
+              errors={errors}
+            />
+            <Button
+              type={ButtonType.SUBMIT}
+              label="Save"
+              className={styles.button}
+            />
+          </div>
         </div>
-        <Button
-          type={ButtonType.SUBMIT}
-          label="Save"
-          className={styles.button}
-        />
       </form>
     </div>
   );

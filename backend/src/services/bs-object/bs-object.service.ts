@@ -159,7 +159,9 @@ class BSObject {
     };
 
     const objects = await this.#bsObjectRepository.getObjects(filter);
-    return { items: objects };
+    const countItems = await this.#bsObjectRepository.getCount(spaceId);
+
+    return { items: objects, countItems };
   }
 }
 

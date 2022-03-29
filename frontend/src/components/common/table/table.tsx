@@ -95,7 +95,7 @@ const Table: FC<Props> = ({
                       <div
                         className={styles.resizer}
                         {...column.getResizerProps()}
-                      ></div>
+                      />
                     </th>
                   ))}
                 </tr>

@@ -63,6 +63,10 @@ class BSObject {
       .offset(offset);
   }
 
+  public async getCount(spaceId: string): Promise<number> {
+    return this.#BSObjectModel.query().select().where({ spaceId }).resultSize();
+  }
+
   public static modelToEntity(model: BSObjectM): BSObjectEntity {
     const { id, name, sizeInBytes, spaceId, uploadedBy, awsObjectKey } = model;
 
