@@ -9,6 +9,11 @@ const checkHasRole =
   async (req: FastifyRequest, _rep: FastifyReply): Promise<void> => {
     const token = req.user?.token as string;
     const { userRole } = tokenService.decode<TokenPayload>(token);
+    const hasRole = Boolean(roles.length);
+
+    if (!hasRole) {
+      return;
+    }
 
     const hasCorrectRole = roles.some((it) => it === userRole);
 
