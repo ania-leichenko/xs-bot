@@ -12,15 +12,16 @@ const ActionCell = (
   return (
     <div className={styles.wrapper}>
       <IconButton
+        title="Edit"
+        icon={IconName.GEAR}
+        label="Edit"
+        to={`${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute}
+      />
+      <IconButton
         title="Delete"
         icon={IconName.TRASH}
         label="Delete"
         onClick={handleDelete}
-      />
-      <IconButton
-        icon={IconName.GEAR}
-        label="Edit"
-        to={`${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute}
       />
     </div>
   );

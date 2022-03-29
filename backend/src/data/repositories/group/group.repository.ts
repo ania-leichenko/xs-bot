@@ -94,6 +94,18 @@ class Group {
     return Group.modelToEntity(group, workerIds, permissionIds);
   }
 
+  public getCount(
+    filter: EAMGroupGetByTenantRequestParamsDto,
+  ): Promise<number> {
+    const { tenantId } = filter;
+
+    return this.#GroupModel
+      .query()
+      .select('id')
+      .where({ tenantId })
+      .resultSize();
+  }
+
   async create(group: GroupEntity): Promise<GroupEntity> {
     const { id, name, tenantId, createdAt, workersIds, permissionsIds } = group;
 
@@ -141,14 +153,18 @@ class Group {
       .where({ 'groupId': id });
     await this.#UsersGroupsModel.query().delete().where({ 'groupId': id });
 
-    await this.#UsersGroupsModel.query().insert(
-      workersIds.map((workerId) => ({
-        id: getRandomId(),
-        userId: workerId,
-        groupId: id,
-        createdAt: new Date().toISOString(),
-      })),
-    );
+    const hasWorkers = Boolean(workersIds.length);
+
+    if (hasWorkers) {
+      await this.#UsersGroupsModel.query().insert(
+        workersIds.map((workerId) => ({
+          id: getRandomId(),
+          userId: workerId,
+          groupId: id,
+          createdAt: new Date().toISOString(),
+        })),
+      );
+    }
 
     await this.#GroupsPermissionsModel.query().insert(
       permissionsIds.map((permissionId) => ({

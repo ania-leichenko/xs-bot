@@ -63,6 +63,7 @@ class Instance {
       filter: requestParams,
       tenantId,
     });
+    const countItems = await this.#instanceRepository.getCount(tenantId);
 
     return {
       items: instances.map(
@@ -87,6 +88,7 @@ class Instance {
           operationSystem,
         }),
       ),
+      countItems,
     };
   }
 

@@ -68,6 +68,13 @@ export {
   type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
 export {
+  type BSObjectDownloadParamsDto,
+  type BSObjectGetRequestParamsDto,
+  type BSObjectGetResponseItemDto,
+  type BSObjectGetResponseDto,
+  type BSObjectDeleteParamsDto,
+} from './bs-object/bs-object';
+export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
   type SCInstanceCreateFormDto,

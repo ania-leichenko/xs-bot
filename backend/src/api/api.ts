@@ -12,6 +12,8 @@ import {
   keyPair,
   slcFunction,
   bsObject,
+  token,
+  permission,
 } from '~/services/services';
 import { WHITE_ROUTES } from '~/common/constants/constants';
 import {
@@ -50,6 +52,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
     services: {
       group,
       worker,
+      permission,
     },
     prefix: ApiPath.EAM,
   });
@@ -71,6 +74,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
     services: {
       space,
       bsObject,
+      token,
     },
     prefix: ApiPath.BS,
   });

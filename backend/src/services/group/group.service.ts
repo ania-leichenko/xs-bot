@@ -26,7 +26,8 @@ class Group {
     filter: EAMGroupGetByTenantRequestParamsDto,
   ): Promise<EAMGroupGetByTenantResponseDto> {
     const groups = await this.#groupRepository.getGroupsByTenant(filter);
-    return { items: groups };
+    const countItems = await this.#groupRepository.getCount(filter);
+    return { items: groups, countItems };
   }
 
   public async create({
@@ -103,7 +104,6 @@ class Group {
 
       group.setName(name);
     }
-
     group.setWorkersIds(workersIds);
     group.setPermissionsIds(permissionsIds);
 
@@ -115,8 +115,7 @@ class Group {
   public async getGroupById(
     id: string,
   ): Promise<EamGroupGetByIdResponseDto | null> {
-    const group = await this.#groupRepository.getGroupById(id);
-    return group;
+    return this.#groupRepository.getGroupById(id);
   }
 }
 

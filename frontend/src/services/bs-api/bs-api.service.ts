@@ -4,8 +4,13 @@ import {
   ContentType,
   HttpMethod,
   SpacesApiPath,
+  ObjectsApiPath,
 } from 'common/enums/enums';
 import {
+  BSObjectDeleteParamsDto,
+  BSObjectDownloadParamsDto,
+  BSObjectGetRequestParamsDto,
+  BSObjectGetResponseDto,
   BSSpaceCreateRequestDto,
   BSSpaceCreateResponseDto,
   BSSpaceGetRequestParamsDto,
@@ -64,6 +69,79 @@ class BSApi {
         method: HttpMethod.POST,
         contentType: ContentType.JSON,
         payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public loadObjects(
+    filter: BSObjectGetRequestParamsDto,
+    id: string,
+  ): Promise<BSObjectGetResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        id,
+        SpacesApiPath.OBJECTS,
+      ),
+      {
+        method: HttpMethod.GET,
+        params: filter,
+      },
+    );
+  }
+
+  public downloadObject(params: BSObjectDownloadParamsDto): Promise<Blob> {
+    return this.#http.downloadBlob(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        params.spaceId,
+        SpacesApiPath.OBJECTS,
+        ObjectsApiPath.ROOT,
+        params.objectId,
+      ),
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public deleteObject(params: BSObjectDeleteParamsDto): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        params.spaceId,
+        SpacesApiPath.OBJECTS,
+        ObjectsApiPath.ROOT,
+        params.objectId,
+      ),
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
+
+  public uploadObject(id: string, file: FormData): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.BS,
+        BSApiPath.SPACES,
+        SpacesApiPath.ROOT,
+        id,
+        SpacesApiPath.OBJECTS,
+      ),
+      {
+        method: HttpMethod.POST,
+        payload: file,
       },
     );
   }

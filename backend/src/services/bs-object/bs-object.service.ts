@@ -145,8 +145,38 @@ class BSObject {
     };
 
     const objects = await this.#bsObjectRepository.getObjects(filter);
+    const countItems = await this.#bsObjectRepository.getCount(spaceId);
 
-    return { items: objects };
+    return { items: objects, countItems };
+  }
+
+  public async deleteObject(
+    spaceId: string,
+    objectId: string,
+    tenantId: string,
+  ): Promise<void> {
+    const object = await this.#bsObjectRepository.getByIdAndTenant(
+      objectId,
+      tenantId,
+    );
+
+    const hasObject = Boolean(object && object.spaceId == spaceId);
+
+    if (!hasObject) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.OBJECT_NOT_FOUND,
+      });
+    }
+
+    const { name } = await this.#spaceService.getSpaceById(spaceId);
+
+    await this.#s3Service.deleteObject({
+      bucket: name,
+      key: object?.name as string,
+    });
+
+    await this.#bsObjectRepository.deleteById(objectId);
   }
 }
 

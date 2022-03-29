@@ -1,7 +1,7 @@
 enum WorkersTableAccessor {
   WORKER_NAME = 'workerName',
   GROUPS = 'groups',
-  CREATION_TIME = 'createdAt',
+  CREATED_AT = 'createdAt',
   ACTIONS = 'actions',
 }
 

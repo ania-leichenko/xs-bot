@@ -10,6 +10,7 @@ import { reducer as SCConfigurateInstance } from './sc-configurate-instance/redu
 import { reducer as sc } from './sc/reducer';
 import { reducer as slc } from './slc/reducer';
 import { reducer as SLCFunctionConfigurate } from './slc-configurate-function/reducer';
+import { reducer as BSSpace } from './bs-space/reducer';
 
 const rootReducer = {
   app,
@@ -18,6 +19,7 @@ const rootReducer = {
   sc,
   SCConfigurateInstance,
   bs,
+  BSSpace,
   BSSpaceCreate,
   slc,
   SLCFunctionConfigurate,
