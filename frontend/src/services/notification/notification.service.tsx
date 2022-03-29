@@ -6,8 +6,11 @@ const DEFAULT_TITLE = 'Error';
 const DEFAULT_MESSAGE = 'Unexpected error';
 
 class Notification {
-  public [NotificationType.ERROR](title?: string, message?: string): void {
-    toastr.error(title ?? DEFAULT_TITLE, message ?? DEFAULT_MESSAGE, {
+  public [NotificationType.ERROR](
+    title = DEFAULT_TITLE,
+    message = DEFAULT_MESSAGE,
+  ): void {
+    toastr.error(title, message, {
       className: styles.wrapper,
       icon: <div className={styles.attention} />,
     });
