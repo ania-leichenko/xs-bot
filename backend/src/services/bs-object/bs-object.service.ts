@@ -163,6 +163,28 @@ class BSObject {
 
     return { items: objects, countItems };
   }
+
+  public async deleteObject(
+    spaceId: string,
+    objectId: string,
+    tenantId: string,
+  ): Promise<void> {
+    const object = await this.#bsObjectRepository.getByIdAndTenant(
+      objectId,
+      tenantId,
+    );
+
+    const hasObject = Boolean(object && object.spaceId !== spaceId);
+
+    if (!hasObject) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.OBJECT_NOT_FOUND,
+      });
+    }
+
+    await this.#bsObjectRepository.deleteById(objectId);
+  }
 }
 
 export { BSObject };
