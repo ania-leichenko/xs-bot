@@ -2,7 +2,6 @@ import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   space as spaceServ,
   bsObject as bsObjectServ,
-  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
@@ -11,7 +10,6 @@ import {
   SpacesApiPath,
   Permission,
   UserRole,
-  ExceptionMessage,
 } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
@@ -19,7 +17,6 @@ import {
   BSSpaceGetRequestParamsDto,
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
-  TokenPayload,
   BSObjectGetRequestParamsDto,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
@@ -27,31 +24,25 @@ import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-sch
 import {
   upload as uploadHook,
   checkHasPermissions as checkHasPermissionsHook,
-  checkRole as checkRoleHook,
+  checkHasRole as checkHasRoleHook,
 } from '~/hooks/hooks';
-import { BsError } from '~/exceptions/exceptions';
 
 type Options = {
   services: {
     space: typeof spaceServ;
     bsObject: typeof bsObjectServ;
-    token: typeof tokenServ;
   };
 };
 
 const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const {
-    space: spaceService,
-    bsObject: bsObjectService,
-    token: tokenService,
-  } = opts.services;
+  const { space: spaceService, bsObject: bsObjectService } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
     url: BSApiPath.SPACES,
     preHandler: [
       checkHasPermissionsHook(Permission.MANAGE_BS),
-      checkRoleHook(UserRole.WORKER),
+      checkHasRoleHook(UserRole.WORKER),
     ],
     schema: {
       body: bsSpaceCreateValidationSchema,
@@ -83,7 +74,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: BSApiPath.SPACES,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(),
+    ],
     async handler(
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
       rep: FastifyReply,
@@ -100,23 +94,15 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID}`,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
       rep: FastifyReply,
     ) {
-      const { id } = req.params;
-      const token = req.user?.token as string;
-      const { userRole } = tokenService.decode<TokenPayload>(token);
-
-      if (userRole !== UserRole.WORKER) {
-        throw new BsError({
-          status: HttpCode.DENIED,
-          message: ExceptionMessage.MASTER_SPACE_DELETE,
-        });
-      }
-
-      await spaceService.delete(id);
+      await spaceService.delete(req.params.id);
 
       return rep.send(true).status(HttpCode.OK);
     },
@@ -131,10 +117,11 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     preHandler: [
       uploadHook.single('file'),
       checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
     ],
     async handler(
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const { id } = req.params;
 
@@ -153,7 +140,10 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.GET,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(req, rep) {
       const { spaceId, objectId } = req.params;
 
@@ -175,7 +165,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         Querystring: BSObjectGetRequestParamsDto;
         Params: { id: string };
       }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const objects = await bsObjectService.getObjects({
         spaceId: req.params.id,

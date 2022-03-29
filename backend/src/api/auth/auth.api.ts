@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { auth as authServ } from '~/services/services';
 import {
@@ -59,7 +59,7 @@ const initAuthApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{ Body: EAMMasterSignInRequestDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const signInUserPayload = await authService.getMaster(req.body);
       return rep.send(signInUserPayload).status(HttpCode.OK);
@@ -82,7 +82,7 @@ const initAuthApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{ Body: EAMWorkerSignInRequestDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const signInUserPayload = await authService.getWorker(req.body);
       return rep.send(signInUserPayload).status(HttpCode.OK);

@@ -1,4 +1,4 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { master as masterServ } from '~/services/services';
 import { eamMasterSignUp as masterSignUpValidationSchema } from '~/validation-schemas/validation-schemas';
@@ -31,7 +31,7 @@ const initMastersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     },
     async handler(
       req: FastifyRequest<{ Body: EAMMasterSignUpRequestDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
       const user = await masterService.create(req.body);
       return rep.send(user).status(HttpCode.CREATED);

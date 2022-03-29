@@ -11,6 +11,7 @@ import {
   InstancesApiPath,
   SshKeysApiPath,
   Permission,
+  UserRole,
 } from '~/common/enums/enums';
 import {
   SCInstanceCreateRequestDto,
@@ -25,7 +26,10 @@ import {
   scInstanceCreate as scInstanceCreateValidationSchema,
   scInstanceUpdate as scInstanceUpdateValidationSchema,
 } from '~/validation-schemas/validation-schemas';
-import { checkHasPermissions as checkHasPermissionsHook } from '~/hooks/hooks';
+import {
+  checkHasPermissions as checkHasPermissionsHook,
+  checkHasRole as checkHasRoleHook,
+} from '~/hooks/hooks';
 
 type Options = {
   services: {
@@ -88,7 +92,10 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_SC),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(
       req: FastifyRequest<{
         Params: SCInstanceDeleteParamsDto;
@@ -103,7 +110,10 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.PUT,
     url: `${SCApiPath.INSTANCES}${InstancesApiPath.$ID}`,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_SC),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     schema: {
       body: scInstanceUpdateValidationSchema,
     },
@@ -131,7 +141,10 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.POST,
     url: SCApiPath.ROOT,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_SC),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     schema: {
       body: scInstanceCreateValidationSchema,
     },
