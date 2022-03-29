@@ -5,12 +5,10 @@ import {
   useAppDispatch,
   usePagination,
 } from 'hooks/hooks';
-import { Table } from 'components/common/common';
+import { Table, Button, IconButton } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
-import { DataStatus, Pagination } from 'common/enums/enums';
+import { DataStatus, Pagination, AppRoute, IconName } from 'common/enums/enums';
 import { slc as slcActions } from 'store/actions';
-import { AppRoute, IconName } from 'common/enums/enums';
-import { Button, IconButton } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {

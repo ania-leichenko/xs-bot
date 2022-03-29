@@ -13,6 +13,7 @@ import { Button, IconButton } from 'components/common/common';
 import styles from './styles.module.scss';
 
 type Props = {
+  onWorkerDelete: (id: string) => void;
   pagination?: {
     perPage: number;
     countItems: number;

@@ -37,6 +37,10 @@ const EAM: FC = () => {
     dispatch(eamActions.deleteGroup(id));
   };
 
+  const handleWorkersDelete = (id: string): void => {
+    dispatch(eamActions.deleteWorker(id));
+  };
+
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -45,7 +49,7 @@ const EAM: FC = () => {
       </h2>
       <Tenant />
       <div className={styles.tableWrapper}>
-        <WorkersTable></WorkersTable>
+        <WorkersTable onWorkerDelete={handleWorkersDelete}></WorkersTable>
       </div>
       <GroupsTable onGroupDelete={handleGroupDelete}></GroupsTable>
     </div>
