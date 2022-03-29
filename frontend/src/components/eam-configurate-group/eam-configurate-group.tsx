@@ -102,7 +102,7 @@ const EAMConfigurateGroup: FC = () => {
         Entity Access Management
       </h2>
       <section className={styles.formWrapper}>
-        <h3 className={styles.formTitle}>Create Group</h3>
+        <h3 className={styles.formTitle}>Edit Group</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
