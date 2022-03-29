@@ -38,6 +38,7 @@ const ExceptionMessage = {
   GROUP_NOT_EMPTY: 'The group with workers can not be deleted',
   GROUP_NOT_FOUND: 'Group not found',
   GROUP_EXISTS: 'Group with this name already exists',
+  KEY_PAIR_NOT_FOUND: 'Key pair not found',
   INSTANCE_NOT_FOUND: 'Instance not found',
   SSH_KEY_NOT_FOUND: 'Ssh key not found',
   NOTHING_TO_UPDATE: 'Nothing to update',

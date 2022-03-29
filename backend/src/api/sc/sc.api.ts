@@ -59,7 +59,10 @@ const initScApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${SCApiPath.SSH_KEYS}${SshKeysApiPath.$ID}`,
-    preHandler: checkHasPermissionsHook(Permission.MANAGE_SC),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_SC),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(
       req: FastifyRequest<{
         Params: SCSshKeyGetByIdParamsDto;
