@@ -19,9 +19,7 @@ import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import {
   encrypt as encryptServ,
-  master as masterServ,
   token as tokenServ,
-  tenant as tenantServ,
   instance as instanceServ,
   space as spaceServ,
   slcFunction as slcFunctionServ,
@@ -36,8 +34,6 @@ type Constructor = {
   instanceRepository: typeof instanceRep;
   encryptService: typeof encryptServ;
   tokenService: typeof tokenServ;
-  masterService: typeof masterServ;
-  tenantService: typeof tenantServ;
   instanceService: typeof instanceServ;
   spaceService: typeof spaceServ;
   slcFunctionService: typeof slcFunctionServ;
@@ -51,8 +47,6 @@ class Worker {
   #instanceRepository: typeof instanceRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
-  #masterService: typeof masterServ;
-  #tenantService: typeof tenantServ;
   #instanceService: typeof instanceServ;
   #spaceService: typeof spaceServ;
   #slcFunctionService: typeof slcFunctionServ;
@@ -65,8 +59,6 @@ class Worker {
     instanceRepository,
     encryptService,
     tokenService,
-    masterService,
-    tenantService,
     instanceService,
     spaceService,
     slcFunctionService,
@@ -78,8 +70,6 @@ class Worker {
     this.#instanceRepository = instanceRepository;
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
-    this.#masterService = masterService;
-    this.#tenantService = tenantService;
     this.#instanceService = instanceService;
     this.#spaceService = spaceService;
     this.#slcFunctionService = slcFunctionService;
@@ -209,15 +199,6 @@ class Worker {
       throw new EAMError({
         status: HttpCode.NOT_FOUND,
         message: ExceptionMessage.WORKER_NAME_EXISTS,
-      });
-    }
-
-    const master = await this.#masterService.getMasterById(id);
-
-    if (master) {
-      throw new EAMError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_DELETE,
       });
     }
 
