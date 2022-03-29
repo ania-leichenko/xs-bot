@@ -47,7 +47,7 @@ class RegistrationActions {
     await reg.Password_Field.waitForExist({
       timeout: 3000,
     });
-    await reg.Password_Field.setValue(masterPassword);  
+    await reg.Password_Field.setValue(masterPassword);
   }
 
   async FillWorkerSignInForm(tenantName: string, workerName: string, password: string): Promise<void> {

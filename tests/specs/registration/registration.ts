@@ -11,17 +11,17 @@ const regobj = new RegistrationPage();
 
 
 describe('User', async () => {
-    
+
     it('can sign up', async () => {
         await browser.url('/');
         await act.SignUp();
         await check.EAM.waitForExist(); //check
         let eamCheck = await check.EAM.isExisting();
-        await assert.equal(eamCheck,true);     
+        await assert.equal(eamCheck,true);
     })
-    
+
     it('can sign in as a master', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.SignInAsMaster(registerData.Email, registerData.MasterPassword);
         await check.EAM.waitForExist(); //check
@@ -30,7 +30,7 @@ describe('User', async () => {
     })
 
     it('can sign in as a worker', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.FillWorkerSignInForm(registerData.TenantNameForWorkerSignIn, registerData.WorkerName, registerData.WorkerPassword);
         await act.Sign();
@@ -40,7 +40,7 @@ describe('User', async () => {
     })
 
     it('can see error message when tenant name invalid', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.FillWorkerSignInForm(registerData.Incorrect, registerData.WorkerName, registerData.WorkerPassword);
         await act.Sign();
@@ -50,7 +50,7 @@ describe('User', async () => {
     })
 
     it('can see error message when worker name invalid', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.FillWorkerSignInForm(registerData.TenantNameForWorkerSignIn, registerData.Incorrect, registerData.WorkerPassword);
         await act.Sign();
@@ -60,7 +60,7 @@ describe('User', async () => {
     })
 
     it('can see error message when email invalid', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.SignInAsMaster(registerData.IncorrectEmail, registerData.MasterPassword);
         await regobj.ErrorIcon.waitForDisplayed(); //check
@@ -69,7 +69,7 @@ describe('User', async () => {
     })
 
     it('can see error message when password invalid', async () => {
-        await browser.reloadSession();  
+        await browser.reloadSession();
         await browser.url('/');
         await act.SignInAsMaster(registerData.Email, registerData.Incorrect);
         await regobj.ErrorIcon.waitForDisplayed(); //check

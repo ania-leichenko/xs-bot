@@ -50,7 +50,7 @@ class RegistrationPage {
   get ErrorMessage (): ReturnType<typeof $> {
     return $('div[class="rrt-text"]')
   }
-  
+
 }
 
 export { RegistrationPage };
