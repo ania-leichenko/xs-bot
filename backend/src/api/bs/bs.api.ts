@@ -74,10 +74,7 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: BSApiPath.SPACES,
-    preHandler: [
-      checkHasPermissionsHook(Permission.MANAGE_BS),
-      checkHasRoleHook(),
-    ],
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
       rep: FastifyReply,
