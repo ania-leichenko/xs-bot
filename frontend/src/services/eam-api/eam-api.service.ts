@@ -115,6 +115,21 @@ class EAMApi {
     );
   }
 
+  public deleteWorker(id: string): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.WORKERS,
+        WorkersApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
+
   public getAllWorkers(
     params: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllResponseDto> {
