@@ -183,6 +183,13 @@ class BSObject {
       });
     }
 
+    const { name } = await this.#spaceService.getSpaceById(spaceId);
+
+    await this.#s3Service.deleteObject({
+      bucket: name,
+      key: object?.name as string,
+    });
+
     await this.#bsObjectRepository.deleteById(objectId);
   }
 }
