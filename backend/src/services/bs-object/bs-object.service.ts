@@ -174,7 +174,7 @@ class BSObject {
       tenantId,
     );
 
-    const hasObject = Boolean(object && object.spaceId !== spaceId);
+    const hasObject = Boolean(object && object.spaceId == spaceId);
 
     if (!hasObject) {
       throw new BsError({

@@ -48,8 +48,9 @@ class BSObject {
   ): Promise<BSObjectEntity | null> {
     const object = await this.#BSObjectModel
       .query()
+      .join(TableName.WORKERS, 'uploadedBy', '=', `${TableName.WORKERS}.id`)
       .select()
-      .where({ id })
+      .where({ 'objects.id': id })
       .andWhere({ tenantId })
       .first();
     return object ? BSObject.modelToEntity(object) : null;
