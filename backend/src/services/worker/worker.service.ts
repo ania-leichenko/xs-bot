@@ -202,7 +202,7 @@ class Worker {
     return { items: workers, countItems };
   }
 
-  public async deleteWorker(id: string): Promise<void> {
+  public async delete(id: string): Promise<void> {
     const worker = await this.#workerRepository.getById(id);
 
     if (!worker) {
@@ -241,7 +241,7 @@ class Worker {
       }),
     );
 
-    await this.#workerRepository.deleteWorker(id);
+    await this.#workerRepository.delete(id);
   }
 }
 
