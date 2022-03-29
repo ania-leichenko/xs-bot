@@ -103,13 +103,13 @@ const EAMConfigurateGroup: FC = () => {
       </h2>
       <section className={styles.formWrapper}>
         <h3 className={styles.formTitle}>
-          {hasGroup ? 'Edit Group' : 'Create group'}
+          {hasGroup ? 'Edit' : 'Create'} group
         </h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
               <h3 className={styles.inputGroupTitle}>
-                {hasGroup ? 'Edit group name' : 'Name the group'}
+                {hasGroup ? 'Edit' : 'Name'} group name
               </h3>
               <div className={styles.inputWrapper}>
                 <Input
