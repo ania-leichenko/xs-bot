@@ -115,7 +115,7 @@ class Group {
   public async getGroupById(
     id: string,
   ): Promise<EamGroupGetByIdResponseDto | null> {
-    return await this.#groupRepository.getGroupById(id);
+    return this.#groupRepository.getGroupById(id);
   }
 }
 
