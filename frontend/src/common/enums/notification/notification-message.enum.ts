@@ -1,6 +1,7 @@
 enum NotificationMessage {
   EAM_PERMISSION_LACK = 'You do not have the necessary rights to perform these actions.',
   EAM_WORKER_CREATE = 'Worker has been successfully created',
+  EAM_WORKER_DELETE = 'Worker has been successfully deleted',
   EAM_GROUP_CREATE = 'Group has been successfully created',
   EAM_GROUP_UPDATE = 'Group has been successfully updated',
   EAM_GROUP_DELETE = 'Group has been successfully deleted',
