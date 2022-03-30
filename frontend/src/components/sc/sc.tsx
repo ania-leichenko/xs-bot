@@ -8,7 +8,6 @@ import styles from './styles.module.scss';
 
 const SC: FC = () => {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
   const [currentInstanceId, setCurrentInstanceId] = useState<string | null>(
     null,
   );
@@ -23,19 +22,16 @@ const SC: FC = () => {
   }, [dispatch]);
 
   const handleDeleteInstance = (id: string): void => {
-    setIsVisible(true);
     setCurrentInstanceId(id);
   };
 
   const handleCancelDelete = (): void => {
-    setIsVisible(false);
     setCurrentInstanceId(null);
   };
 
   const handleConfirmDelete = (): void => {
     dispatch(scActions.deleteInstance(currentInstanceId as string));
     setCurrentInstanceId(null);
-    setIsVisible(false);
   };
 
   const handleCopyKey = (keyId: string): void => {
@@ -57,7 +53,7 @@ const SC: FC = () => {
         </div>
       </div>
       <ConfirmDeletePopup
-        isOpen={isVisible}
+        isOpen={Boolean(currentInstanceId)}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         entityType={EntityType.INSTANCE}

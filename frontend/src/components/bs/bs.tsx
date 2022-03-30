@@ -8,7 +8,6 @@ import { bs as bsActions } from 'store/actions';
 
 const BS: FC = () => {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
   const [currentSpaceId, setCurrentSpaceId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -21,19 +20,16 @@ const BS: FC = () => {
   }, [dispatch]);
 
   const handleSpaceDelete = (id: string): void => {
-    setIsVisible(true);
     setCurrentSpaceId(id);
   };
 
   const handleCancelDelete = (): void => {
-    setIsVisible(false);
     setCurrentSpaceId(null);
   };
 
   const handleConfirmDelete = (): void => {
     dispatch(bsActions.deleteSpace(currentSpaceId as string));
     setCurrentSpaceId(null);
-    setIsVisible(false);
   };
 
   return (
@@ -48,7 +44,7 @@ const BS: FC = () => {
         </div>
       </div>
       <ConfirmDeletePopup
-        isOpen={isVisible}
+        isOpen={Boolean(currentSpaceId)}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         entityType={EntityType.SPACE}

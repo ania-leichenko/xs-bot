@@ -8,7 +8,6 @@ import { BSSpace as BSSpaceActions } from 'store/actions';
 
 const BSSpace: FC = () => {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
   const [currentObjectId, setCurrentObjectId] = useState<string | null>(null);
 
   const { id } = useParams();
@@ -35,12 +34,10 @@ const BSSpace: FC = () => {
   };
 
   const handleObjectDelete = (id: string): void => {
-    setIsVisible(true);
     setCurrentObjectId(id);
   };
 
   const handleCancelDelete = (): void => {
-    setIsVisible(false);
     setCurrentObjectId(null);
   };
 
@@ -52,7 +49,6 @@ const BSSpace: FC = () => {
       }),
     );
     setCurrentObjectId(null);
-    setIsVisible(false);
   };
 
   return (
@@ -71,7 +67,7 @@ const BSSpace: FC = () => {
         </div>
       </div>
       <ConfirmDeletePopup
-        isOpen={isVisible}
+        isOpen={Boolean(currentObjectId)}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         entityType={EntityType.OBJECT}

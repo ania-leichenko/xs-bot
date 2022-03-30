@@ -8,7 +8,6 @@ import { slc as slcActions } from 'store/actions';
 
 const SLC: FC = () => {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
   const [currentFunctionId, setCurrentFunctionId] = useState<string | null>(
     null,
   );
@@ -23,19 +22,16 @@ const SLC: FC = () => {
   }, [dispatch]);
 
   const handleFunctionDelete = (id: string): void => {
-    setIsVisible(true);
     setCurrentFunctionId(id);
   };
 
   const handleCancelDelete = (): void => {
-    setIsVisible(false);
     setCurrentFunctionId(null);
   };
 
   const handleConfirmDelete = (): void => {
     dispatch(slcActions.deleteFunction(currentFunctionId as string));
     setCurrentFunctionId(null);
-    setIsVisible(false);
   };
 
   return (
@@ -50,7 +46,7 @@ const SLC: FC = () => {
         </div>
       </div>
       <ConfirmDeletePopup
-        isOpen={isVisible}
+        isOpen={Boolean(currentFunctionId)}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         entityType={EntityType.FUNCTION}

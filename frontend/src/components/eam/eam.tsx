@@ -13,7 +13,6 @@ import styles from './styles.module.scss';
 
 const EAM: FC = () => {
   const dispatch = useAppDispatch();
-  const [isVisible, setIsVisible] = useState(false);
   const [currentGroupId, setCurrentGroupId] = useState<string | null>(null);
   const [currentWorkerId, setCurrentWorkerId] = useState<string | null>(null);
 
@@ -44,17 +43,14 @@ const EAM: FC = () => {
   }, [dispatch, tenantId]);
 
   const handleGroupDelete = (id: string): void => {
-    setIsVisible(true);
     setCurrentGroupId(id);
   };
 
   const handleWorkersDelete = (id: string): void => {
-    setIsVisible(true);
     setCurrentWorkerId(id);
   };
 
   const handleCancelDelete = (): void => {
-    setIsVisible(false);
     currentGroupId ? setCurrentGroupId(null) : setCurrentWorkerId(null);
   };
 
@@ -66,8 +62,6 @@ const EAM: FC = () => {
       dispatch(eamActions.deleteWorker(currentWorkerId as string));
       setCurrentWorkerId(null);
     }
-
-    setIsVisible(false);
   };
 
   return (
@@ -84,7 +78,7 @@ const EAM: FC = () => {
         <GroupsTable onGroupDelete={handleGroupDelete} />
       </div>
       <ConfirmDeletePopup
-        isOpen={isVisible}
+        isOpen={Boolean(currentGroupId || currentWorkerId)}
         onClose={handleCancelDelete}
         onConfirm={handleConfirmDelete}
         entityType={currentGroupId ? EntityType.GROUP : EntityType.WORKER}
