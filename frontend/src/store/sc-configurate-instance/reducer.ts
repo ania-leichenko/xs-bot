@@ -36,11 +36,17 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(createInstance.fulfilled, (state) => {
     state.instanceDataStatus = DataStatus.FULFILLED;
   });
+  builder.addCase(createInstance.rejected, (state) => {
+    state.instanceDataStatus = DataStatus.REJECTED;
+  });
   builder.addCase(updateInstance.pending, (state) => {
     state.instanceDataStatus = DataStatus.PENDING;
   });
   builder.addCase(updateInstance.fulfilled, (state) => {
     state.instanceDataStatus = DataStatus.FULFILLED;
+  });
+  builder.addCase(updateInstance.rejected, (state) => {
+    state.instanceDataStatus = DataStatus.REJECTED;
   });
 });
 
