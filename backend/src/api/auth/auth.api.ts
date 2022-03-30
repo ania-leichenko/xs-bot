@@ -1,24 +1,24 @@
 import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
-import { auth as authServ } from '~/services/services';
+import { master as masterServ, auth as authServ } from '~/services/services';
 import {
+  eamMasterSignUp as masterSignUpValidationSchema,
   eamMasterSignIn as masterSignInValidationSchema,
   eamWorkerSignIn as workerSignInValidationSchema,
 } from '~/validation-schemas/validation-schemas';
 import { HttpCode, HttpMethod, AuthApiPath } from '~/common/enums/enums';
 import {
-  EAMWorkerSignInRequestDto,
+  EAMMasterSignUpRequestDto,
   EAMMasterSignInRequestDto,
+  EAMWorkerSignInRequestDto,
 } from '~/common/types/types';
 
 type Options = {
-  services: {
-    auth: typeof authServ;
-  };
+  services: { master: typeof masterServ; auth: typeof authServ };
 };
 
 const initAuthApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { auth: authService } = opts.services;
+  const { master: masterService, auth: authService } = opts.services;
 
   fastify.route({
     method: HttpMethod.GET,
@@ -28,6 +28,29 @@ const initAuthApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const user = await authService.getCurrentUser(token);
 
       return rep.send(user).status(HttpCode.OK);
+    },
+  });
+  fastify.route({
+    method: HttpMethod.POST,
+    url: AuthApiPath.SIGN_UP,
+    schema: {
+      body: masterSignUpValidationSchema,
+    },
+    validatorCompiler({
+      schema,
+    }: FastifyRouteSchemaDef<typeof masterSignUpValidationSchema>) {
+      return (
+        data: EAMMasterSignUpRequestDto,
+      ): ReturnType<typeof masterSignUpValidationSchema['validate']> => {
+        return schema.validate(data);
+      };
+    },
+    async handler(
+      req: FastifyRequest<{ Body: EAMMasterSignUpRequestDto }>,
+      rep: FastifyReply,
+    ) {
+      const user = await masterService.create(req.body);
+      return rep.send(user).status(HttpCode.CREATED);
     },
   });
   fastify.route({

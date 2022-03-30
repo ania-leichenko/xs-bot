@@ -4,6 +4,7 @@ import {
   group as groupServ,
   worker as workerServ,
   permission as permissionServ,
+  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
@@ -22,6 +23,7 @@ import {
   EAMGroupDeleteParamsDto,
   EAMWorkerDeleteRequestDto,
   EamGroupGetByIdRequestDto,
+  TokenPayload,
 } from '~/common/types/types';
 import {
   eamGroupCreate as groupCreateValidationSchema,
@@ -38,6 +40,7 @@ type Options = {
     group: typeof groupServ;
     worker: typeof workerServ;
     permission: typeof permissionServ;
+    token: typeof tokenServ;
   };
 };
 
@@ -46,6 +49,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     group: groupService,
     worker: workerService,
     permission: permissionService,
+    token: tokenService,
   } = opts.services;
 
   fastify.route({
@@ -54,6 +58,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     schema: {
       body: workerValidationSchema,
     },
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     validatorCompiler({
       schema,
     }: FastifyRouteSchemaDef<typeof workerValidationSchema>) {
@@ -67,13 +72,16 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep: FastifyReply,
     ) {
+      const token = req.userData?.token as string;
+      const { tenantId } = tokenService.decode<TokenPayload>(token);
+
       return rep
         .send(
           await workerService.create({
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token: req.userData?.token as string,
+            tenantId,
           }),
         )
         .status(HttpCode.CREATED);
@@ -86,6 +94,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     schema: {
       body: groupCreateValidationSchema,
     },
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     validatorCompiler({
       schema,
     }: FastifyRouteSchemaDef<typeof groupCreateValidationSchema>) {
@@ -110,6 +119,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     schema: {
       body: groupUpdateValidationSchema,
     },
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     validatorCompiler({
       schema,
     }: FastifyRouteSchemaDef<typeof groupUpdateValidationSchema>) {
@@ -136,6 +146,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{
         Params: EamGroupGetByIdRequestDto;
@@ -189,6 +200,7 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${EAMApiPath.GROUPS}${GroupsApiPath.$ID}`,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_EAM),
     async handler(
       req: FastifyRequest<{ Params: EAMGroupDeleteParamsDto }>,
       rep: FastifyReply,
@@ -204,7 +216,10 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${EAMApiPath.WORKERS}${WorkersApiPath.$ID}`,
-    preHandler: checkHasRoleHook(UserRole.MASTER),
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_EAM),
+      checkHasRoleHook(UserRole.MASTER),
+    ],
     async handler(
       req: FastifyRequest<{ Params: EAMWorkerDeleteRequestDto }>,
       rep: FastifyReply,

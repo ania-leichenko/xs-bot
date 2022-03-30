@@ -1,6 +1,4 @@
 import { FC } from 'react';
-import { Button, IconButton } from 'components/common/common';
-import { AppRoute, IconName } from 'common/enums/enums';
 import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
 import { eam as eamActions } from 'store/actions';
 import { GroupsTable, WorkersTable, Tenant } from './components/components';
@@ -43,25 +41,6 @@ const EAM: FC = () => {
     dispatch(eamActions.deleteWorker(id));
   };
 
-  const handleWorkersReload = (): void => {
-    dispatch(
-      eamActions.loadWorkers({
-        tenantId: tenantId as string,
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-  const handleGroupsReload = (): void => {
-    dispatch(
-      eamActions.loadGroups({
-        tenantId: tenantId as string,
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -70,37 +49,9 @@ const EAM: FC = () => {
       </h2>
       <Tenant />
       <div className={styles.tableWrapper}>
-        <WorkersTable onWorkerDelete={handleWorkersDelete}>
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              onClick={handleWorkersReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-              title="Refresh"
-            />
-            <Button
-              className={styles.addWorkerBtn}
-              to={AppRoute.EAM_CREATE_WORKER}
-              label="Add Worker"
-            />
-          </div>
-        </WorkersTable>
+        <WorkersTable onWorkerDelete={handleWorkersDelete}></WorkersTable>
       </div>
-      <GroupsTable onGroupDelete={handleGroupDelete}>
-        <div className={styles.buttonsBlock}>
-          <IconButton
-            onClick={handleGroupsReload}
-            icon={IconName.RELOAD}
-            label="Reload"
-            title="Refresh"
-          />
-          <Button
-            className={styles.addGroupBtn}
-            to={AppRoute.EAM_CONFIGURATE_GROUP}
-            label="Add Group"
-          />
-        </div>
-      </GroupsTable>
+      <GroupsTable onGroupDelete={handleGroupDelete}></GroupsTable>
     </div>
   );
 };

@@ -20,7 +20,6 @@ import {
   authorization as authorizationPlugin,
   file as filePlugin,
 } from '~/plugins/plugins';
-import { initMastersApi } from './masters/masters.api';
 import { initTenantsApi } from './tenants/tenants.api';
 import { initBsApi } from '~/api/bs/bs.api';
 import { initAuthApi } from './auth/auth.api';
@@ -38,21 +37,17 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(filePlugin);
   fastify.register(initAuthApi, {
     services: {
+      master,
       auth,
     },
     prefix: ApiPath.AUTH,
-  });
-  fastify.register(initMastersApi, {
-    services: {
-      master,
-    },
-    prefix: ApiPath.MASTERS,
   });
   fastify.register(initEamApi, {
     services: {
       group,
       worker,
       permission,
+      token,
     },
     prefix: ApiPath.EAM,
   });
