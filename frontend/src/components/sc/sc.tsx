@@ -1,13 +1,9 @@
 import { FC } from 'react';
-import { AppRoute, IconName, EntityType } from 'common/enums/enums';
+import { EntityType } from 'common/enums/enums';
 import { useAppDispatch, useEffect, useState } from 'hooks/hooks';
-import { sc as scActions } from 'store/actions';
 import { InstancesTable } from './components/components';
-import {
-  Button,
-  IconButton,
-  ConfirmDeletePopup,
-} from 'components/common/common';
+import { ConfirmDeletePopup } from 'components/common/common';
+import { sc as scActions } from 'store/actions';
 import styles from './styles.module.scss';
 
 const SC: FC = () => {
@@ -46,15 +42,6 @@ const SC: FC = () => {
     dispatch(scActions.loadSshKey(keyId));
   };
 
-  const handleReload = (): void => {
-    dispatch(
-      scActions.loadInstances({
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <>
       <div className={styles.wrapper}>
@@ -66,29 +53,15 @@ const SC: FC = () => {
           <InstancesTable
             onInstanceDelete={handleDeleteInstance}
             onKeyClick={handleCopyKey}
-          >
-            <div className={styles.buttonsBlock}>
-              <IconButton
-                onClick={handleReload}
-                icon={IconName.RELOAD}
-                label="Reload"
-                title="Refresh"
-              />
-              <Button
-                className={styles.addInstanceBtn}
-                to={AppRoute.SC_CONFIGURATE_INSTANCE}
-                label="Add Instance"
-              />
-            </div>
-          </InstancesTable>
+          />
         </div>
-        <ConfirmDeletePopup
-          isOpen={isVisible}
-          onClose={handleCancelDelete}
-          onConfirm={handleConfirmDelete}
-          entityType={EntityType.INSTANCE}
-        />
       </div>
+      <ConfirmDeletePopup
+        isOpen={isVisible}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        entityType={EntityType.INSTANCE}
+      />
     </>
   );
 };

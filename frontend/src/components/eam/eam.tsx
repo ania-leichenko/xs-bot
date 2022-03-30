@@ -1,10 +1,6 @@
 import { FC } from 'react';
-import {
-  Button,
-  ConfirmDeletePopup,
-  IconButton,
-} from 'components/common/common';
-import { AppRoute, EntityType, IconName } from 'common/enums/enums';
+import { ConfirmDeletePopup } from 'components/common/common';
+import { EntityType } from 'common/enums/enums';
 import {
   useAppDispatch,
   useAppSelector,
@@ -74,25 +70,6 @@ const EAM: FC = () => {
     setIsVisible(false);
   };
 
-  const handleWorkersReload = (): void => {
-    dispatch(
-      eamActions.loadWorkers({
-        tenantId: tenantId as string,
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-  const handleGroupsReload = (): void => {
-    dispatch(
-      eamActions.loadGroups({
-        tenantId: tenantId as string,
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <>
       <div className={styles.wrapper}>
@@ -102,44 +79,16 @@ const EAM: FC = () => {
         </h2>
         <Tenant />
         <div className={styles.tableWrapper}>
-          <WorkersTable onWorkerDelete={handleWorkersDelete}>
-            <div className={styles.buttonsBlock}>
-              <IconButton
-                onClick={handleWorkersReload}
-                icon={IconName.RELOAD}
-                label="Reload"
-                title="Refresh"
-              />
-              <Button
-                className={styles.addWorkerBtn}
-                to={AppRoute.EAM_CREATE_WORKER}
-                label="Add Worker"
-              />
-            </div>
-          </WorkersTable>
+          <WorkersTable onWorkerDelete={handleWorkersDelete} />
         </div>
-        <GroupsTable onGroupDelete={handleGroupDelete}>
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              onClick={handleGroupsReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-              title="Refresh"
-            />
-            <Button
-              className={styles.addGroupBtn}
-              to={AppRoute.EAM_CONFIGURATE_GROUP}
-              label="Add Group"
-            />
-          </div>
-        </GroupsTable>
-        <ConfirmDeletePopup
-          isOpen={isVisible}
-          onClose={handleCancelDelete}
-          onConfirm={handleConfirmDelete}
-          entityType={currentGroupId ? EntityType.GROUP : EntityType.WORKER}
-        />
+        <GroupsTable onGroupDelete={handleGroupDelete} />
       </div>
+      <ConfirmDeletePopup
+        isOpen={isVisible}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+        entityType={currentGroupId ? EntityType.GROUP : EntityType.WORKER}
+      />
     </>
   );
 };

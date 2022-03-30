@@ -1,10 +1,6 @@
 import { FC } from 'react';
-import { AppRoute, EntityType, IconName } from 'common/enums/enums';
-import {
-  Button,
-  ConfirmDeletePopup,
-  IconButton,
-} from 'components/common/common';
+import { EntityType } from 'common/enums/enums';
+import { ConfirmDeletePopup } from 'components/common/common';
 import styles from './styles.module.scss';
 import { FunctionsTable } from './components/components';
 import { useAppDispatch, useEffect, useState } from 'hooks/hooks';
@@ -42,15 +38,6 @@ const SLC: FC = () => {
     setIsVisible(false);
   };
 
-  const handleFunctionReload = (): void => {
-    dispatch(
-      slcActions.loadFunctions({
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <>
       <div className={styles.wrapper}>
@@ -59,21 +46,7 @@ const SLC: FC = () => {
           ServerLess Computing
         </h2>
         <div className={styles.tableWrapper}>
-          <FunctionsTable onFunctionDelete={handleFunctionDelete}>
-            <div className={styles.buttonsBlock}>
-              <IconButton
-                title="Refresh"
-                onClick={handleFunctionReload}
-                icon={IconName.RELOAD}
-                label="Reload"
-              />
-              <Button
-                className={styles.addFunctionBtn}
-                to={AppRoute.SLC_CONFIGURATE_FUNCTION}
-                label="Create function"
-              />
-            </div>
-          </FunctionsTable>
+          <FunctionsTable onFunctionDelete={handleFunctionDelete} />
         </div>
       </div>
       <ConfirmDeletePopup
