@@ -109,7 +109,7 @@ const EAMConfigurateGroup: FC = () => {
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
               <h3 className={styles.inputGroupTitle}>
-                {hasGroup ? 'Edit' : 'Name'} group name
+                {hasGroup ? 'Edit group name' : 'Name the group'}
               </h3>
               <div className={styles.inputWrapper}>
                 <Input
