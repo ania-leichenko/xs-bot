@@ -22,6 +22,7 @@ type Props = {
     handleLoad: (from: number) => void;
     from: number;
   };
+  hasGroup: boolean;
 };
 
 const WorkersTable: FC<Props> = ({
@@ -29,6 +30,7 @@ const WorkersTable: FC<Props> = ({
   handleAddWorkerId,
   handleRemoveWorkerId,
   handleIsCheckedId,
+  hasGroup,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -73,7 +75,9 @@ const WorkersTable: FC<Props> = ({
   return (
     <div>
       <h3 className={styles.inputGroupTitle}>
-        Add workers to the Group - Optional
+        {hasGroup
+          ? 'Edit workers in the group'
+          : 'Add workers to the Group - Optional'}
       </h3>
       <Table
         className={styles.table}
