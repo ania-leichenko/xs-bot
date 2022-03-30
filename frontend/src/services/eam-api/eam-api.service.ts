@@ -15,6 +15,8 @@ import {
   EamGroupGetByIdResponseDto,
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
+  EAMWorkerCreateRequestDto,
+  EAMWorkerCreateResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -152,6 +154,19 @@ class EAMApi {
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.PERMISSION),
       {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public createWorker(
+    payload: EAMWorkerCreateRequestDto,
+  ): Promise<EAMWorkerCreateResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }

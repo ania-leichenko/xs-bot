@@ -70,13 +70,16 @@ const initEamApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Body: EAMWorkerCreateRequestDto }>,
       rep: FastifyReply,
     ) {
+      const token = req.user?.token as string;
+      const { tenantId } = tokenService.decode<TokenPayload>(token);
+
       return rep
         .send(
           await workerService.create({
             name: req.body.name,
             password: req.body.password,
             groupIds: req.body.groupIds,
-            token: req.user?.token as string,
+            tenantId,
           }),
         )
         .status(HttpCode.CREATED);
