@@ -1,5 +1,6 @@
 const ExceptionMessage = {
   USER_ROLE: 'This type of user not able to do this',
+  USER_ROLE_NOT_ADD: 'User type not specified for access',
   USER_EXISTS: 'Account with this email already exists.',
   UNAUTHORIZED_USER: 'Unauthorized user.',
   INCORRECT_CREDENTIALS:

@@ -12,7 +12,10 @@ const checkHasRole =
     const hasRole = Boolean(roles.length);
 
     if (!hasRole) {
-      return;
+      throw new HttpError({
+        status: HttpCode.LOCKED,
+        message: ExceptionMessage.USER_ROLE_NOT_ADD,
+      });
     }
 
     const hasCorrectRole = roles.some((it) => it === userRole);
