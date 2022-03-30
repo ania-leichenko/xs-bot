@@ -90,6 +90,8 @@ const ObjectsTable: FC<Props> = ({
     dispatch(
       BSSpaceActions.uploadObject({ id: id as string, file: file as File }),
     );
+
+    (evt.target as HTMLInputElement).value = '';
   };
 
   return (
