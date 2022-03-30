@@ -1,13 +1,21 @@
 import { FC } from 'react';
-import { AppRoute, IconName } from 'common/enums/enums';
-import { useAppDispatch, useEffect } from 'hooks/hooks';
+import { AppRoute, IconName, EntityType } from 'common/enums/enums';
+import { useAppDispatch, useEffect, useState } from 'hooks/hooks';
 import { sc as scActions } from 'store/actions';
 import { InstancesTable } from './components/components';
-import { Button, IconButton } from 'components/common/common';
+import {
+  Button,
+  IconButton,
+  ConfirmDeletePopup,
+} from 'components/common/common';
 import styles from './styles.module.scss';
 
 const SC: FC = () => {
   const dispatch = useAppDispatch();
+  const [isVisible, setIsVisible] = useState(false);
+  const [currentInstanceId, setCurrentInstanceId] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     dispatch(
@@ -19,7 +27,19 @@ const SC: FC = () => {
   }, [dispatch]);
 
   const handleDeleteInstance = (id: string): void => {
-    dispatch(scActions.deleteInstance(id));
+    setIsVisible(true);
+    setCurrentInstanceId(id);
+  };
+
+  const handleCancelDelete = (): void => {
+    setIsVisible(false);
+    setCurrentInstanceId(null);
+  };
+
+  const handleConfirmDelete = (): void => {
+    dispatch(scActions.deleteInstance(currentInstanceId as string));
+    setCurrentInstanceId(null);
+    setIsVisible(false);
   };
 
   const handleCopyKey = (keyId: string): void => {
@@ -36,32 +56,40 @@ const SC: FC = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <h2 className={styles.title}>
-        SC - <br />
-        Server Computing
-      </h2>
-      <div className={styles.tableWrapper}>
-        <InstancesTable
-          onInstanceDelete={handleDeleteInstance}
-          onKeyClick={handleCopyKey}
-        >
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              onClick={handleReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-              title="Refresh"
-            />
-            <Button
-              className={styles.addInstanceBtn}
-              to={AppRoute.SC_CONFIGURATE_INSTANCE}
-              label="Add Instance"
-            />
-          </div>
-        </InstancesTable>
+    <>
+      <div className={styles.wrapper}>
+        <h2 className={styles.title}>
+          SC - <br />
+          Server Computing
+        </h2>
+        <div className={styles.tableWrapper}>
+          <InstancesTable
+            onInstanceDelete={handleDeleteInstance}
+            onKeyClick={handleCopyKey}
+          >
+            <div className={styles.buttonsBlock}>
+              <IconButton
+                onClick={handleReload}
+                icon={IconName.RELOAD}
+                label="Reload"
+                title="Refresh"
+              />
+              <Button
+                className={styles.addInstanceBtn}
+                to={AppRoute.SC_CONFIGURATE_INSTANCE}
+                label="Add Instance"
+              />
+            </div>
+          </InstancesTable>
+        </div>
+        <ConfirmDeletePopup
+          isOpen={isVisible}
+          onClose={handleCancelDelete}
+          onConfirm={handleConfirmDelete}
+          entityType={EntityType.INSTANCE}
+        />
       </div>
-    </div>
+    </>
   );
 };
 
