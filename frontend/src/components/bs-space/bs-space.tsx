@@ -55,6 +55,8 @@ const BSSpace: FC = () => {
     dispatch(
       BSSpaceActions.uploadObject({ id: id as string, file: file as File }),
     );
+
+    (evt.target as HTMLInputElement).value = '';
   };
 
   const handleObjectDelete = (objectId: string): void => {
