@@ -21,13 +21,9 @@ const SLC: FC = () => {
     );
   }, [dispatch]);
 
-  const handleFunctionDelete = (id: string): void => {
-    setCurrentFunctionId(id);
-  };
+  const handleFunctionDelete = (id: string): void => setCurrentFunctionId(id);
 
-  const handleCancelDelete = (): void => {
-    setCurrentFunctionId(null);
-  };
+  const handleCancelDelete = (): void => setCurrentFunctionId(null);
 
   const handleConfirmDelete = (): void => {
     dispatch(slcActions.deleteFunction(currentFunctionId as string));

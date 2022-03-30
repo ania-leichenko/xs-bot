@@ -19,13 +19,9 @@ const BS: FC = () => {
     );
   }, [dispatch]);
 
-  const handleSpaceDelete = (id: string): void => {
-    setCurrentSpaceId(id);
-  };
+  const handleSpaceDelete = (id: string): void => setCurrentSpaceId(id);
 
-  const handleCancelDelete = (): void => {
-    setCurrentSpaceId(null);
-  };
+  const handleCancelDelete = (): void => setCurrentSpaceId(null);
 
   const handleConfirmDelete = (): void => {
     dispatch(bsActions.deleteSpace(currentSpaceId as string));

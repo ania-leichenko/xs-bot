@@ -33,13 +33,9 @@ const BSSpace: FC = () => {
     );
   };
 
-  const handleObjectDelete = (id: string): void => {
-    setCurrentObjectId(id);
-  };
+  const handleObjectDelete = (id: string): void => setCurrentObjectId(id);
 
-  const handleCancelDelete = (): void => {
-    setCurrentObjectId(null);
-  };
+  const handleCancelDelete = (): void => setCurrentObjectId(null);
 
   const handleConfirmDelete = (): void => {
     dispatch(

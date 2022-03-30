@@ -21,13 +21,9 @@ const SC: FC = () => {
     );
   }, [dispatch]);
 
-  const handleDeleteInstance = (id: string): void => {
-    setCurrentInstanceId(id);
-  };
+  const handleDeleteInstance = (id: string): void => setCurrentInstanceId(id);
 
-  const handleCancelDelete = (): void => {
-    setCurrentInstanceId(null);
-  };
+  const handleCancelDelete = (): void => setCurrentInstanceId(null);
 
   const handleConfirmDelete = (): void => {
     dispatch(scActions.deleteInstance(currentInstanceId as string));

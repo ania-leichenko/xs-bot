@@ -42,17 +42,12 @@ const EAM: FC = () => {
     );
   }, [dispatch, tenantId]);
 
-  const handleGroupDelete = (id: string): void => {
-    setCurrentGroupId(id);
-  };
+  const handleGroupDelete = (id: string): void => setCurrentGroupId(id);
 
-  const handleWorkersDelete = (id: string): void => {
-    setCurrentWorkerId(id);
-  };
+  const handleWorkersDelete = (id: string): void => setCurrentWorkerId(id);
 
-  const handleCancelDelete = (): void => {
+  const handleCancelDelete = (): void =>
     currentGroupId ? setCurrentGroupId(null) : setCurrentWorkerId(null);
-  };
 
   const handleConfirmDelete = (): void => {
     if (currentGroupId) {
