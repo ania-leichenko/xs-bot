@@ -44,11 +44,11 @@ class RegistrationPage {
   }
 
   get ErrorIcon (): ReturnType<typeof $> {
-    return $('div[class="notification_attention__obnLi"]')
+    return $('div[class="notification_attention__obnLi"]');
   }
 
   get ErrorMessage (): ReturnType<typeof $> {
-    return $('div[class="rrt-text"]')
+    return $('div[class="rrt-text"]');
   }
 
 }
