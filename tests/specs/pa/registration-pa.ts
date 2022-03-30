@@ -39,30 +39,30 @@ class RegistrationActions {
     await reg.Password_Field.setValue(registerData.MasterPassword);
   }
 
-  async FillMasterSignInForm(): Promise<void> {
+  async FillMasterSignInForm(email: string, masterPassword: string): Promise<void> {
     await reg.Email_Field.waitForExist({
       timeout: 3000,
     });
-    await reg.Email_Field.setValue(registerData.Email);
+    await reg.Email_Field.setValue(email);
     await reg.Password_Field.waitForExist({
       timeout: 3000,
     });
-    await reg.Password_Field.setValue(registerData.MasterPassword);
+    await reg.Password_Field.setValue(masterPassword);
   }
 
-  async FillWorkerSignInForm(): Promise<void> {
+  async FillWorkerSignInForm(tenantName: string, workerName: string, password: string): Promise<void> {
     await reg.TenantName_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.TenantName_Field.setValue(registerData.TenantName);
+    await reg.TenantName_Field.setValue(tenantName);
     await reg.WorkerName_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.WorkerName_Field.setValue(registerData.WorkerName);
+    await reg.WorkerName_Field.setValue(workerName);
     await reg.Password_Field.waitForExist({
       timeout: 2000,
     });
-    await reg.Password_Field.setValue(registerData.WorkerPassword);
+    await reg.Password_Field.setValue(password);
   }
 
   async Sign(): Promise<void> {
@@ -73,15 +73,17 @@ class RegistrationActions {
     await reg.Sign_Button.click();
   }
 
-  async SignInAsMaster(): Promise<void> {
+  async SignInAsMaster(email: string, masterPassword: string): Promise<void> {
     await this.OpenMasterSignInForm();
-    await this.FillMasterSignInForm();
+    await this.FillMasterSignInForm(email, masterPassword);
+    await this.Sign();
   }
 
   async SignUp(): Promise<void> {
     await this.OpenMasterSignInForm();
     await this.OpenSignUpForm();
     await this.FillMasterSignUpForm();
+    await this.Sign();
   }
 }
 

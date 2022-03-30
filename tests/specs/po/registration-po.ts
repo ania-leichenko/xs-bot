@@ -42,6 +42,15 @@ class RegistrationPage {
   get Logo(): ReturnType<typeof $> {
     return $('img[class="styles_signUpLogo__iiydr"]');
   }
+
+  get ErrorIcon (): ReturnType<typeof $> {
+    return $('div[class="notification_attention__obnLi"]');
+  }
+
+  get ErrorMessage (): ReturnType<typeof $> {
+    return $('div[class="rrt-text"]');
+  }
+
 }
 
 export { RegistrationPage };

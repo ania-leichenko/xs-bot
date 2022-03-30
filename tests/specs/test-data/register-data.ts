@@ -6,6 +6,12 @@ const registerData = {
   TenantNameForWorkerSignIn: 'MASTER',
   WorkerName: 'Bob',
   NewTenantName: 'MASTERrich',
+  Incorrect: 'incorrect',
+  IncorrectEmail: 'dsfdfds@csd.dsa',
+  InvalidWorkerNameMessage: 'Account with that worker name does not exist. Try again or create a new account.',
+  InvalidTenantNameMessage: 'Account with that tenant name does not exist.',
+  InvalidEmailMessage: 'Account with that email does not exist. Try again or create a new account.',
+  InvalidPasswordMessage: 'Your authentication information is incorrect. Please try again.',
 };
 
 export { registerData };
