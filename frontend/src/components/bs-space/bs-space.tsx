@@ -1,5 +1,3 @@
-import { IconName } from 'common/enums/enums';
-import { IconButton } from 'components/common/common';
 import { useAppDispatch, useEffect, useParams } from 'hooks/hooks';
 import { ObjectsTable } from './components/components';
 import React, { FC } from 'react';
@@ -23,18 +21,6 @@ const BSSpace: FC = () => {
     );
   }, [dispatch]);
 
-  const handleObjectsReload = (): void => {
-    dispatch(
-      BSSpaceActions.loadObjects({
-        filter: {
-          from: 0,
-          count: 5,
-        },
-        id: id as string,
-      }),
-    );
-  };
-
   const handleObjectDownload = (objectId: string): void => {
     dispatch(
       BSSpaceActions.downloadObject({
@@ -42,21 +28,6 @@ const BSSpace: FC = () => {
         objectId,
       }),
     );
-  };
-
-  const handleObjectUpload = (evt: React.FormEvent<HTMLInputElement>): void => {
-    const [file] = evt.currentTarget.files ?? [];
-    const hasFiles = Boolean(file);
-
-    if (!hasFiles) {
-      return;
-    }
-
-    dispatch(
-      BSSpaceActions.uploadObject({ id: id as string, file: file as File }),
-    );
-
-    (evt.target as HTMLInputElement).value = '';
   };
 
   const handleObjectDelete = (objectId: string): void => {
@@ -79,24 +50,7 @@ const BSSpace: FC = () => {
           spaceId={id as string}
           onObjectDelete={handleObjectDelete}
           onObjectDownload={handleObjectDownload}
-        >
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              title="Refresh"
-              onClick={handleObjectsReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-            />
-            <label className={styles.fileInput}>
-              Upload
-              <input
-                className={styles.hideDefaultInput}
-                type="file"
-                onChange={handleObjectUpload}
-              />
-            </label>
-          </div>
-        </ObjectsTable>
+        />
       </div>
     </div>
   );
