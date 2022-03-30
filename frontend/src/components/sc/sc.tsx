@@ -1,9 +1,7 @@
 import { FC } from 'react';
-import { AppRoute, IconName } from 'common/enums/enums';
 import { useAppDispatch, useEffect } from 'hooks/hooks';
 import { sc as scActions } from 'store/actions';
 import { InstancesTable } from './components/components';
-import { Button, IconButton } from 'components/common/common';
 import styles from './styles.module.scss';
 
 const SC: FC = () => {
@@ -26,15 +24,6 @@ const SC: FC = () => {
     dispatch(scActions.loadSshKey(keyId));
   };
 
-  const handleReload = (): void => {
-    dispatch(
-      scActions.loadInstances({
-        from: 0,
-        count: 5,
-      }),
-    );
-  };
-
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>
@@ -45,21 +34,7 @@ const SC: FC = () => {
         <InstancesTable
           onInstanceDelete={handleDeleteInstance}
           onKeyClick={handleCopyKey}
-        >
-          <div className={styles.buttonsBlock}>
-            <IconButton
-              onClick={handleReload}
-              icon={IconName.RELOAD}
-              label="Reload"
-              title="Refresh"
-            />
-            <Button
-              className={styles.addInstanceBtn}
-              to={AppRoute.SC_CONFIGURATE_INSTANCE}
-              label="Add Instance"
-            />
-          </div>
-        </InstancesTable>
+        ></InstancesTable>
       </div>
     </div>
   );
