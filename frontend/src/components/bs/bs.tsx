@@ -27,7 +27,7 @@ const BS: FC = () => {
         Binary Storage
       </h2>
       <div className={styles.tableWrapper}>
-        <SpacesTable onSpaceDelete={handleSpaceDelete}></SpacesTable>
+        <SpacesTable onSpaceDelete={handleSpaceDelete} />
       </div>
     </div>
   );

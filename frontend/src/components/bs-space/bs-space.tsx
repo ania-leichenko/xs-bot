@@ -50,7 +50,7 @@ const BSSpace: FC = () => {
           spaceId={id as string}
           onObjectDelete={handleObjectDelete}
           onObjectDownload={handleObjectDownload}
-        ></ObjectsTable>
+        />
       </div>
     </div>
   );
