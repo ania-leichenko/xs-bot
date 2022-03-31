@@ -39,9 +39,17 @@ const reducer = createReducer(initialState, (builder) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;
   });
+  builder.addCase(loadWorkers.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+    state.workers = [];
+  });
   builder.addCase(getPermission.fulfilled, (state, action) => {
     state.permissionsDateStatus = DataStatus.FULFILLED;
     state.permissions = action.payload.items;
+  });
+  builder.addCase(getPermission.pending, (state) => {
+    state.permissionsDateStatus = DataStatus.PENDING;
+    state.permissions = [];
   });
   builder.addCase(getGroupById.fulfilled, (state, action) => {
     state.group = action.payload;
