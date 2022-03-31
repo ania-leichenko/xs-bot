@@ -18,6 +18,10 @@ const Pagination: FC<Props> = ({
   currentPage,
   countItems,
 }) => {
+  if (countItems === 0) {
+    return null;
+  }
+
   return (
     <div className={styles.pagination}>
       <div className={styles.countItems}>
