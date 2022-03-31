@@ -1,5 +1,3 @@
-import * as assert from 'assert';
-
 import { SC } from '../po/sc-po';
 import { SCActions } from '../pa/sc-pa';
 import { RegistrationActions } from '../pa/registration-pa';
@@ -32,4 +30,4 @@ describe('Worker', async () => {
         await scact.CheckInstanceDelete();
     });
 
-})
+});
