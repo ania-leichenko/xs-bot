@@ -5,7 +5,7 @@ const dash = new Dashboard();
 class DashboardActions {
   async OpenEAM(): Promise<void> {
     await dash.EAM.waitForClickable({
-      timeout: 2000,
+      timeout: 6000,
     });
     await dash.EAM.click();
   }

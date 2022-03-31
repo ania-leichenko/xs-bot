@@ -44,6 +44,13 @@ class EAMActions {
     await eamGroup.click();
   }
 
+  async FillCreateWorkerWithoutGroupForm(Name: string): Promise<void> {
+    await eamAct.Name_Field.waitForClickable({
+      timeout: 2000,
+    });
+    await eamAct.Name_Field.setValue(Name);
+  }
+
   async ClickSaveCSV(): Promise<void> {
     await eamAct.SaveCSV_Button.waitForExist({
       timeout: 5000,
@@ -53,28 +60,80 @@ class EAMActions {
     await eamAct.SaveCSV_Button.click();
   }
 
+  async ClickDeleteWorkerButton(): Promise<void> {
+    await eamAct.DeleteWorker_Button.waitForClickable({
+      timeout: 5000,
+    });
+    await eamAct.DeleteWorker_Button.click();
+    await eamAct.DeleteConfirm_Popup.waitForDisplayed({
+      timeout: 3000,
+    });
+    const [, , , DeleteConfirm] = await eamAct.DeleteConfirm_Button;
+    await DeleteConfirm.click();
+  }
+
   async FillCreateGroupForm(Name: string): Promise<void> {
     await eamAct.Name_Field.waitForClickable({
       timeout: 2000,
     });
     await eamAct.Name_Field.setValue(Name);
-    const [eamPermission] = await eamAct.Permissions;
+    const [bsPermission] = await eamAct.Permissions;
+    await bsPermission.scrollIntoView();
+    await bsPermission.click();
+  }
+
+  async FillCreateGroupWithoutPermissionsForm(Name: string): Promise<void> {
+    await eamAct.Name_Field.waitForClickable({
+      timeout: 2000,
+    });
+    await eamAct.Name_Field.clearValue();
+    await eamAct.Name_Field.setValue(Name);
+  }
+  async FillCreateGroupWithWorkersForm(Name: string): Promise<void> {
+    await eamAct.Name_Field.waitForClickable({
+      timeout: 2000,
+    });
+    await eamAct.Name_Field.setValue(Name);
+    const [eamWorker] = await eamAct.LastWorker;
+    await eamWorker.scrollIntoView();
+    await eamWorker.click();
+    const [bsPermission] = await eamAct.Permissions;
+    await bsPermission.scrollIntoView();
+    await bsPermission.click();
+  }
+  async FillEditWorkersInTheGroupForm(): Promise<void> {
+    await eamAct.Name_Field.waitForClickable({
+      timeout: 2000,
+    });
+    const [eamWorker] = await eamAct.LastWorker;
+    await eamWorker.scrollIntoView();
+    await eamWorker.click();
+  }
+  async FillEditGroupPermissionsForm(): Promise<void> {
+    await eamAct.Name_Field.waitForClickable({
+      timeout: 2000,
+    });
+    const [, eamPermission] = await eamAct.Permissions;
     await eamPermission.scrollIntoView();
     await eamPermission.click();
   }
 
-  async ClickReloadGroupButton(): Promise<void> {
-    await eamAct.ReloadGroup_Button.waitForExist({
+  async ClickDeleteGroupButton(): Promise<void> {
+    await eamAct.DeleteGroup_Button.waitForClickable({
       timeout: 8000,
     });
-    await eamAct.ReloadGroup_Button.click();
-  }
-
-  async ClickDeleteGroupButton(): Promise<void> {
-    await eamAct.DeleteGroup_Button.waitForExist({
-      timeout: 2000,
-    });
     await eamAct.DeleteGroup_Button.click();
+    await eamAct.DeleteConfirm_Popup.waitForDisplayed({
+      timeout: 3000,
+    });
+    const [, , , DeleteConfirm] = await eamAct.DeleteConfirm_Button;
+    await DeleteConfirm.click();
+  }
+  async ClickEditGroupButton(): Promise<void> {
+    await eamAct.EditGroup_Button.waitForClickable({
+      timeout: 4000,
+    });
+    await eamAct.EditGroup_Button.click();
   }
 }
 
