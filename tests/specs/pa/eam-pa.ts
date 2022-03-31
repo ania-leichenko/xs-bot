@@ -68,7 +68,7 @@ class EAMActions {
     await eamAct.DeleteConfirm_Popup.waitForDisplayed({
       timeout: 3000,
     });
-    const [, , , DeleteConfirm] = await eamAct.DeleteConfirm_Button;
+    const [DeleteConfirm] = await eamAct.DeleteConfirm_Button;
     await DeleteConfirm.click();
   }
 
@@ -94,7 +94,7 @@ class EAMActions {
       timeout: 2000,
     });
     await eamAct.Name_Field.setValue(Name);
-    const [eamWorker] = await eamAct.LastWorker;
+    const [eamWorker] = await eamAct.Workers;
     await eamWorker.scrollIntoView();
     await eamWorker.click();
     const [bsPermission] = await eamAct.Permissions;
@@ -126,7 +126,7 @@ class EAMActions {
     await eamAct.DeleteConfirm_Popup.waitForDisplayed({
       timeout: 3000,
     });
-    const [, , , DeleteConfirm] = await eamAct.DeleteConfirm_Button;
+    const [DeleteConfirm] = await eamAct.DeleteConfirm_Button;
     await DeleteConfirm.click();
   }
   async ClickEditGroupButton(): Promise<void> {

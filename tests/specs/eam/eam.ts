@@ -38,7 +38,6 @@ describe('MASTER', async () => {
     await browser.reloadSession();
   });
   it('can open eam', async () => {
-    /////////CHECK/////////////
     const check = await eam.AddWorker_Button.isExisting();
     asserteam.equal(check, true);
   });
@@ -46,7 +45,6 @@ describe('MASTER', async () => {
     await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
     await browser.refresh();
-    /////////CHECK and return previous value/////////////
     const check = await eam.Name_Field.getValue();
     asserteam.strictEqual(check, registerData.NewTenantName);
     await eamActions.ChangeTenantName(registerData.TenantName);
@@ -55,11 +53,10 @@ describe('MASTER', async () => {
   it('can see success message when change tenant name', async () => {
     await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK and return previous value/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessTenantChange);
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
@@ -67,18 +64,16 @@ describe('MASTER', async () => {
   it('can see error message when change tenant name to existing one', async () => {
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorTenantChange);
   });
   it('can not change tenant name to existing one', async () => {
     const last = await eam.Name_Field.getValue();
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
     const newlast = await eam.Name_Field.getValue();
     asserteam.strictEqual(last, newlast);
   });
@@ -88,7 +83,6 @@ describe('MASTER', async () => {
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await eamActions.ClickSaveCSV();
-    /////////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [checkElement] = await eam.LastWorker;
@@ -100,11 +94,10 @@ describe('MASTER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessWorkerCreate);
   });
   it('can not create worker without adding him to some group', async () => {
@@ -115,7 +108,6 @@ describe('MASTER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerWithoutGroupForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [newlastElement] = await eam.LastWorker;
@@ -127,11 +119,10 @@ describe('MASTER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerWithoutGroupForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorWorkerCreate);
   });
   it('can delete worker', async () => {
@@ -144,7 +135,6 @@ describe('MASTER', async () => {
     const [, , , , lastElement] = await eam.LastWorker;
     const second = await lastElement.getText();
     await eamActions.ClickDeleteWorkerButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [LastElement] = await eam.LastWorker;
     const last = await LastElement.getText();
@@ -156,12 +146,12 @@ describe('MASTER', async () => {
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await checkEAM.OpenEAM();
+    await browser.refresh();
     await eamActions.ClickDeleteWorkerButton();
-    /////////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
-      timeout: 8000,
+    await eam.Success_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessWorkerDelete);
   });
   it('can create group', async () => {
@@ -169,7 +159,6 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -180,11 +169,10 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupCreate);
   });
   it('can not create group without permissions', async () => {
@@ -195,7 +183,6 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [newlastElement] = await eam.LastGroup;
@@ -207,11 +194,10 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorGroupCreate);
   });
   it('can create group with workers', async () => {
@@ -219,7 +205,6 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithWorkersForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -234,7 +219,6 @@ describe('MASTER', async () => {
     const [, , , , , lastElement] = await eam.LastGroup;
     const second = await lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [LastElement] = await eam.LastGroup;
     const last = await LastElement.getText();
@@ -245,13 +229,13 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    await browser.pause(2000);
+    await browser.pause(1000);
+    await browser.refresh();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
-      timeout: 6000,
+    await eam.Success_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupDelete);
   });
   it('can not delete group with workers', async () => {
@@ -263,7 +247,6 @@ describe('MASTER', async () => {
     const [lastElement] = await eam.LastGroup;
     const last = await lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [newLastElement] = await eam.LastGroup;
     const newlast = await newLastElement.getText();
@@ -276,11 +259,10 @@ describe('MASTER', async () => {
     await eamActions.ClickSaveButton();
     await browser.pause(2000);
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
-      timeout: 6000,
+    await eam.Error_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorGroupDelete);
   });
   it('can edit group name', async () => {
@@ -288,7 +270,6 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -299,23 +280,21 @@ describe('MASTER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
   it('can see success message when edit workers in the group', async () => {
     await eamActions.ClickEditGroupButton();
     await eamActions.FillEditWorkersInTheGroupForm();
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
   it('can see success message when edit group permissions', async () => {
@@ -327,11 +306,10 @@ describe('MASTER', async () => {
     await eamActions.ClickEditGroupButton();
     await eamActions.FillEditGroupPermissionsForm();
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
 });
@@ -365,7 +343,6 @@ describe('WORKER', async () => {
     await browser.reloadSession();
   });
   it('can open eam', async () => {
-    /////////CHECK/////////////
     const check = await eam.AddWorker_Button.isExisting();
     asserteam.equal(check, true);
   });
@@ -373,7 +350,6 @@ describe('WORKER', async () => {
     await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
     await browser.refresh();
-    /////////CHECK and return previous value/////////////
     const check = await eam.Name_Field.getValue();
     asserteam.strictEqual(check, registerData.NewTenantName);
     await eamActions.ChangeTenantName(registerData.TenantName);
@@ -382,11 +358,10 @@ describe('WORKER', async () => {
   it('can see success message when change tenant name', async () => {
     await eamActions.ChangeTenantName(registerData.NewTenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK and return previous value/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessTenantChange);
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
@@ -394,18 +369,16 @@ describe('WORKER', async () => {
   it('can see error message when change tenant name to existing one', async () => {
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorTenantChange);
   });
   it('can not change tenant name to existing one', async () => {
     const last = await eam.Name_Field.getValue();
     await eamActions.ChangeTenantName(registerData.TenantName);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
     const newlast = await eam.Name_Field.getValue();
     asserteam.strictEqual(last, newlast);
   });
@@ -415,7 +388,6 @@ describe('WORKER', async () => {
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
     await eamActions.ClickSaveCSV();
-    /////////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [checkElement] = await eam.LastWorker;
@@ -427,11 +399,10 @@ describe('WORKER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessWorkerCreate);
   });
   it('can not create worker without adding him to some group', async () => {
@@ -442,7 +413,6 @@ describe('WORKER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerWithoutGroupForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [newlastElement] = await eam.LastWorker;
@@ -454,11 +424,10 @@ describe('WORKER', async () => {
     const NewWorker = new Date().getTime() / 1000 + 'dev';
     await eamActions.FillCreateWorkerWithoutGroupForm(NewWorker);
     await eamActions.ClickSaveButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorWorkerCreate);
   });
   it('can not delete worker', async () => {
@@ -466,7 +435,6 @@ describe('WORKER', async () => {
     const [lastElement] = await eam.LastWorker;
     const last = await lastElement.getText();
     await eamActions.ClickDeleteWorkerButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [newLastElement] = await eam.LastWorker;
     const newlast = await newLastElement.getText();
@@ -474,11 +442,10 @@ describe('WORKER', async () => {
   });
   it('can see error message when delete worker', async () => {
     await eamActions.ClickDeleteWorkerButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
-      timeout: 8000,
+    await eam.Error_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorWorkerDelete);
   });
   it('can create group', async () => {
@@ -486,7 +453,6 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -497,11 +463,10 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupCreate);
   });
   it('can not create group without permissions', async () => {
@@ -512,7 +477,6 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await checkEAM.OpenEAM();
     await browser.pause(1000);
     const [newlastElement] = await eam.LastGroup;
@@ -524,11 +488,10 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
+    await eam.Error_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorGroupCreate);
   });
   it('can create group with workers', async () => {
@@ -536,7 +499,6 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithWorkersForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -551,7 +513,6 @@ describe('WORKER', async () => {
     const [, , , , , lastElement] = await eam.LastGroup;
     const second = await lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [LastElement] = await eam.LastGroup;
     const last = await LastElement.getText();
@@ -562,13 +523,13 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupForm(NewGroup);
     await eamActions.ClickSaveButton();
-    await browser.pause(2000);
+    await browser.pause(1000);
+    await browser.refresh();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
-      timeout: 6000,
+    await eam.Success_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupDelete);
   });
   it('can not delete group with workers', async () => {
@@ -580,7 +541,6 @@ describe('WORKER', async () => {
     const [lastElement] = await eam.LastGroup;
     const last = await lastElement.getText();
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
     await browser.pause(1000);
     const [newLastElement] = await eam.LastGroup;
     const newlast = await newLastElement.getText();
@@ -593,11 +553,10 @@ describe('WORKER', async () => {
     await eamActions.ClickSaveButton();
     await browser.pause(2000);
     await eamActions.ClickDeleteGroupButton();
-    /////////CHECK/////////////
-    await eam.Error_Icon.waitForDisplayed({
-      timeout: 6000,
+    await eam.Error_Message.waitForDisplayed({
+      timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Error_Message.getText();
     asserteam.strictEqual(check, eamData.ErrorGroupDelete);
   });
   it('can edit group name', async () => {
@@ -605,7 +564,6 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
     await browser.pause(1000);
     const [checkElement] = await eam.LastGroup;
     const check = await checkElement.getText();
@@ -616,22 +574,20 @@ describe('WORKER', async () => {
     const NewGroup = new Date().getTime() / 1000 + 'group';
     await eamActions.FillCreateGroupWithoutPermissionsForm(NewGroup);
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
   it('can see success message when edit workers in the group', async () => {
     await eamActions.ClickEditGroupButton();
     await eamActions.FillEditWorkersInTheGroupForm();
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
   it('can see success message when edit group permissions', async () => {
@@ -643,11 +599,10 @@ describe('WORKER', async () => {
     await eamActions.ClickEditGroupButton();
     await eamActions.FillEditGroupPermissionsForm();
     await eamActions.ClickSaveButton();
-    ///////CHECK/////////////
-    await eam.Success_Icon.waitForDisplayed({
+    await eam.Success_Message.waitForDisplayed({
       timeout: 3000,
     });
-    const check = await eam.Message.getText();
+    const check = await eam.Success_Message.getText();
     asserteam.strictEqual(check, eamData.SuccessGroupEdit);
   });
 });
