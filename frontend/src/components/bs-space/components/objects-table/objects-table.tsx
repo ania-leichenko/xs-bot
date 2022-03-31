@@ -4,15 +4,18 @@ import {
   useMemo,
   useAppDispatch,
   usePagination,
+  useParams,
 } from 'hooks/hooks';
-import { Table } from 'components/common/common';
+import { Table, IconButton } from 'components/common/common';
 import { getRows, getColumns } from './helpers/helpers';
-import { DataStatus, Pagination } from 'common/enums/enums';
+import { DataStatus, Pagination, IconName } from 'common/enums/enums';
 import { BSSpace as BSSpaceActions } from 'store/actions';
+import styles from './styles.module.scss';
 
 type Props = {
   spaceId: string;
   onObjectDownload: (objectId: string) => void;
+  onObjectDelete: (objectId: string) => void;
   pagination?: {
     perPage: number;
     countItems: number;
@@ -21,7 +24,11 @@ type Props = {
   };
 };
 
-const ObjectsTable: FC<Props> = ({ children, onObjectDownload, spaceId }) => {
+const ObjectsTable: FC<Props> = ({
+  onObjectDelete,
+  onObjectDownload,
+  spaceId,
+}) => {
   const dispatch = useAppDispatch();
 
   const { objects, dataStatus, countItems } = useAppSelector(({ BSSpace }) => ({
@@ -50,9 +57,42 @@ const ObjectsTable: FC<Props> = ({ children, onObjectDownload, spaceId }) => {
     from: Pagination.INITIAL_FROM_COUNT,
   });
 
-  const data = useMemo(() => getRows({ objects, onObjectDownload }), [objects]);
+  const { id } = useParams();
+
+  const handleObjectsReload = (): void => {
+    dispatch(
+      BSSpaceActions.loadObjects({
+        filter: {
+          from: 0,
+          count: 5,
+        },
+        id: id as string,
+      }),
+    );
+    objectsPagination.onReload();
+  };
+
+  const data = useMemo(
+    () => getRows({ objects, onObjectDownload, onObjectDelete }),
+    [objects],
+  );
 
   const columns = useMemo(() => getColumns(), []);
+
+  const handleObjectUpload = (evt: React.FormEvent<HTMLInputElement>): void => {
+    const [file] = evt.currentTarget.files ?? [];
+    const hasFiles = Boolean(file);
+
+    if (!hasFiles) {
+      return;
+    }
+
+    dispatch(
+      BSSpaceActions.uploadObject({ id: id as string, file: file as File }),
+    );
+
+    (evt.target as HTMLInputElement).value = '';
+  };
 
   return (
     <Table
@@ -63,7 +103,21 @@ const ObjectsTable: FC<Props> = ({ children, onObjectDownload, spaceId }) => {
       isLoading={isLoading}
       pagination={objectsPagination}
     >
-      {children}
+      <div className={styles.buttonsBlock}>
+        <IconButton
+          onClick={handleObjectsReload}
+          icon={IconName.RELOAD}
+          label="Reload"
+        />
+        <label className={styles.fileInput}>
+          Upload
+          <input
+            className={styles.hideDefaultInput}
+            type="file"
+            onChange={handleObjectUpload}
+          />
+        </label>
+      </div>
     </Table>
   );
 };

@@ -7,7 +7,7 @@ import {
 } from '~/services/services';
 import { BSObject as BSObjectEntity } from './bs-object.entity';
 import { HttpCode } from '~/common/enums/http/http';
-import { ExceptionMessage, UserRole } from '~/common/enums/enums';
+import { ExceptionMessage } from '~/common/enums/enums';
 import { BsError } from '~/exceptions/exceptions';
 import {
   UploadPayload,
@@ -51,13 +51,6 @@ class BSObject {
     id,
   }: UploadPayload): Promise<BSObjectEntity> {
     const user: TokenPayload = await this.#tokenService.decode(token);
-
-    if (user.userRole !== UserRole.WORKER) {
-      throw new BsError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_OBJECT_UPLOAD,
-      });
-    }
 
     const space = await this.#spaceService.getSpaceById(id);
 
@@ -115,13 +108,6 @@ class BSObject {
   }): Promise<GetObjectCommandOutput> {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
-    if (user.userRole !== UserRole.WORKER) {
-      throw new BsError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_OBJECT_DOWNLOAD,
-      });
-    }
-
     const space = await this.#spaceService.getSpaceById(spaceId);
 
     const worker = await this.#workerService.getUserById(space.createdBy);
@@ -172,6 +158,35 @@ class BSObject {
     const countItems = await this.#bsObjectRepository.getCount(spaceId);
 
     return { items: objects, countItems };
+  }
+
+  public async deleteObject(
+    spaceId: string,
+    objectId: string,
+    tenantId: string,
+  ): Promise<void> {
+    const object = await this.#bsObjectRepository.getByIdAndTenant(
+      objectId,
+      tenantId,
+    );
+
+    const hasObject = Boolean(object && object.spaceId == spaceId);
+
+    if (!hasObject) {
+      throw new BsError({
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.OBJECT_NOT_FOUND,
+      });
+    }
+
+    const { name } = await this.#spaceService.getSpaceById(spaceId);
+
+    await this.#s3Service.deleteObject({
+      bucket: name,
+      key: object?.name as string,
+    });
+
+    await this.#bsObjectRepository.deleteById(objectId);
   }
 }
 
