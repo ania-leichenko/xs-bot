@@ -4,24 +4,20 @@ import { IconName } from 'common/enums/enums';
 import styles from './styles.module.scss';
 
 type Props = {
-  handleBackPage: () => void;
-  handleNextPage: () => void;
+  onBackPage: () => void;
+  onNextPage: () => void;
   allPage: number;
   currentPage: number;
   countItems: number;
 };
 
 const Pagination: FC<Props> = ({
-  handleBackPage,
-  handleNextPage,
+  onBackPage,
+  onNextPage,
   allPage,
   currentPage,
   countItems,
 }) => {
-  if (countItems === 0) {
-    return null;
-  }
-
   return (
     <div className={styles.pagination}>
       <div className={styles.countItems}>
@@ -29,14 +25,14 @@ const Pagination: FC<Props> = ({
       </div>
       <div className={styles.currentPage}>
         <IconButton
-          onClick={handleBackPage}
+          onClick={onBackPage}
           icon={IconName.ARROW_LEFT}
           label="ArrowRight"
         />
         <div>{currentPage}</div>
         <div className={styles.count}>of {allPage}</div>
         <IconButton
-          onClick={handleNextPage}
+          onClick={onNextPage}
           icon={IconName.ARROW_RIGHT}
           label="ArrowRight"
         />
