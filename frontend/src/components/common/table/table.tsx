@@ -123,7 +123,7 @@ const Table: FC<Props> = ({
             </tbody>
           </table>
         )}
-        {hasPlaceholder && (
+        {hasPlaceholder && !isLoading && (
           <div className={styles.placeholder}>{placeholder}</div>
         )}
       </div>
