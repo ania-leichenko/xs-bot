@@ -51,9 +51,9 @@ const Table: FC<Props> = ({
     );
 
   const hasStrPlaceholder = Boolean(placeholder);
-  const hasData = data.length !== 0;
+  const hasData = Boolean(data.length);
   const hasPlaceholder = hasStrPlaceholder && !hasData;
-  const hasCountItems = pagination?.countItems !== 0;
+  const hasCountItems = Boolean(pagination?.countItems);
 
   return (
     <div
