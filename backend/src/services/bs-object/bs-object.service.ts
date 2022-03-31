@@ -65,6 +65,16 @@ class BSObject {
         message: ExceptionMessage.OBJECT_NOT_UPLOADED,
       });
     }
+
+    const re = /^[a-z]{3,20}.[a-z]+/;
+
+    if (!re.test(file.originalname)) {
+      throw new BsError({
+        status: HttpCode.BAD_REQUEST,
+        message: ExceptionMessage.OBJECT_NAME_RULE,
+      });
+    }
+
     const { ETag: awsObjectKey } = await this.#s3Service.uploadObject({
       spaceName: space.name,
       file: file.buffer as Buffer,
