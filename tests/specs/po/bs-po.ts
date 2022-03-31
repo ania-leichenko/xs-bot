@@ -43,6 +43,10 @@ class BS {
     get Message (): ReturnType<typeof $> {
         return $('div[class="rrt-text"]')
     }
+    
+    get TableCell (): ReturnType<typeof $> {
+        return $('tr>td[role="cell"]')
+    }
 
 }
 

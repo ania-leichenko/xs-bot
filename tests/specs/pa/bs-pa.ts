@@ -21,7 +21,7 @@ class BSActions {
     async UploadFile() {
 
         await bs.Bucket_Link.click();
-        const remoteFilePath = await browser.uploadFile('../tests/specs/test-files/Logo.svg');
+        const remoteFilePath = await browser.uploadFile('../tests/specs/dashboard/dashboard.ts');
         await bs.File_Input.setValue(remoteFilePath);
         await bs.Reload_Button.waitForClickable({
           timeout: 2000,
@@ -45,49 +45,27 @@ class BSActions {
     }
 
     async CheckFileExist() {
-        await $('tr>td[class="styles_tableCell__C6dnh"]').waitForExist({
+        await bs.TableCell.waitForExist({
             timeout: 2000,
           });
-        let tableCell = await $('tr>td[class="styles_tableCell__C6dnh"]');
-        let tableCellValue = await tableCell.getText();
-        let fileCreated;
-        if (bsData.FileName == tableCellValue){
-           fileCreated = true;
-        }
-        else{
-           fileCreated = false;
-        }
+        let tableCellValue = await bs.TableCell.getText();
+        let fileCreated = bsData.FileName == tableCellValue;
         assert.equal(fileCreated,true);
     }
 
     async CheckFileDeleting() {
-        let tableCell = await $('tr>td[class="styles_tableCell__C6dnh"]');
-        let fileCreated;
-        if (await tableCell.isExisting() == true){
-           let tableCellValue = await tableCell.getText();
-           if (bsData.FileName == tableCellValue){
-              fileCreated = true;
-           }
-           else{
-              fileCreated = false;
-           }
-        }
-        else{
-           fileCreated = false;
-        }
+      let tableCellValue;
+      if (await bs.TableCell.isExisting() == true){
+         tableCellValue = await bs.TableCell.getText();
+      };
+        let fileCreated = (await bs.TableCell.isExisting() == true)&&(bsData.FileName == tableCellValue);
         assert.equal(fileCreated,false);
       }
 
     async CheckBucketExist() {
-      let tableCell = await $('tr>td[class="styles_tableCell__C6dnh"]');
+      let tableCell = await bs.TableCell;
       let tableCellValue = await tableCell.getText();
-      let bucketCreated;
-      if (bsData.SpaceName == tableCellValue){
-         bucketCreated = true;
-      }
-      else{
-         bucketCreated = false;
-      }
+      let bucketCreated = bsData.SpaceName == tableCellValue;
       assert.equal(bucketCreated,true);
     }
 
@@ -99,20 +77,11 @@ class BSActions {
     }
 
     async CheckBucketDelete() {
-      let tableCell = await $('tr>td[class="styles_tableCell__C6dnh"]');
-      let bucketCreated;
-      if (await tableCell.isExisting() == true){
-         let tableCellValue = await tableCell.getText();
-         if (bsData.SpaceName == tableCellValue){
-            bucketCreated = true;
-         }
-         else{
-            bucketCreated = false;
-         }
-      }
-      else{
-         bucketCreated = false;
-      }
+      let tableCellValue;
+      if (await bs.TableCell.isExisting() == true){
+         tableCellValue = await bs.TableCell.getText();
+      };
+      let bucketCreated = (await bs.TableCell.isExisting() == true)&&(bsData.FileName == tableCellValue);
       assert.equal(bucketCreated,false);
     }
 

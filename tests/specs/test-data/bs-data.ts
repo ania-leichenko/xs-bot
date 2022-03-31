@@ -1,6 +1,6 @@
 const bsData = {
     SpaceName: "superbucketx",
-    FileName: "Logo.svg",
+    FileName: "dashboard.ts",
     SuccessCreated: "Space has been successfully created",
     SuccessDeleted: "Space has been successfully deleted",
 };
