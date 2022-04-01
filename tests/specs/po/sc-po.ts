@@ -47,6 +47,18 @@ class SC {
     get TableCell (): ReturnType<typeof $> {
         return $('tr>td[role="cell"]');
     }
+
+    get SuccessIcon (): ReturnType<typeof $> {
+        return $('div[class="notification_check__FUZIb"]')
+    }
+
+    get Message (): ReturnType<typeof $> {
+        return $('div[class="rrt-text"]')
+    }
+
+    get EditIcon (): ReturnType<typeof $> {
+        return $('img[alt="Edit"]')
+    }
 }
 
 export { SC };
