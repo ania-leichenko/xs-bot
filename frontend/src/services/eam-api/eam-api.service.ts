@@ -12,8 +12,11 @@ import {
   EAMGroupGetByTenantRequestParamsDto,
   EAMGroupGetByTenantResponseDto,
   EAMPermissionGetAllResponseDto,
+  EamGroupGetByIdResponseDto,
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
+  EAMWorkerCreateRequestDto,
+  EAMWorkerCreateResponseDto,
 } from 'common/types/types';
 import { joinItems } from 'helpers/helpers';
 import { Http } from 'services/http/http.service';
@@ -62,6 +65,43 @@ class EAMApi {
     );
   }
 
+  public updateGroup(
+    id: string,
+    payload: EAMGroupCreateRequestDto,
+  ): Promise<EAMGroupCreateResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUPS,
+        GroupsApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.PUT,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
+      },
+    );
+  }
+
+  public getGroupById(params: {
+    id: string;
+  }): Promise<EamGroupGetByIdResponseDto> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.GROUPS,
+        GroupsApiPath.ROOT,
+        params.id,
+      ),
+      {
+        method: HttpMethod.GET,
+      },
+    );
+  }
+
   public deleteGroup(id: string): Promise<boolean> {
     return this.#http.load(
       joinItems(
@@ -69,6 +109,21 @@ class EAMApi {
         ApiPath.EAM,
         EAMApiPath.GROUPS,
         GroupsApiPath.ROOT,
+        id,
+      ),
+      {
+        method: HttpMethod.DELETE,
+      },
+    );
+  }
+
+  public deleteWorker(id: string): Promise<boolean> {
+    return this.#http.load(
+      joinItems(
+        this.#apiPrefix,
+        ApiPath.EAM,
+        EAMApiPath.WORKERS,
+        WorkersApiPath.ROOT,
         id,
       ),
       {
@@ -93,11 +148,25 @@ class EAMApi {
       },
     );
   }
+
   public getAllPermission(): Promise<EAMPermissionGetAllResponseDto> {
     return this.#http.load(
       joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.PERMISSION),
       {
         method: HttpMethod.GET,
+      },
+    );
+  }
+
+  public createWorker(
+    payload: EAMWorkerCreateRequestDto,
+  ): Promise<EAMWorkerCreateResponseDto> {
+    return this.#http.load(
+      joinItems(this.#apiPrefix, ApiPath.EAM, EAMApiPath.WORKERS),
+      {
+        method: HttpMethod.POST,
+        contentType: ContentType.JSON,
+        payload: JSON.stringify(payload),
       },
     );
   }

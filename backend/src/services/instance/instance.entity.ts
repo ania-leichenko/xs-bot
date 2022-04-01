@@ -1,5 +1,6 @@
 import { getRandomId } from '~/helpers/helpers';
 import { InstanceState } from '~/common/enums/enums';
+import { OperationSystem } from '~/common/types/types';
 
 class Instance {
   public id: string;
@@ -13,6 +14,7 @@ class Instance {
   public awsInstanceId: string;
   public tenantId: string;
   public state: InstanceState;
+  public operationSystem: OperationSystem;
 
   private constructor({
     id,
@@ -26,6 +28,7 @@ class Instance {
     awsInstanceId,
     tenantId,
     state,
+    operationSystem,
   }: {
     id: string;
     name: string;
@@ -38,6 +41,7 @@ class Instance {
     awsInstanceId: string;
     tenantId: string;
     state: InstanceState;
+    operationSystem: OperationSystem;
   }) {
     this.id = id;
     this.name = name;
@@ -50,6 +54,7 @@ class Instance {
     this.awsInstanceId = awsInstanceId;
     this.tenantId = tenantId;
     this.state = state;
+    this.operationSystem = operationSystem;
   }
 
   public static initialize({
@@ -64,6 +69,7 @@ class Instance {
     awsInstanceId,
     tenantId,
     state,
+    operationSystem,
   }: {
     id: string;
     name: string;
@@ -76,6 +82,7 @@ class Instance {
     awsInstanceId: string;
     tenantId: string;
     state: InstanceState;
+    operationSystem: OperationSystem;
   }): Instance {
     return new Instance({
       id,
@@ -89,6 +96,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state,
+      operationSystem,
     });
   }
 
@@ -100,6 +108,7 @@ class Instance {
     createdBy,
     awsInstanceId,
     tenantId,
+    operationSystem,
   }: {
     name: string;
     keyPairId: string;
@@ -108,6 +117,7 @@ class Instance {
     createdBy: string;
     awsInstanceId: string;
     tenantId: string;
+    operationSystem: OperationSystem;
   }): Instance {
     return new Instance({
       id: getRandomId(),
@@ -121,6 +131,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state: InstanceState.CREATING,
+      operationSystem,
     });
   }
 }

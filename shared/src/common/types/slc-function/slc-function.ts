@@ -11,4 +11,5 @@ export { type SLCFunctionUpdateParamsDto } from './slc-function-update-params-dt
 export { type SLCFunctionUpdateRequestDto } from './slc-function-update-request-dto.type';
 export { type SLCFunctionUpdateResponseDto } from './slc-function-update-response-dto.type';
 export { type SLCFunctionRunParamsDto } from './slc-function-run-params-dto.type';
+export { type SLCFunctionRunRequestDto } from './slc-function-run-request-dto.type';
 export { type SLCFunctionRunResponseDto } from './slc-function-run-response-dto.type';

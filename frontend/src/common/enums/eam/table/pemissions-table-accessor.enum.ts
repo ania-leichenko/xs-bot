@@ -1,7 +1,8 @@
 enum PermissionsTableAccessor {
   ID = 'id',
   PERMISSION_NAME = 'name',
-  CREATION_TIME = 'createdAt',
+  CREATED_AT = 'createdAt',
+  ACTION = 'action',
 }
 
 export { PermissionsTableAccessor };

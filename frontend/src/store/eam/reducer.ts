@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DataStatus } from 'common/enums/enums';
-import { deleteGroup, loadWorkers, loadGroups } from './actions';
+import { DataStatus, Pagination } from 'common/enums/enums';
+import { deleteGroup, loadWorkers, loadGroups, deleteWorker } from './actions';
 import { logOut } from 'store/auth/actions';
 import {
   EAMGroupGetByTenantResponseItemDto,
@@ -11,36 +11,44 @@ type State = {
   dataStatus: DataStatus;
   workers: EAMWorkerGetAllItemResponseDto[];
   groupsDataStatus: DataStatus;
+  workersDataStatus: DataStatus;
   groups: EAMGroupGetByTenantResponseItemDto[];
+  workersCountAll: number;
+  groupsCountAll: number;
 };
 
 const initialState: State = {
   dataStatus: DataStatus.IDLE,
   groupsDataStatus: DataStatus.IDLE,
+  workersDataStatus: DataStatus.IDLE,
   groups: [],
   workers: [],
+  workersCountAll: 0,
+  groupsCountAll: 0,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder.addCase(loadWorkers.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.workersDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadWorkers.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.workersDataStatus = DataStatus.FULFILLED;
     state.workers = action.payload.items;
+    state.workersCountAll = action.payload.countItems;
   });
   builder.addCase(loadWorkers.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.workersDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(loadGroups.pending, (state) => {
-    state.dataStatus = DataStatus.PENDING;
+    state.groupsDataStatus = DataStatus.PENDING;
   });
   builder.addCase(loadGroups.fulfilled, (state, action) => {
-    state.dataStatus = DataStatus.FULFILLED;
+    state.groupsDataStatus = DataStatus.FULFILLED;
     state.groups = action.payload.items;
+    state.groupsCountAll = action.payload.countItems;
   });
   builder.addCase(loadGroups.rejected, (state) => {
-    state.dataStatus = DataStatus.REJECTED;
+    state.groupsDataStatus = DataStatus.REJECTED;
   });
   builder.addCase(deleteGroup.pending, (state) => {
     state.dataStatus = DataStatus.PENDING;
@@ -48,8 +56,21 @@ const reducer = createReducer(initialState, (builder) => {
   builder.addCase(deleteGroup.fulfilled, (state, action) => {
     state.dataStatus = DataStatus.FULFILLED;
     state.groups = state.groups.filter((group) => group.id !== action.payload);
+    state.groupsCountAll = state.groupsCountAll - Pagination.INCREMENT;
   });
   builder.addCase(deleteGroup.rejected, (state) => {
+    state.dataStatus = DataStatus.REJECTED;
+  });
+  builder.addCase(deleteWorker.pending, (state) => {
+    state.dataStatus = DataStatus.PENDING;
+  });
+  builder.addCase(deleteWorker.fulfilled, (state, action) => {
+    state.dataStatus = DataStatus.FULFILLED;
+    state.workers = state.workers.filter(
+      (worker) => worker.id !== action.payload,
+    );
+  });
+  builder.addCase(deleteWorker.rejected, (state) => {
     state.dataStatus = DataStatus.REJECTED;
   });
   builder.addCase(logOut.fulfilled, (state) => {

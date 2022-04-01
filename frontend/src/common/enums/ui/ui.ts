@@ -5,3 +5,5 @@ export { ButtonColor } from './button-color.enum';
 export { IconName } from './icon-name.enum';
 export { ChipStyle } from './chip-style.enum';
 export { ChipColor } from './chip-color.enum';
+export { EditorColor } from './editor-color.enum';
+export { EditorLang } from './editor-lang.enum';

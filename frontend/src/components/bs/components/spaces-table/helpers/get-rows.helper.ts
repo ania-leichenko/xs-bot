@@ -1,10 +1,9 @@
 import { SpacesTableAccessor } from 'common/enums/enums';
 import { BSSpaceGetResponseItemDto } from 'common/types/types';
-import { ActionCell } from '../components/components';
-import { getDistanceToDateNow } from 'helpers/helpers';
+import { ActionCell, BsSpaceLink } from '../components/components';
 
 type Row = {
-  [SpacesTableAccessor.SPACE_NAME]: string;
+  [SpacesTableAccessor.SPACE_NAME]: JSX.Element;
   [SpacesTableAccessor.CREATED_AT]: string;
   [SpacesTableAccessor.ACTIONS]: JSX.Element;
 };
@@ -20,10 +19,8 @@ const getRows = ({
     const { name, createdAt, id } = item;
 
     return {
-      [SpacesTableAccessor.SPACE_NAME]: name,
-      [SpacesTableAccessor.CREATED_AT]: getDistanceToDateNow(
-        new Date(createdAt),
-      ),
+      [SpacesTableAccessor.SPACE_NAME]: BsSpaceLink(name, id),
+      [SpacesTableAccessor.CREATED_AT]: createdAt,
       [SpacesTableAccessor.ACTIONS]: ActionCell(id, onSpaceDelete),
     };
   });

@@ -6,7 +6,7 @@ import {
   BSSpaceGetResponseDto,
   TokenPayload,
 } from '~/common/types/types';
-import { ExceptionMessage, HttpCode, UserRole } from '~/common/enums/enums';
+import { ExceptionMessage, HttpCode } from '~/common/enums/enums';
 import { s3 as s3Serv, token as tokenServ } from '~/services/services';
 import { BsError } from '~/exceptions/exceptions';
 
@@ -45,8 +45,8 @@ class Space {
     };
 
     const spaces = await this.#spaceRepository.getByTenantId(filter);
-
-    return { items: spaces };
+    const countItems = await this.#spaceRepository.getCount(filter);
+    return { items: spaces, countItems };
   }
 
   public async create({
@@ -58,13 +58,6 @@ class Space {
   }): Promise<BSSpaceCreateResponseDto> {
     const user: TokenPayload = await this.#tokenService.decode(token);
 
-    if (user.userRole !== UserRole.WORKER) {
-      throw new BsError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_SPACE_CREATE,
-      });
-    }
-
     await this.#s3Service.creteBucket(name);
 
     const space = SpaceEntity.createNew({ name, createdBy: user.userId });
@@ -72,22 +65,7 @@ class Space {
     return this.#spaceRepository.create(space);
   }
 
-  public async delete({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const user: TokenPayload = await this.#tokenService.decode(token);
-
-    if (user.userRole !== UserRole.WORKER) {
-      throw new BsError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_SPACE_DELETE,
-      });
-    }
-
+  public async delete(id: string): Promise<void> {
     const space = await this.#spaceRepository.getSpaceById(id);
 
     if (!space) {

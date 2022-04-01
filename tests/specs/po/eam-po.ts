@@ -2,48 +2,53 @@ class EAM {
   get Name_Field(): ReturnType<typeof $> {
     return $('input[name="name"]');
   }
-
   get Save_Button(): ReturnType<typeof $> {
     return $('button[type="submit"]');
   }
-
   get AddWorker_Button(): ReturnType<typeof $> {
     return $('a[href="/eam/create-worker"]');
   }
-
   get AddGroup_Button(): ReturnType<typeof $> {
     return $('a[href="/eam/configurate-group"]');
   }
-
-  get Logo(): ReturnType<typeof $> {
-    return $('img[alt="logo"]');
-  }
-
   get Groups(): ReturnType<typeof $$> {
-    return $$('.checkbox_span__Kuugs');
+    return $$('input[type="checkbox"] + span');
   }
-
+  get Workers(): ReturnType<typeof $$> {
+    return $$('input[type="checkbox"] + span');
+  }
   get SaveCSV_Button(): ReturnType<typeof $> {
-    return $('.styles_saveBtn__jQ6gL');
+    return $('div[data-testid="save-csv-btn"] button');
   }
-
+  get DeleteWorker_Button(): ReturnType<typeof $> {
+    return $('img[alt="Delete"]');
+  }
+  get DeleteConfirm_Popup(): ReturnType<typeof $> {
+    return $('div[data-testid="del-popup"]');
+  }
+  get DeleteConfirm_Button(): ReturnType<typeof $$> {
+    return $$('div[data-testid="del-popup"] button');
+  }
   get LastWorker(): ReturnType<typeof $$> {
-    return $$('.styles_tableCell__C6dnh');
+    return $$('td[role="cell"]');
   }
-
   get Permissions(): ReturnType<typeof $$> {
-    return $$('.styles_inputGroups__bgqt2 li:last-child .checkbox_span__Kuugs');
+    return $$('form ul li:last-child input[type="checkbox"] + span');
   }
   get LastGroup(): ReturnType<typeof $$> {
-    return $$('div[data-testid="eam-group-table"] .styles_tableCell__C6dnh');
+    return $$('div[data-testid="eam-group-table"] td[role="cell"]');
   }
-
-  get ReloadGroup_Button(): ReturnType<typeof $> {
-    return $('div[data-testid="eam-group-table"] img[alt="Reload"]');
-  }
-
   get DeleteGroup_Button(): ReturnType<typeof $> {
     return $('div[data-testid="eam-group-table"] img[alt="Delete"]');
+  }
+  get EditGroup_Button(): ReturnType<typeof $> {
+    return $('div[data-testid="eam-group-table"] img[alt="Edit"]');
+  }
+  get Success_Message(): ReturnType<typeof $> {
+    return $('.rrt-success .rrt-text');
+  }
+  get Error_Message(): ReturnType<typeof $> {
+    return $('.rrt-error .rrt-text');
   }
 }
 
