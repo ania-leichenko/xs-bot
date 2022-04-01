@@ -1,13 +1,17 @@
-import { FastifyPluginAsync, FastifyRequest } from 'fastify';
+import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 import {
   space as spaceServ,
   bsObject as bsObjectServ,
+  token as tokenServ,
 } from '~/services/services';
 import {
   HttpCode,
   HttpMethod,
   BSApiPath,
   SpacesApiPath,
+  Permission,
+  UserRole,
+  FormDataCommonKey,
 } from '~/common/enums/enums';
 import {
   BSSpaceCreateRequestDto,
@@ -15,24 +19,40 @@ import {
   BSSpaceGetRequestParamsDto,
   BSObjectDownloadParamsDto,
   BSObjectUploadParamsDto,
+  BSObjectGetRequestParamsDto,
+  BSObjectDeleteParamsDto,
+  TokenPayload,
 } from '~/common/types/types';
 import { FastifyRouteSchemaDef } from 'fastify/types/schema';
 import { bsSpaceCreate as bsSpaceCreateValidationSchema } from '~/validation-schemas/validation-schemas';
-import { upload } from '~/middlewares/middlewares';
+import {
+  upload as uploadHook,
+  checkHasPermissions as checkHasPermissionsHook,
+  checkHasRole as checkHasRoleHook,
+} from '~/hooks/hooks';
 
 type Options = {
   services: {
     space: typeof spaceServ;
     bsObject: typeof bsObjectServ;
+    token: typeof tokenServ;
   };
 };
 
 const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { space: spaceService, bsObject: bsObjectService } = opts.services;
+  const {
+    space: spaceService,
+    bsObject: bsObjectService,
+    token: tokenService,
+  } = opts.services;
 
   fastify.route({
     method: HttpMethod.POST,
     url: BSApiPath.SPACES,
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     schema: {
       body: bsSpaceCreateValidationSchema,
     },
@@ -45,14 +65,15 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         return schema.validate(data);
       };
     },
-    async handler(req: FastifyRequest<{ Body: BSSpaceCreateRequestDto }>, rep) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
+    async handler(
+      req: FastifyRequest<{ Body: BSSpaceCreateRequestDto }>,
+      rep: FastifyReply,
+    ) {
       return rep
         .send(
           await spaceService.create({
             name: req.body.name,
-            token,
+            token: req.userData?.token as string,
           }),
         )
         .status(HttpCode.CREATED);
@@ -62,15 +83,14 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.GET,
     url: BSApiPath.SPACES,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
     async handler(
       req: FastifyRequest<{ Querystring: BSSpaceGetRequestParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-
       const spaces = await spaceService.getSpacesByTenant({
         query: req.query,
-        token,
+        token: req.userData?.token as string,
       });
 
       return rep.send(spaces).status(HttpCode.OK);
@@ -80,17 +100,15 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: HttpMethod.DELETE,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID}`,
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(
       req: FastifyRequest<{ Params: BSSpaceDeleteParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
-      const { id } = req.params;
-
-      await spaceService.delete({
-        id,
-        token,
-      });
+      await spaceService.delete(req.params.id);
 
       return rep.send(true).status(HttpCode.OK);
     },
@@ -102,19 +120,28 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.POST,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
-    preHandler: upload.single('file'),
+    preHandler: [
+      uploadHook.single(FormDataCommonKey.FILE),
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
+    async onError(req, rep, err) {
+      if (err) {
+        return rep.status(HttpCode.BAD_REQUEST);
+      }
+    },
     async handler(
       req: FastifyRequest<{ Params: BSObjectUploadParamsDto }>,
-      rep,
+      rep: FastifyReply,
     ) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { id } = req.params;
 
       await bsObjectService.upload({
-        token,
+        token: req.userData?.token as string,
         file: req.file,
         id,
       });
+
       return rep.send(true).status(HttpCode.OK);
     },
   });
@@ -124,17 +151,63 @@ const initBsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   }>({
     method: HttpMethod.GET,
     url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
     async handler(req, rep) {
-      const [, token] = req.headers?.authorization?.split(' ') ?? [];
       const { spaceId, objectId } = req.params;
 
       const object = await bsObjectService.download({
-        token,
+        token: req.userData?.token as string,
         spaceId,
         objectId,
       });
 
       return rep.send(object).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.GET,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$ID_OBJECTS}`,
+    preHandler: checkHasPermissionsHook(Permission.MANAGE_BS),
+    async handler(
+      req: FastifyRequest<{
+        Querystring: BSObjectGetRequestParamsDto;
+        Params: { id: string };
+      }>,
+      rep: FastifyReply,
+    ) {
+      const objects = await bsObjectService.getObjects({
+        spaceId: req.params.id,
+        from: req.query.from,
+        count: req.query.count,
+        token: req.userData?.token as string,
+      });
+
+      return rep.send(objects).status(HttpCode.OK);
+    },
+  });
+
+  fastify.route({
+    method: HttpMethod.DELETE,
+    url: `${BSApiPath.SPACES}${SpacesApiPath.$SPACEID_OBJECTS_$OBJECTID}`,
+    preHandler: [
+      checkHasPermissionsHook(Permission.MANAGE_BS),
+      checkHasRoleHook(UserRole.WORKER),
+    ],
+    async handler(
+      req: FastifyRequest<{ Params: BSObjectDeleteParamsDto }>,
+      rep: FastifyReply,
+    ) {
+      const { spaceId, objectId } = req.params;
+      const token = req.userData?.token as string;
+      const { tenantId } = tokenService.decode<TokenPayload>(token);
+
+      await bsObjectService.deleteObject(spaceId, objectId, tenantId);
+
+      return rep.send(true).status(HttpCode.OK);
     },
   });
 };

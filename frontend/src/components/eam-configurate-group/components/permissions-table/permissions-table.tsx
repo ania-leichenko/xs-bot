@@ -9,6 +9,7 @@ type Props = {
   handleRemovePermissionId: (id: string) => void;
   handleIsCheckedPermissionId: (id: string) => boolean;
   selectedPermissions: string[];
+  hasGroup: boolean;
 };
 
 const PermissionsTable: FC<Props> = ({
@@ -16,25 +17,29 @@ const PermissionsTable: FC<Props> = ({
   handleAddPermissionId,
   handleRemovePermissionId,
   handleIsCheckedPermissionId,
+  hasGroup,
 }) => {
   const { permissions } = useAppSelector(({ EAMGroupConfigurate }) => ({
     permissions: EAMGroupConfigurate.permissions,
   }));
 
-  const data = useMemo(() => getRows(permissions), [permissions]);
-
-  const columns = useMemo(
+  const data = useMemo(
     () =>
-      getColumns(
+      getRows(
+        permissions,
         handleAddPermissionId,
         handleRemovePermissionId,
         handleIsCheckedPermissionId,
       ),
-    [selectedPermissions],
+    [permissions, selectedPermissions],
   );
+
+  const columns = useMemo(() => getColumns(), []);
   return (
     <div className={styles.wrapper}>
-      <h3 className={styles.groupTitle}>Attach permissions policies</h3>
+      <h3 className={styles.groupTitle}>
+        {hasGroup ? 'Edit' : 'Attach'} permissions policies
+      </h3>
       <Table
         className={styles.table}
         columns={columns}

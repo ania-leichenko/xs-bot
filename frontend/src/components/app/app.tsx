@@ -22,6 +22,7 @@ import { EAMConfigurateWorker } from 'components/eam-configurate-worker/eam-conf
 import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
 import { NotFound } from 'components/not-found-page/not-found-page';
 import { BS } from 'components/bs/bs';
+import { BSSpace } from 'components/bs-space/bs-space';
 import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
 import { SC } from 'components/sc/sc';
 import { SCConfigurateInstance } from 'components/sc-configurate-instance/sc-configurate-instance';
@@ -64,10 +65,6 @@ const App: FC = () => {
           element={<AuthorizedRoute component={<Dashboard />} />}
         />
         <Route
-          path={AppRoute.EAM_CONFIGURATE_GROUP}
-          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
-        />
-        <Route
           path={AppRoute.EAM}
           element={
             <AuthorizedRoute
@@ -79,6 +76,14 @@ const App: FC = () => {
         <Route
           path={AppRoute.EAM_CREATE_WORKER}
           element={<AuthorizedRoute component={<EAMConfigurateWorker />} />}
+        />
+        <Route
+          path={AppRoute.EAM_CONFIGURATE_GROUP}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
+        />
+        <Route
+          path={AppRoute.EAM_CONFIGURATE_GROUP_$ID}
+          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
         />
         <Route
           path={AppRoute.BS}
@@ -93,6 +98,25 @@ const App: FC = () => {
           path={AppRoute.BS_CREATE_SPACE}
           element={<AuthorizedRoute component={<BSCreateSpace />} />}
         />
+        <Route
+          path={AppRoute.BS_SPACE}
+          element={
+            <AuthorizedRoute
+              component={<BSSpace />}
+              permissions={[Permission.MANAGE_BS]}
+            />
+          }
+        >
+          <Route
+            path={AppRoute.$ID}
+            element={
+              <AuthorizedRoute
+                component={<BSSpace />}
+                permissions={[Permission.MANAGE_BS]}
+              />
+            }
+          />
+        </Route>
         <Route
           path={AppRoute.SC}
           element={

@@ -19,12 +19,17 @@ const useSelectedItems = <T>(items: T[]): UseSelectedItemsHook<T> => {
     setSelectedItems([]);
   };
 
+  const handleReset = (newItems: T[]): void => {
+    setSelectedItems(newItems);
+  };
+
   return {
     selectedItems,
     handleAdd,
     handleRemove,
     handleCheck,
     handleRemoveAll,
+    handleReset,
   };
 };
 

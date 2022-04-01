@@ -48,26 +48,28 @@ const Tenant: FC = () => {
 
   return (
     <div>
-      <h3 className={styles.title}>Change Tenant Name</h3>
       <form
         className={styles.wrapper}
         onSubmit={handleSubmit(handleFormSubmit)}
       >
         <div className={styles.wrapperInput}>
-          <Input
-            type={InputType.TEXT}
-            label=""
-            placeholder=""
-            name={getNameOf<EAMTenantFormDto>('name')}
-            control={control}
-            errors={errors}
-          />
+          <h3 className={styles.title}>Change Tenant Name</h3>
+          <div className={styles.blockInput}>
+            <Input
+              type={InputType.TEXT}
+              label=""
+              placeholder=""
+              name={getNameOf<EAMTenantFormDto>('name')}
+              control={control}
+              errors={errors}
+            />
+            <Button
+              type={ButtonType.SUBMIT}
+              label="Save"
+              className={styles.button}
+            />
+          </div>
         </div>
-        <Button
-          type={ButtonType.SUBMIT}
-          label="Save"
-          className={styles.button}
-        />
       </form>
     </div>
   );

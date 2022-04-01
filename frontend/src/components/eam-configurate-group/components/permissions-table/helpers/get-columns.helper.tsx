@@ -2,34 +2,36 @@ import {
   PermissionsTableAccessor,
   PermissionsTableHeader,
 } from 'common/enums/enums';
-import { Column } from 'react-table';
-import { SelectRowCell } from '../../../helpers/helpers';
+import { Column, Row } from 'react-table';
+import { sortCallback, getDateDecoratedWithAgo } from 'helpers/helpers';
 
-const getColumns = (
-  handleAddId: (id: string) => void,
-  handleRemoveId: (id: string) => void,
-  handleIsCheckedId: (id: string) => boolean,
-): Column[] => {
+const getColumns = (): Column[] => {
   return [
     {
       Header: '',
-      accessor: 'check',
-      Cell: ({ row }): JSX.Element =>
-        SelectRowCell(row, handleAddId, handleRemoveId, handleIsCheckedId),
-      minWidth: 30,
-      width: 50,
+      accessor: PermissionsTableAccessor.ACTION,
+      minWidth: 55,
+      width: 55,
+      sortType: 'basic',
     },
     {
       Header: PermissionsTableHeader.PERMISSIONS_NAME,
       accessor: PermissionsTableAccessor.PERMISSION_NAME,
       minWidth: 140,
       width: 300,
+      sortType: 'basic',
     },
     {
       Header: PermissionsTableHeader.CREATION_TIME,
-      accessor: PermissionsTableAccessor.CREATION_TIME,
+      accessor: PermissionsTableAccessor.CREATED_AT,
       minWidth: 120,
       width: 300,
+      sortType: (rowA: Row, rowB: Row, id: string): number => {
+        return sortCallback(rowA.values[id], rowB.values[id]);
+      },
+      Cell: ({ value }): string => {
+        return getDateDecoratedWithAgo(new Date(value));
+      },
     },
   ];
 };

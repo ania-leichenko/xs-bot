@@ -2,7 +2,7 @@ enum GroupsTableHeader {
   GROUP_NAME = 'Group name',
   WORKERS = 'Workers',
   PERMISSIONS = 'Permissions',
-  CREATION_TIME = 'Created',
+  CREATED_AT = 'Created',
   ACTIONS = 'Actions',
 }
 

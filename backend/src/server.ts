@@ -6,9 +6,10 @@ import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
 import cors from 'fastify-cors';
 import { backgroundJob } from '~/services/services';
-import { upload } from './middlewares/middlewares';
+import { upload as uploadHook } from './hooks/hooks';
 
 const app = Fastify({
+  bodyLimit: 6 * 1024 * 1024,
   logger: {
     prettyPrint: true,
   },
@@ -20,7 +21,7 @@ app.register(cors, {
   origin: ENV.APP.FRONTEND_URL,
 });
 
-app.register(upload.contentParser);
+app.register(uploadHook.contentParser);
 
 app.register(initApi, {
   prefix: ENV.API.V1_PREFIX,

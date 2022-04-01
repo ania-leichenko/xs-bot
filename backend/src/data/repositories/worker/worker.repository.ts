@@ -46,7 +46,7 @@ class Worker {
   ): Promise<EAMWorkerGetAllItemResponseDto[]> {
     const { from: offset, count: limit, tenantId } = param;
 
-    const workers = await this.#WorkerModel
+    return this.#WorkerModel
       .query()
       .select('id', 'name', 'createdAt')
       .where({ tenantId })
@@ -54,11 +54,21 @@ class Worker {
       .orderBy('createdAt', 'desc')
       .offset(offset)
       .limit(limit);
-
-    return workers;
   }
 
-  public async deleteWorker(workerId: string): Promise<number> {
+  public getCount(
+    param: EAMWorkerGetByTenantRequestParamsDto,
+  ): Promise<number> {
+    const { tenantId } = param;
+
+    return this.#WorkerModel
+      .query()
+      .select('id')
+      .where({ tenantId })
+      .resultSize();
+  }
+
+  public async delete(workerId: string): Promise<number> {
     await this.#UsersGroupsModel.query().where({ 'userId': workerId }).delete();
     return this.#WorkerModel.query().deleteById(workerId);
   }

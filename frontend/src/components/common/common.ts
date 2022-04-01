@@ -16,3 +16,5 @@ export { Loader } from './loader/loader';
 export { IconButton } from './icon-button/icon-button';
 export { Editor } from './editor/editor';
 export { Chip } from './chip/chip';
+export { Modal } from './modal/modal';
+export { ConfirmDeletePopup } from './confirm-delete-popup/confirm-delete-popup';
