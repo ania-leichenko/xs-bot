@@ -6,6 +6,7 @@ import { bsData } from '../test-data/bs-data';
 const bs = new BS();
 
 class BSActions {
+
   async CreateBucket(): Promise<void> {
     await bs.AddSpace_Button.click();
     await bs.SpaceName_Field.setValue(bsData.SpaceName);
