@@ -27,7 +27,7 @@ const SLCPopup: FC<Props> = ({ isOpen, onRun, onClose }) => {
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} data-testid="func-arg-wrap">
         <h4 className={styles.title}>{'Pass function arguments'}</h4>
         <Editor
           value={value}
