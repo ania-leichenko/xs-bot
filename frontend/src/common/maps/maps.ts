@@ -1,1 +1,5 @@
-export { iconNameToSrc } from './ui/ui';
+export {
+  iconNameToSrc,
+  instanceStateToChipColor,
+  langNameToLangExtension,
+} from './ui/ui';

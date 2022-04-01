@@ -1,7 +1,6 @@
 import { Instance as InstanceM } from '~/data/models/models';
 import { Instance as InstanceEntity } from '~/services/instance/instance.entity';
 import { SCInstanceGetByTenantRequestParamsDto } from '~/common/types/types';
-import { InstanceState } from '~/common/enums/enums';
 
 type Constructor = {
   InstanceModel: typeof InstanceM;
@@ -14,15 +13,11 @@ class Instance {
     this.#InstanceModel = InstanceModel;
   }
 
-  public async updateById(
-    id: string,
-    data: {
-      name?: string;
-      state?: InstanceState;
-      hostname?: string;
-    },
-  ): Promise<InstanceEntity> {
-    return this.#InstanceModel.query().patchAndFetchById(id, data);
+  public async updateById(instance: InstanceEntity): Promise<InstanceEntity> {
+    return this.#InstanceModel
+      .query()
+      .withGraphFetched('[operationSystem]')
+      .patchAndFetchById(instance.id, instance);
   }
 
   public async delete(id: string): Promise<number> {
@@ -60,22 +55,29 @@ class Instance {
     tenantId: string;
   }): Promise<InstanceEntity[]> {
     const { from: offset, count: limit } = filter;
-    const instances = await this.#InstanceModel
+    return this.#InstanceModel
       .query()
       .select()
       .where({ tenantId })
+      .withGraphFetched('[operationSystem]')
       .orderBy('createdAt', 'desc')
       .offset(offset)
       .limit(limit);
+  }
 
-    return instances.map(Instance.modelToEntity);
+  public getCount(tenantId: string): Promise<number> {
+    return this.#InstanceModel
+      .query()
+      .select()
+      .where({ tenantId })
+      .resultSize();
   }
 
   public async getInstancesByDate(date: string): Promise<InstanceM[]> {
     return this.#InstanceModel.query().select().where('createdAt', '<', date);
   }
 
-  public async create(instance: InstanceEntity): Promise<InstanceM> {
+  public async create(instance: InstanceEntity): Promise<InstanceEntity> {
     const {
       id,
       name,
@@ -89,19 +91,22 @@ class Instance {
       tenantId,
       state,
     } = instance;
-    return this.#InstanceModel.query().insert({
-      id,
-      name,
-      createdAt,
-      keyPairId,
-      username,
-      hostname,
-      operationSystemId,
-      createdBy,
-      awsInstanceId,
-      tenantId,
-      state,
-    });
+    return this.#InstanceModel
+      .query()
+      .insert({
+        id,
+        name,
+        createdAt,
+        keyPairId,
+        username,
+        hostname,
+        operationSystemId,
+        createdBy,
+        awsInstanceId,
+        tenantId,
+        state,
+      })
+      .withGraphFetched('[operationSystem]');
   }
 
   public static modelToEntity(model: InstanceM): InstanceEntity {
@@ -117,6 +122,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state,
+      operationSystem,
     } = model;
 
     return InstanceEntity.initialize({
@@ -131,6 +137,7 @@ class Instance {
       awsInstanceId,
       tenantId,
       state,
+      operationSystem,
     });
   }
 }

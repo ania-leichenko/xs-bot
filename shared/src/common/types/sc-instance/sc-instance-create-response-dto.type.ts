@@ -1,4 +1,5 @@
 import { InstanceState } from '~/common/enums/enums';
+import { SCInstanceRelatedItem } from './sc-instance-related-item.type';
 
 type SCInstanceCreateResponseDto = {
   name: string;
@@ -9,6 +10,7 @@ type SCInstanceCreateResponseDto = {
   publicIpAddress: null;
   keyPairId: string;
   state: InstanceState;
+  operationSystem: SCInstanceRelatedItem;
 };
 
 export { type SCInstanceCreateResponseDto };

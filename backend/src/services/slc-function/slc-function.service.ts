@@ -5,7 +5,6 @@ import {
   SLCFunctionUpdateResponseDto,
   SLCFunctionLoadParamsDto,
   SLCFunctionLoadResponseDto,
-  SLCFunctionRunParamsDto,
   SLCFunctionRunResponseDto,
   TokenPayload,
 } from '~/common/types/types';
@@ -15,7 +14,6 @@ import { SLCError } from '~/exceptions/exceptions';
 import {
   HttpCode,
   ExceptionMessage,
-  UserRole,
   LambdaDefaultParam,
 } from '~/common/enums/enums';
 import { token as tokenServ, lambda as lambdaServ } from '~/services/services';
@@ -48,15 +46,8 @@ class SLCFunction {
     name: string;
     token: string;
   }): Promise<SLCFunctionCreateResponseDto> {
-    const { userId: createdBy, userRole } =
+    const { userId: createdBy } =
       this.#tokenService.decode<TokenPayload>(token);
-
-    if (userRole !== UserRole.WORKER) {
-      throw new SLCError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_CREATE,
-      });
-    }
 
     const slcFunctionByName = await this.#slcFunctionRepository.getByName(name);
 
@@ -109,26 +100,12 @@ class SLCFunction {
     const slcFunctions = await this.#slcFunctionRepository.getAllByTenant(
       filter,
     );
+    const countItems = await this.#slcFunctionRepository.getCount(filter);
 
-    return { items: slcFunctions };
+    return { items: slcFunctions, countItems };
   }
 
-  public async delete({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
-
-    if (userRole !== UserRole.WORKER) {
-      throw new SLCError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_DELETE,
-      });
-    }
-
+  public async delete(id: string): Promise<void> {
     const slcFunction = await this.#slcFunctionRepository.getById(id);
 
     if (!slcFunction) {
@@ -146,21 +123,10 @@ class SLCFunction {
   public async updateById({
     id,
     sourceCode,
-    token,
   }: {
     id: string;
     sourceCode: string;
-    token: string;
   }): Promise<SLCFunctionUpdateResponseDto> {
-    const { userRole } = this.#tokenService.decode<TokenPayload>(token);
-
-    if (userRole !== UserRole.WORKER) {
-      throw new SLCError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_FUNCTION_UPDATE,
-      });
-    }
-
     const slcFunction = await this.#slcFunctionRepository.getById(id);
 
     if (!slcFunction) {
@@ -214,7 +180,11 @@ class SLCFunction {
 
   public async runById({
     id,
-  }: SLCFunctionRunParamsDto): Promise<SLCFunctionRunResponseDto> {
+    payload,
+  }: {
+    id: string;
+    payload?: string;
+  }): Promise<SLCFunctionRunResponseDto> {
     const slcFunction = await this.#slcFunctionRepository.getById(id);
 
     if (!slcFunction) {
@@ -224,9 +194,12 @@ class SLCFunction {
       });
     }
 
-    const payload = await this.#lambdaService.runFunction(slcFunction.name);
+    const responsePayload = await this.#lambdaService.runFunction(
+      slcFunction.name,
+      payload,
+    );
 
-    return { payload };
+    return { payload: responsePayload };
   }
 }
 

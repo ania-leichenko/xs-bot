@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { AppRoute, ButtonStyle, DataStatus } from 'common/enums/enums';
+import {
+  AppRoute,
+  ButtonStyle,
+  DataStatus,
+  EditorLang,
+} from 'common/enums/enums';
 import { Button, Editor, Loader, Navigate } from 'components/common/common';
 import {
   useAppDispatch,
@@ -9,6 +14,8 @@ import {
 } from 'hooks/hooks';
 import { SLCFunctionConfigurate as SLCFunctionActions } from 'store/actions';
 import { debounce } from 'helpers/helpers';
+import { SLCPopup } from './components/components';
+
 import styles from './styles.module.scss';
 
 interface Props {
@@ -31,6 +38,7 @@ const EditForm: FC<Props> = ({ id }) => {
   const hasCodeLoading = dataStatus === DataStatus.PENDING;
   const isPossibleSave = !hasSave && !hasCodeLoading;
   const hasResponse = Boolean(response);
+  const [isVisibleSLCPopup, setVisibleSLCPopup] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(SLCFunctionActions.loadFunction({ id }));
@@ -40,8 +48,25 @@ const EditForm: FC<Props> = ({ id }) => {
     setEditCode(loadFunction?.sourceCode ?? '');
   }, [loadFunction]);
 
-  const handleRun = (): void => {
-    dispatch(SLCFunctionActions.runFunction({ id }));
+  const handleOpenSLCPopup = (): void => {
+    setVisibleSLCPopup(true);
+  };
+
+  const handleCloseSLCPopup = (): void => {
+    setVisibleSLCPopup(false);
+  };
+
+  const handleRun = (payload?: string): void => {
+    dispatch(
+      SLCFunctionActions.runFunction({
+        params: { id },
+        payload: { payload },
+      }),
+    )
+      .unwrap()
+      .then(() => {
+        handleCloseSLCPopup();
+      });
   };
 
   const handleSaveCode = (): void => {
@@ -66,13 +91,13 @@ const EditForm: FC<Props> = ({ id }) => {
     <>
       <h3 className={styles.formTitle}>Edit Function</h3>;
       <div className={styles.wrapper}>
-        <h4 className={styles.title}>{loadFunction?.name ?? ''}</h4>
-        <div className={styles.buttons}>
+        <h4 className={styles.title}>{loadFunction?.name as string}</h4>
+        <div className={styles.buttons} data-testid="edit-func-btn">
           <Button
             className={styles.button}
             btnStyle={ButtonStyle.FILLED}
             label="Run"
-            onClick={handleRun}
+            onClick={handleOpenSLCPopup}
           />
           <Button
             className={styles.button}
@@ -92,17 +117,28 @@ const EditForm: FC<Props> = ({ id }) => {
       {hasCodeLoading ? (
         <Loader />
       ) : (
-        <Editor value={editCode} onChangeValue={handleOnChangeValue} />
+        <Editor
+          value={editCode}
+          onChangeValue={handleOnChangeValue}
+          lang={EditorLang.JAVASCRIPT}
+          placeholder="Source code can't be empty."
+        />
       )}
       <div className={styles.buttons}>
-        <div className={styles.button}>
+        <div>
           <Button
+            className={styles.button}
             btnStyle={ButtonStyle.OUTLINED}
             label="Cancel"
             onClick={handleCancel}
           />
         </div>
       </div>
+      <SLCPopup
+        isOpen={isVisibleSLCPopup}
+        onClose={handleCloseSLCPopup}
+        onRun={handleRun}
+      />
     </>
   );
 };

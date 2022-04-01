@@ -1,21 +1,26 @@
 .title {
-  margin-left: 140px;
   color: var(--color-white);
 }
 
 .wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-bottom: 30px;
-  text-align: center;
 }
 
 .wrapperInput {
-  width: 450px;
+  width: 610px;
 }
 
 .button {
   width: 150px;
-  height: 50px;
+  height: 45px;
   margin-left: 10px;
+}
+
+.blockInput {
+  display: flex;
+  flex-direction: row;
 }

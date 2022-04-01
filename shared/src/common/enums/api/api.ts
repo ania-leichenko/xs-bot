@@ -1,6 +1,5 @@
 export { ApiPath } from './api-path.enum';
 export { AuthApiPath } from './auth-api-path.enum';
-export { MastersApiPath } from './masters-api-path.enum';
 export { TenantsApiPath } from './tenants-api-path.enum';
 export { EAMApiPath } from './eam-api-path.enum';
 export { GroupsApiPath } from './groups-api-path.enum';
@@ -12,3 +11,4 @@ export { SLCFunctionApiPath } from './slc-function-api-path.enum';
 export { SpacesApiPath } from './spaces-api-path.enum';
 export { InstancesApiPath } from './instances-api-path.enum';
 export { SshKeysApiPath } from './ssh-keys-api-path.enum';
+export { ObjectsApiPath } from './objects-api-path.enum';

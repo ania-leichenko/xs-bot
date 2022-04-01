@@ -3,9 +3,10 @@ import { Button, Input } from 'components/common/common';
 import {
   useAppDispatch,
   useAppForm,
-  useEffect,
   useAppSelector,
+  useEffect,
   useSelectedItems,
+  useParams,
 } from 'hooks/hooks';
 import { DEFAULT_GROUP_PAYLOAD } from './common/constants';
 import {
@@ -17,22 +18,32 @@ import {
 import { getNameOf } from 'helpers/helpers';
 import { EAMGroupConfigurate as EAMGroupConfigurateActions } from 'store/actions';
 import styles from './styles.module.scss';
-import { EAMGroupConfigurateRequestDto } from 'common/types/types';
+import {
+  EAMGroupConfigurateRequestDto,
+  EAMGroupUpdateRequestDto,
+} from 'common/types/types';
 import { eamGroupConfigurate as eamGroupConfigurateValidationSchema } from 'validation-schemas/validation-schemas';
 import { WorkersTable, PermissionsTable } from './components/components';
 
 const EAMConfigurateGroup: FC = () => {
-  const { control, errors, handleSubmit } =
-    useAppForm<EAMGroupConfigurateRequestDto>({
-      defaultValues: DEFAULT_GROUP_PAYLOAD,
-      validationSchema: eamGroupConfigurateValidationSchema,
-    });
-
-  const { tenantId } = useAppSelector(({ app }) => ({
-    tenantId: app.tenant?.id,
-  }));
-
   const dispatch = useAppDispatch();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(EAMGroupConfigurateActions.getGroupById({ id }));
+    }
+  }, [id]);
+
+  const { tenantId, group } = useAppSelector(
+    ({ app, EAMGroupConfigurate }) => ({
+      tenantId: app.tenant?.id,
+      group: id ? EAMGroupConfigurate.group : null,
+    }),
+  );
+
+  const hasGroup = Boolean(group);
 
   useEffect(() => {
     if (!tenantId) {
@@ -46,18 +57,42 @@ const EAMConfigurateGroup: FC = () => {
       }),
     );
     dispatch(EAMGroupConfigurateActions.getPermission());
-  }, [dispatch, tenantId]);
+  }, [dispatch, tenantId, group]);
+
+  const { control, errors, handleSubmit, handleReset } =
+    useAppForm<EAMGroupConfigurateRequestDto>({
+      defaultValues: DEFAULT_GROUP_PAYLOAD,
+      validationSchema: eamGroupConfigurateValidationSchema,
+    });
 
   const selectedWorkers = useSelectedItems<string>([]);
   const selectedPermissions = useSelectedItems<string>([]);
 
+  useEffect(() => {
+    if (hasGroup) {
+      handleReset({ name: group!.name });
+      selectedWorkers.handleReset(group!.workersIds);
+      selectedPermissions.handleReset(group!.permissionsIds);
+    }
+  }, [group]);
+
   const handleFormSubmit = (payload: EAMGroupConfigurateRequestDto): void => {
-    const newPayload: EAMGroupConfigurateRequestDto = {
-      name: payload.name,
-      workersIds: selectedWorkers.selectedItems,
-      permissionsIds: selectedPermissions.selectedItems,
-    };
-    dispatch(EAMGroupConfigurateActions.create(newPayload));
+    if (hasGroup) {
+      const newPayload: EAMGroupUpdateRequestDto = {
+        id: group!.id,
+        name: payload.name,
+        workersIds: selectedWorkers.selectedItems,
+        permissionsIds: selectedPermissions.selectedItems,
+      };
+      dispatch(EAMGroupConfigurateActions.update(newPayload));
+    } else {
+      const newPayload: EAMGroupConfigurateRequestDto = {
+        name: payload.name,
+        workersIds: selectedWorkers.selectedItems,
+        permissionsIds: selectedPermissions.selectedItems,
+      };
+      dispatch(EAMGroupConfigurateActions.create(newPayload));
+    }
   };
 
   return (
@@ -67,11 +102,15 @@ const EAMConfigurateGroup: FC = () => {
         Entity Access Management
       </h2>
       <section className={styles.formWrapper}>
-        <h3 className={styles.formTitle}>Create Group</h3>
+        <h3 className={styles.formTitle}>
+          {hasGroup ? 'Edit' : 'Create'} group
+        </h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <ul className={styles.inputGroups}>
             <li className={styles.inputGroup}>
-              <h3 className={styles.inputGroupTitle}>Name the group</h3>
+              <h3 className={styles.inputGroupTitle}>
+                {hasGroup ? 'Edit group name' : 'Name the group'}
+              </h3>
               <div className={styles.inputWrapper}>
                 <Input
                   type={InputType.TEXT}
@@ -89,6 +128,7 @@ const EAMConfigurateGroup: FC = () => {
                 handleIsCheckedId={selectedWorkers.handleCheck}
                 handleRemoveWorkerId={selectedWorkers.handleRemove}
                 handleAddWorkerId={selectedWorkers.handleAdd}
+                hasGroup={hasGroup}
               />
             </li>
             <li>
@@ -97,6 +137,7 @@ const EAMConfigurateGroup: FC = () => {
                 handleIsCheckedPermissionId={selectedPermissions.handleCheck}
                 handleRemovePermissionId={selectedPermissions.handleRemove}
                 handleAddPermissionId={selectedPermissions.handleAdd}
+                hasGroup={hasGroup}
               />
             </li>
           </ul>
@@ -112,7 +153,7 @@ const EAMConfigurateGroup: FC = () => {
               <Button
                 className={styles.button}
                 type={ButtonType.SUBMIT}
-                label="Save"
+                label={hasGroup ? 'Save' : 'Create'}
               />
             </div>
           </div>

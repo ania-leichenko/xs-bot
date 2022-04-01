@@ -3,6 +3,7 @@ export {
   type AppDispatch,
   type AsyncThunkConfig,
   type UseSelectedItemsHook,
+  type UsePaginationtemsHook,
   type NotifyActionPayload,
 } from './app/app';
 export {
@@ -32,6 +33,9 @@ export {
   type EAMGroupGetByTenantRequestParamsDto,
   type EAMGroupGetByTenantResponseDto,
   type EAMGroupGetByTenantResponseItemDto,
+  type EamGroupGetByIdRequestDto,
+  type EamGroupGetByIdResponseDto,
+  type EAMGroupUpdateRequestDto,
   type EAMGroupDeleteParamsDto,
 } from './eam-group/eam-group';
 export {
@@ -64,6 +68,13 @@ export {
   type BSSpaceDeleteParamsDto,
 } from './bs-space/bs-space';
 export {
+  type BSObjectDownloadParamsDto,
+  type BSObjectGetRequestParamsDto,
+  type BSObjectGetResponseItemDto,
+  type BSObjectGetResponseDto,
+  type BSObjectDeleteParamsDto,
+} from './bs-object/bs-object';
+export {
   type SCInstanceCreateRequestDto,
   type SCInstanceCreateResponseDto,
   type SCInstanceCreateFormDto,
@@ -86,6 +97,7 @@ export {
   type SLCFunctionUpdateRequestDto,
   type SLCFunctionUpdateResponseDto,
   type SLCFunctionRunParamsDto,
+  type SLCFunctionRunRequestDto,
   type SLCFunctionRunResponseDto,
 } from './slc-function/slc-function';
 export {

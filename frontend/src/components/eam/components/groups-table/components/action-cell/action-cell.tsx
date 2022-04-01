@@ -1,5 +1,6 @@
 import { IconButton } from 'components/common/common';
-import { IconName } from 'common/enums/enums';
+import { AppRoute, IconName } from 'common/enums/enums';
+import styles from './styles.module.scss';
 
 const ActionCell = (
   id: string,
@@ -9,7 +10,20 @@ const ActionCell = (
     onGroupDelete(id);
   };
   return (
-    <IconButton icon={IconName.TRASH} label="Delete" onClick={handleDelete} />
+    <div className={styles.wrapper}>
+      <IconButton
+        title="Edit"
+        icon={IconName.GEAR}
+        label="Edit"
+        to={`${AppRoute.EAM_CONFIGURATE_GROUP}/${id}` as AppRoute}
+      />
+      <IconButton
+        title="Delete"
+        icon={IconName.TRASH}
+        label="Delete"
+        onClick={handleDelete}
+      />
+    </div>
   );
 };
 

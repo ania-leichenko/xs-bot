@@ -12,16 +12,13 @@ import {
   EAMWorkerSignInResponseDto,
   EAMWorkerGetAllResponseDto,
   EAMWorkerGetByTenantRequestParamsDto,
-  TokenPayload,
 } from '~/common/types/types';
 import { Worker as WorkerEntity } from './worker.entity';
 import { HttpCode } from '~/common/enums/http/http';
 import { ExceptionMessage, UserRole } from '~/common/enums/enums';
 import {
   encrypt as encryptServ,
-  master as masterServ,
   token as tokenServ,
-  tenant as tenantServ,
   instance as instanceServ,
   space as spaceServ,
   slcFunction as slcFunctionServ,
@@ -36,8 +33,6 @@ type Constructor = {
   instanceRepository: typeof instanceRep;
   encryptService: typeof encryptServ;
   tokenService: typeof tokenServ;
-  masterService: typeof masterServ;
-  tenantService: typeof tenantServ;
   instanceService: typeof instanceServ;
   spaceService: typeof spaceServ;
   slcFunctionService: typeof slcFunctionServ;
@@ -51,8 +46,6 @@ class Worker {
   #instanceRepository: typeof instanceRep;
   #encryptService: typeof encryptServ;
   #tokenService: typeof tokenServ;
-  #masterService: typeof masterServ;
-  #tenantService: typeof tenantServ;
   #instanceService: typeof instanceServ;
   #spaceService: typeof spaceServ;
   #slcFunctionService: typeof slcFunctionServ;
@@ -65,8 +58,6 @@ class Worker {
     instanceRepository,
     encryptService,
     tokenService,
-    masterService,
-    tenantService,
     instanceService,
     spaceService,
     slcFunctionService,
@@ -78,8 +69,6 @@ class Worker {
     this.#instanceRepository = instanceRepository;
     this.#encryptService = encryptService;
     this.#tokenService = tokenService;
-    this.#masterService = masterService;
-    this.#tenantService = tenantService;
     this.#instanceService = instanceService;
     this.#spaceService = spaceService;
     this.#slcFunctionService = slcFunctionService;
@@ -112,11 +101,11 @@ class Worker {
   public async create({
     name,
     password,
-    token,
+    tenantId,
     groupIds,
-  }: EAMWorkerCreateRequestDto): Promise<EAMWorkerCreateResponseDto> {
-    const { tenantId } = this.#tokenService.decode<TokenPayload>(token);
-
+  }: EAMWorkerCreateRequestDto & {
+    tenantId: string;
+  }): Promise<EAMWorkerCreateResponseDto> {
     const passwordSalt = await this.#encryptService.createSalt();
     const passwordHash = await this.#encryptService.createHash(
       password,
@@ -198,28 +187,17 @@ class Worker {
     param: EAMWorkerGetByTenantRequestParamsDto,
   ): Promise<EAMWorkerGetAllResponseDto> {
     const workers = await this.#workerRepository.getAll(param);
-    return { items: workers };
+    const countItems = await this.#workerRepository.getCount(param);
+    return { items: workers, countItems };
   }
 
-  public async deleteWorker({
-    id,
-    token,
-  }: {
-    id: string;
-    token: string;
-  }): Promise<void> {
-    const user: TokenPayload = await this.#tokenService.decode(token);
+  public async delete(id: string): Promise<void> {
+    const worker = await this.#workerRepository.getById(id);
 
-    if (user.userRole !== UserRole.MASTER) {
-      throw new EAMError();
-    }
-
-    const master = await this.#masterService.getMasterById(id);
-
-    if (master) {
+    if (!worker) {
       throw new EAMError({
-        status: HttpCode.DENIED,
-        message: ExceptionMessage.MASTER_DELETE,
+        status: HttpCode.NOT_FOUND,
+        message: ExceptionMessage.WORKER_NOT_FOUND,
       });
     }
 
@@ -233,17 +211,17 @@ class Worker {
     await Promise.all(
       spaces.map((item) => {
         const id = item.id;
-        return this.#spaceService.delete({ id, token });
+        return this.#spaceService.delete(id);
       }),
     );
     await Promise.all(
       slcFunctions.map((slcFunction) => {
         const id = slcFunction.id;
-        return this.#slcFunctionService.delete({ id, token });
+        return this.#slcFunctionService.delete(id);
       }),
     );
 
-    await this.#workerRepository.deleteWorker(id);
+    await this.#workerRepository.delete(id);
   }
 }
 
