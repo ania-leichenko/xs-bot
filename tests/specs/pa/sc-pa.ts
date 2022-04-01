@@ -7,7 +7,7 @@ const sc = new SC();
 
 class SCActions {
 
-    async CreateInstance() {
+    async CreateInstance(): Promise<void> {
       await sc.AddInstance_Button.click();
       await sc.InstanceName_Field.setValue(scData.InstanceName);
       await sc.OSFieldShown.click();
@@ -18,42 +18,42 @@ class SCActions {
       await sc.Create_Button.click();
     }
 
-    async CheckInstanceExist() {
+    async CheckInstanceExist(): Promise<void> {
       await sc.TableCell.waitForExist({
         timeout: 5000,
       });
-      let tableCellValue = await sc.TableCell.getText();
-      let fileCreated = scData.InstanceName == tableCellValue;
+      const tableCellValue = await sc.TableCell.getText();
+      const fileCreated = scData.InstanceName == tableCellValue;
       assert.equal(fileCreated,true);
     }
 
-    async DeleteInstance() {
+    async DeleteInstance(): Promise<void> {
       await sc.Bucket.click();
       await sc.ConfirmDeleting.click();
     }
 
-    async CheckInstanceDelete() {
+    async CheckInstanceDelete(): Promise<void> {
       let tableCellValue;
       if (await sc.TableCell.isExisting() == true){
         tableCellValue = await sc.TableCell.getText();
-      };
-      let bucketCreated = (await sc.TableCell.isExisting() == true)&&(scData.InstanceName == tableCellValue);
+      }
+      const bucketCreated = (await sc.TableCell.isExisting() == true)&&(scData.InstanceName == tableCellValue);
       assert.equal(bucketCreated,false);
     }
 
-    async ChangeName(newName: string) {
+    async ChangeName(newName: string): Promise<void> {
       await sc.EditIcon.click();
       await sc.InstanceName_Field.clearValue();
       await sc.InstanceName_Field.setValue(newName);
       await sc.Create_Button.click();
     }
 
-    async CheckChangeName(newName: string) {
+    async CheckChangeName(newName: string): Promise<void> {
       await browser.pause(1000);
       await sc.Reload_Button.click();
       await sc.TableCell.waitForExist();
-      let TableCellText = await sc.TableCell.getText();
-      let nameCanged = (newName == TableCellText);
+      const TableCellText = await sc.TableCell.getText();
+      const nameCanged = newName == TableCellText;
       assert.equal(nameCanged,true);
   }
 

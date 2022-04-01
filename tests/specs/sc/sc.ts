@@ -7,10 +7,10 @@ import { DashboardActions } from '../pa/dashboard-pa';
 import { registerData } from '../test-data/register-data';
 import { scData } from '../test-data/sc-data';
 
-var dashact = new DashboardActions();
-var regact = new RegistrationActions();
-var scact = new SCActions();
-var scobj = new SC();
+let dashact = new DashboardActions();
+let regact = new RegistrationActions();
+let scact = new SCActions();
+let scobj = new SC();
 
 describe('Worker', async () => {
 
@@ -19,7 +19,7 @@ describe('Worker', async () => {
         await regact.FillWorkerSignInForm(
             registerData.TenantNameForWorkerSignIn,
             registerData.WorkerName,
-            registerData.WorkerPassword
+            registerData.WorkerPassword,
         );
         await regact.Sign();
         await dashact.OpenSC();
@@ -44,7 +44,7 @@ describe('Worker', async () => {
         await browser.url('/sc');
         await scact.CreateInstance();
         await scobj.SuccessIcon.waitForDisplayed();
-        let success = await scobj.Message.getText();
+        const success = await scobj.Message.getText();
         assert.equal(success,scData.SuccessCreated);
     });
 
@@ -52,7 +52,7 @@ describe('Worker', async () => {
         await browser.url('/sc');
         await scact.DeleteInstance();
         await scobj.SuccessIcon.waitForDisplayed();
-        let success = await scobj.Message.getText();
+        const success = await scobj.Message.getText();
         assert.equal(success,scData.SuccessDeleted);
     });
 

@@ -22,15 +22,15 @@ class SC {
 
     get OS_Field (): ReturnType<typeof $> {
         return $('input[name="operationSystemId"]');
-    };
+    }
 
     get OSFieldShown (): ReturnType<typeof $> {
         return $('input[id="react-select-2-input"]');
-    };
+    }
 
     get ubuntu18 (): ReturnType<typeof $> {
         return $('div[id="react-select-2-option-0"]');
-    };
+    }
 
     get UserData_Field (): ReturnType<typeof $> {
         return $('textarea[name="userData"]');
@@ -41,7 +41,7 @@ class SC {
     }
 
     get ConfirmDeleting (): ReturnType<typeof $> {
-        return $('button[class="styles_btn__9DPcn styles_btnColorOrange__Jnd2G styles_btnStyleFilled__UVKdC styles_button__PuOil"]')
+        return $('button[class="styles_btn__9DPcn styles_btnColorOrange__Jnd2G styles_btnStyleFilled__UVKdC styles_button__PuOil"]');
     }
 
     get TableCell (): ReturnType<typeof $> {
@@ -49,15 +49,15 @@ class SC {
     }
 
     get SuccessIcon (): ReturnType<typeof $> {
-        return $('div[class="notification_check__FUZIb"]')
+        return $('div[class="notification_check__FUZIb"]');
     }
 
     get Message (): ReturnType<typeof $> {
-        return $('div[class="rrt-text"]')
+        return $('div[class="rrt-text"]');
     }
 
     get EditIcon (): ReturnType<typeof $> {
-        return $('img[alt="Edit"]')
+        return $('img[alt="Edit"]');
     }
 }
 

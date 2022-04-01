@@ -7,7 +7,7 @@ const bs = new BS();
 
 class BSActions {
 
-    async CreateBucket() {
+    async CreateBucket(): Promise<void> {
 
        await bs.AddSpace_Button.click();
        await bs.SpaceName_Field.setValue(bsData.SpaceName);
@@ -18,7 +18,7 @@ class BSActions {
 
     }
 
-    async UploadFile() {
+    async UploadFile(): Promise<void> {
 
         await bs.Bucket_Link.click();
         const remoteFilePath = await browser.uploadFile('../tests/specs/dashboard/dashboard.ts');
@@ -30,7 +30,7 @@ class BSActions {
  
     }
 
-    async DeleteFile() {
+    async DeleteFile(): Promise<void> {
 
         await bs.Bucket_Link.click();
         await bs.Bucket.waitForClickable({
@@ -44,7 +44,7 @@ class BSActions {
  
     }
 
-    async CheckFileExist() {
+    async CheckFileExist(): Promise<void> {
         await bs.TableCell.waitForExist({
             timeout: 2000,
           });
@@ -53,7 +53,7 @@ class BSActions {
         assert.equal(fileCreated,true);
     }
 
-    async CheckFileDeleting() {
+    async CheckFileDeleting(): Promise<void> {
       let tableCellValue;
       if (await bs.TableCell.isExisting() == true){
          tableCellValue = await bs.TableCell.getText();
@@ -62,21 +62,21 @@ class BSActions {
         assert.equal(fileCreated,false);
       }
 
-    async CheckBucketExist() {
+    async CheckBucketExist(): Promise<void> {
       let tableCell = await bs.TableCell;
       let tableCellValue = await tableCell.getText();
       let bucketCreated = bsData.SpaceName == tableCellValue;
       assert.equal(bucketCreated,true);
     }
 
-    async DeleteBucket() {
+    async DeleteBucket(): Promise<void> {
 
        await bs.Bucket.click();
        await bs.ConfirmDeleting.click();
 
     }
 
-    async CheckBucketDelete() {
+    async CheckBucketDelete(): Promise<void> {
       let tableCellValue;
       if (await bs.TableCell.isExisting() == true){
          tableCellValue = await bs.TableCell.getText();
