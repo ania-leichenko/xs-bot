@@ -7,10 +7,10 @@ import { DashboardActions } from '../pa/dashboard-pa';
 import { registerData } from '../test-data/register-data';
 import { scData } from '../test-data/sc-data';
 
-let dashact = new DashboardActions();
-let regact = new RegistrationActions();
-let scact = new SCActions();
-let scobj = new SC();
+const dashact = new DashboardActions();
+const regact = new RegistrationActions();
+const scact = new SCActions();
+const scobj = new SC();
 
 describe('Worker', async () => {
 
