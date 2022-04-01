@@ -17,8 +17,8 @@ describe('Worker', async () => {
     it('can create instance', async () => {
         await browser.url('/');
         await regact.FillWorkerSignInForm(
-            registerData.TenantNameForWorkerSignIn, 
-            registerData.WorkerName, 
+            registerData.TenantNameForWorkerSignIn,
+            registerData.WorkerName,
             registerData.WorkerPassword
         );
         await regact.Sign();
