@@ -92,7 +92,7 @@ const EditForm: FC<Props> = ({ id }) => {
       <h3 className={styles.formTitle}>Edit Function</h3>;
       <div className={styles.wrapper}>
         <h4 className={styles.title}>{loadFunction?.name as string}</h4>
-        <div className={styles.buttons}>
+        <div className={styles.buttons} data-testid="edit-func-btn">
           <Button
             className={styles.button}
             btnStyle={ButtonStyle.FILLED}
