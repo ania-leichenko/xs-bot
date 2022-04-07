@@ -1,0 +1,35 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon --exec ts-node --files -r tsconfig-paths/register ./src/bot.ts"
+  },
+  "keywords": [
+    "pg",
+    "promise",
+    "postgres"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/config": "^0.0.41",
+    "path": "^0.12.7",
+    "pg": "^8.7.3",
+    "pg-promise": "^10.11.1",
+    "telegraf": "^4.7.0",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.23",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.5.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "nodemon": "^2.0.15",
+    "typescript": "^4.6.3"
+  }
+}
