@@ -1,27 +1,27 @@
 version: "3.8"
 
 services:
-  bws_postgres:
-    container_name: bws_postgres
+  xs_bot_postgres:
+    container_name: xs_bot_postgres
     image: postgres:14.1
     restart: on-failure
     ports:
-      - 7433:5432
+      - 5432:5432
     networks:
-      - bws_backend_network
+      - xs_bot_backend_network
     env_file:
       - ../../.env/postgres.env
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=bws
+      - POSTGRES_DB=xs_bot
       - PGDATA=/var/lib/postgresql/data
     volumes:
-      - bws_postgres_data:/var/lib/postgresql/data
+      - xs_bot_postgres_data:/var/lib/postgresql/data
 
 volumes:
-  bws_postgres_data:
+  xs_bot_postgres_data:
     driver: local
 
 networks:
-  bws_backend_network:
+  xs_bot_backend_network:
     driver: bridge
