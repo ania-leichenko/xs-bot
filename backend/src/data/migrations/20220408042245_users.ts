@@ -1,17 +1,17 @@
 import { Knex } from 'knex';
 import { TableName } from '~/common/enums/enums';
 
-const TABLE_NAME = TableName.PERMISSIONS;
+const TABLE_NAME = TableName.USERS;
 
 async function up(knex: Knex): Promise<void> {
+
   return knex.schema.createTable(TABLE_NAME, (table) => {
-    table
-      .uuid('id')
-      .unique()
-      .notNullable()
-      .defaultTo(knex.raw('uuid_generate_v4()'))
-      .primary({ constraintName: 'permissions_pkey' });
-    table.string('name').notNullable();
+    table.bigint('chat_id').notNullable();
+    table.string('first_name').notNullable();
+    table.string('username').notNullable();
+    table.tinyint('admin').notNullable().defaultTo(0);
+    table.datetime('joined').notNullable();
+    table.datetime('last_action').notNullable();
   });
 }
 
