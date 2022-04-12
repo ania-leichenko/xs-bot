@@ -1,6 +1,3 @@
-export { DateFormat } from './date/date-format.enum';
-export { ENV, AppEnvironment } from './app/app';
-export { TableName } from './db/db';
 export {
   START_TEXT,
   FOREX_TEXT,
@@ -12,6 +9,9 @@ export {
   SWIFT_TEXT,
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
+} from './text.enum';
+
+export {
   FOREX_TITLE,
   FAQ_TITLE,
   FAQ_BUTTON_TITLE,
@@ -24,4 +24,4 @@ export {
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
   BACK,
-} from './buttonInfo/buttonInfo';
+} from './title.enum';
