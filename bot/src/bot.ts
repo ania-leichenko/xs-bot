@@ -65,6 +65,7 @@ type Button = {
 
 const pressBtn = ({ id_btn, title, text }: Button): void => {
   bot.action(id_btn, async (ctx) => {
+    ctx.deleteMessage();
     if (id_btn === 'btn_1' || id_btn === 'btn_2') {
       try {
         ctx.replyWithHTML(
