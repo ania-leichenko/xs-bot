@@ -4,6 +4,17 @@ import {
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
 } from './emoji.enum';
+import {
+  FOREX_TITLE,
+  FAQ_TITLE,
+  PERSONAL_AREA_TITLE,
+  CRYPTO_TITLE,
+  CRYPTO_BUTTON_TITLE,
+  SCRILL_TITLE,
+  SWIFT_TITLE,
+  BANK_CARD_TITLE,
+  CONFIRM_PAYMENT_TITLE,
+} from './title.enum';
 
 export const START_TEXT = `In order to become a member of premium signals, you need to choose which subscription you need.Daily receipt of 5 to 10 signals!
 
@@ -11,8 +22,11 @@ By purchasing our signals, you get access to trading strategies that are a guara
 
 Choose from the list below ${SEE_BUTTONS}`;
 export const FOREX_TEXT =
-  'Get signals with a return of more than 95%. Signals for the forex market, gold and indices. During the day, 5-10 signals come, and the stop loss does not exceed the profit.The most successful signals for gold, more than 1000 pips per month. In just a month, the goal of 3000 points will always be reached.';
-export const FAQ_TEXT = `
+  `<b>${FOREX_TITLE}</b>
+
+Get signals with a return of more than 95%. Signals for the forex market, gold and indices. During the day, 5-10 signals come, and the stop loss does not exceed the profit.The most successful signals for gold, more than 1000 pips per month. In just a month, the goal of 3000 points will always be reached.`;
+export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
+
 ${QUESSION_ICON} Can I be sure of the authenticity of Premium Signals? Can I get free access for one day to try them out?
 ${CHECKED_ICON}  All free signals are updated daily in the free channel. You can test free signals at any time.
 
@@ -26,10 +40,14 @@ ${QUESSION_ICON}  What should I do if I fail to open trades?
 ${CHECKED_ICON} All our instructions and training are directly aimed at your guaranteed result, and you can always contact the administrator for any questions.
 
 If you have any questions, please contact the administrator ?@bestsignalsadmin (Due to the extensive amount of work, the administrator's response may take some time.)`;
-export const PERSONAL_AREA_TEXT = '';
-export const CRYPTO_BUTTON_TEXT =
-  'Get signals for the spot and futures market of cryptocurrencies. Transactions can be both short-term and long-term. When a signal is published, you will receive stop loss and take profit, as well as the trading leverage and the size of the deposit at which you need to enter the deal. The risk per trade is no more than 2%. High volatility instants';
-export const CRYPTO_TEXT = `
+export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
+
+`;
+export const CRYPTO_BUTTON_TEXT = `${CRYPTO_BUTTON_TITLE}
+
+Get signals for the spot and futures market of cryptocurrencies. Transactions can be both short-term and long-term. When a signal is published, you will receive stop loss and take profit, as well as the trading leverage and the size of the deposit at which you need to enter the deal. The risk per trade is no more than 2%. High volatility instants`;
+export const CRYPTO_TEXT = `<b>${CRYPTO_TITLE}</b>
+
 Wallet: USDT
 Address: TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2
 Network: TRC20
@@ -53,14 +71,21 @@ Name: Jexly
 No fee.
 
 ${SERVICE_INACTIVE_ICON} Send an amount over 2% than the subscription amount, otherwise the commission will not be covered and the system will not count the payment ${SERVICE_INACTIVE_ICON}`;
-export const SCRILL_TEXT = `Send to my mail -> sergeisemenovfx@gmail.com
+export const SCRILL_TEXT = `<b>${SCRILL_TITLE}</b>
+
+Send to my mail -> sergeisemenovfx@gmail.com
 
 ${SERVICE_INACTIVE_ICON} Send an amount over 8% than the subscription amount, otherwise the commission will not be covered and the system will not count the payment ${SERVICE_INACTIVE_ICON}`;
-export const SWIFT_TEXT = `You can transfer funds to us using the swift method, but the minimum amount is $600 (payment for half a year in advance). It also depends on your bank and what fees it takes for the transfer. You may have to pay another 50-100 dollars for commissions.
+export const SWIFT_TEXT = `<b>${SWIFT_TITLE}</b>
+
+You can transfer funds to us using the swift method, but the minimum amount is $600 (payment for half a year in advance). It also depends on your bank and what fees it takes for the transfer. You may have to pay another 50-100 dollars for commissions.
 
 To make a payment, contact the administrator @BestSignalsAdmin`;
-export const BANK_CARD_TEXT =
-  'To make a payment, contact the administrator @BestSignalsAdmin';
-export const CONFIRM_PAYMENT_TEXT = `${SERVICE_INACTIVE_ICON} Send payment confirmation in chat. This can be a transaction number, ID, screenshot or video. But first, make sure that you have a telegram nickname, otherwise the system will not be able to give you a subscription. ${SERVICE_INACTIVE_ICON}
+export const BANK_CARD_TEXT = `<b>${BANK_CARD_TITLE}</b>
+
+To make a payment, contact the administrator @BestSignalsAdmin`;
+export const CONFIRM_PAYMENT_TEXT = `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${SERVICE_INACTIVE_ICON} Send payment confirmation in chat. This can be a transaction number, ID, screenshot or video. But first, make sure that you have a telegram nickname, otherwise the system will not be able to give you a subscription. ${SERVICE_INACTIVE_ICON}
 
 Until you respond to this message in this chat, we will not receive payment from you and the system will not be able to process the payment!`;

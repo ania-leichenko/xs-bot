@@ -13,11 +13,8 @@ import {
   SWIFT_TEXT,
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
-  FOREX_TITLE,
   FOREX_BUTTON_TITLE,
-  FAQ_TITLE,
   FAQ_BUTTON_TITLE,
-  PERSONAL_AREA_TITLE,
   PERSONAL_AREA_BUTTON_TITLE,
   CRYPTO_TITLE,
   CRYPTO_BUTTON_TITLE,
@@ -118,9 +115,7 @@ class BotServ {
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${FOREX_TITLE}</b>
-
-${FOREX_TEXT}`,
+        html: `${FOREX_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
           [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }],
@@ -143,9 +138,7 @@ ${FOREX_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CRYPTO_TITLE}</b>
-
-${CRYPTO_BUTTON_TEXT}`,
+        html: `${CRYPTO_BUTTON_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
           [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }],
@@ -168,7 +161,7 @@ ${CRYPTO_BUTTON_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${FAQ_TITLE}</b>${FAQ_TEXT}`,
+        html: `${FAQ_TEXT}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
@@ -180,9 +173,7 @@ ${CRYPTO_BUTTON_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${PERSONAL_AREA_TITLE}</b>
-
-${PERSONAL_AREA_TEXT}`,
+        html: `${PERSONAL_AREA_TEXT}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
@@ -203,9 +194,7 @@ ${PERSONAL_AREA_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CRYPTO_TITLE}</b>
-
-${CRYPTO_TEXT}`,
+        html: `${CRYPTO_TEXT}`,
         buttons: [
           [
             {
@@ -225,9 +214,7 @@ ${CRYPTO_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${SCRILL_TITLE}</b>
-
-${SCRILL_TEXT}`,
+        html: `${SCRILL_TEXT}`,
         buttons: [
           [
             {
@@ -247,9 +234,7 @@ ${SCRILL_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${SWIFT_TITLE}</b>
-
-${SWIFT_TEXT}`,
+        html: `${SWIFT_TEXT}`,
         buttons: [
           [
             {
@@ -269,9 +254,7 @@ ${SWIFT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${BANK_CARD_TITLE}</b>
-
-${BANK_CARD_TEXT}`,
+        html: `${BANK_CARD_TEXT}`,
         buttons: [
           [
             {
@@ -293,9 +276,7 @@ ${BANK_CARD_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+        html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }]],
       });
     } catch (e) {
@@ -309,9 +290,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+        html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }]],
       });
     } catch (e) {
@@ -322,9 +301,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+        html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }]],
       });
     } catch (e) {
@@ -338,9 +315,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+        html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }]],
       });
     } catch (e) {
@@ -352,9 +327,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${CRYPTO_TITLE}</b>
-
-${CRYPTO_TEXT}`,
+        html: `${CRYPTO_TEXT}`,
         buttons: [
           [
             {
@@ -374,9 +347,7 @@ ${CRYPTO_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${SCRILL_TITLE}</b>
-
-${SCRILL_TEXT}`,
+        html: `${SCRILL_TEXT}`,
         buttons: [
           [
             {
@@ -396,9 +367,7 @@ ${SCRILL_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${SWIFT_TITLE}</b>
-
-${SWIFT_TEXT}`,
+        html: `${SWIFT_TEXT}`,
         buttons: [
           [
             {
@@ -418,9 +387,7 @@ ${SWIFT_TEXT}`,
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `<b>${BANK_CARD_TITLE}</b>
-
-${BANK_CARD_TEXT}`,
+        html: `${BANK_CARD_TEXT}`,
         buttons: [
           [
             {
@@ -442,9 +409,7 @@ ${BANK_CARD_TEXT}`,
       try {
         ctx.deleteMessage();
         this.renderScreen(ctx, {
-          html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+          html: `${CONFIRM_PAYMENT_TEXT}`,
           buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }]],
         });
       } catch (e) {
@@ -458,9 +423,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
       try {
         ctx.deleteMessage();
         this.renderScreen(ctx, {
-          html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+          html: `${CONFIRM_PAYMENT_TEXT}`,
           buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }]],
         });
       } catch (e) {
@@ -474,9 +437,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
       try {
         ctx.deleteMessage();
         this.renderScreen(ctx, {
-          html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+          html: `${CONFIRM_PAYMENT_TEXT}`,
           buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }]],
         });
       } catch (e) {
@@ -490,9 +451,7 @@ ${CONFIRM_PAYMENT_TEXT}`,
       try {
         ctx.deleteMessage();
         this.renderScreen(ctx, {
-          html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
-
-${CONFIRM_PAYMENT_TEXT}`,
+          html: `${CONFIRM_PAYMENT_TEXT}`,
           buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
         });
       } catch (e) {
