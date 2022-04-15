@@ -1,6 +1,7 @@
 import { ACCOUNT_ICON, PRICE_ICON, BACK_ICON } from './emoji.enum';
 
-export const FOREX_TITLE = 'Forex — 99$/month';
+export const FOREX_TITLE = 'Forex';
+export const FOREX_BUTTON_TITLE = 'Forex — 99$/month';
 export const FAQ_BUTTON_TITLE = 'FAQ';
 export const FAQ_TITLE = 'Frequently asked questions:';
 export const PERSONAL_AREA_TITLE = `${ACCOUNT_ICON} Personal Area`;

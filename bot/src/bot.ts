@@ -17,6 +17,7 @@ import {
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
   FOREX_TITLE,
+  FOREX_BUTTON_TITLE,
   FAQ_TITLE,
   FAQ_BUTTON_TITLE,
   PERSONAL_AREA_TITLE,
@@ -28,8 +29,30 @@ import {
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
   BACK,
+  START_SCREEN,
+  FOREX_SCREEN,
+  CRYPTO_SCREEN,
+  FAQ_SCREEN,
+  PERSONAL_AREA_SCREEN,
+  PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
+  PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
+  PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
+  PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
+import { InlineKeyboardMarkup } from 'telegraf/typings/core/types/typegram';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
 Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
@@ -46,140 +69,437 @@ bot.start(async (ctx) => {
     last_action: new Date(),
   });
 
-  ctx.replyWithHTML(
-    START_TEXT,
-    Markup.inlineKeyboard([
-      [Markup.button.callback(FOREX_TITLE, 'btn_1')],
-      [Markup.button.callback(CRYPTO_BUTTON_TITLE, 'btn_2')],
-      [Markup.button.callback(FAQ_BUTTON_TITLE, 'btn_3')],
-      [Markup.button.callback(PERSONAL_AREA_TITLE, 'btn_4')],
-    ]),
-  );
+  startScreen(ctx);
 });
 
-type Button = {
-  id_btn: string;
-  title?: string;
-  text?: string;
+type TButton = {
+  id: string;
+  title: string;
 };
+type TButtons = Array<TButton>;
 
-const pressBtn = ({ id_btn, title, text }: Button): void => {
-  bot.action(id_btn, async (ctx) => {
-    ctx.deleteMessage();
-    if (id_btn === 'btn_1' || id_btn === 'btn_2') {
-      try {
-        ctx.replyWithHTML(
-          `<b>${title}</b>
-
-${text}`,
-          Markup.inlineKeyboard([
-            [Markup.button.callback(CRYPTO_TITLE, 'btn_5')],
-            [Markup.button.callback(SCRILL_TITLE, 'btn_6')],
-            [Markup.button.callback(SWIFT_TITLE, 'btn_7')],
-            [Markup.button.callback(BANK_CARD_TITLE, 'btn_8')],
-            [Markup.button.callback(BACK, 'btn_9')],
-          ]),
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    if (id_btn === 'btn_3' || id_btn === 'btn_4') {
-      try {
-        ctx.replyWithHTML(
-          `<b>${title}</b>
-
-${text}`,
-          Markup.inlineKeyboard([[Markup.button.callback(BACK, 'btn_9')]]),
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    if (
-      id_btn === 'btn_5' ||
-      id_btn === 'btn_6' ||
-      id_btn === 'btn_7' ||
-      id_btn === 'btn_8'
-    ) {
-      try {
-        ctx.replyWithHTML(
-          `<b>${title}</b>
-
-${text}`,
-          Markup.inlineKeyboard([
-            [Markup.button.callback(CONFIRM_PAYMENT_TITLE, 'btn_10')],
-            [Markup.button.callback(BACK, 'btn_9')],
-          ]),
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    if (id_btn === 'btn_10') {
-      try {
-        ctx.replyWithHTML(
-          `${text}`,
-          Markup.inlineKeyboard([[Markup.button.callback(BACK, 'btn_9')]]),
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }
+function startScreen(ctx: {
+  replyWithHTML: (
+    arg0: string,
+    arg1: Markup.Markup<InlineKeyboardMarkup>,
+  ) => void;
+}): void {
+  renderScreen(ctx, {
+    html: START_TEXT,
+    buttons: [
+      [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
+      [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
+      [{ title: FAQ_BUTTON_TITLE, id: FAQ_SCREEN }],
+      [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+    ],
   });
-};
+}
 
-pressBtn({
-  id_btn: 'btn_1',
-  title: FOREX_TITLE,
-  text: FOREX_TEXT,
+function renderScreen(
+  ctx: {
+    replyWithHTML: (
+      arg0: string,
+      arg1: Markup.Markup<InlineKeyboardMarkup>,
+    ) => void;
+  },
+  options: {
+    html: string;
+    buttons: TButtons[];
+  },
+): void {
+  ctx.replyWithHTML(
+    options.html,
+    Markup.inlineKeyboard(
+      options.buttons.map((arr) => {
+        return arr.map((button) =>
+          Markup.button.callback(button.title, button.id),
+        );
+      }),
+    ),
+  );
+}
+
+bot.action(FOREX_SCREEN, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${FOREX_TITLE}</b>
+
+${FOREX_TEXT}`,
+      buttons: [
+        [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
+        [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }],
+        [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }],
+        [{ title: BANK_CARD_TITLE, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }],
+        [{ title: BACK, id: START_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_2',
-  title: CRYPTO_BUTTON_TITLE,
-  text: CRYPTO_BUTTON_TEXT,
+bot.action(CRYPTO_SCREEN, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CRYPTO_TITLE}</b>
+
+${CRYPTO_BUTTON_TEXT}`,
+      buttons: [
+        [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
+        [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }],
+        [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }],
+        [{ title: BANK_CARD_TITLE, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }],
+        [{ title: BACK, id: START_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_3',
-  title: FAQ_TITLE,
-  text: FAQ_TEXT,
+bot.action(FAQ_SCREEN, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${FAQ_TITLE}</b>${FAQ_TEXT}`,
+      buttons: [[{ title: BACK, id: START_SCREEN }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_4',
-  title: PERSONAL_AREA_BUTTON_TITLE,
-  text: PERSONAL_AREA_TEXT,
+bot.action(PERSONAL_AREA_SCREEN, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${PERSONAL_AREA_TITLE}</b>${PERSONAL_AREA_TEXT}`,
+      buttons: [[{ title: BACK, id: START_SCREEN }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_5',
-  title: CRYPTO_TITLE,
-  text: CRYPTO_TEXT,
+bot.action(START_SCREEN, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    startScreen(ctx);
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_6',
-  title: SCRILL_TITLE,
-  text: SCRILL_TEXT,
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CRYPTO_TITLE}</b>
+
+${CRYPTO_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
+          },
+        ],
+        [{ title: BACK, id: FOREX_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_7',
-  title: SWIFT_TITLE,
-  text: SWIFT_TEXT,
+bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${SCRILL_TITLE}</b>
+
+${SCRILL_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+          },
+        ],
+        [{ title: BACK, id: FOREX_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_8',
-  title: BANK_CARD_TITLE,
-  text: BANK_CARD_TEXT,
+bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${SWIFT_TITLE}</b>
+
+${SWIFT_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
+          },
+        ],
+        [{ title: BACK, id: FOREX_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
-pressBtn({
-  id_btn: 'btn_10',
-  text: CONFIRM_PAYMENT_TEXT,
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${BANK_CARD_TITLE}</b>
+
+${BANK_CARD_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
+          },
+        ],
+        [{ title: BACK, id: FOREX_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${BANK_CARD_TITLE}</b>
+
+${BANK_CARD_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
+          },
+        ],
+        [{ title: BACK, id: FOREX_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CRYPTO_TITLE}</b>
+
+${CRYPTO_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
+          },
+        ],
+        [{ title: BACK, id: CRYPTO_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${SCRILL_TITLE}</b>
+
+${SCRILL_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+          },
+        ],
+        [{ title: BACK, id: CRYPTO_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${SWIFT_TITLE}</b>
+
+${SWIFT_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
+          },
+        ],
+        [{ title: BACK, id: CRYPTO_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${BANK_CARD_TITLE}</b>
+
+${BANK_CARD_TEXT}`,
+      buttons: [
+        [
+          {
+            title: CONFIRM_PAYMENT_TITLE,
+            id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+          },
+        ],
+        [{ title: BACK, id: CRYPTO_SCREEN }],
+      ],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    renderScreen(ctx, {
+      html: `<b>${CONFIRM_PAYMENT_TITLE}</b>
+
+${CONFIRM_PAYMENT_TEXT}`,
+      buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
+    });
+  } catch (e) {
+    console.error(e);
+  }
 });
 
 console.log('Bot started');
