@@ -60,15 +60,18 @@ Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 const bot = new Telegraf(token);
 
 bot.start(async (ctx) => {
-  userServ.create({
-    chat_id: ctx.from.id,
-    first_name: ctx.from.first_name,
-    username: 'string',
-    admin: 0,
-    joined: new Date(),
-    last_action: new Date(),
-  });
-
+  const user = await userServ.getUserById(ctx.from.id);
+  if (!user) {
+    userServ.create({
+      chat_id: ctx.from.id,
+      first_name: ctx.from.first_name,
+      //TO DO:
+      username: 'string',
+      admin: 0,
+      joined: new Date(),
+      last_action: new Date(),
+    });
+  }
   startScreen(ctx);
 });
 

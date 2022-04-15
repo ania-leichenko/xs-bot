@@ -12,7 +12,14 @@ class User {
     this.#userRepository = userRepository;
   }
 
-  public async create({ chat_id, first_name, username, admin, joined, last_action }: UserEntity): Promise<void> {
+  public async create({
+    chat_id,
+    first_name,
+    username,
+    admin,
+    joined,
+    last_action,
+  }: UserEntity): Promise<void> {
     const user = await this.#userRepository.create({
       chat_id,
       first_name,
@@ -25,6 +32,10 @@ class User {
     if (!user) {
       throw new Error();
     }
+  }
+
+  public async getUserById(chat_id: number): Promise<UserEntity | null> {
+    return this.#userRepository.getUserById(chat_id);
   }
 }
 

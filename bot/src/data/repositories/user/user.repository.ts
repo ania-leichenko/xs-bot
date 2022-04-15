@@ -15,7 +15,7 @@ class User {
   public async create(user: UserEntity): Promise<UserEntity> {
     const { chat_id, first_name, username, admin, joined, last_action } = user;
 
-    const newWorker = await this.#UserModel.query().insert({
+    const newUser = await this.#UserModel.query().insert({
       chat_id,
       first_name,
       username,
@@ -24,8 +24,15 @@ class User {
       last_action,
     });
 
-    return User.modelToEntity(newWorker);
+    return User.modelToEntity(newUser);
   }
+
+  public async getUserById(chat_id: number): Promise<UserEntity | null> {
+    const user = await this.#UserModel.query().where({ chat_id }).first();
+    if (!user) return null;
+    return User.modelToEntity(user);
+  }
+
   public static modelToEntity(model: UserM): UserEntity {
     const { chat_id, first_name, username, admin, joined, last_action } = model;
 
