@@ -40,6 +40,12 @@ bot.start((ctx) => {
   botServ.startScreen(ctx);
 });
 
+bot.on('message', (ctx) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  botServ.confirmPayment(ctx);
+});
+
 bot.action(FOREX_SCREEN, async (ctx) => {
   botServ.forexScreen(ctx);
 });
@@ -61,7 +67,7 @@ bot.action(START_SCREEN, async (ctx) => {
 });
 
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentByCryptoScreenOfForex(ctx);
+  botServ.confirmPayment(ctx);
 });
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
@@ -91,16 +97,16 @@ bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
   botServ.confirmPaymentByBankCardScreenOfForex(ctx);
 });
- bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
-   botServ.paymentByCryptoScreenOfCrypto(ctx);
- });
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
+  botServ.paymentByCryptoScreenOfCrypto(ctx);
+});
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentByScrillScreenOfCrypto(ctx);
 });
 
 bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
-    botServ.paymentBySwiftScreenOfCrypto(ctx);
+  botServ.paymentBySwiftScreenOfCrypto(ctx);
 });
 
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -108,11 +114,11 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
-   botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
+  botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
-   botServ.confirmPaymentByScrillScreenOfCrypto(ctx);
+  botServ.confirmPaymentByScrillScreenOfCrypto(ctx);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {

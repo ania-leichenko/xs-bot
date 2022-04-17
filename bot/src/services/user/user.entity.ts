@@ -1,7 +1,7 @@
 class User {
   public chat_id: number;
   public first_name: string;
-  public username: string;
+  public username?: string;
   public admin: number;
   public joined: Date;
   public last_action: Date;

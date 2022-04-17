@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import { Context, Markup } from 'telegraf';
-import { user as userServ } from '../services';
+import { user as userServ, userMessage as userMessageServ } from '../services';
 import {
-  //ENV,
   START_TEXT,
   FOREX_TEXT,
   FAQ_TEXT,
@@ -48,6 +47,7 @@ import {
 
 type Constructor = {
   userService: typeof userServ;
+  userMessageService: typeof userMessageServ;
 };
 
 type TButton = {
@@ -58,9 +58,11 @@ type TButtons = Array<TButton>;
 
 class BotServ {
   #userService: typeof userServ;
+  #userMessageService: typeof userMessageServ;
 
-  constructor({ userService }: Constructor) {
+  constructor({ userService, userMessageService }: Constructor) {
     this.#userService = userService;
+    this.#userMessageService = userMessageService;
   }
   public async startBot(ctx: Context): Promise<void> {
     if (!ctx.from) {
@@ -71,13 +73,26 @@ class BotServ {
       userServ.create({
         chat_id: ctx.from.id,
         first_name: ctx.from.first_name,
-        //TO DO:
-        username: 'string',
+        username: ctx.from.username,
         admin: 0,
         joined: new Date(),
         last_action: new Date(),
       });
     }
+  }
+
+  public async confirmPayment(
+    ctx: Context & { message?: { text?: string } },
+  ): Promise<void> {
+    if (!ctx.message) {
+      throw new Error('ctx.message is undefined');
+    }
+   
+    userMessageServ.create({
+      chat_id: ctx.message.chat.id,
+      text: ctx.message.text,
+      date: new Date(ctx.message.date),
+    });
   }
 
   public async startScreen(ctx: Context): Promise<void> {
@@ -406,57 +421,57 @@ class BotServ {
   public async confirmPaymentByCryptoScreenOfCrypto(
     ctx: Context,
   ): Promise<void> {
-      try {
-        ctx.deleteMessage();
-        this.renderScreen(ctx, {
-          html: `${CONFIRM_PAYMENT_TEXT}`,
-          buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }]],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }]],
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   public async confirmPaymentByScrillScreenOfCrypto(
     ctx: Context,
   ): Promise<void> {
-      try {
-        ctx.deleteMessage();
-        this.renderScreen(ctx, {
-          html: `${CONFIRM_PAYMENT_TEXT}`,
-          buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }]],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }]],
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-   public async confirmPaymentBySwiftScreenOfCrypto(
+  public async confirmPaymentBySwiftScreenOfCrypto(
     ctx: Context,
   ): Promise<void> {
-      try {
-        ctx.deleteMessage();
-        this.renderScreen(ctx, {
-          html: `${CONFIRM_PAYMENT_TEXT}`,
-          buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }]],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }]],
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   public async confirmPaymentByBankCardScreenOfCrypto(
     ctx: Context,
   ): Promise<void> {
-      try {
-        ctx.deleteMessage();
-        this.renderScreen(ctx, {
-          html: `${CONFIRM_PAYMENT_TEXT}`,
-          buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
+      });
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
 
