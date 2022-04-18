@@ -1,175 +1,82 @@
-import { FC } from 'react';
-import {
-  Routes,
-  Route,
-  AuthorizedRoute,
-  Toaster,
-  Loader,
-} from 'components/common/common';
-import { useAppDispatch, useAppSelector, useEffect } from 'hooks/hooks';
-import { auth as authActions, app as appActions } from 'store/actions';
-import {
-  AppRoute,
-  DataStatus,
-  StorageKey,
-  Permission,
-} from 'common/enums/enums';
-import { Auth } from 'components/auth/auth';
-import { Dashboard } from 'components/dashboard/dashboard';
-import { storage } from 'services/services';
-import { EAM } from 'components/eam/eam';
-import { EAMConfigurateWorker } from 'components/eam-configurate-worker/eam-configurate-worker';
-import { EAMConfigurateGroup } from 'components/eam-configurate-group/eam-configurate-group';
-import { NotFound } from 'components/not-found-page/not-found-page';
-import { BS } from 'components/bs/bs';
-import { BSSpace } from 'components/bs-space/bs-space';
-import { BSCreateSpace } from 'components/bs-create-space/bs-create-space';
-import { SC } from 'components/sc/sc';
-import { SCConfigurateInstance } from 'components/sc-configurate-instance/sc-configurate-instance';
-import { SLC } from 'components/slc/slc';
-import { SLCConfigurateFunction } from 'components/slc-configurate-function/slc-configurate-function';
+import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { useTheme } from '@material-ui/core/styles';
+import { useStyles } from './css';
+import UserListTable from '../user-list/user-list';
+interface Props {
+  window?: () => Window;
+}
 
-const App: FC = () => {
-  const { user, authStatus } = useAppSelector(({ auth }) => ({
-    user: auth.user,
-    authStatus: auth.dataStatus,
-  }));
-  const dispatch = useAppDispatch();
-  const hasToken = Boolean(storage.getItem(StorageKey.TOKEN));
-  const hasUser = Boolean(user);
+function App(props: Props) {
+  const { window } = props;
+  const classes = useStyles();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  useEffect(() => {
-    if (hasToken) {
-      dispatch(authActions.loadCurrentUser());
-    }
-  }, [dispatch]);
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-  useEffect(() => {
-    if (!user) {
-      return;
-    }
-    dispatch(appActions.getTenant({ id: user.tenantId }));
-  }, [user, dispatch]);
+  const drawer = (
+    <div>
+      <div className={classes.toolbar} />
+      <List>
+        {['User List', 'Paid List'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 
-  if (!hasUser && hasToken && authStatus !== DataStatus.REJECTED) {
-    return <Loader />;
-  }
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <>
-      <Routes>
-        <Route path={AppRoute.SIGN_IN} element={<Auth />} />
-        <Route path={AppRoute.SIGN_UP} element={<Auth />} />
-        <Route
-          path={AppRoute.ROOT}
-          element={<AuthorizedRoute component={<Dashboard />} />}
-        />
-        <Route
-          path={AppRoute.EAM}
-          element={
-            <AuthorizedRoute
-              component={<EAM />}
-              permissions={[Permission.MANAGE_EAM]}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.EAM_CREATE_WORKER}
-          element={<AuthorizedRoute component={<EAMConfigurateWorker />} />}
-        />
-        <Route
-          path={AppRoute.EAM_CONFIGURATE_GROUP}
-          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
-        />
-        <Route
-          path={AppRoute.EAM_CONFIGURATE_GROUP_$ID}
-          element={<AuthorizedRoute component={<EAMConfigurateGroup />} />}
-        />
-        <Route
-          path={AppRoute.BS}
-          element={
-            <AuthorizedRoute
-              component={<BS />}
-              permissions={[Permission.MANAGE_BS]}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.BS_CREATE_SPACE}
-          element={<AuthorizedRoute component={<BSCreateSpace />} />}
-        />
-        <Route
-          path={AppRoute.BS_SPACE}
-          element={
-            <AuthorizedRoute
-              component={<BSSpace />}
-              permissions={[Permission.MANAGE_BS]}
-            />
-          }
-        >
-          <Route
-            path={AppRoute.$ID}
-            element={
-              <AuthorizedRoute
-                component={<BSSpace />}
-                permissions={[Permission.MANAGE_BS]}
-              />
-            }
-          />
-        </Route>
-        <Route
-          path={AppRoute.SC}
-          element={
-            <AuthorizedRoute
-              component={<SC />}
-              permissions={[Permission.MANAGE_SC]}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.SC_CONFIGURATE_INSTANCE}
-          element={
-            <AuthorizedRoute
-              component={<SCConfigurateInstance />}
-              permissions={[Permission.MANAGE_SC]}
-            />
-          }
-        >
-          <Route
-            path={AppRoute.$ID}
-            element={
-              <AuthorizedRoute
-                component={<SCConfigurateInstance />}
-                permissions={[Permission.MANAGE_SC]}
-              />
-            }
-          />
-        </Route>
-        <Route
-          path={AppRoute.SLC}
-          element={
-            <AuthorizedRoute
-              component={<SLC />}
-              permissions={[Permission.MANAGE_SLC]}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.SLC_CONFIGURATE_FUNCTION}
-          element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
-        />
-        <Route
-          path={AppRoute.SLC_CONFIGURATE_FUNCTION_$ID}
-          element={<AuthorizedRoute component={<SLCConfigurateFunction />} />}
-        />
-        <Route
-          path={AppRoute.NOT_FOUND}
-          element={<AuthorizedRoute component={<NotFound />} />}
-        />
-      </Routes>
-      <Toaster />
-    </>
+    <div className={classes.root}>
+      <CssBaseline />
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true,
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <UserListTable />
+      </main>
+    </div>
   );
-};
+}
 
 export { App };
