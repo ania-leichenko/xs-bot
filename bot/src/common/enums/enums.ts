@@ -1,4 +1,4 @@
-export { DateFormat } from './date/date-format.enum';
+export { DateFormat } from './date/date-format';
 export { ENV, AppEnvironment } from './app/app';
 export { TableName } from './db/db';
 export {

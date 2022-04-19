@@ -1,1 +1,1 @@
-export { TableName } from './table-name.enum';
+export { TableName } from 'bws-shared/common/enums/enums';

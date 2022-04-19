@@ -1,3 +1,1 @@
-export { AppEnvironment } from './app-environment.enum';
-export { ENV } from './env.enum';
-export { LogLevel } from './log-level.enum';
+export { ENV, AppEnvironment } from 'bws-shared/common/enums/enums';
