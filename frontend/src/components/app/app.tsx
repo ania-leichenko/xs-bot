@@ -7,7 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from './css';
-import UserListTable from '../user-list/user-list';
+import { UserListTable } from '../user-list/user-list';
+import { PaidListTable } from '../paid-list/paid-list';
 interface Props {
   window?: () => Window;
 }
@@ -18,7 +19,7 @@ function App(props: Props) {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = (): void => {
     setMobileOpen(!mobileOpen);
   };
 
@@ -26,7 +27,7 @@ function App(props: Props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        {['User List', 'Paid List'].map((text, index) => (
+        {['User List', 'Paid List'].map((text) => (
           <ListItem button key={text}>
             <ListItemText primary={text} />
           </ListItem>
@@ -56,7 +57,7 @@ function App(props: Props) {
               keepMounted: true,
             }}
           >
-            {drawer}
+            {drawer.key === 'User List' ? <UserListTable /> : <PaidListTable />}
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
@@ -72,8 +73,10 @@ function App(props: Props) {
         </Hidden>
       </nav>
       <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <UserListTable />
+        <div className={classes.toolbar}>
+          <UserListTable />
+          <PaidListTable />
+        </div>
       </main>
     </div>
   );

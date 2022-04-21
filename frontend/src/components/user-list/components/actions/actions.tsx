@@ -4,15 +4,19 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditIcon from '@material-ui/icons/Edit';
+import ListIcon from '@material-ui/icons/List';
+import { useStyles } from '../css';
+import { Edit } from '../edit/edit';
 
 export function Actions() {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null);
   };
 
@@ -23,7 +27,7 @@ export function Actions() {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        Open Menu
+        <ListIcon />
       </Button>
       <Menu
         id="simple-menu"
@@ -33,11 +37,11 @@ export function Actions() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <EditIcon />
-          Edit
+          <EditIcon className={classes.icons} />
+          <Edit />
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <DeleteOutlinedIcon />
+          <DeleteOutlinedIcon className={classes.icons} />
           Delete
         </MenuItem>
       </Menu>
