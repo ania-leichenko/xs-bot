@@ -69,7 +69,7 @@ class BotServ {
       throw new Error('ctx.from is undefined');
     }
     const user = userServ.getUserById(ctx.from.id);
-    if (!user) {
+    if(!user) {
       userServ.create({
         chat_id: ctx.from.id,
         first_name: ctx.from.first_name,
@@ -81,13 +81,13 @@ class BotServ {
     }
   }
 
-  public async confirmPayment(
+  public async userMessage(
     ctx: Context & { message?: { text?: string } },
   ): Promise<void> {
     if (!ctx.message) {
       throw new Error('ctx.message is undefined');
     }
-   
+
     userMessageServ.create({
       chat_id: ctx.message.chat.id,
       text: ctx.message.text,

@@ -1,6 +1,15 @@
 import { FastifyPluginAsync } from 'fastify';
+import { initUsersApi } from './user';
+import {
+  users,
+} from '~/services/services';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const initApi: FastifyPluginAsync = async (_fastify) => {};
+const initApi: FastifyPluginAsync = async (fastify) => {
+  fastify.register(initUsersApi, {
+    services: {
+      users,
+    },
+  });
+};
 
 export { initApi };

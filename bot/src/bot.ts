@@ -2,7 +2,7 @@
 import { Telegraf } from 'telegraf';
 import Knex from 'knex';
 import 'isomorphic-fetch';
-import { Model } from 'objection';
+import { AbstractModel } from './data/models/abstract/abstract.model';
 import {
   ENV,
   FOREX_SCREEN,
@@ -31,7 +31,9 @@ import { knexConfig } from '../knexfile';
 import { botServ } from './services/services';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
-Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
 const bot = new Telegraf(token);
 
@@ -43,7 +45,7 @@ bot.start((ctx) => {
 bot.on('message', (ctx) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  botServ.confirmPayment(ctx);
+  botServ.userMessage(ctx);
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
@@ -67,7 +69,7 @@ bot.action(START_SCREEN, async (ctx) => {
 });
 
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPayment(ctx);
+  botServ.paymentByCryptoScreenOfForex(ctx);
 });
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {

@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import Knex from 'knex';
-import { Model } from 'objection';
+import { AbstractModel } from './data/models/abstract/abstract.model';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
@@ -13,12 +13,21 @@ const app = Fastify({
   },
 });
 
-Model.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
 app.register(cors, {
   origin: ENV.APP.FRONTEND_URL,
 });
 
-app.register(initApi, {
-  prefix: ENV.API.V1_PREFIX,
+app.register(initApi);
+
+app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
+  if (err) {
+    app.log.error(err);
+  }
+  app.log.info(
+    `Listening to connections on - ${address}, Environment: ${ENV.APP.NODE_ENV}`,
+  );
 });

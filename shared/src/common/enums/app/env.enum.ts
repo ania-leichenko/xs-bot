@@ -54,9 +54,6 @@ const ENV = {
   FLAGS: {
     HAS_INSTANCE_AUTO_DELETING: HAS_INSTANCE_AUTO_DELETING === 'true',
   },
-  API: {
-    V1_PREFIX: '/api/v1',
-  },
 } as const;
 
 export { ENV };
