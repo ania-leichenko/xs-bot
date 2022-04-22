@@ -14,7 +14,6 @@ class UserRepository {
 
   public async getAllUsers(): Promise<UserEntity[]> {
     const users = await this.#UserModel.query();
-    return [];
 
     return users.map((user) => UserRepository.modelToEntity(user));
   }

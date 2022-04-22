@@ -68,7 +68,9 @@ class BotServ {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
-    const user = userServ.getUserById(ctx.from.id);
+    const user = await userServ.getUserById(ctx.from.id);
+
+      console.log('user ->', user);
     if(!user) {
       userServ.create({
         chat_id: ctx.from.id,
