@@ -13,7 +13,6 @@ import {
   SCRILL_TITLE,
   SWIFT_TITLE,
   BANK_CARD_TITLE,
-  CONFIRM_PAYMENT_TITLE,
   COPY_SIGNALS_TITLE,
 } from './title.enum';
 
@@ -92,8 +91,8 @@ To make a payment, contact the administrator @BestSignalsAdmin`;
 export const BANK_CARD_TEXT = `<b>${BANK_CARD_TITLE}</b>
 
 To make a payment, contact the administrator @BestSignalsAdmin`;
-export const CONFIRM_PAYMENT_TEXT = `<b>${CONFIRM_PAYMENT_TITLE}</b>
+export const CONFIRM_PAYMENT_TEXT = `We have received your payment.
 
-${SERVICE_INACTIVE_ICON} Send payment confirmation in chat. This can be a transaction number, ID, screenshot or video. But first, make sure that you have a telegram nickname, otherwise the system will not be able to give you a subscription. ${SERVICE_INACTIVE_ICON}
+Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
-Until you respond to this message in this chat, we will not receive payment from you and the system will not be able to process the payment!`;
+Track your subscription status in personal area`;

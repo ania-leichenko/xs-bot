@@ -338,7 +338,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -352,7 +355,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -363,7 +369,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -377,7 +386,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -471,7 +483,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -485,7 +500,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -499,7 +517,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -513,7 +534,10 @@ class BotServ {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }],
+        ],
       });
     } catch (e) {
       console.error(e);
@@ -608,6 +632,7 @@ class BotServ {
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
           [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS }],
         ],
       });
@@ -624,6 +649,7 @@ class BotServ {
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
           [
             {
               title: BACK,
@@ -645,6 +671,7 @@ class BotServ {
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
           [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
         ],
       });
@@ -661,6 +688,7 @@ class BotServ {
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
           [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS }],
         ],
       });
