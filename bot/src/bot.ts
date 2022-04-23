@@ -10,6 +10,7 @@ import {
   FAQ_SCREEN,
   PERSONAL_AREA_SCREEN,
   START_SCREEN,
+  COPY_SIGNALS_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
   PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
@@ -26,6 +27,15 @@ import {
   CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  MESSAGE_FROM_BOT_TO_USER,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import { botServ } from './services/services';
@@ -46,6 +56,7 @@ bot.on('message', (ctx) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   botServ.userMessage(ctx);
+  ctx.reply(MESSAGE_FROM_BOT_TO_USER);
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
@@ -54,6 +65,10 @@ bot.action(FOREX_SCREEN, async (ctx) => {
 
 bot.action(CRYPTO_SCREEN, async (ctx) => {
   botServ.cryptoScreen(ctx);
+});
+
+bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
+  botServ.copySignalsScreen(ctx);
 });
 
 bot.action(FAQ_SCREEN, async (ctx) => {
@@ -129,6 +144,38 @@ bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.confirmPaymentByBankCardScreenOfCrypto(ctx);
+});
+
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.paymentByCryptoOfCopySignals(ctx);
+});
+
+bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.paymentByScrillOfCopySignals(ctx);
+});
+
+bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.paymentBySwiftOfCopySignals(ctx);
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.paymentByBankCardOfCopySignals(ctx);
+});
+
+bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.confirmPaymentByScillScreenOfCopySignals(ctx);
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
+});
+
+bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
 });
 
 console.log('Bot started');

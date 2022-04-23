@@ -14,17 +14,25 @@ import {
   SWIFT_TITLE,
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
+  COPY_SIGNALS_TITLE,
 } from './title.enum';
 
+export const MESSAGE_FROM_BOT_TO_USER = `We have received your payment.
+
+Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
+
+Track your subscription status in personal area`;
 export const START_TEXT = `In order to become a member of premium signals, you need to choose which subscription you need.Daily receipt of 5 to 10 signals!
 
 By purchasing our signals, you get access to trading strategies that are a guaranteed guarantee of your success! If our signals do not bring you profit, we will return the funds!
 
 Choose from the list below ${SEE_BUTTONS}`;
-export const FOREX_TEXT =
-  `<b>${FOREX_TITLE}</b>
+export const FOREX_TEXT = `<b>${FOREX_TITLE}</b>
 
 Get signals with a return of more than 95%. Signals for the forex market, gold and indices. During the day, 5-10 signals come, and the stop loss does not exceed the profit.The most successful signals for gold, more than 1000 pips per month. In just a month, the goal of 3000 points will always be reached.`;
+export const COPY_SIGNALS_TEXT = `<b>${COPY_SIGNALS_TITLE}</b>
+
+Copy signals to your trading account with a delay of 0.00001ms! Trades with take profit and stop loss will be copied to your account, and if the trade is closed in the bot, it will be automatically closed on your account as well.`;
 export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
 
 ${QUESSION_ICON} Can I be sure of the authenticity of Premium Signals? Can I get free access for one day to try them out?

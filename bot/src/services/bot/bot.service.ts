@@ -4,6 +4,7 @@ import { user as userServ, userMessage as userMessageServ } from '../services';
 import {
   START_TEXT,
   FOREX_TEXT,
+  COPY_SIGNALS_TEXT,
   FAQ_TEXT,
   PERSONAL_AREA_TEXT,
   CRYPTO_TEXT,
@@ -17,6 +18,7 @@ import {
   PERSONAL_AREA_BUTTON_TITLE,
   CRYPTO_TITLE,
   CRYPTO_BUTTON_TITLE,
+  COPY_SIGNALS_TITLE,
   SCRILL_TITLE,
   SWIFT_TITLE,
   BANK_CARD_TITLE,
@@ -25,6 +27,7 @@ import {
   START_SCREEN,
   FOREX_SCREEN,
   CRYPTO_SCREEN,
+  COPY_SIGNALS_SCREEN,
   FAQ_SCREEN,
   PERSONAL_AREA_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
@@ -43,6 +46,14 @@ import {
   CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
 
 type Constructor = {
@@ -70,7 +81,7 @@ class BotServ {
     }
     const user = await userServ.getUserById(ctx.from.id);
 
-    if(!user) {
+    if (!user) {
       userServ.create({
         chatId: ctx.from.id,
         firstName: ctx.from.first_name,
@@ -102,6 +113,7 @@ class BotServ {
       buttons: [
         [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
         [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
+        [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
         [{ title: FAQ_BUTTON_TITLE, id: FAQ_SCREEN }],
         [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
       ],
@@ -163,6 +175,39 @@ class BotServ {
             {
               title: BANK_CARD_TITLE,
               id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+            },
+          ],
+          [{ title: BACK, id: START_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async copySignalsScreen(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${COPY_SIGNALS_TEXT}`,
+        buttons: [
+          [
+            {
+              title: CRYPTO_TITLE,
+              id: PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [
+            {
+              title: SCRILL_TITLE,
+              id: PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
+          [
+            {
+              title: BANK_CARD_TITLE,
+              id: PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
             },
           ],
           [{ title: BACK, id: START_SCREEN }],
@@ -469,6 +514,155 @@ class BotServ {
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [[{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }]],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async paymentByCryptoOfCopySignals(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CRYPTO_TEXT}`,
+        buttons: [
+          [
+            {
+              title: CONFIRM_PAYMENT_TITLE,
+              id: CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async paymentByScrillOfCopySignals(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${SCRILL_TEXT}`,
+        buttons: [
+          [
+            {
+              title: CONFIRM_PAYMENT_TITLE,
+              id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async paymentBySwiftOfCopySignals(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${SWIFT_TEXT}`,
+        buttons: [
+          [
+            {
+              title: CONFIRM_PAYMENT_TITLE,
+              id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async paymentByBankCardOfCopySignals(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${BANK_CARD_TEXT}`,
+        buttons: [
+          [
+            {
+              title: CONFIRM_PAYMENT_TITLE,
+              id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async confirmPaymentByCryptoScreenOfCopySignals(
+    ctx: Context,
+  ): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [
+          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async confirmPaymentByScillScreenOfCopySignals(
+    ctx: Context,
+  ): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [
+          [
+            {
+              title: BACK,
+              id: PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async confirmPaymentBySwiftScreenOfCopySignals(
+    ctx: Context,
+  ): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [
+          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async confirmPaymentByBankCardScreenOfCopySignals(
+    ctx: Context,
+  ): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${CONFIRM_PAYMENT_TEXT}`,
+        buttons: [
+          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS }],
+        ],
       });
     } catch (e) {
       console.error(e);
