@@ -9,7 +9,7 @@ import 'assets/css/styles.scss';
 
 render(
   <StrictMode>
-      <App />
+    <App />
   </StrictMode>,
   document.getElementById('root'),
 );

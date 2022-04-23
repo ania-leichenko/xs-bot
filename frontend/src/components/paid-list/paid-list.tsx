@@ -10,7 +10,6 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './css';
 import Button from '@material-ui/core/Button';
-import { Edit } from './components/edit-and-add/edit-and-add';
 
 function createData(
   user_name: string,

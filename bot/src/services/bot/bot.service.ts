@@ -70,15 +70,14 @@ class BotServ {
     }
     const user = await userServ.getUserById(ctx.from.id);
 
-      console.log('user ->', user);
     if(!user) {
       userServ.create({
-        chat_id: ctx.from.id,
-        first_name: ctx.from.first_name,
+        chatId: ctx.from.id,
+        firstName: ctx.from.first_name,
         username: ctx.from.username,
         admin: 0,
         joined: new Date(),
-        last_action: new Date(),
+        lastAction: new Date(),
       });
     }
   }

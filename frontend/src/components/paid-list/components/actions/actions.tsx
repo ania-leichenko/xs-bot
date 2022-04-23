@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import EditIcon from '@material-ui/icons/Edit';
 import ListIcon from '@material-ui/icons/List';
 import InfoIcon from '@material-ui/icons/Info';
 import { useStyles } from './css';
@@ -42,7 +41,6 @@ export function Actions() {
           Info
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <EditIcon className={classes.icons} />
           <Edit />
         </MenuItem>
         <MenuItem onClick={handleClose}>

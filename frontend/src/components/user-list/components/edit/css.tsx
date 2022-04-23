@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '250px',
       },
     },
+    icons: {
+      margin: '8px',
+    },
   }),
 );
 

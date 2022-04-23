@@ -3,15 +3,50 @@ import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
 
-const currencies = [
+const plan = [
   {
-    value: '0',
-    label: '0',
+    value: 'Forex',
+    label: 'Forex',
   },
   {
-    value: '1',
-    label: '1',
+    value: 'Crypto',
+    label: 'Crypto',
+  },
+];
+
+const paymentMethod = [
+  {
+    value: 'Crypto',
+    label: 'Crypto',
+  },
+  {
+    value: 'Scrill',
+    label: 'Scrill',
+  },
+  {
+    value: 'SWIFT',
+    label: 'SWIFT',
+  },
+  {
+    value: 'Bank Card',
+    label: 'Bank Card',
+  },
+];
+
+const status = [
+  {
+    value: 'Active',
+    label: 'Active',
+  },
+  {
+    value: 'Pending',
+    label: 'Pending',
+  },
+  {
+    value: 'Inactve',
+    label: 'Inactve',
   },
 ];
 
@@ -48,7 +83,10 @@ export function Edit() {
     <div>
       {(['right'] as Anchor[]).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Edit</Button>
+          <Button onClick={toggleDrawer(anchor, true)}>
+            <EditIcon className={classes.icons} />
+            Edit
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}
@@ -56,19 +94,67 @@ export function Edit() {
             onOpen={toggleDrawer(anchor, true)}
           >
             <form className={classes.root} noValidate autoComplete="off">
+              <div>Add paid user</div>
+              <div>
+                <TextField
+                  id="outlined-textarea"
+                  label="Subcription Time"
+                  placeholder=""
+                  multiline
+                  variant="outlined"
+                />
+              </div>
               <div>
                 <TextField
                   id="outlined-select-currency-native"
                   select
-                  label="Admin"
-                  value={currency}
+                  label="Plan"
+                  value={plan}
                   onChange={handleChange}
                   SelectProps={{
                     native: true,
                   }}
                   variant="outlined"
                 >
-                  {currencies.map((option) => (
+                  {plan.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div>
+                <TextField
+                  id="outlined-select-currency-native"
+                  select
+                  label="Payment method"
+                  value={paymentMethod}
+                  onChange={handleChange}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  variant="outlined"
+                >
+                  {paymentMethod.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div>
+                <TextField
+                  id="outlined-select-currency-native"
+                  select
+                  label="Status"
+                  value={status}
+                  onChange={handleChange}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  variant="outlined"
+                >
+                  {status.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -76,6 +162,22 @@ export function Edit() {
                 </TextField>
               </div>
             </form>
+            <div className={classes.buttons}>
+              <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  href="#contained-buttons"
+                >
+                  Save
+                </Button>
+              </div>
+              <div>
+                <Button variant="outlined" href="#outlined-buttons">
+                  Cancel
+                </Button>
+              </div>
+            </div>
           </SwipeableDrawer>
         </React.Fragment>
       ))}

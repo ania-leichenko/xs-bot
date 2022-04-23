@@ -3,6 +3,7 @@ import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import EditIcon from '@material-ui/icons/Edit';
 
 const currencies = [
   {
@@ -48,7 +49,10 @@ export function Edit() {
     <div>
       {(['right'] as Anchor[]).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Edit</Button>
+          <Button onClick={toggleDrawer(anchor, true)}>
+            <EditIcon className={classes.icons} />
+            Edit
+          </Button>
           <SwipeableDrawer
             anchor={anchor}
             open={state[anchor]}

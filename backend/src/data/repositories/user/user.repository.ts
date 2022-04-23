@@ -14,7 +14,7 @@ class UserRepository {
 
   public async getAllUsers(): Promise<UserEntity[]> {
     const users = await this.#UserModel.query();
-
+    console.log('users --> ', users); //eslint-disable-line
     return users.map((user) => UserRepository.modelToEntity(user));
   }
 

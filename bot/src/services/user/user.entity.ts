@@ -1,55 +1,55 @@
 class User {
-  public chat_id: number;
-  public first_name: string;
+  public chatId: number;
+  public firstName: string;
   public username?: string;
   public admin: number;
   public joined: Date;
-  public last_action: Date;
+  public lastAction: Date;
 
   private constructor({
-    chat_id,
-    first_name,
+    chatId,
+    firstName,
     username,
     admin,
     joined,
-    last_action,
+    lastAction,
   }: {
-    chat_id: number;
-    first_name: string;
+    chatId: number;
+    firstName: string;
     username: string;
     admin: number;
     joined: Date;
-    last_action: Date;
+    lastAction: Date;
   }) {
-    this.chat_id = chat_id;
-    this.first_name = first_name;
+    this.chatId = chatId;
+    this.firstName = firstName;
     this.username = username;
     this.admin = admin;
     this.joined = joined;
-    this.last_action = last_action;
+    this.lastAction = lastAction;
   }
   public static createNew({
-    chat_id,
-    first_name,
+    chatId,
+    firstName,
     username,
     admin,
     joined,
-    last_action,
+    lastAction,
   }: {
-    chat_id: number;
-    first_name: string;
+    chatId: number;
+    firstName: string;
     username: string;
     admin: number;
     joined: Date;
-    last_action: Date;
+    lastAction: Date;
   }): User {
     return new User({
-      chat_id,
-      first_name,
+      chatId,
+      firstName,
       username,
       admin,
       joined,
-      last_action,
+      lastAction,
     });
   }
 }

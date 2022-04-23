@@ -13,36 +13,36 @@ class User {
   }
 
   public async create(user: UserEntity): Promise<UserEntity> {
-    const { chat_id, first_name, username, admin, joined, last_action } = user;
+    const { chatId, firstName, username, admin, joined, lastAction } = user;
 
     const newUser = await this.#UserModel.query().insert({
-      chat_id,
-      first_name,
+      chatId,
+      firstName,
       username,
       admin,
       joined,
-      last_action,
+      lastAction,
     });
 
     return User.modelToEntity(newUser);
   }
 
-  public async getUserById(chat_id: number): Promise<UserEntity | null> {
-    const user = await this.#UserModel.query().where({ chat_id }).first();
+  public async getUserById(chatId: number): Promise<UserEntity | null> {
+    const user = await this.#UserModel.query().where({ chatId }).first();
     if (!user) return null;
     return User.modelToEntity(user);
   }
 
   public static modelToEntity(model: UserM): UserEntity {
-    const { chat_id, first_name, username, admin, joined, last_action } = model;
+    const { chatId, firstName, username, admin, joined, lastAction } = model;
 
     return UserEntity.createNew({
-      chat_id,
-      first_name,
+      chatId,
+      firstName,
       username,
       admin,
       joined,
-      last_action,
+      lastAction,
     });
   }
 }

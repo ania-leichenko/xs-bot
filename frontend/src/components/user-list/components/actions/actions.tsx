@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import EditIcon from '@material-ui/icons/Edit';
 import ListIcon from '@material-ui/icons/List';
-import { useStyles } from '../css';
+import { useStyles } from './css';
 import { Edit } from '../edit/edit';
 
 export function Actions() {
@@ -37,7 +37,6 @@ export function Actions() {
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <EditIcon className={classes.icons} />
           <Edit />
         </MenuItem>
         <MenuItem onClick={handleClose}>

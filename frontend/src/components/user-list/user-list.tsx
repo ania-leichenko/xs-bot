@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,19 +9,55 @@ import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
 import { useStyles } from './css';
 
-function createData(
-  user_name  : string,
-  admin: number,
-  joined: number,
-  last_action: number,
-) {
-  return { user_name, admin, joined, last_action };
-}
+type Users = {
+  firstName: string;
+  username: string;
+  admin: number;
+  joined: Date;
+  lastAction: Date;
+};
 
-const rows = [createData('Frozen yoghurt', 159, 60, 40)];
-
-export  function UserListTable() {
+export function UserListTable() {
   const classes = useStyles();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/users', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(data);
+      });
+  }, []);
+
+  function formateDate(date: Date): String {
+    const allDate = new Date(date);
+    let day = allDate.getDay();
+    if (day < 10) {
+      day = `0${day}`
+    }
+    let mouth = allDate.getMonth();
+     if (mouth < 10) {
+       mouth = `0${mouth}`;
+     }
+    const year = allDate.getFullYear();
+    let hour = allDate.getHours();
+    if (hour < 10) {
+      hour = `0${hour}`;
+    }
+    const minutes = allDate.getMinutes();
+     if (minutes < 10) {
+       minutes = `0${minutes}`;
+     }
+    return `${day} / ${mouth} / ${year}  ${hour}:${minutes}`;
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -35,19 +72,23 @@ export  function UserListTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.user_name}>
-              <TableCell component="th" scope="row" align="center">
-                {row.user_name}
-              </TableCell>
-              <TableCell align="center">{row.admin}</TableCell>
-              <TableCell align="center">{row.joined}</TableCell>
-              <TableCell align="center">{row.last_action}</TableCell>
-              <TableCell align="center">
-                <Actions />
-              </TableCell>
-            </TableRow>
-          ))}
+          {users &&
+            users.map((user: Users) => (
+              <TableRow>
+                <TableCell component="th" scope="row" align="center">
+                  {user.firstName}
+                  {`@${user.username}`}
+                </TableCell>
+                <TableCell align="center">{user.admin}</TableCell>
+                <TableCell align="center">{formateDate(user.joined)}</TableCell>
+                <TableCell align="center">
+                  {formateDate(user.lastAction)}
+                </TableCell>
+                <TableCell align="center">
+                  <Actions />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>
