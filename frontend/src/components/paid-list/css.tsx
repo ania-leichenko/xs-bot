@@ -3,13 +3,14 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     table: {
       minWidth: 650,
-      backgroundColor: blueGrey[700],
+    },
+    tableContainer: {
+      backgroundColor: '#283046',
     },
     tableHead: {
       display: 'flex',

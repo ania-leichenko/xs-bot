@@ -37,6 +37,14 @@ class User {
   public async getUserById(chatId: number): Promise<UserEntity | null> {
     return this.#userRepository.getUserById(chatId);
   }
+
+  public async checkIsAdmin(chatId: number): Promise<boolean> {
+    const user =  await this.#userRepository.getUserById(chatId);
+    if (user?.admin === 1) {
+      return true;
+    }
+    return false;
+  }
 }
 
 export { User };

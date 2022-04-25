@@ -26,7 +26,7 @@ export function PaidListTable() {
   const classes = useStyles();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.tableContainer}>
       <TableHead className={classes.tableHead}>
         <div className={classes.search}>
           <div className={classes.searchIcon}>

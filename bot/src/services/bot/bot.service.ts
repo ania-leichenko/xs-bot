@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 import { Context, Markup } from 'telegraf';
-import { user as userServ, userMessage as userMessageServ } from '../services';
+import {
+  user as userServ,
+  userMessage as userMessageServ,
+  paidList as paidListServ,
+} from '../services';
 import {
   START_TEXT,
   FOREX_TEXT,
@@ -59,6 +63,7 @@ import {
 type Constructor = {
   userService: typeof userServ;
   userMessageService: typeof userMessageServ;
+  paidListService: typeof paidListServ;
 };
 
 type TButton = {
@@ -91,6 +96,33 @@ class BotServ {
         lastAction: new Date(),
       });
     }
+  }
+
+  public async createTicket(
+    ctx: Context,
+    {
+      plan,
+      paymentMethod,
+      status,
+    }: {
+      plan: string;
+      paymentMethod: string;
+      status: string;
+    },
+  ): Promise<void> {
+    if (!ctx.from) {
+      throw new Error('ctx.from is undefined');
+    }
+
+    paidListServ.create({
+      chatId: ctx.from.id,
+      firstName: ctx.from.first_name,
+      username: ctx.from.username,
+      subcriptionTime: new Date(),
+      plan: plan,
+      paymentMethod: paymentMethod,
+      status: status,
+    });
   }
 
   public async userMessage(

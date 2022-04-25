@@ -4,7 +4,6 @@ import {
   Theme,
   createStyles,
 } from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const drawerWidth = 240;
 
@@ -12,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      backgroundColor: blueGrey[900],
+      backgroundColor: '#141b2f',
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
-      backgroundColor: blueGrey[700],
+      backgroundColor: '#283046',
     },
     content: {
       flexGrow: 1,
