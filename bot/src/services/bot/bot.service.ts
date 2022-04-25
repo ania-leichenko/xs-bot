@@ -59,6 +59,7 @@ import {
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
+import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 
 type Constructor = {
   userService: typeof userServ;
@@ -109,19 +110,44 @@ class BotServ {
       paymentMethod: string;
       status: string;
     },
-  ): Promise<void> {
+  ): Promise<PaidListEntity> {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
 
-    paidListServ.create({
+    const ticket = await paidListServ.create({
       chatId: ctx.from.id,
       firstName: ctx.from.first_name,
-      username: ctx.from.username,
+      username: ctx.from.username || '',
       subcriptionTime: new Date(),
       plan: plan,
       paymentMethod: paymentMethod,
       status: status,
+      country: ctx.from.language_code || '',
+    });
+
+    const message = `<b>New Payment</b>
+
+Ticket: ${ticket.ticket}
+Username: ${ticket.username}
+Telegram name: ${ticket.firstName}
+Plan: ${ticket.plan}
+Payment method: ${ticket.paymentMethod}
+ID: ${ticket.chatId}
+Country: ${ticket.country}`;
+    this.sendMessageToAdmin(ctx, message);
+    return ticket;
+  }
+
+  public async sendMessageToAdmin(
+    ctx: Context,
+    message: string,
+  ): Promise<void> {
+    const admins = await userServ.getAllAdmins();
+    admins.map((admin): void => {
+      ctx.telegram.sendMessage(admin.chatId, message, {
+        parse_mode: 'HTML',
+      });
     });
   }
 
@@ -372,7 +398,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
+          [{ title: BACK, id:  START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -389,7 +415,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -403,7 +429,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -420,7 +446,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -517,7 +543,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -534,7 +560,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -551,7 +577,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -568,7 +594,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -665,7 +691,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -685,7 +711,7 @@ class BotServ {
           [
             {
               title: BACK,
-              id: PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+              id: START_SCREEN,
             },
           ],
         ],
@@ -704,7 +730,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {
@@ -721,7 +747,7 @@ class BotServ {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {

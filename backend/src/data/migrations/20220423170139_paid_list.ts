@@ -13,6 +13,7 @@ async function up(knex: Knex): Promise<void> {
     table.string('plan').notNullable();
     table.string('payment_method').notNullable();
     table.string('status').notNullable();
+    table.string('country').notNullable();
   });
 }
 

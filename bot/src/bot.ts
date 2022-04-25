@@ -35,7 +35,6 @@ import {
   CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
-  MESSAGE_FROM_BOT_TO_USER,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import { botServ } from './services/services';
@@ -50,13 +49,6 @@ const bot = new Telegraf(token);
 bot.start((ctx) => {
   botServ.startBot(ctx);
   botServ.startScreen(ctx);
-});
-
-bot.on('message', (ctx) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  botServ.userMessage(ctx);
-  ctx.reply(MESSAGE_FROM_BOT_TO_USER);
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
@@ -110,11 +102,11 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
   botServ.confirmPaymentByScrillScreenOfForex(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'Forex',
-     paymentMethod: 'Scrill',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'Forex',
+    paymentMethod: 'Scrill',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
@@ -152,38 +144,38 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'Crypto',
-     paymentMethod: 'Crypto',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'Crypto',
+    paymentMethod: 'Crypto',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.confirmPaymentByScrillScreenOfCrypto(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'Crypto',
-     paymentMethod: 'Scrill',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'Crypto',
+    paymentMethod: 'Scrill',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.confirmPaymentBySwiftScreenOfCrypto(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'Crypto',
-     paymentMethod: 'SWIFT',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'Crypto',
+    paymentMethod: 'SWIFT',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.confirmPaymentByBankCardScreenOfCrypto(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'Crypto',
-     paymentMethod: 'BankCard',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'Crypto',
+    paymentMethod: 'BankCard',
+    status: 'Pending',
+  });
 });
 
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
@@ -204,38 +196,38 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'CopySignals',
-     paymentMethod: 'Crypto',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'CopySignals',
+    paymentMethod: 'Crypto',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentByScillScreenOfCopySignals(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'CopySignals',
-     paymentMethod: 'Scrill',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'CopySignals',
+    paymentMethod: 'Scrill',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'CopySignals',
-     paymentMethod: 'SWIFT',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'CopySignals',
+    paymentMethod: 'SWIFT',
+    status: 'Pending',
+  });
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
-   botServ.createTicket(ctx, {
-     plan: 'CopySignals',
-     paymentMethod: 'BankCard',
-     status: 'Pending',
-   });
+  botServ.createTicket(ctx, {
+    plan: 'CopySignals',
+    paymentMethod: 'BankCard',
+    status: 'Pending',
+  });
 });
 
 console.log('Bot started');

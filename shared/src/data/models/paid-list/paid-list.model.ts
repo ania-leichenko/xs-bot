@@ -13,9 +13,10 @@ class PaidList extends AbstractModel {
   [PaidListTableField.PLAN]: string;
   [PaidListTableField.PAYMENT_METHOD]: string;
   [PaidListTableField.STATUS]: string;
+  [PaidListTableField.COUNTRY]: string;
 
   static get idColumn(): string {
-    return PaidListTableField.CHAT_ID;
+    return PaidListTableField.TICKET;
   }
 
   static get tableName(): string {

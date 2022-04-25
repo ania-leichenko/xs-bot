@@ -33,6 +33,11 @@ class User {
     return User.modelToEntity(user);
   }
 
+  public async getAllAdmins(): Promise<UserEntity[]> {
+    const admins = await this.#UserModel.query().where({ admin: 1 });
+    return admins.map((admin) => User.modelToEntity(admin));
+  }
+
   public static modelToEntity(model: UserM): UserEntity {
     const { chatId, firstName, username, admin, joined, lastAction } = model;
 

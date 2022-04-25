@@ -20,8 +20,18 @@ class PaidList {
     plan,
     paymentMethod,
     status,
-  }: PaidListEntity): Promise<void> {
-    const ticket = await this.#paidListRepository.create({
+    country,
+  }: {
+    chatId: number;
+    firstName: string;
+    username: string;
+    subcriptionTime: Date;
+    plan: string;
+    paymentMethod: string;
+    status: string;
+    country: string;
+  }): Promise<PaidListEntity> {
+    const tickets = await this.#paidListRepository.create({
       chatId,
       firstName,
       username,
@@ -29,11 +39,13 @@ class PaidList {
       plan,
       paymentMethod,
       status,
+      country,
     });
 
-    if (!ticket) {
+    if (!tickets) {
       throw new Error();
     }
+    return tickets;
   }
 }
 

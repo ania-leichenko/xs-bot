@@ -12,7 +12,16 @@ class PaidList {
     this.#PaidListModel = PaidListModel;
   }
 
-  public async create(ticket: PaidListEntity): Promise<PaidListEntity> {
+  public async create(ticket: {
+    chatId: number;
+    firstName: string;
+    username: string;
+    subcriptionTime: Date;
+    plan: string;
+    paymentMethod: string;
+    status: string;
+    country: string;
+  }): Promise<PaidListEntity> {
     const {
       chatId,
       firstName,
@@ -21,29 +30,38 @@ class PaidList {
       plan,
       paymentMethod,
       status,
+      country,
     } = ticket;
 
-    const newTicket = await this.#PaidListModel.query().insert({
-      chatId,
-      firstName,
-      username,
-      subcriptionTime,
-      plan,
-      paymentMethod,
-      status,
-    });
+    const newTicket = await this.#PaidListModel
+      .query()
+      .insert({
+        chatId,
+        firstName,
+        username,
+        subcriptionTime,
+        plan,
+        paymentMethod,
+        status,
+        country,
+      })
+      .returning('ticket');
 
     return PaidList.modelToEntity(newTicket);
   }
 
-  public async getTicketById(chatId: number): Promise<PaidListEntity | null> {
-    const ticket = await this.#PaidListModel.query().where({ chatId }).first();
+  public async getTicketById(ticketId: number): Promise<PaidListEntity | null> {
+    const ticket = await this.#PaidListModel
+      .query()
+      .where({ ticketId })
+      .first();
     if (!ticket) return null;
     return PaidList.modelToEntity(ticket);
   }
 
   public static modelToEntity(model: PaidListM): PaidListEntity {
     const {
+      ticket,
       chatId,
       firstName,
       username,
@@ -51,9 +69,11 @@ class PaidList {
       plan,
       paymentMethod,
       status,
+      country,
     } = model;
 
     return PaidListEntity.createNew({
+      ticket,
       chatId,
       firstName,
       username,
@@ -61,6 +81,7 @@ class PaidList {
       plan,
       paymentMethod,
       status,
+      country,
     });
   }
 }

@@ -7,6 +7,7 @@ enum PaidListTableField {
   PLAN = 'plan',
   PAYMENT_METHOD = 'paymentMethod',
   STATUS = 'status',
+  COUNTRY = 'country',
 }
 
 export { PaidListTableField };
