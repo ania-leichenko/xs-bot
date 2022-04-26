@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import { formateDate } from '../formateDate/formateDate';
 
 type Ticket = {
+  ticket: number;
   firstName: string;
   username: string;
   subcriptionTime: Date;
@@ -89,7 +90,7 @@ export function PaidListTable() {
                 <TableCell align="center">{ticket.paymentMethod}</TableCell>
                 <TableCell align="center">{ticket.status}</TableCell>
                 <TableCell align="center">
-                  <Actions />
+                  <Actions ticket={ticket.ticket} setTickets={setTickets} />
                 </TableCell>
               </TableRow>
             ))}

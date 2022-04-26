@@ -7,6 +7,10 @@ type Options = {
   };
 };
 
+type Params = {
+  id: number;
+};
+
 const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { paidList: paidListService } = opts.services;
 
@@ -14,6 +18,16 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: 'GET',
     url: '/tickets',
     async handler(req: FastifyRequest, rep: FastifyReply) {
+      const tickets = await paidListService.getAllTickets();
+      return rep.send(tickets).status(200);
+    },
+  });
+
+  fastify.route({
+    method: 'DELETE',
+    url: '/tickets/:id',
+    async handler(req: FastifyRequest<{ Params: Params }>, rep: FastifyReply) {
+      await paidListService.delete(req.params.id);
       const tickets = await paidListService.getAllTickets();
       return rep.send(tickets).status(200);
     },

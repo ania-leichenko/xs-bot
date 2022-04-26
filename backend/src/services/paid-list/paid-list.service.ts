@@ -15,6 +15,10 @@ class PaidList {
   async getAllTickets(): Promise<PaidListEntity[]> {
     return this.#paidListRepository.getAllTickets();
   }
+
+   public async delete(id: number): Promise<void> {
+    await this.#paidListRepository.delete(id);
+  }
 }
 
 export { PaidList };

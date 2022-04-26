@@ -11,6 +11,7 @@ import { useStyles } from './css';
 import { formateDate } from '../formateDate/formateDate';
 
 type Users = {
+  chatId: number;
   firstName: string;
   username: string;
   admin: number;
@@ -62,7 +63,7 @@ export function UserListTable() {
                 <TableCell align="center">{formateDate(user.joined)}</TableCell>
                 <TableCell align="center">{formateDate(user.lastAction)}</TableCell>
                 <TableCell align="center">
-                  <Actions />
+                  <Actions chatId={user.chatId} setUsers={setUsers}/>
                 </TableCell>
               </TableRow>
             ))}

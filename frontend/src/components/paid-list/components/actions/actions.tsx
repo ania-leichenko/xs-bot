@@ -8,7 +8,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import { useStyles } from './css';
 import { Edit } from '../edit-and-add/edit-and-add';
 
-export function Actions() {
+export function Actions({
+  ticket,
+  setTickets,
+}: {
+  ticket: number;
+  setTickets: (data: any) => void;
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -18,6 +24,22 @@ export function Actions() {
 
   const handleClose = (): void => {
     setAnchorEl(null);
+  };
+
+  const handleDeleteTicket = (): void => {
+    fetch(`http://localhost:3001/tickets/${ticket}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setTickets(data);
+      });
   };
 
   return (
@@ -44,8 +66,12 @@ export function Actions() {
           <Edit />
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <DeleteOutlinedIcon className={classes.icons} />
-          Delete
+          <div onClick={handleDeleteTicket} className={classes.button}>
+            <DeleteOutlinedIcon
+              className={classes.icons}
+            />
+            Delete
+          </div>
         </MenuItem>
       </Menu>
     </div>

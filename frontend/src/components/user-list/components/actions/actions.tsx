@@ -3,12 +3,17 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import EditIcon from '@material-ui/icons/Edit';
 import ListIcon from '@material-ui/icons/List';
 import { useStyles } from './css';
 import { Edit } from '../edit/edit';
 
-export function Actions() {
+export function Actions({
+  chatId,
+  setUsers,
+}: {
+  chatId: number;
+  setUsers: (data: any) => void;
+}) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -18,6 +23,22 @@ export function Actions() {
 
   const handleClose = (): void => {
     setAnchorEl(null);
+  };
+
+  const handleDeleteUser = (): void => {
+    fetch(`http://localhost:3001/user/${chatId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(data);
+      });
   };
 
   return (
@@ -40,8 +61,10 @@ export function Actions() {
           <Edit />
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <DeleteOutlinedIcon className={classes.icons} />
-          Delete
+          <div onClick={handleDeleteUser} className={classes.button}>
+            <DeleteOutlinedIcon className={classes.icons} />
+            Delete
+          </div>
         </MenuItem>
       </Menu>
     </div>

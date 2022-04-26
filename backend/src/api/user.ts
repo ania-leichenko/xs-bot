@@ -7,6 +7,10 @@ type Options = {
   };
 };
 
+type Params = {
+  id: number,
+};
+
 const initUsersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { users: usersService } = opts.services;
 
@@ -17,6 +21,16 @@ const initUsersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const users =  await usersService.getAllUsers();
       return rep.send(users)
       .status(200);
+    },
+  });
+
+  fastify.route({
+    method: 'DELETE',
+    url: '/user/:id',
+    async handler(req: FastifyRequest<{ Params: Params }>, rep: FastifyReply) {
+      await usersService.delete(req.params.id);
+       const users = await usersService.getAllUsers();
+      return rep.send(users).status(200);
     },
   });
 };

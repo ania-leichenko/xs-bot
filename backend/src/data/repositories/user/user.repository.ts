@@ -17,6 +17,10 @@ class UserRepository {
     return users.map((user) => UserRepository.modelToEntity(user));
   }
 
+  public async delete(usersId: number): Promise<number> {
+    return this.#UserModel.query().deleteById(usersId);
+  }
+
   public static modelToEntity(model: UserM): UserEntity {
     return UserEntity.initialize(model);
   }

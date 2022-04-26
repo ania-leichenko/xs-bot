@@ -15,6 +15,10 @@ class UserService {
   async getAllUsers(): Promise<UserEntity[]> {
     return this.#usersRepository.getAllUsers();
   }
+
+  public async delete(id: number): Promise<void> {
+    await this.#usersRepository.delete(id);
+  }
 }
 
 export { UserService };

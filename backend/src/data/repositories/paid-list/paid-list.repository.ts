@@ -17,6 +17,10 @@ class PaidList {
     return tickets.map((ticket) => PaidList.modelToEntity(ticket));
   }
 
+  public async delete(id: number): Promise<number> {
+    return this.#PaidListModel.query().deleteById(id);
+  }
+
   public static modelToEntity(model: PaidListM): PaidListEntity {
     return PaidListEntity.initialize(model);
   }
