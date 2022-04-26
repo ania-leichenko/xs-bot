@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
 import { useStyles } from './css';
+import { formateDate } from '../formateDate/formateDate';
 
 type Users = {
   firstName: string;
@@ -37,28 +38,6 @@ export function UserListTable() {
       });
   }, []);
 
-  function formateDate(date: Date): String {
-    const allDate = new Date(date);
-    let day = allDate.getDay();
-    if (day < 10) {
-      day = `0${day}`
-    }
-    let mouth = allDate.getMonth();
-     if (mouth < 10) {
-       mouth = `0${mouth}`;
-     }
-    const year = allDate.getFullYear();
-    let hour = allDate.getHours();
-    if (hour < 10) {
-      hour = `0${hour}`;
-    }
-    const minutes = allDate.getMinutes();
-     if (minutes < 10) {
-       minutes = `0${minutes}`;
-     }
-    return `${day} / ${mouth} / ${year}  ${hour}:${minutes}`;
-  }
-
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -81,9 +60,7 @@ export function UserListTable() {
                 </TableCell>
                 <TableCell align="center">{user.admin}</TableCell>
                 <TableCell align="center">{formateDate(user.joined)}</TableCell>
-                <TableCell align="center">
-                  {formateDate(user.lastAction)}
-                </TableCell>
+                <TableCell align="center">{formateDate(user.lastAction)}</TableCell>
                 <TableCell align="center">
                   <Actions />
                 </TableCell>

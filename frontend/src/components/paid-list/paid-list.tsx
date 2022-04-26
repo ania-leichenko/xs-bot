@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,20 +11,36 @@ import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './css';
 import Button from '@material-ui/core/Button';
+import { formateDate } from '../formateDate/formateDate';
 
-function createData(
-  user_name: string,
-  admin: number,
-  joined: number,
-  last_action: number,
-) {
-  return { user_name, admin, joined, last_action };
-}
-
-const rows = [createData('Frozen yoghurt', 159, 60, 40)];
+type Ticket = {
+  firstName: string;
+  username: string;
+  subcriptionTime: Date;
+  plan: string;
+  paymentMethod: string;
+  status: string;
+};
 
 export function PaidListTable() {
   const classes = useStyles();
+  const [tickets, setTickets] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/tickets', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setTickets(data);
+      });
+  }, []);
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
@@ -59,20 +76,23 @@ export function PaidListTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.user_name}>
-              <TableCell component="th" scope="row" align="center">
-                {row.user_name}
-              </TableCell>
-              <TableCell align="center">{row.admin}</TableCell>
-              <TableCell align="center">{row.joined}</TableCell>
-              <TableCell align="center">{row.last_action}</TableCell>
-              <TableCell align="center">{row.last_action}</TableCell>
-              <TableCell align="center">
-                <Actions />
-              </TableCell>
-            </TableRow>
-          ))}
+          {tickets &&
+            tickets.map((ticket: Ticket) => (
+              <TableRow>
+                <TableCell component="th" scope="row" align="center">
+                  {ticket.firstName}
+                </TableCell>
+                <TableCell align="center">
+                  {formateDate(ticket.subcriptionTime)}
+                </TableCell>
+                <TableCell align="center">{ticket.plan}</TableCell>
+                <TableCell align="center">{ticket.paymentMethod}</TableCell>
+                <TableCell align="center">{ticket.status}</TableCell>
+                <TableCell align="center">
+                  <Actions />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

@@ -50,15 +50,6 @@ class PaidList {
     return PaidList.modelToEntity(newTicket);
   }
 
-  public async getTicketById(ticketId: number): Promise<PaidListEntity | null> {
-    const ticket = await this.#PaidListModel
-      .query()
-      .where({ ticketId })
-      .first();
-    if (!ticket) return null;
-    return PaidList.modelToEntity(ticket);
-  }
-
   public static modelToEntity(model: PaidListM): PaidListEntity {
     const {
       ticket,
