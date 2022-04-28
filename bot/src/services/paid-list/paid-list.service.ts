@@ -47,6 +47,11 @@ class PaidList {
     }
     return tickets;
   }
+  public async getUserByChannelPlan(
+    channel_plan: string,
+  ): Promise<PaidListEntity[]> {
+    return this.#paidListRepository.getUserByChannelPlan(channel_plan);
+  }
 }
 
 export { PaidList };

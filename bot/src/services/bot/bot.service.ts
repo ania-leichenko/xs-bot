@@ -4,6 +4,7 @@ import {
   user as userServ,
   userMessage as userMessageServ,
   paidList as paidListServ,
+  channel as channelServ,
 } from '../services';
 import {
   START_TEXT,
@@ -65,6 +66,7 @@ type Constructor = {
   userService: typeof userServ;
   userMessageService: typeof userMessageServ;
   paidListService: typeof paidListServ;
+  channelService: typeof channelServ;
 };
 
 type TButton = {
@@ -76,10 +78,16 @@ type TButtons = Array<TButton>;
 class BotServ {
   #userService: typeof userServ;
   #userMessageService: typeof userMessageServ;
+  #channelService: typeof channelServ;
 
-  constructor({ userService, userMessageService }: Constructor) {
+  constructor({
+    userService,
+    userMessageService,
+    channelService,
+  }: Constructor) {
     this.#userService = userService;
     this.#userMessageService = userMessageService;
+    this.#channelService = channelService;
   }
   public async startBot(ctx: Context): Promise<void> {
     if (!ctx.from) {
@@ -163,6 +171,26 @@ Country: ${ticket.country}`;
       text: ctx.message.text,
       date: new Date(ctx.message.date),
     });
+  }
+
+  public async getChannel(ctx: Context): Promise<PaidListEntity[]> {
+    if (!ctx) {
+      throw new Error('ctx is undefined');
+    }
+    if (!ctx.channelPost) {
+      throw new Error('ctx.channelPost is undefined');
+    }
+    if (!ctx.channelPost.sender_chat) {
+      throw new Error('ctx.channelPost.sender_chat is undefined');
+    }
+    const channel = await channelServ.getChannelById(
+      ctx.channelPost.sender_chat.id,
+    );
+    if(!channel) {
+      throw new Error('channel is udefined');
+    }
+    const users = await paidListServ.getUserByChannelPlan(channel.plan);
+    return users;
   }
 
   public async startScreen(ctx: Context): Promise<void> {
@@ -398,7 +426,7 @@ Country: ${ticket.country}`;
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id:  START_SCREEN }],
+          [{ title: BACK, id: START_SCREEN }],
         ],
       });
     } catch (e) {

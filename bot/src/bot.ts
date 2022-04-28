@@ -38,6 +38,7 @@ import {
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import { botServ } from './services/services';
+import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -49,6 +50,16 @@ const bot = new Telegraf(token);
 bot.start((ctx) => {
   botServ.startBot(ctx);
   botServ.startScreen(ctx);
+});
+
+bot.on('channel_post', async (ctx) => {
+  const users = await botServ.getChannel(ctx);
+
+  users.map((user: PaidListEntity) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    bot.telegram.sendMessage(user.chatId, ctx.channelPost.text);
+  });
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {

@@ -50,6 +50,16 @@ class PaidList {
     return PaidList.modelToEntity(newTicket);
   }
 
+  public async getUserByChannelPlan(
+    channel_plan: string,
+  ): Promise<PaidListEntity[]> {
+    const users = await this.#PaidListModel
+      .query()
+      .where({ plan: channel_plan })
+      .where('subcription_time', '>', new Date());
+    return users.map((user) => PaidList.modelToEntity(user));
+  }
+
   public static modelToEntity(model: PaidListM): PaidListEntity {
     const {
       ticket,
