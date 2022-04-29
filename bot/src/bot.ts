@@ -37,7 +37,11 @@ import {
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
-import { botServ } from './services/services';
+import {
+  botServ,
+  paidList as paidListServ,
+  channelMessage as channelMessageServ,
+} from './services/services';
 import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
@@ -53,12 +57,31 @@ bot.start((ctx) => {
 });
 
 bot.on('channel_post', async (ctx) => {
-  const users = await botServ.getChannel(ctx);
-
+  const channel = await botServ.getChannel(ctx);
+  const users = await paidListServ.getUserByChannelPlan(channel.plan);
   users.map((user: PaidListEntity) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     bot.telegram.sendMessage(user.chatId, ctx.channelPost.text);
+  });
+  channelMessageServ.create({
+    channelId: ctx.channelPost.chat.id,
+    messageId: ctx.channelPost.message_id,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    message: ctx.channelPost.text,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
+});
+
+bot.on('edited_channel_post', async (ctx) => {
+  channelMessageServ.update({
+    messageId: ctx.editedChannelPost.message_id,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    message: ctx.editedChannelPost.text,
+    updatedAt: new Date(),
   });
 });
 

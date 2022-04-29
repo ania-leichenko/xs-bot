@@ -5,6 +5,7 @@ import {
   userMessage as userMessageServ,
   paidList as paidListServ,
   channel as channelServ,
+  channelMessage as channelMessageServ,
 } from '../services';
 import {
   START_TEXT,
@@ -61,12 +62,14 @@ import {
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
 import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
+import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
 
 type Constructor = {
   userService: typeof userServ;
   userMessageService: typeof userMessageServ;
   paidListService: typeof paidListServ;
   channelService: typeof channelServ;
+  channelMessageService: typeof channelMessageServ;
 };
 
 type TButton = {
@@ -79,15 +82,18 @@ class BotServ {
   #userService: typeof userServ;
   #userMessageService: typeof userMessageServ;
   #channelService: typeof channelServ;
+  #channelMessageService: typeof channelMessageServ;
 
   constructor({
     userService,
     userMessageService,
     channelService,
+    channelMessageService,
   }: Constructor) {
     this.#userService = userService;
     this.#userMessageService = userMessageService;
     this.#channelService = channelService;
+    this.#channelMessageService = channelMessageService;
   }
   public async startBot(ctx: Context): Promise<void> {
     if (!ctx.from) {
@@ -173,7 +179,7 @@ Country: ${ticket.country}`;
     });
   }
 
-  public async getChannel(ctx: Context): Promise<PaidListEntity[]> {
+  public async getChannel(ctx: Context): Promise<ChannelEntity> {
     if (!ctx) {
       throw new Error('ctx is undefined');
     }
@@ -186,11 +192,10 @@ Country: ${ticket.country}`;
     const channel = await channelServ.getChannelById(
       ctx.channelPost.sender_chat.id,
     );
-    if(!channel) {
+    if (!channel) {
       throw new Error('channel is udefined');
     }
-    const users = await paidListServ.getUserByChannelPlan(channel.plan);
-    return users;
+    return channel;
   }
 
   public async startScreen(ctx: Context): Promise<void> {
