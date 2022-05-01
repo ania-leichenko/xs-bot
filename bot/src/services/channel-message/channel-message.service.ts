@@ -41,7 +41,7 @@ class ChannelMessage {
     messageId: number;
     message: string;
     updatedAt: Date;
-  }): Promise<ChannelMessageEntity> {
+  }): Promise<number> {
     const updateMessage = await this.#channelMessageRepository.update({
       messageId,
       message,

@@ -41,8 +41,9 @@ import {
   botServ,
   paidList as paidListServ,
   channelMessage as channelMessageServ,
+  botMessage as botMessageServ,
 } from './services/services';
-import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
+//import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -57,32 +58,78 @@ bot.start((ctx) => {
 });
 
 bot.on('channel_post', async (ctx) => {
-  const channel = await botServ.getChannel(ctx);
-  const users = await paidListServ.getUserByChannelPlan(channel.plan);
-  users.map((user: PaidListEntity) => {
+  try {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    bot.telegram.sendMessage(user.chatId, ctx.channelPost.text);
-  });
-  channelMessageServ.create({
-    channelId: ctx.channelPost.chat.id,
-    messageId: ctx.channelPost.message_id,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    message: ctx.channelPost.text,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  });
+    if (!ctx.channelPost.text) {
+      return;
+    }
+    const channel = await botServ.getChannel(ctx);
+    const users = await paidListServ.getUserByChannelPlan(channel.plan);
+    for (const user of users) {
+      const res = await bot.telegram.sendMessage(
+        user.chatId,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ctx.channelPost.text,
+      );
+
+      botMessageServ.create({
+        chatId: user.chatId,
+        messageId: res.message_id,
+        messageIdFromChannel: ctx.channelPost.message_id,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      // bot.telegram.deleteMessage(user.chatId, ctx.channelPost.message_id);
+    }
+
+    channelMessageServ.create({
+      channelId: ctx.channelPost.chat.id,
+      messageId: ctx.channelPost.message_id,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      message: ctx.channelPost.text,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    //ctx.deleteMessage(ctx.channelPost.message_id);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 bot.on('edited_channel_post', async (ctx) => {
-  channelMessageServ.update({
-    messageId: ctx.editedChannelPost.message_id,
+  try {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    message: ctx.editedChannelPost.text,
-    updatedAt: new Date(),
-  });
+    if (!ctx.editedChannelPost.text) {
+      return;
+    }
+
+    await channelMessageServ.update({
+      messageId: ctx.editedChannelPost.message_id,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      message: ctx.editedChannelPost.text,
+      updatedAt: new Date(),
+    });
+    const botMessages = await botMessageServ.getByMessageId(
+      ctx.editedChannelPost.message_id,
+    );
+    botMessages.map((message) => {
+      bot.telegram.editMessageText(
+        message.chatId,
+        message.messageId,
+        undefined,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ctx.editedChannelPost.text,
+      );
+    });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {

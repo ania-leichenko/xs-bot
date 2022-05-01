@@ -37,14 +37,12 @@ class ChannelMessage {
     messageId: number;
     message: string;
     updatedAt: Date;
-  }): Promise<ChannelMessageEntity> {
+  }): Promise<number> {
     const updateMessage = await this.#ChannelMessageModel
       .query()
       .patch({ message: message, updatedAt: updatedAt })
       .where({ messageId: messageId });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return ChannelMessage.modelToEntity(updateMessage);
+    return updateMessage;
   }
 
   public static modelToEntity(model: ChannelMessageM): ChannelMessageEntity {
