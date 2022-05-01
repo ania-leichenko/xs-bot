@@ -43,7 +43,6 @@ import {
   channelMessage as channelMessageServ,
   botMessage as botMessageServ,
 } from './services/services';
-//import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -81,7 +80,7 @@ bot.on('channel_post', async (ctx) => {
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      // bot.telegram.deleteMessage(user.chatId, ctx.channelPost.message_id);
+      //bot.telegram.deleteMessage(user.chatId, ctx.channelPost.message_id);
     }
 
     channelMessageServ.create({

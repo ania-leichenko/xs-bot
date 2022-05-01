@@ -28,6 +28,7 @@ export {
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
   BACK,
+  USER_SUBCRITION,
 } from './title.enum';
 
 export {

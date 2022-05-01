@@ -12,7 +12,7 @@ import {
   FOREX_TEXT,
   COPY_SIGNALS_TEXT,
   FAQ_TEXT,
-  PERSONAL_AREA_TEXT,
+  USER_SUBCRITION,
   CRYPTO_TEXT,
   CRYPTO_BUTTON_TEXT,
   SCRILL_TEXT,
@@ -60,6 +60,7 @@ import {
   CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  PERSONAL_AREA_TITLE,
 } from '~/common/enums/enums';
 import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
@@ -324,8 +325,10 @@ Country: ${ticket.country}`;
   public async personalAreaScreen(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
+
       this.renderScreen(ctx, {
-        html: `${PERSONAL_AREA_TEXT}`,
+        html: `${PERSONAL_AREA_TITLE}
+${USER_SUBCRITION} no active subscription`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
