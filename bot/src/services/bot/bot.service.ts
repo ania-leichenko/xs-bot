@@ -5,7 +5,6 @@ import {
   userMessage as userMessageServ,
   paidList as paidListServ,
   channel as channelServ,
-  channelMessage as channelMessageServ,
 } from '../services';
 import {
   START_TEXT,
@@ -61,16 +60,17 @@ import {
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   PERSONAL_AREA_TITLE,
+  TILL,
 } from '~/common/enums/enums';
 import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
+import { formateDate } from '~/common/types/types';
 
 type Constructor = {
   userService: typeof userServ;
   userMessageService: typeof userMessageServ;
   paidListService: typeof paidListServ;
   channelService: typeof channelServ;
-  channelMessageService: typeof channelMessageServ;
 };
 
 type TButton = {
@@ -82,25 +82,25 @@ type TButtons = Array<TButton>;
 class BotServ {
   #userService: typeof userServ;
   #userMessageService: typeof userMessageServ;
+  #paidListService: typeof paidListServ;
   #channelService: typeof channelServ;
-  #channelMessageService: typeof channelMessageServ;
 
   constructor({
     userService,
     userMessageService,
+    paidListService,
     channelService,
-    channelMessageService,
   }: Constructor) {
     this.#userService = userService;
     this.#userMessageService = userMessageService;
+    this.#paidListService = paidListService;
     this.#channelService = channelService;
-    this.#channelMessageService = channelMessageService;
   }
   public async startBot(ctx: Context): Promise<void> {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
-    const user = await userServ.getUserById(ctx.from.id);
+    const user = await this.#userService.getUserById(ctx.from.id);
 
     if (!user) {
       userServ.create({
@@ -130,7 +130,7 @@ class BotServ {
       throw new Error('ctx.from is undefined');
     }
 
-    const ticket = await paidListServ.create({
+    const ticket = await this.#paidListService.create({
       chatId: ctx.from.id,
       firstName: ctx.from.first_name,
       username: ctx.from.username || '',
@@ -158,7 +158,7 @@ Country: ${ticket.country}`;
     ctx: Context,
     message: string,
   ): Promise<void> {
-    const admins = await userServ.getAllAdmins();
+    const admins = await this.#userService.getAllAdmins();
     admins.map((admin): void => {
       ctx.telegram.sendMessage(admin.chatId, message, {
         parse_mode: 'HTML',
@@ -173,7 +173,7 @@ Country: ${ticket.country}`;
       throw new Error('ctx.message is undefined');
     }
 
-    userMessageServ.create({
+    this.#userMessageService.create({
       chat_id: ctx.message.chat.id,
       text: ctx.message.text,
       date: new Date(ctx.message.date),
@@ -190,7 +190,7 @@ Country: ${ticket.country}`;
     if (!ctx.channelPost.sender_chat) {
       throw new Error('ctx.channelPost.sender_chat is undefined');
     }
-    const channel = await channelServ.getChannelById(
+    const channel = await this.#channelService.getChannelById(
       ctx.channelPost.sender_chat.id,
     );
     if (!channel) {
@@ -325,11 +325,43 @@ Country: ${ticket.country}`;
   public async personalAreaScreen(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
+      if (!ctx.from) {
+        throw new Error('ctx.from is undefined');
+      }
+      const tickets = await this.#paidListService.getTicketByChatId(
+        ctx.from.id,
+      );
+      if (tickets.length === 0) {
+        this.renderScreen(ctx, {
+          html: `${PERSONAL_AREA_TITLE}
 
-      this.renderScreen(ctx, {
-        html: `${PERSONAL_AREA_TITLE}
 ${USER_SUBCRITION} no active subscription`,
-        buttons: [[{ title: BACK, id: START_SCREEN }]],
+          buttons: [[{ title: BACK, id: START_SCREEN }]],
+        });
+      }
+      tickets.map((ticket) => {
+        if (ticket.subcriptionTime > new Date() && ticket.status === 'Active') {
+          const subscriptionDate = new Date(ticket.subcriptionTime);
+          let subscriptionTime = formateDate(String(ticket.subcriptionTime));
+          if (subscriptionDate.getFullYear() === 5000) {
+            subscriptionTime = 'Lifetime';
+          }
+          this.renderScreen(ctx, {
+            html: `${PERSONAL_AREA_TITLE}
+
+${USER_SUBCRITION} ${ticket.plan}
+${TILL} ${subscriptionTime}`,
+            buttons: [[{ title: BACK, id: START_SCREEN }]],
+          });
+        }
+        if (ticket.status === 'Pending') {
+          this.renderScreen(ctx, {
+            html: `${PERSONAL_AREA_TITLE}
+
+${USER_SUBCRITION} Your subscription is being automatically confirmed, please wait`,
+            buttons: [[{ title: BACK, id: START_SCREEN }]],
+          });
+        }
       });
     } catch (e) {
       console.error(e);

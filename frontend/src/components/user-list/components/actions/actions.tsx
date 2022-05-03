@@ -12,8 +12,8 @@ type Users = {
   firstName: string;
   username: string;
   admin: number;
-  joined: Date;
-  lastAction: Date;
+  joined: string;
+  lastAction: string;
 };
 
 type Props = {

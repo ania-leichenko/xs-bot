@@ -29,6 +29,7 @@ export {
   CONFIRM_PAYMENT_TITLE,
   BACK,
   USER_SUBCRITION,
+  TILL,
 } from './title.enum';
 
 export {

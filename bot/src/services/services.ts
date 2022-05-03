@@ -43,7 +43,6 @@ const botServ = new BotServ({
   userMessageService: userMessage,
   paidListService: paidList,
   channelService: channel,
-  channelMessageService: channelMessage,
 });
 
 export {

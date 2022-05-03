@@ -60,6 +60,11 @@ class PaidList {
     return users.map((user) => PaidList.modelToEntity(user));
   }
 
+  public async getTicketByChatId(chatId: number): Promise<PaidListEntity[]> {
+     const tickets = await this.#PaidListModel.query().where({ chatId });
+     return tickets.map((ticket) => PaidList.modelToEntity(ticket));
+  }
+
   public static modelToEntity(model: PaidListM): PaidListEntity {
     const {
       ticket,
