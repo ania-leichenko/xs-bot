@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import ListIcon from '@material-ui/icons/List';
 import { useStyles } from './css';
-import { Edit } from '../edit-and-add/edit-and-add';
+import { Edit } from '../edit/edit';
 
-export function Actions({
-  ticket,
-  setTickets,
-}: {
+type Ticket = {
   ticket: number;
+  firstName: string;
+  username: string;
+  subcriptionTime: string;
+  plan: string;
+  paymentMethod: string;
+  status: string;
+};
+
+type Props = {
+  ticket: Ticket;
   setTickets: (data: any) => void;
-}) {
+};
+
+export const Actions: FC<Props> = ({ ticket, setTickets }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -26,16 +35,14 @@ export function Actions({
   };
 
   const handleDeleteTicket = (): void => {
-    fetch(`http://localhost:3001/tickets/${ticket}`, {
+    fetch(`http://localhost:3001/tickets/${ticket.ticket}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
         setTickets(data);
       });
@@ -58,17 +65,15 @@ export function Actions({
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Edit />
+          <Edit setTickets={setTickets} ticket={ticket} />
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <div onClick={handleDeleteTicket} className={classes.button}>
-            <DeleteOutlinedIcon
-              className={classes.icons}
-            />
+            <DeleteOutlinedIcon className={classes.icons} />
             Delete
           </div>
         </MenuItem>
       </Menu>
     </div>
   );
-}
+};

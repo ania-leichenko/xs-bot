@@ -1,15 +1,15 @@
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-//import { Provider } from 'react-redux';
-// import { unstable_HistoryRouter as Router } from 'react-router-dom';
-//import { store } from 'store/store';
+import { unstable_HistoryRouter as Router } from 'react-router-dom';
 import { App } from 'components/app/app';
-// import { navigation } from 'services/services';
+import { navigation } from 'services/services';
 import 'assets/css/styles.scss';
 
 render(
   <StrictMode>
-    <App />
+    <Router history={navigation.instance}>
+      <App />
+    </Router>
   </StrictMode>,
   document.getElementById('root'),
 );

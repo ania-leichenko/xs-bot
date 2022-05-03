@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, SetStateAction } from 'react';
 import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
@@ -18,16 +18,44 @@ const currencies = [
 
 type Anchor = 'right';
 
-export function Edit() {
+type Users = {
+  chatId: number;
+  firstName: string;
+  username: string;
+  admin: number;
+  joined: Date;
+  lastAction: Date;
+};
+
+type Props = {
+  user: Users;
+  setUsers: (data: any) => void;
+};
+
+export const Edit: FC<Props> = ({ user, setUsers }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
   });
+  const [admin, setAdmin] = React.useState(user.admin);
 
-  const [currency, setCurrency] = React.useState('0');
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>):void => {
-    setCurrency(event.target.value);
+  const onChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setAdmin(Number(event.target.value));
+    fetch(`http://localhost:3001/user/${user.chatId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        chatId: user.chatId,
+        admin: Number(event.target.value),
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+      });
   };
 
   const toggleDrawer =
@@ -65,11 +93,8 @@ export function Edit() {
                   id="outlined-select-currency-native"
                   select
                   label="Admin"
-                  value={currency}
-                  onChange={handleChange}
-                  SelectProps={{
-                    native: true,
-                  }}
+                  value={admin}
+                  onChange={onChangeAdmin}
                   variant="outlined"
                 >
                   {currencies.map((option) => (
@@ -85,4 +110,4 @@ export function Edit() {
       ))}
     </div>
   );
-}
+};

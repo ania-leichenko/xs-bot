@@ -13,12 +13,33 @@ class PaidList {
   }
 
   public async getAllTickets(): Promise<PaidListEntity[]> {
-    const tickets = await this.#PaidListModel.query();
+    const tickets = await this.#PaidListModel
+      .query()
+      .orderBy('subcriptionTime', 'asc');
     return tickets.map((ticket) => PaidList.modelToEntity(ticket));
   }
 
   public async delete(id: number): Promise<number> {
     return this.#PaidListModel.query().deleteById(id);
+  }
+
+  public async update({
+    ticket,
+    subcriptionTime,
+    status,
+  }: {
+    ticket: number;
+    subcriptionTime: Date;
+    status: string;
+  }): Promise<number> {
+    const updateTicket = await this.#PaidListModel
+      .query()
+      .patch({
+        subcriptionTime: subcriptionTime,
+        status: status,
+      })
+      .where({ ticket: ticket });
+    return updateTicket;
   }
 
   public static modelToEntity(model: PaidListM): PaidListEntity {

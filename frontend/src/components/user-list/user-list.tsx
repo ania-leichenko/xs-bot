@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,7 +19,7 @@ type Users = {
   lastAction: Date;
 };
 
-export function UserListTable() {
+export const UserListTable: FC = () => {
   const classes = useStyles();
   const [users, setUsers] = useState([]);
 
@@ -54,7 +54,7 @@ export function UserListTable() {
         <TableBody>
           {users &&
             users.map((user: Users) => (
-              <TableRow>
+              <TableRow key={user.chatId}>
                 <TableCell component="th" scope="row" align="center">
                   {user.firstName}
                   {`@${user.username}`}
@@ -63,7 +63,7 @@ export function UserListTable() {
                 <TableCell align="center">{formateDate(user.joined)}</TableCell>
                 <TableCell align="center">{formateDate(user.lastAction)}</TableCell>
                 <TableCell align="center">
-                  <Actions chatId={user.chatId} setUsers={setUsers}/>
+                  <Actions user={user} setUsers={setUsers}/>
                 </TableCell>
               </TableRow>
             ))}
@@ -71,4 +71,4 @@ export function UserListTable() {
       </Table>
     </TableContainer>
   );
-}
+};

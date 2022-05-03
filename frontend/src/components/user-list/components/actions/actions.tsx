@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -7,13 +7,21 @@ import ListIcon from '@material-ui/icons/List';
 import { useStyles } from './css';
 import { Edit } from '../edit/edit';
 
-export function Actions({
-  chatId,
-  setUsers,
-}: {
+type Users = {
   chatId: number;
+  firstName: string;
+  username: string;
+  admin: number;
+  joined: Date;
+  lastAction: Date;
+};
+
+type Props = {
+  user: Users;
   setUsers: (data: any) => void;
-}) {
+};
+
+export const Actions: FC<Props> = ({ user, setUsers }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -26,7 +34,7 @@ export function Actions({
   };
 
   const handleDeleteUser = (): void => {
-    fetch(`http://localhost:3001/user/${chatId}`, {
+    fetch(`http://localhost:3001/user/${user.chatId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +66,7 @@ export function Actions({
         onClose={handleClose}
       >
         <MenuItem onClick={handleClose}>
-          <Edit />
+          <Edit user={user} setUsers={setUsers} />
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <div onClick={handleDeleteUser} className={classes.button}>
@@ -69,4 +77,4 @@ export function Actions({
       </Menu>
     </div>
   );
-}
+};

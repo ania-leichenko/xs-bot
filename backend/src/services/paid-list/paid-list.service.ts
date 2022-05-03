@@ -16,8 +16,29 @@ class PaidList {
     return this.#paidListRepository.getAllTickets();
   }
 
-   public async delete(id: number): Promise<void> {
+  public async delete(id: number): Promise<void> {
     await this.#paidListRepository.delete(id);
+  }
+
+  public async update({
+    ticket,
+    subcriptionTime,
+    status,
+  }: {
+    ticket: number;
+    subcriptionTime: Date;
+    status: string;
+  }): Promise<number> {
+    const updateTicket = await this.#paidListRepository.update({
+      ticket,
+      subcriptionTime,
+      status,
+    });
+
+    if (!updateTicket) {
+      throw new Error();
+    }
+    return updateTicket;
   }
 }
 

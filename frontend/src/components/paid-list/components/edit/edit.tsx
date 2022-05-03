@@ -1,41 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import EditIcon from '@material-ui/icons/Edit';
 
-const plan = [
-  {
-    value: 'Forex',
-    label: 'Forex',
-  },
-  {
-    value: 'Crypto',
-    label: 'Crypto',
-  },
-];
-
-const paymentMethod = [
-  {
-    value: 'Crypto',
-    label: 'Crypto',
-  },
-  {
-    value: 'Scrill',
-    label: 'Scrill',
-  },
-  {
-    value: 'SWIFT',
-    label: 'SWIFT',
-  },
-  {
-    value: 'Bank Card',
-    label: 'Bank Card',
-  },
-];
-
-const status = [
+const statuses = [
   {
     value: 'Active',
     label: 'Active',
@@ -52,16 +22,39 @@ const status = [
 
 type Anchor = 'right';
 
-export function Edit() {
+type Ticket = {
+  ticket: number;
+  firstName: string;
+  username: string;
+  subcriptionTime: string;
+  plan: string;
+  paymentMethod: string;
+  status: string;
+};
+
+type Props = {
+  ticket: Ticket;
+  setTickets: (data: any) => void;
+};
+
+export const Edit: FC<Props> = ({ ticket, setTickets }) => {
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
   });
+  const [userSubcriptionTime, setUserSubcriptionTime] = React.useState(
+    ticket.subcriptionTime,
+  );
+  const [userStatus, setUserStatus] = React.useState(ticket.status);
 
-  const [currency, setCurrency] = React.useState('0');
+  const onChangeSubscriptionTime = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setUserSubcriptionTime(event.target.value);
+  };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    setCurrency(event.target.value);
+  const onChangeStatus = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setUserStatus(event.target.value);
   };
 
   const toggleDrawer =
@@ -79,6 +72,25 @@ export function Edit() {
       setState({ ...state, [anchor]: open });
     };
 
+  const handleSaveTicket = (): void => {
+    fetch(`http://localhost:3001/tickets/${ticket.ticket}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        ticket: ticket.ticket,
+        subscriptionTime: userSubcriptionTime,
+        status: userStatus,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTickets(data);
+      });
+  };
+
   return (
     <div>
       {(['right'] as Anchor[]).map((anchor) => (
@@ -93,68 +105,32 @@ export function Edit() {
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
           >
+            <div>Add paid user</div>
             <form className={classes.root} noValidate autoComplete="off">
-              <div>Add paid user</div>
               <div>
                 <TextField
                   id="outlined-textarea"
-                  label="Subcription Time"
+                  label="Subscription Time"
                   placeholder=""
                   multiline
                   variant="outlined"
+                  onChange={onChangeSubscriptionTime}
+                  value={userSubcriptionTime}
                 />
               </div>
               <div>
                 <TextField
                   id="outlined-select-currency-native"
                   select
-                  label="Plan"
-                  value={plan}
-                  onChange={handleChange}
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="outlined"
-                >
-                  {plan.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </div>
-              <div>
-                <TextField
-                  id="outlined-select-currency-native"
-                  select
-                  label="Payment method"
-                  value={paymentMethod}
-                  onChange={handleChange}
-                  SelectProps={{
-                    native: true,
-                  }}
-                  variant="outlined"
-                >
-                  {paymentMethod.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </div>
-              <div>
-                <TextField
-                  id="outlined-select-currency-native"
-                  select
                   label="Status"
-                  value={status}
-                  onChange={handleChange}
+                  value={userStatus}
+                  onChange={onChangeStatus}
                   SelectProps={{
                     native: true,
                   }}
                   variant="outlined"
                 >
-                  {status.map((option) => (
+                  {statuses.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
@@ -162,12 +138,14 @@ export function Edit() {
                 </TextField>
               </div>
             </form>
+
             <div className={classes.buttons}>
               <div>
                 <Button
                   variant="contained"
                   color="primary"
                   href="#contained-buttons"
+                  onClick={handleSaveTicket}
                 >
                   Save
                 </Button>
@@ -183,4 +161,4 @@ export function Edit() {
       ))}
     </div>
   );
-}
+};

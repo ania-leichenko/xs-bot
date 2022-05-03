@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -10,20 +10,19 @@ import { Actions } from './components/actions/actions';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './css';
-import Button from '@material-ui/core/Button';
 import { formateDate } from '../formateDate/formateDate';
 
 type Ticket = {
   ticket: number;
   firstName: string;
   username: string;
-  subcriptionTime: Date;
+  subcriptionTime: string;
   plan: string;
   paymentMethod: string;
   status: string;
 };
 
-export function PaidListTable() {
+export const PaidListTable: FC = () => {
   const classes = useStyles();
   const [tickets, setTickets] = useState([]);
 
@@ -59,11 +58,6 @@ export function PaidListTable() {
             inputProps={{ 'aria-label': 'search' }}
           />
         </div>
-        <div>
-          <Button variant="contained" color="primary" href="#contained-buttons">
-            Add
-          </Button>
-        </div>
       </TableHead>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
@@ -79,7 +73,7 @@ export function PaidListTable() {
         <TableBody>
           {tickets &&
             tickets.map((ticket: Ticket) => (
-              <TableRow>
+              <TableRow key={ticket.ticket}>
                 <TableCell component="th" scope="row" align="center">
                   {ticket.firstName}
                 </TableCell>
@@ -90,7 +84,7 @@ export function PaidListTable() {
                 <TableCell align="center">{ticket.paymentMethod}</TableCell>
                 <TableCell align="center">{ticket.status}</TableCell>
                 <TableCell align="center">
-                  <Actions ticket={ticket.ticket} setTickets={setTickets} />
+                  <Actions ticket={ticket} setTickets={setTickets} />
                 </TableCell>
               </TableRow>
             ))}
@@ -98,4 +92,4 @@ export function PaidListTable() {
       </Table>
     </TableContainer>
   );
-}
+};

@@ -1,4 +1,4 @@
-export function formateDate(date: Date): String {
+export function formateDate(date: string): string {
   const allDate = new Date(date);
   let day: number | string = allDate.getDay();
   if (day < 10) {
