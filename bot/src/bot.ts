@@ -82,7 +82,6 @@ bot.on('channel_post', async (ctx) => {
       });
       //bot.telegram.deleteMessage(user.chatId, ctx.channelPost.message_id);
     }
-
     channelMessageServ.create({
       channelId: ctx.channelPost.chat.id,
       messageId: ctx.channelPost.message_id,

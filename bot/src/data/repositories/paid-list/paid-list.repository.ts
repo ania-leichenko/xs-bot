@@ -53,16 +53,21 @@ class PaidList {
   public async getUserByChannelPlan(
     channel_plan: string,
   ): Promise<PaidListEntity[]> {
-    const users = await this.#PaidListModel
+    const usersQuery = this.#PaidListModel
       .query()
-      .where({ plan: channel_plan })
-      .where('subcription_time', '>', new Date());
+      .where('subcription_time', '>', new Date())
+      .where('status', '=', 'Active');
+    if (channel_plan !== 'All') {
+      usersQuery.where({ plan: channel_plan });
+    }
+
+    const users = await usersQuery;
     return users.map((user) => PaidList.modelToEntity(user));
   }
 
   public async getTicketByChatId(chatId: number): Promise<PaidListEntity[]> {
-     const tickets = await this.#PaidListModel.query().where({ chatId });
-     return tickets.map((ticket) => PaidList.modelToEntity(ticket));
+    const tickets = await this.#PaidListModel.query().where({ chatId });
+    return tickets.map((ticket) => PaidList.modelToEntity(ticket));
   }
 
   public static modelToEntity(model: PaidListM): PaidListEntity {
