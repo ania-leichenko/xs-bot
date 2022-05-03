@@ -1,4 +1,4 @@
-import React, { FC, SetStateAction } from 'react';
+import React, { FC } from 'react';
 import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
