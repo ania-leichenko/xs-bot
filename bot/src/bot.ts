@@ -39,7 +39,7 @@ import {
 import { knexConfig } from '../knexfile';
 import {
   botServ,
-  paidList as paidListServ,
+  ticket as ticketServ,
   channelMessage as channelMessageServ,
   botMessage as botMessageServ,
 } from './services/services';
@@ -64,34 +64,25 @@ bot.on('channel_post', async (ctx) => {
       return;
     }
     const channel = await botServ.getChannel(ctx);
-    const users = await paidListServ.getUserByChannelPlan(channel.plan);
+    const users = await ticketServ.getUserByChannelPlan(channel.plan);
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const message = ctx.channelPost.text;
+    const channelMessage = await channelMessageServ.create({
+      channelId: ctx.channelPost.chat.id,
+      messageId: ctx.channelPost.message_id,
+      message,
+    });
     for (const user of users) {
-      const res = await bot.telegram.sendMessage(
-        user.chatId,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ctx.channelPost.text,
-      );
-
+      const res = await bot.telegram.sendMessage(user.chatId, message);
       botMessageServ.create({
         chatId: user.chatId,
         messageId: res.message_id,
-        messageIdFromChannel: ctx.channelPost.message_id,
+        channelMessageId: channelMessage.id,
         createdAt: new Date(),
         updatedAt: new Date(),
       });
-      //bot.telegram.deleteMessage(user.chatId, ctx.channelPost.message_id);
     }
-    channelMessageServ.create({
-      channelId: ctx.channelPost.chat.id,
-      messageId: ctx.channelPost.message_id,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      message: ctx.channelPost.text,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    //ctx.deleteMessage(ctx.channelPost.message_id);
   } catch (e) {
     console.log(e);
   }
@@ -112,9 +103,15 @@ bot.on('edited_channel_post', async (ctx) => {
       message: ctx.editedChannelPost.text,
       updatedAt: new Date(),
     });
-    const botMessages = await botMessageServ.getByMessageId(
-      ctx.editedChannelPost.message_id,
-    );
+    const channelMessage = await channelMessageServ.getByChannelMessageId({
+      messageId: ctx.editedChannelPost.message_id,
+      channelId: ctx.editedChannelPost.chat.id,
+    });
+    if (!channelMessage) {
+      return;
+    }
+    const botMessages = await botMessageServ.getByMessageId(channelMessage.id);
+
     botMessages.map((message) => {
       bot.telegram.editMessageText(
         message.chatId,

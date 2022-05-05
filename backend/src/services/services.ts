@@ -1,16 +1,16 @@
 import {
   users as usersRepository,
-  paidList as paidListRepository,
+  ticket as ticketRepository,
 } from '~/data/repositories/repositories';
 import { UserService } from './user/user.service';
-import { PaidList } from './paid-list/paid-list.service';
+import { Ticket } from './ticket/ticket.service';
 
 const users = new UserService({
   usersRepository,
 });
 
-const paidList = new PaidList({
-  paidListRepository,
+const ticket = new Ticket({
+  ticketRepository,
 });
 
-export { users, paidList };
+export { users, ticket };

@@ -1,11 +1,11 @@
 import {
   User as UserModel,
-  PaidList as PaidListModel,
+  Ticket as TicketModel,
 } from '~/data/models/models';
 import { UserRepository } from './user/user';
-import { PaidList } from './paid-list/paid-list.repository';
+import { Ticket } from './ticket/ticket.repository';
 
 const users = new UserRepository({ UserModel });
-const paidList = new PaidList({ PaidListModel });
+const ticket  = new Ticket({ TicketModel });
 
-export { users, paidList };
+export { users, ticket  };

@@ -1,4 +1,5 @@
 class ChannelMessage {
+  public id: string;
   public channelId: number;
   public messageId: number;
   public message: string;
@@ -6,18 +7,21 @@ class ChannelMessage {
   public updatedAt: Date;
 
   constructor({
+    id,
     channelId,
     messageId,
     message,
     createdAt,
     updatedAt,
   }: {
+    id: string;
     channelId: number;
     messageId: number;
     message: string;
     createdAt: Date;
     updatedAt: Date;
   }) {
+    this.id = id;
     this.channelId = channelId;
     this.messageId = messageId;
     this.message = message;
@@ -25,24 +29,23 @@ class ChannelMessage {
     this.updatedAt = updatedAt;
   }
   public static createNew({
+    id,
     channelId,
     messageId,
     message,
-    createdAt,
-    updatedAt,
   }: {
+    id: string;
     channelId: number;
     messageId: number;
     message: string;
-    createdAt: Date;
-    updatedAt: Date;
   }): ChannelMessage {
     return new ChannelMessage({
+      id,
       channelId,
       messageId,
       message,
-      createdAt,
-      updatedAt,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
   }
 }

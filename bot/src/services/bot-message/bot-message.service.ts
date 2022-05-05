@@ -15,14 +15,14 @@ class BotMessage {
   public async create({
     chatId,
     messageId,
-    messageIdFromChannel,
+    channelMessageId,
     createdAt,
     updatedAt,
   }: BotMessageEntity): Promise<BotMessageEntity> {
     const newBotMessage = await this.#botMessageRepository.create({
       chatId,
       messageId,
-      messageIdFromChannel,
+      channelMessageId,
       createdAt,
       updatedAt,
     });
@@ -33,8 +33,10 @@ class BotMessage {
     return newBotMessage;
   }
 
-  async getByMessageId(messageId: number): Promise<BotMessageEntity[]> {
-    return this.#botMessageRepository.getByMessageId(messageId);
+  async getByMessageId(id: string): Promise<BotMessageEntity[]> {
+    // eslint-disable-next-line no-console
+    //console.log(id);
+    return this.#botMessageRepository.getByMessageId(id);
   }
 }
 

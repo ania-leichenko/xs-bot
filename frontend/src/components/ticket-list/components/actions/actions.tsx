@@ -11,7 +11,7 @@ type Ticket = {
   ticket: number;
   firstName: string;
   username: string;
-  subcriptionTime: string;
+  subscriptionTime: string;
   plan: string;
   paymentMethod: string;
   status: string;

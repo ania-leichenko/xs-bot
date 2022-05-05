@@ -26,7 +26,7 @@ type Ticket = {
   ticket: number;
   firstName: string;
   username: string;
-  subcriptionTime: string;
+  subscriptionTime: string;
   plan: string;
   paymentMethod: string;
   status: string;
@@ -43,7 +43,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
     right: false,
   });
   const [userSubcriptionTime, setUserSubcriptionTime] = React.useState(
-    ticket.subcriptionTime,
+    ticket.subscriptionTime,
   );
   const [userStatus, setUserStatus] = React.useState(ticket.status);
 

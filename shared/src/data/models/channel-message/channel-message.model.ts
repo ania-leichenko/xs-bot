@@ -5,6 +5,7 @@ import { AbstractModel } from '../abstract/abstract.model';
 import { ChannelMessageTableField } from './channel-message-table-field.enum';
 
 class ChannelMessage extends AbstractModel {
+  [ChannelMessageTableField.ID]: string;
   [ChannelMessageTableField.CHANNEL_ID]: number;
   [ChannelMessageTableField.MESSAGE_ID]: number;
   [ChannelMessageTableField.MESSAGE]: string;
@@ -12,7 +13,7 @@ class ChannelMessage extends AbstractModel {
   [ChannelMessageTableField.UPDATED_AT]: Date;
 
   static get idColumn(): string {
-    return ChannelMessageTableField.CHANNEL_ID;
+    return ChannelMessageTableField.ID;
   }
 
   static get tableName(): string {

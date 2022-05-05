@@ -1,9 +1,9 @@
-class PaidList {
+class Ticket {
   public ticket: number;
   public chatId: number;
   public firstName: string;
   public username?: string;
-  public subcriptionTime: Date;
+  public subscriptionTime: Date;
   public plan: string;
   public paymentMethod: string;
   public status: string;
@@ -14,7 +14,7 @@ class PaidList {
     chatId,
     firstName,
     username,
-    subcriptionTime,
+    subscriptionTime,
     plan,
     paymentMethod,
     status,
@@ -24,7 +24,7 @@ class PaidList {
     chatId: number;
     firstName: string;
     username?: string;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     plan: string;
     paymentMethod: string;
     status: string;
@@ -34,7 +34,7 @@ class PaidList {
     this.chatId = chatId;
     this.firstName = firstName;
     this.username = username;
-    this.subcriptionTime = subcriptionTime;
+    this.subscriptionTime = subscriptionTime;
     this.plan = plan;
     this.paymentMethod = paymentMethod;
     this.status = status;
@@ -45,7 +45,7 @@ class PaidList {
     chatId,
     firstName,
     username,
-    subcriptionTime,
+    subscriptionTime,
     plan,
     paymentMethod,
     status,
@@ -55,18 +55,18 @@ class PaidList {
     chatId: number;
     firstName: string;
     username?: string;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     plan: string;
     paymentMethod: string;
     status: string;
     country: string;
-  }): PaidList {
-    return new PaidList({
+  }): Ticket {
+    return new Ticket({
       ticket,
       chatId,
       firstName,
       username,
-      subcriptionTime,
+      subscriptionTime,
       plan,
       paymentMethod,
       status,
@@ -75,4 +75,4 @@ class PaidList {
   }
 }
 
-export { PaidList };
+export { Ticket };

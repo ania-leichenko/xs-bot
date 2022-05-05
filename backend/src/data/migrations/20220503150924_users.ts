@@ -1,19 +1,20 @@
 import { Knex } from 'knex';
 import { TableName } from '~/common/enums/enums';
 
-const TABLE_NAME = TableName.PAID_LIST;
+const TABLE_NAME = TableName.USERS;
 
 async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable(TABLE_NAME, (table) => {
-    table.increments('ticket').unique().notNullable();
-    table.bigint('chat_id').notNullable();
+    table
+      .bigint('chat_id')
+      .unique()
+      .notNullable()
+      .primary({ constraintName: 'users_pkey' });
     table.string('first_name').notNullable();
     table.string('username').notNullable();
-    table.datetime('subcription_time').notNullable();
-    table.string('plan').notNullable();
-    table.string('payment_method').notNullable();
-    table.string('status').notNullable();
-    table.string('country').notNullable();
+    table.tinyint('admin').notNullable().defaultTo(0);
+    table.timestamp('joined').notNullable();
+    table.timestamp('last_action').notNullable().defaultTo(knex.fn.now());
   });
 }
 

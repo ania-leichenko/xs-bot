@@ -14,7 +14,7 @@ class UserMessage extends AbstractModel {
   }
 
   static get tableName(): string {
-    return TableName.MESSAGE_FROM_USER;
+    return TableName.MESSAGE_FROM_USERS;
   }
 }
 

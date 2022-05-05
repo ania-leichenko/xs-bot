@@ -1,7 +1,7 @@
 import {
   user as userRepository,
   userMessage as userMessageRepository,
-  paidList as paidListRepository,
+  ticket as ticketRepository,
   channel as channelRepository,
   channelMessage as channelMessageRepository,
   botMessage as botMessageRepository,
@@ -9,7 +9,7 @@ import {
 import { User } from './user/user.service';
 import { BotServ } from './bot/bot.service';
 import { UserMessage } from './user-message/user-message.service';
-import { PaidList } from './paid-list/paid-list.service';
+import { Ticket } from './ticket/ticket.service';
 import { Channel } from './channels/channel.service';
 import { ChannelMessage } from './channel-message/channel-message.service';
 import { BotMessage } from './bot-message/bot-message.service';
@@ -22,8 +22,8 @@ const userMessage = new UserMessage({
   userMessageRepository,
 });
 
-const paidList = new PaidList({
-  paidListRepository,
+const ticket = new Ticket({
+  ticketRepository,
 });
 
 const channel = new Channel({
@@ -41,7 +41,7 @@ const botMessage = new BotMessage({
 const botServ = new BotServ({
   userService: user,
   userMessageService: userMessage,
-  paidListService: paidList,
+  ticketService: ticket,
   channelService: channel,
 });
 
@@ -49,7 +49,7 @@ export {
   user,
   botServ,
   userMessage,
-  paidList,
+  ticket,
   channel,
   channelMessage,
   botMessage,

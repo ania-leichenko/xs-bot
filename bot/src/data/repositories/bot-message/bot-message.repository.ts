@@ -15,13 +15,13 @@ class BotMessage {
   public async create(
     bot_message: BotMessageEntity,
   ): Promise<BotMessageEntity> {
-    const { chatId, messageId, messageIdFromChannel, createdAt, updatedAt } =
+    const { chatId, messageId, channelMessageId, createdAt, updatedAt } =
       bot_message;
 
     const newBotMessage = await this.#BotMessageModel.query().insert({
-      chatId,
+      chatId: Number(chatId),
       messageId,
-      messageIdFromChannel,
+      channelMessageId,
       createdAt,
       updatedAt,
     });
@@ -29,23 +29,22 @@ class BotMessage {
     return BotMessage.modelToEntity(newBotMessage);
   }
 
-  public async getByMessageId(messageId: number): Promise<BotMessageEntity[]> {
+  public async getByMessageId(id: string): Promise<BotMessageEntity[]> {
     const botMessages = await this.#BotMessageModel
       .query()
-      .where({ message_id_from_channel: messageId });
+      .where({ channelMessageId: id });
     return botMessages.map((botMessage) =>
       BotMessage.modelToEntity(botMessage),
     );
   }
 
   public static modelToEntity(model: BotMessageM): BotMessageEntity {
-    const { chatId, messageId, messageIdFromChannel, createdAt, updatedAt } =
-      model;
+    const { chatId, messageId, channelMessageId, createdAt, updatedAt } = model;
 
     return BotMessageEntity.createNew({
       chatId,
       messageId,
-      messageIdFromChannel,
+      channelMessageId,
       createdAt,
       updatedAt,
     });

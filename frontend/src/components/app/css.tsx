@@ -1,14 +1,12 @@
-
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-} from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    body: {
+      height: '100%',
+    },
     root: {
       display: 'flex',
       backgroundColor: '#141b2f',
@@ -26,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(1),
     },
   }),
 );

@@ -16,20 +16,17 @@ class ChannelMessage {
     channelId,
     messageId,
     message,
-    createdAt,
-    updatedAt,
-  }: ChannelMessageEntity): Promise<ChannelMessageEntity> {
-    const newChannelMessage = await this.#channelMessageRepository.create({
+  }: {
+    channelId: number;
+    messageId: number;
+    message: string;
+  }): Promise<ChannelMessageEntity> {
+    const newChannelMessage = this.#channelMessageRepository.create({
       channelId,
       messageId,
       message,
-      createdAt,
-      updatedAt,
     });
 
-    if (!newChannelMessage) {
-      throw new Error();
-    }
     return newChannelMessage;
   }
 
@@ -52,6 +49,18 @@ class ChannelMessage {
       throw new Error();
     }
     return updateMessage;
+  }
+  async getByChannelMessageId({
+    messageId,
+    channelId,
+  }: {
+    messageId: number;
+    channelId: number;
+  }): Promise<ChannelMessageEntity | undefined> {
+    return this.#channelMessageRepository.getByChannelMessageId({
+      messageId,
+      channelId,
+    });
   }
 }
 

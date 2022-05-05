@@ -16,13 +16,13 @@ type Ticket = {
   ticket: number;
   firstName: string;
   username: string;
-  subcriptionTime: string;
+  subscriptionTime: string;
   plan: string;
   paymentMethod: string;
   status: string;
 };
 
-export const PaidListTable: FC = () => {
+export const TicketTable: FC = () => {
   const classes = useStyles();
   const [tickets, setTickets] = useState([]);
 
@@ -78,7 +78,7 @@ export const PaidListTable: FC = () => {
                   {ticket.firstName}
                 </TableCell>
                 <TableCell align="center">
-                  {formateDate(ticket.subcriptionTime)}
+                  {formateDate(ticket.subscriptionTime)}
                 </TableCell>
                 <TableCell align="center">{ticket.plan}</TableCell>
                 <TableCell align="center">{ticket.paymentMethod}</TableCell>

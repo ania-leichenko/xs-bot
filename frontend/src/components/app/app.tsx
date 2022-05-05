@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { useTheme } from '@material-ui/core/styles';
 import { useStyles } from './css';
 import { UserListTable } from '../user-list/user-list';
-import { PaidListTable } from '../paid-list/paid-list';
+import { TicketTable } from '../ticket-list/ticket-list';
 import { AppRoute } from 'common/enums/enums';
 import { Routes, Route, Link } from 'react-router-dom';
 
@@ -69,10 +69,13 @@ const App: FC = () => {
       <main className={classes.content}>
         <div className={classes.toolbar}>
           <Routes>
-            <Route path={AppRoute.ROOT} element={<UserListTable />} />
+            <Route
+              path={AppRoute.ROOT}
+              element={<UserListTable />}
+            />
             <Route
               path={AppRoute.PAID_LIST_TABLE}
-              element={<PaidListTable />}
+              element={<TicketTable />}
             />
           </Routes>
         </div>

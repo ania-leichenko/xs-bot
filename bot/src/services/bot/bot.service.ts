@@ -3,7 +3,7 @@ import { Context, Markup } from 'telegraf';
 import {
   user as userServ,
   userMessage as userMessageServ,
-  paidList as paidListServ,
+  ticket as ticketServ,
   channel as channelServ,
 } from '../services';
 import {
@@ -62,14 +62,14 @@ import {
   PERSONAL_AREA_TITLE,
   TILL,
 } from '~/common/enums/enums';
-import { PaidList as PaidListEntity } from '~/services/paid-list/paid-list.entity';
+import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
 import { formateDate } from '~/common/types/types';
 
 type Constructor = {
   userService: typeof userServ;
   userMessageService: typeof userMessageServ;
-  paidListService: typeof paidListServ;
+  ticketService: typeof ticketServ;
   channelService: typeof channelServ;
 };
 
@@ -82,18 +82,18 @@ type TButtons = Array<TButton>;
 class BotServ {
   #userService: typeof userServ;
   #userMessageService: typeof userMessageServ;
-  #paidListService: typeof paidListServ;
+  #ticketService: typeof ticketServ;
   #channelService: typeof channelServ;
 
   constructor({
     userService,
     userMessageService,
-    paidListService,
+    ticketService,
     channelService,
   }: Constructor) {
     this.#userService = userService;
     this.#userMessageService = userMessageService;
-    this.#paidListService = paidListService;
+    this.#ticketService = ticketService;
     this.#channelService = channelService;
   }
   public async startBot(ctx: Context): Promise<void> {
@@ -125,16 +125,16 @@ class BotServ {
       paymentMethod: string;
       status: string;
     },
-  ): Promise<PaidListEntity> {
+  ): Promise<TicketEntity> {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
 
-    const ticket = await this.#paidListService.create({
+    const ticket = await this.#ticketService.create({
       chatId: ctx.from.id,
       firstName: ctx.from.first_name,
       username: ctx.from.username || '',
-      subcriptionTime: new Date(),
+      subscriptionTime: new Date(),
       plan: plan,
       paymentMethod: paymentMethod,
       status: status,
@@ -219,6 +219,9 @@ Country: ${ticket.country}`;
       buttons: TButtons[];
     },
   ): void {
+    if (!options.buttons) {
+      return;
+    }
     ctx.replyWithHTML(
       options.html,
       Markup.inlineKeyboard(
@@ -328,7 +331,7 @@ Country: ${ticket.country}`;
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
-      const tickets = await this.#paidListService.getTicketByChatId(
+      const tickets = await this.#ticketService.getTicketByChatId(
         ctx.from.id,
       );
       if (tickets.length === 0) {
@@ -340,9 +343,12 @@ ${USER_SUBCRITION} no active subscription`,
         });
       }
       tickets.map((ticket) => {
-        if (ticket.subcriptionTime > new Date() && ticket.status === 'Active') {
-          const subscriptionDate = new Date(ticket.subcriptionTime);
-          let subscriptionTime = formateDate(String(ticket.subcriptionTime));
+        if (
+          ticket.subscriptionTime > new Date() &&
+          ticket.status === 'Active'
+        ) {
+          const subscriptionDate = new Date(ticket.subscriptionTime);
+          let subscriptionTime = formateDate(String(ticket.subscriptionTime));
           if (subscriptionDate.getFullYear() === 5000) {
             subscriptionTime = 'Lifetime';
           }

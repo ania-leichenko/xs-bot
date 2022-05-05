@@ -1,4 +1,4 @@
-class PaidList {
+class Ticket {
   public ticket: number;
   public chatId: number;
   public firstName: string;
@@ -60,8 +60,8 @@ class PaidList {
     paymentMethod: string;
     status: string;
     country: string;
-  }): PaidList {
-    return new PaidList({
+  }): Ticket {
+    return new Ticket({
       ticket,
       chatId,
       firstName,
@@ -75,4 +75,4 @@ class PaidList {
   }
 }
 
-export { PaidList };
+export { Ticket };

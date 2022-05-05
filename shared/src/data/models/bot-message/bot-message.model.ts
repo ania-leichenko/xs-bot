@@ -7,16 +7,16 @@ import { BotMessageTableField } from './bot-message-table-field.enum';
 class BotMessage extends AbstractModel {
   [BotMessageTableField.CHAT_ID]: number;
   [BotMessageTableField.MESSAGE_ID]: number;
-  [BotMessageTableField.MESSAGE_ID_FROM_CHANNEL]: number;
+  [BotMessageTableField.CHANNEL_MESSAGE_ID]: string;
   [BotMessageTableField.CREATED_AT]: Date;
   [BotMessageTableField.UPDATED_AT]: Date;
 
   static get idColumn(): string {
-    return BotMessageTableField.CHAT_ID;
+    return BotMessageTableField.MESSAGE_ID;
   }
 
   static get tableName(): string {
-    return TableName.MESSAGE_FROM_BOT;
+    return TableName.MESSAGES_FROM_BOT;
   }
 }
 

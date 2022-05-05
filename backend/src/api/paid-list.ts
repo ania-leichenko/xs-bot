@@ -1,9 +1,9 @@
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
-import { paidList as paidListServ } from '~/services/services';
+import { ticket as ticketServ } from '~/services/services';
 
 type Options = {
   services: {
-    paidList: typeof paidListServ;
+    ticket: typeof ticketServ;
   };
 };
 
@@ -20,13 +20,13 @@ type Body = {
 };
 
 const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { paidList: paidListService } = opts.services;
+  const { ticket: ticketService } = opts.services;
 
   fastify.route({
     method: 'GET',
     url: '/tickets',
     async handler(req: FastifyRequest, rep: FastifyReply) {
-      const tickets = await paidListService.getAllTickets();
+      const tickets = await ticketService.getAllTickets();
       return rep.send(tickets).status(200);
     },
   });
@@ -35,8 +35,8 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: 'DELETE',
     url: '/tickets/:id',
     async handler(req: FastifyRequest<{ Params: Params }>, rep: FastifyReply) {
-      await paidListService.delete(req.params.id);
-      const tickets = await paidListService.getAllTickets();
+      await ticketService.delete(req.params.id);
+      const tickets = await ticketService.getAllTickets();
       return rep.send(tickets).status(200);
     },
   });
@@ -47,12 +47,12 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: Params; Body: Body }>,
       rep: FastifyReply,
     ) {
-      await paidListService.update({
+      await ticketService.update({
         ticket: req.params.id,
         subcriptionTime: req.body.subcriptionTime,
         status: req.body.status,
       });
-      const tickets = await paidListService.getAllTickets();
+      const tickets = await ticketService.getAllTickets();
       return rep.send(tickets).status(200);
     },
   });

@@ -13,7 +13,7 @@ class Channel extends AbstractModel {
   }
 
   static get tableName(): string {
-    return TableName.CHANELLS;
+    return TableName.CHANNELS;
   }
 }
 

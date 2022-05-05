@@ -1,7 +1,7 @@
 enum BotMessageTableField {
   CHAT_ID = 'chatId',
   MESSAGE_ID = 'messageId',
-  MESSAGE_ID_FROM_CHANNEL = 'messageIdFromChannel',
+  CHANNEL_MESSAGE_ID = 'channelMessageId',
   CREATED_AT = 'createdAt',
   UPDATED_AT = 'updatedAt',
 }

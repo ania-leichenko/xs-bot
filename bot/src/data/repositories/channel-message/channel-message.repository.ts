@@ -12,19 +12,26 @@ class ChannelMessage {
     this.#ChannelMessageModel = ChannelMessageModel;
   }
 
-  public async create(
-    channel_message: ChannelMessageEntity,
-  ): Promise<ChannelMessageEntity> {
-    const { channelId, messageId, message, createdAt, updatedAt } =
-      channel_message;
+  public async create({
+    channelId,
+    messageId,
+    message,
+  }: {
+    channelId: number;
+    messageId: number;
+    message: string;
+  }): Promise<ChannelMessageEntity> {
 
-    const newChannelMessage = await this.#ChannelMessageModel.query().insert({
-      channelId,
-      messageId,
-      message,
-      createdAt,
-      updatedAt,
-    });
+    const newChannelMessage = await this.#ChannelMessageModel
+      .query()
+      .insert({
+        channelId,
+        messageId,
+        message,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      .returning('id');
 
     return ChannelMessage.modelToEntity(newChannelMessage);
   }
@@ -45,15 +52,27 @@ class ChannelMessage {
     return updateMessage;
   }
 
+  public async getByChannelMessageId({
+    messageId,
+    channelId,
+  }: {
+    messageId: number;
+    channelId: number;
+  }): Promise<ChannelMessageEntity | undefined> {
+    return this.#ChannelMessageModel
+      .query()
+      .where({ messageId: messageId, channelId: channelId })
+      .first();
+  }
+
   public static modelToEntity(model: ChannelMessageM): ChannelMessageEntity {
-    const { channelId, messageId, message, createdAt, updatedAt } = model;
+    const { id, channelId, messageId, message } = model;
 
     return ChannelMessageEntity.createNew({
+      id,
       channelId,
       messageId,
       message,
-      createdAt,
-      updatedAt,
     });
   }
 }

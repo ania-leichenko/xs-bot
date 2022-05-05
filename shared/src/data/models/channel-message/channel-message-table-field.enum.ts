@@ -1,4 +1,5 @@
 enum ChannelMessageTableField {
+  ID = 'id',
   CHANNEL_ID = 'channelId',
   MESSAGE_ID = 'messageId',
   MESSAGE = 'message',
