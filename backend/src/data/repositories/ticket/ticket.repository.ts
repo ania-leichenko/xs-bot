@@ -15,7 +15,7 @@ class Ticket {
   public async getAllTickets(): Promise<TicketEntity[]> {
     const tickets = await this.#TicketModel
       .query()
-      .orderBy('subcriptionTime', 'asc');
+      .orderBy('subscriptionTime', 'asc');
     return tickets.map((ticket) => Ticket.modelToEntity(ticket));
   }
 
@@ -25,17 +25,17 @@ class Ticket {
 
   public async update({
     ticket,
-    subcriptionTime,
+    subscriptionTime,
     status,
   }: {
     ticket: number;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     status: string;
   }): Promise<number> {
     const updateTicket = await this.#TicketModel
       .query()
       .patch({
-        subcriptionTime: subcriptionTime,
+        subscriptionTime: subscriptionTime,
         status: status,
       })
       .where({ ticket: ticket });

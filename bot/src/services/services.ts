@@ -1,6 +1,5 @@
 import {
   user as userRepository,
-  userMessage as userMessageRepository,
   ticket as ticketRepository,
   channel as channelRepository,
   channelMessage as channelMessageRepository,
@@ -8,7 +7,6 @@ import {
 } from '~/data/repositories/repositories';
 import { User } from './user/user.service';
 import { BotServ } from './bot/bot.service';
-import { UserMessage } from './user-message/user-message.service';
 import { Ticket } from './ticket/ticket.service';
 import { Channel } from './channels/channel.service';
 import { ChannelMessage } from './channel-message/channel-message.service';
@@ -16,10 +14,6 @@ import { BotMessage } from './bot-message/bot-message.service';
 
 const user = new User({
   userRepository,
-});
-
-const userMessage = new UserMessage({
-  userMessageRepository,
 });
 
 const ticket = new Ticket({
@@ -40,7 +34,6 @@ const botMessage = new BotMessage({
 
 const botServ = new BotServ({
   userService: user,
-  userMessageService: userMessage,
   ticketService: ticket,
   channelService: channel,
 });
@@ -48,7 +41,6 @@ const botServ = new BotServ({
 export {
   user,
   botServ,
-  userMessage,
   ticket,
   channel,
   channelMessage,

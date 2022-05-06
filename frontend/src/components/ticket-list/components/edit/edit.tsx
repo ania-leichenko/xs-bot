@@ -24,6 +24,7 @@ type Anchor = 'right';
 
 type Ticket = {
   ticket: number;
+  chatId: number;
   firstName: string;
   username: string;
   subscriptionTime: string;
@@ -83,6 +84,9 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         ticket: ticket.ticket,
         subscriptionTime: userSubcriptionTime,
         status: userStatus,
+        chatId: ticket.chatId,
+        messageForUser:
+          'Your payment has been approved! Thanks for the payment. All signals will be in the feed of the same bot',
       }),
     })
       .then((response) => response.json())

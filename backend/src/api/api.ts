@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from 'fastify';
 import { initUsersApi } from './user';
-import { initTicketsApi } from './paid-list';
-import { users, ticket } from '~/services/services';
+import { initTicketsApi } from './ticket';
+import { users, ticket, messageForUsers } from '~/services/services';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initUsersApi, {
@@ -12,6 +12,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initTicketsApi, {
     services: {
       ticket,
+      messageForUsers,
     },
   });
 };

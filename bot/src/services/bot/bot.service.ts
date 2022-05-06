@@ -2,7 +2,6 @@
 import { Context, Markup } from 'telegraf';
 import {
   user as userServ,
-  userMessage as userMessageServ,
   ticket as ticketServ,
   channel as channelServ,
 } from '../services';
@@ -68,7 +67,6 @@ import { formateDate } from '~/common/types/types';
 
 type Constructor = {
   userService: typeof userServ;
-  userMessageService: typeof userMessageServ;
   ticketService: typeof ticketServ;
   channelService: typeof channelServ;
 };
@@ -81,18 +79,15 @@ type TButtons = Array<TButton>;
 
 class BotServ {
   #userService: typeof userServ;
-  #userMessageService: typeof userMessageServ;
   #ticketService: typeof ticketServ;
   #channelService: typeof channelServ;
 
   constructor({
     userService,
-    userMessageService,
     ticketService,
     channelService,
   }: Constructor) {
     this.#userService = userService;
-    this.#userMessageService = userMessageService;
     this.#ticketService = ticketService;
     this.#channelService = channelService;
   }
@@ -163,20 +158,6 @@ Country: ${ticket.country}`;
       ctx.telegram.sendMessage(admin.chatId, message, {
         parse_mode: 'HTML',
       });
-    });
-  }
-
-  public async userMessage(
-    ctx: Context & { message?: { text?: string } },
-  ): Promise<void> {
-    if (!ctx.message) {
-      throw new Error('ctx.message is undefined');
-    }
-
-    this.#userMessageService.create({
-      chat_id: ctx.message.chat.id,
-      text: ctx.message.text,
-      date: new Date(ctx.message.date),
     });
   }
 
@@ -331,9 +312,7 @@ Country: ${ticket.country}`;
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
-      const tickets = await this.#ticketService.getTicketByChatId(
-        ctx.from.id,
-      );
+      const tickets = await this.#ticketService.getTicketByChatId(ctx.from.id);
       if (tickets.length === 0) {
         this.renderScreen(ctx, {
           html: `${PERSONAL_AREA_TITLE}

@@ -3,7 +3,7 @@ class Ticket {
   public chatId: number;
   public firstName: string;
   public username?: string;
-  public subcriptionTime: Date;
+  public subscriptionTime: Date;
   public plan: string;
   public paymentMethod: string;
   public status: string;
@@ -14,7 +14,7 @@ class Ticket {
     chatId,
     firstName,
     username,
-    subcriptionTime,
+    subscriptionTime,
     plan,
     paymentMethod,
     status,
@@ -24,7 +24,7 @@ class Ticket {
     chatId: number;
     firstName: string;
     username?: string;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     plan: string;
     paymentMethod: string;
     status: string;
@@ -34,7 +34,7 @@ class Ticket {
     this.chatId = chatId;
     this.firstName = firstName;
     this.username = username;
-    this.subcriptionTime = subcriptionTime;
+    this.subscriptionTime = subscriptionTime;
     this.plan = plan;
     this.paymentMethod = paymentMethod;
     this.status = status;
@@ -45,7 +45,7 @@ class Ticket {
     chatId,
     firstName,
     username,
-    subcriptionTime,
+    subscriptionTime,
     plan,
     paymentMethod,
     status,
@@ -55,7 +55,7 @@ class Ticket {
     chatId: number;
     firstName: string;
     username?: string;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     plan: string;
     paymentMethod: string;
     status: string;
@@ -66,7 +66,7 @@ class Ticket {
       chatId,
       firstName,
       username,
-      subcriptionTime,
+      subscriptionTime,
       plan,
       paymentMethod,
       status,
