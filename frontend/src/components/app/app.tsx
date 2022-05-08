@@ -27,7 +27,12 @@ const App: FC = () => {
       <List>
         {['User List', 'Paid List'].map((text) => (
           <ListItem button key={text}>
-            <Link to={text === 'User List' ? AppRoute.ROOT : AppRoute.PAID_LIST_TABLE}>
+            <Link
+              to={
+                text === 'User List' ? AppRoute.ROOT : AppRoute.PAID_LIST_TABLE
+              }
+              className={classes.link}
+             >
               <ListItemText primary={text} />
             </Link>
           </ListItem>

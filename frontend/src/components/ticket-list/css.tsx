@@ -39,17 +39,18 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
     },
     inputRoot: {
-      color: 'inherit',
-      width: '100%',
+      color: '#4f5668',
+      border: '1px solid #4f5668',
+      borderRadius: '5px',
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '20ch',
-      },
+    },
+    text: {
+      color: '#c0c3c8',
     },
   }),
 );

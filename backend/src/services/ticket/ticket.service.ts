@@ -22,16 +22,16 @@ class Ticket {
 
   public async update({
     ticket,
-    subcriptionTime,
+    subscriptionTime,
     status,
   }: {
     ticket: number;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     status: string;
   }): Promise<number> {
     const updateTicket = await this.#ticketRepository.update({
       ticket,
-      subcriptionTime,
+      subscriptionTime,
       status,
     });
 

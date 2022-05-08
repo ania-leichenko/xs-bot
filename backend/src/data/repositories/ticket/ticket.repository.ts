@@ -25,17 +25,17 @@ class Ticket {
 
   public async update({
     ticket,
-    subcriptionTime,
+    subscriptionTime,
     status,
   }: {
     ticket: number;
-    subcriptionTime: Date;
+    subscriptionTime: Date;
     status: string;
   }): Promise<number> {
     const updateTicket = await this.#TicketModel
       .query()
       .patch({
-        subcriptionTime: subcriptionTime,
+        subscriptionTime: subscriptionTime,
         status: status,
       })
       .where({ ticket: ticket });

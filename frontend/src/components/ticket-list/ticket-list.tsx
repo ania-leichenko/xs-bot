@@ -8,7 +8,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
 import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './css';
 import { formateDate } from '../formateDate/formateDate';
 
@@ -46,9 +45,6 @@ export const TicketTable: FC = () => {
     <TableContainer component={Paper} className={classes.tableContainer}>
       <TableHead className={classes.tableHead}>
         <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
           <InputBase
             placeholder="Search…"
             classes={{
@@ -62,28 +58,49 @@ export const TicketTable: FC = () => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">User</TableCell>
-            <TableCell align="center">Subscription time</TableCell>
-            <TableCell align="center">Plan</TableCell>
-            <TableCell align="center">Payment method</TableCell>
-            <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Actions</TableCell>
+            <TableCell align="center" className={classes.text}>
+              User
+            </TableCell>
+            <TableCell align="center" className={classes.text}>
+              Subscription time
+            </TableCell>
+            <TableCell align="center" className={classes.text}>
+              Plan
+            </TableCell>
+            <TableCell align="center" className={classes.text}>
+              Payment method
+            </TableCell>
+            <TableCell align="center" className={classes.text}>
+              Status
+            </TableCell>
+            <TableCell align="center" className={classes.text}>
+              Actions
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {tickets &&
             tickets.map((ticket: Ticket) => (
               <TableRow key={ticket.ticket}>
-                <TableCell component="th" scope="row" align="center">
+                <TableCell
+                  component="th"
+                  scope="row"
+                  align="center"
+                  className={classes.text}
+                >
                   {ticket.firstName}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell align="center" className={classes.text}>
                   {formateDate(ticket.subscriptionTime)}
                 </TableCell>
-                <TableCell align="center">{ticket.plan}</TableCell>
-                <TableCell align="center">{ticket.paymentMethod}</TableCell>
-                <TableCell align="center">{ticket.status}</TableCell>
-                <TableCell align="center">
+                <TableCell align="center" className={classes.text}>
+                  {ticket.plan}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>
+                  {ticket.paymentMethod}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>{ticket.status}</TableCell>
+                <TableCell align="center" className={classes.text}>
                   <Actions ticket={ticket} setTickets={setTickets} />
                 </TableCell>
               </TableRow>

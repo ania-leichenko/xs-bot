@@ -13,7 +13,7 @@ type Params = {
 
 type Body = {
   ticket: number;
-  subcriptionTime: Date;
+  subscriptionTime: Date;
   plan: string;
   paymentMethod: string;
   status: string;
@@ -47,11 +47,13 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       req: FastifyRequest<{ Params: Params; Body: Body }>,
       rep: FastifyReply,
     ) {
-      await ticketService.update({
+      const ticket = await ticketService.update({
         ticket: req.params.id,
-        subcriptionTime: req.body.subcriptionTime,
+        subscriptionTime: req.body.subscriptionTime,
         status: req.body.status,
       });
+      // eslint-disable-next-line no-console
+      console.log(ticket);
       const tickets = await ticketService.getAllTickets();
       return rep.send(tickets).status(200);
     },
