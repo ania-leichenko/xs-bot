@@ -58,11 +58,6 @@ bot.start((ctx) => {
 
 bot.on('channel_post', async (ctx) => {
   try {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (!ctx.channelPost.text) {
-      return;
-    }
     const channel = await botServ.getChannel(ctx);
     const users = await ticketServ.getUserByChannelPlan(channel.plan);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -75,6 +70,7 @@ bot.on('channel_post', async (ctx) => {
     });
     for (const user of users) {
       const res = await bot.telegram.sendMessage(user.chatId, message);
+
       botMessageServ.create({
         chatId: user.chatId,
         messageId: res.message_id,
@@ -95,7 +91,6 @@ bot.on('edited_channel_post', async (ctx) => {
     if (!ctx.editedChannelPost.text) {
       return;
     }
-
     await channelMessageServ.update({
       messageId: ctx.editedChannelPost.message_id,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

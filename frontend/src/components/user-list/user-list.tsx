@@ -43,27 +43,46 @@ export const UserListTable: FC = () => {
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell align="center">User</TableCell>
-            <TableCell align="center">Admin</TableCell>
-            <TableCell align="center">Joined</TableCell>
-            <TableCell align="center">Last Action</TableCell>
-            <TableCell align="center">Actions</TableCell>
-          </TableRow>
+          <TableCell align="center" className={classes.text}>
+            User
+          </TableCell>
+          <TableCell align="center" className={classes.text}>
+            Admin
+          </TableCell>
+          <TableCell align="center" className={classes.text}>
+            Joined
+          </TableCell>
+          <TableCell align="center" className={classes.text}>
+            Last Action
+          </TableCell>
+          <TableCell align="center" className={classes.text}>
+            Actions
+          </TableCell>
         </TableHead>
         <TableBody>
           {users &&
             users.map((user: Users) => (
               <TableRow key={user.chatId}>
-                <TableCell component="th" scope="row" align="center">
+                <TableCell
+                  component="th"
+                  scope="row"
+                  align="center"
+                  className={classes.text}
+                >
                   {user.firstName}
                   {`@${user.username}`}
                 </TableCell>
-                <TableCell align="center">{user.admin}</TableCell>
-                <TableCell align="center">{formateDate(user.joined)}</TableCell>
-                <TableCell align="center">{formateDate(user.lastAction)}</TableCell>
-                <TableCell align="center">
-                  <Actions user={user} setUsers={setUsers}/>
+                <TableCell align="center" className={classes.text}>
+                  {user.admin}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>
+                  {formateDate(user.joined)}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>
+                  {formateDate(user.lastAction)}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>
+                  <Actions user={user} setUsers={setUsers} />
                 </TableCell>
               </TableRow>
             ))}

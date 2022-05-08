@@ -77,7 +77,7 @@ export const Edit: FC<Props> = ({ user, setUsers }) => {
     <div>
       {(['right'] as Anchor[]).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>
+          <Button onClick={toggleDrawer(anchor, true)} className={classes.edit}>
             <EditIcon className={classes.icons} />
             Edit
           </Button>
