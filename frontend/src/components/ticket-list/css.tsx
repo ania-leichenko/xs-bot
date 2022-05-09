@@ -17,6 +17,9 @@ const useStyles = makeStyles(
       justifyContent: 'space-between',
       margin: '12px',
     },
+    text: {
+      color: '#c0c3c8',
+    },
   }),
 );
 

@@ -7,10 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
-<<<<<<< HEAD
-=======
-import InputBase from '@material-ui/core/InputBase';
->>>>>>> 6cfdfbee (XS-BOT: + edited channel post)
 import { useStyles } from './css';
 import { formateDate } from '../formateDate/formateDate';
 import Chip from '@mui/material/Chip';
