@@ -19,8 +19,22 @@ class Ticket {
     return tickets.map((ticket) => Ticket.modelToEntity(ticket));
   }
 
-  public async delete(id: number): Promise<number> {
-    return this.#TicketModel.query().deleteById(id);
+  public async softDelete(id: number): Promise<number> {
+    return this.#TicketModel
+      .query()
+      .patch({
+        deletedAt: new Date(),
+      })
+      .where({ ticket: id });
+  }
+
+  public async updateStatus(id: number): Promise<number> {
+    return this.#TicketModel
+      .query()
+      .patch({
+        status: 'Inactive',
+      })
+      .where({ ticket: id });
   }
 
   public async update({

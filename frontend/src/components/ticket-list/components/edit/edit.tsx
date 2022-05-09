@@ -15,8 +15,8 @@ const statuses = [
     label: 'Pending',
   },
   {
-    value: 'Inactve',
-    label: 'Inactve',
+    value: 'Inactive',
+    label: 'Inactive',
   },
 ];
 

@@ -14,6 +14,7 @@ class Ticket extends AbstractModel {
   [TicketTableField.PAYMENT_METHOD]: string;
   [TicketTableField.STATUS]: string;
   [TicketTableField.COUNTRY]: string;
+  [TicketTableField.DELETED_AT]: Date;
 
   static get idColumn(): string {
     return TicketTableField.TICKET;

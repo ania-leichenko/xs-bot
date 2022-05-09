@@ -8,6 +8,7 @@ enum TicketTableField {
   PAYMENT_METHOD = 'paymentMethod',
   STATUS = 'status',
   COUNTRY = 'country',
+  DELETED_AT = 'deletedAt',
 }
 
 export { TicketTableField };

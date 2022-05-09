@@ -16,8 +16,12 @@ class Ticket {
     return this.#ticketRepository.getAllTickets();
   }
 
-  public async delete(id: number): Promise<void> {
-    await this.#ticketRepository.delete(id);
+  public async softDelete(id: number): Promise<void> {
+    await this.#ticketRepository.softDelete(id);
+  }
+
+  public async updateStatus(id: number): Promise<void> {
+    await this.#ticketRepository.updateStatus(id);
   }
 
   public async update({

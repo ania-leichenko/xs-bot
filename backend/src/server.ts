@@ -5,6 +5,7 @@ import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
 import cors from 'fastify-cors';
+import { task } from './services/cron/cron';
 
 const app = Fastify({
   bodyLimit: 6 * 1024 * 1024,
@@ -31,3 +32,5 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
     `Listening to connections on - ${address}, Environment: ${ENV.APP.NODE_ENV}`,
   );
 });
+
+task.start();

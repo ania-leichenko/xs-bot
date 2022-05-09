@@ -37,6 +37,10 @@ class UserService {
     }
     return updateAdmin;
   }
+
+  async getAllAdmins(): Promise<UserEntity[]> {
+    return this.#usersRepository.getAllAdmins();
+  }
 }
 
 export { UserService };

@@ -7,19 +7,25 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import { useStyles } from './css';
 import { formateDate } from '../formateDate/formateDate';
+import Chip from '@mui/material/Chip';
 
 type Ticket = {
   ticket: number;
+  chatId: number;
   firstName: string;
   username: string;
   subscriptionTime: string;
   plan: string;
   paymentMethod: string;
   status: string;
+};
+
+const colorChip = {
+  Active: 'success',
+  Pending: 'warning',
+  Inactive: 'disabled',
 };
 
 export const TicketTable: FC = () => {
@@ -44,21 +50,6 @@ export const TicketTable: FC = () => {
 
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
-      <TableHead className={classes.tableHead}>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search…"
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
-      </TableHead>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -82,7 +73,12 @@ export const TicketTable: FC = () => {
                 </TableCell>
                 <TableCell align="center">{ticket.plan}</TableCell>
                 <TableCell align="center">{ticket.paymentMethod}</TableCell>
-                <TableCell align="center">{ticket.status}</TableCell>
+                <TableCell align="center">
+                  <Chip
+                    label={ticket.status}
+                    //color={colorChip[ticket.status]}
+                  ></Chip>
+                </TableCell>
                 <TableCell align="center">
                   <Actions ticket={ticket} setTickets={setTickets} />
                 </TableCell>

@@ -1,10 +1,9 @@
-//import { Telegraf } from 'telegraf';
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import {
   messageForUsers as messageForUsersServ,
   ticket as ticketServ,
 } from '~/services/services';
- import fetch from 'node-fetch';
+import fetch from 'node-fetch';
 
 type Options = {
   services: {
@@ -19,7 +18,7 @@ type Params = {
 
 type Body = {
   ticket: number;
-  subcriptionTime: Date;
+  subscriptionTime: Date;
   plan: string;
   paymentMethod: string;
   status: string;
@@ -30,9 +29,6 @@ type Body = {
 const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   const { ticket: ticketService, messageForUsers: messageForUsers } =
     opts.services;
-  //const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
-
-  //const bot = new Telegraf(token);
 
   fastify.route({
     method: 'GET',
@@ -46,30 +42,17 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route({
     method: 'DELETE',
     url: '/tickets/:id',
-    async handler(req: FastifyRequest<{ Params: Params }>, rep: FastifyReply) {
-      await ticketService.delete(req.params.id);
-      const tickets = await ticketService.getAllTickets();
-      return rep.send(tickets).status(200);
-    },
-  });
-  fastify.route({
-    method: 'POST',
-    url: '/tickets/:id',
     async handler(
       req: FastifyRequest<{ Params: Params; Body: Body }>,
-      rep,
+      rep: FastifyReply,
     ) {
-      await ticketService.update({
-        ticket: req.params.id,
-        subscriptionTime: req.body.subcriptionTime,
-        status: req.body.status,
-      });
-      const messages = await messageForUsers.create({
-        chatId: req.body.chatId,
-        message: req.body.messageForUser,
-      });
+      await ticketService.softDelete(req.params.id);
+        const messages = await messageForUsers.create({
+          chatId: req.body.chatId,
+          message: req.body.messageForUser,
+        });
       fetch(
-        'https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=1561533553&text=1',
+        `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
         {
           method: 'GET',
           headers: {
@@ -77,16 +60,45 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             'Accept': 'application/json',
           },
         },
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          // eslint-disable-next-line no-console
-          console.log(data);
-        });
-      //bot.telegram.sendMessage(messages.chatId, messages.message);
+      );
+      await ticketService.updateStatus(req.params.id);
       const tickets = await ticketService.getAllTickets();
+      return rep.send(tickets).status(200);
+    },
+  });
+  fastify.route({
+    method: 'POST',
+    url: '/tickets/:id',
+    async handler(req: FastifyRequest<{ Params: Params; Body: Body }>, rep) {
+      await ticketService.update({
+        ticket: req.params.id,
+        subscriptionTime: req.body.subscriptionTime,
+        status: req.body.status,
+      });
+      const messages = await messageForUsers.create({
+        chatId: req.body.chatId,
+        message: req.body.messageForUser,
+      });
+
+      const tickets = await ticketService.getAllTickets();
+
+      const date = new Date();
+      if (
+        req.body.status === 'Active' &&
+        new Date(req.body.subscriptionTime) > date
+      ) {
+        fetch(
+          `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          },
+        );
+      }
+
       return rep.send(tickets).status(200);
     },
   });

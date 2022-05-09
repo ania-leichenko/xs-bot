@@ -8,6 +8,7 @@ import { useStyles } from './css';
 import { Edit } from '../edit/edit';
 
 type Ticket = {
+  chatId: number;
   ticket: number;
   firstName: string;
   username: string;
@@ -41,6 +42,11 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
+      body: JSON.stringify({
+        chatId: ticket.chatId,
+        messageForUser:
+          'Your subscription has been rejected by our system. For all questions, please contact the administrator @bestsignalsadmin',
+      }),
     })
       .then((response) => response.json())
       .then((data) => {

@@ -13,9 +13,7 @@ class UserRepository {
   }
 
   public async getAllUsers(): Promise<UserEntity[]> {
-    const users = await this.#UserModel
-      .query()
-      .orderBy('joined', 'asc');
+    const users = await this.#UserModel.query().orderBy('joined', 'asc');
     return users.map((user) => UserRepository.modelToEntity(user));
   }
 
@@ -37,6 +35,11 @@ class UserRepository {
       })
       .where({ chatId: chatId });
     return updateAdmin;
+  }
+
+  public async getAllAdmins(): Promise<UserEntity[]> {
+    const admins = await this.#UserModel.query().where({ admin: 1 });
+    return admins.map((admin) => UserRepository.modelToEntity(admin));
   }
 
   public static modelToEntity(model: UserM): UserEntity {
