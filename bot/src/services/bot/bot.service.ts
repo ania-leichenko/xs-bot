@@ -10,7 +10,7 @@ import {
   FOREX_TEXT,
   COPY_SIGNALS_TEXT,
   FAQ_TEXT,
-  USER_SUBCRITION,
+  USER_SUBCRITIONS,
   CRYPTO_TEXT,
   CRYPTO_BUTTON_TEXT,
   SCRILL_TEXT,
@@ -60,6 +60,7 @@ import {
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   PERSONAL_AREA_TITLE,
   TILL,
+  POP_UP_TEXT,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
@@ -82,11 +83,7 @@ class BotServ {
   #ticketService: typeof ticketServ;
   #channelService: typeof channelServ;
 
-  constructor({
-    userService,
-    ticketService,
-    channelService,
-  }: Constructor) {
+  constructor({ userService, ticketService, channelService }: Constructor) {
     this.#userService = userService;
     this.#ticketService = ticketService;
     this.#channelService = channelService;
@@ -261,6 +258,21 @@ Country: ${ticket.country}`;
     }
   }
 
+   public async popUpScreen(ctx: Context): Promise<void> {
+    try {
+      ctx.deleteMessage();
+      this.renderScreen(ctx, {
+        html: `${POP_UP_TEXT}`,
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: START_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   public async copySignalsScreen(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
@@ -312,14 +324,10 @@ Country: ${ticket.country}`;
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
-      const tickets = await this.#ticketService.getTicketByChatId(ctx.from.id);
+      const tickets = await this.#ticketService.getTicketByPlan(ctx.from.id);
+      let html = '';
       if (tickets.length === 0) {
-        this.renderScreen(ctx, {
-          html: `${PERSONAL_AREA_TITLE}
-
-${USER_SUBCRITION} no active subscription`,
-          buttons: [[{ title: BACK, id: START_SCREEN }]],
-        });
+        html += 'no active subscription';
       }
       tickets.map((ticket) => {
         if (
@@ -331,22 +339,29 @@ ${USER_SUBCRITION} no active subscription`,
           if (subscriptionDate.getFullYear() === 5000) {
             subscriptionTime = 'Lifetime';
           }
-          this.renderScreen(ctx, {
-            html: `${PERSONAL_AREA_TITLE}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          html += `
+<b>Plan:</b> ${ticket.plan}
+<b>Status:</b> Your subscription active.
+${TILL} ${subscriptionTime}
 
-${USER_SUBCRITION} ${ticket.plan}
-${TILL} ${subscriptionTime}`,
-            buttons: [[{ title: BACK, id: START_SCREEN }]],
-          });
+`;
         }
         if (ticket.status === 'Pending') {
-          this.renderScreen(ctx, {
-            html: `${PERSONAL_AREA_TITLE}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+           html += `<b>Plan:</b> ${ticket.plan}
+<b>Status:</b> Wait for subscription confirmation.
+${TILL} -
 
-${USER_SUBCRITION} Your subscription is being automatically confirmed, please wait`,
-            buttons: [[{ title: BACK, id: START_SCREEN }]],
-          });
+`;
         }
+      });
+      this.renderScreen(ctx, {
+        html: `${PERSONAL_AREA_TITLE}
+
+${USER_SUBCRITIONS}
+${html}`,
+        buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
       console.error(e);

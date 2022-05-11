@@ -70,6 +70,24 @@ class Ticket {
     return tickets.map((ticket: TicketM) => Ticket.modelToEntity(ticket));
   }
 
+  public async getTicketByStatus(
+    chatId: number,
+    plan: string,
+    status: string,
+  ): Promise<TicketEntity | undefined> {
+    return this.#TicketModel
+      .query()
+      .where({ chatId: chatId, plan: plan, status: status })
+      .first();
+  }
+
+  public async getTicketByPLan(chatId: number): Promise<TicketEntity[]> {
+    return this.#TicketModel
+      .query()
+      .where({ chatId: chatId, status: 'Active' })
+      .orWhere({ chatId: chatId, status: 'Pending' });
+  }
+
   public static modelToEntity(model: TicketM): TicketEntity {
     const {
       ticket,
@@ -97,4 +115,4 @@ class Ticket {
   }
 }
 
-export {  Ticket };
+export { Ticket };

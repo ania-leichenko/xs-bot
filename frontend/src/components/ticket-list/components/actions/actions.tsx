@@ -60,6 +60,7 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
+        className={classes.text}
       >
         <ListIcon />
       </Button>

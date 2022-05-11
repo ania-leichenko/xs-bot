@@ -92,28 +92,8 @@ To make a payment, contact the administrator @BestSignalsAdmin`;
 export const BANK_CARD_TEXT = `<b>${BANK_CARD_TITLE}</b>
 
 To make a payment, contact the administrator @BestSignalsAdmin`;
-export const CONFIRM_PAYMENT_TEXT = `
-${BLACK_SQUARE_ICON} Wallet: USDT
-Address: TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2
-Network: TRC20
+export const CONFIRM_PAYMENT_TEXT = `We have received your payment.
 
-${BLACK_SQUARE_ICON} Wallet: BTC
-Address: 0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2
-Network: Binance Smart Chain
-
-${BLACK_SQUARE_ICON} Wallet: BTC
-Address: 14R9wSycdWe4GTPVy3qG4d2ih8MZH9W4et
-Network: Bitcoin
-
-${BLACK_SQUARE_ICON} Wallet: BTC
-Address: bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23
-Network: Binance Chain (BEP2)
-MEMO: 364451047
-
-${BLACK_SQUARE_ICON} Binance pay
-ID: 383468420
-No fee.
-
-Send an amount that covers the commission!
-
-${SERVICE_INACTIVE_ICON} After you make payment, click on the button below ${SEE_BUTTONS}`;
+Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
+Track your subscription status in personal area`;
+export const POP_UP_TEXT = 'You have already paid. Track information in personal area';

@@ -8,7 +8,7 @@ import fetch from 'node-fetch';
 const SUBSCRIPTION_HAS_EXPIRED =
   'Your subscription has expired. In order to continue using our signals, you need to pay for a subscription';
 
-const task = cron.schedule('0 */1 * * * *', async () => {
+const task = cron.schedule('0 */10 * * * *', async () => {
 
   const tickets = await ticketService.getAllTickets();
   const admins = await usersService.getAllAdmins();
@@ -29,7 +29,7 @@ const task = cron.schedule('0 */1 * * * *', async () => {
           },
         );
         fetch(
-          `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${admin.chatId}&text=expired for ${admin.firstName}`,
+          `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${admin.chatId}&text=Expired for ${admin.firstName}, @${admin.username}, ${ticket.plan}`,
           {
             method: 'GET',
             headers: {

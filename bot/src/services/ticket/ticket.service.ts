@@ -55,6 +55,20 @@ class Ticket {
   public async getTicketByChatId(chatId: number): Promise<TicketEntity[]> {
     return this.#ticketRepository.getTicketByChatId(chatId);
   }
+  public async getTicketByStatus({
+    chatId,
+    plan,
+    status,
+  }: {
+    chatId: number;
+    plan: string;
+    status: string;
+  }): Promise<TicketEntity | undefined> {
+    return this.#ticketRepository.getTicketByStatus(chatId, plan, status);
+  }
+  public async getTicketByPlan(chatId: number): Promise<TicketEntity[]> {
+    return this.#ticketRepository.getTicketByPLan(chatId);
+  }
 }
 
 export { Ticket };

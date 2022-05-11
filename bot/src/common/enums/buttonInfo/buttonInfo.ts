@@ -11,6 +11,7 @@ export {
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
   MESSAGE_FROM_BOT_TO_USER,
+  POP_UP_TEXT,
 } from './text.enum';
 
 export {
@@ -28,7 +29,7 @@ export {
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
   BACK,
-  USER_SUBCRITION,
+  USER_SUBCRITIONS,
   TILL,
 } from './title.enum';
 

@@ -88,10 +88,15 @@ export const TicketTable: FC = () => {
                 <TableCell align="center" className={classes.text}>
                   {formateDate(ticket.subscriptionTime)}
                 </TableCell>
-                <TableCell align="center">{ticket.plan}</TableCell>
-                <TableCell align="center">{ticket.paymentMethod}</TableCell>
+                <TableCell align="center" className={classes.text}>
+                  {ticket.plan}
+                </TableCell>
+                <TableCell align="center" className={classes.text}>
+                  {ticket.paymentMethod}
+                </TableCell>
                 <TableCell align="center">
                   <Chip
+                    className={classes.text}
                     label={ticket.status}
                     //color={colorChip[ticket.status]}
                   ></Chip>

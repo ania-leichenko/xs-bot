@@ -58,26 +58,95 @@ bot.start((ctx) => {
 
 bot.on('channel_post', async (ctx) => {
   try {
-    const channel = await botServ.getChannel(ctx);
-    const users = await ticketServ.getUserByChannelPlan(channel.plan);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const message = ctx.channelPost.text;
-    const channelMessage = await channelMessageServ.create({
-      channelId: ctx.channelPost.chat.id,
-      messageId: ctx.channelPost.message_id,
-      message,
-    });
-    for (const user of users) {
-      const res = await bot.telegram.sendMessage(user.chatId, message);
-
-      botMessageServ.create({
-        chatId: user.chatId,
-        messageId: res.message_id,
-        channelMessageId: channelMessage.id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+    if (ctx.channelPost.text) {
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const message = ctx.channelPost.text;
+      const channelMessage = await channelMessageServ.create({
+        channelId: ctx.channelPost.chat.id,
+        messageId: ctx.channelPost.message_id,
+        message,
       });
+      for (const user of users) {
+        const res = await bot.telegram.sendMessage(user.chatId, message);
+
+        botMessageServ.create({
+          chatId: user.chatId,
+          messageId: res.message_id,
+          channelMessageId: channelMessage.id,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (ctx.update.channel_post.photo) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const photos = ctx.update.channel_post.photo.slice(-1);
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      for (const user of users) {
+        for (const photo of photos) {
+          bot.telegram.sendPhoto(user.chatId, photo.file_id);
+        }
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (ctx.update.channel_post.video) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const video = ctx.update.channel_post.video.file_id;
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      for (const user of users) {
+        bot.telegram.sendVideo(user.chatId, video);
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (ctx.update.channel_post.document) {
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const document = ctx.update.channel_post.document.file_id;
+      for (const user of users) {
+        bot.telegram.sendDocument(user.chatId, document);
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (ctx.update.channel_post.sticker) {
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const sticker = ctx.update.channel_post.sticker.file_id;
+      for (const user of users) {
+        bot.telegram.sendSticker(user.chatId, sticker);
+      }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (ctx.update.channel_post.voice) {
+      const channel = await botServ.getChannel(ctx);
+      const users = await ticketServ.getUserByChannelPlan(channel.plan);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const voice = ctx.update.channel_post.voice.file_id;
+      for (const user of users) {
+        bot.telegram.sendVoice(user.chatId, voice);
+      }
     }
   } catch (e) {
     console.log(e);
@@ -123,15 +192,57 @@ bot.on('edited_channel_post', async (ctx) => {
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
+   if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+
+  const ticket = await ticketServ.getTicketByStatus({
+    chatId: ctx.chat.id,
+    plan: 'Forex',
+    status: 'Pending',
+  });
+
+  if (ticket) {
+    botServ.popUpScreen(ctx);
+  } else {
   botServ.forexScreen(ctx);
+  }
 });
 
 bot.action(CRYPTO_SCREEN, async (ctx) => {
-  botServ.cryptoScreen(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+
+  const ticket = await ticketServ.getTicketByStatus({
+    chatId: ctx.chat.id,
+    plan: 'Crypto',
+    status: 'Pending',
+  });
+
+  if (ticket) {
+    botServ.popUpScreen(ctx);
+  } else {
+    botServ.cryptoScreen(ctx);
+  }
 });
 
 bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
+   if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+
+  const ticket = await ticketServ.getTicketByStatus({
+    chatId: ctx.chat.id,
+    plan: 'CopySignals',
+    status: 'Pending',
+  });
+
+  if (ticket) {
+    botServ.popUpScreen(ctx);
+  } else {
   botServ.copySignalsScreen(ctx);
+  }
 });
 
 bot.action(FAQ_SCREEN, async (ctx) => {
