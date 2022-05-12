@@ -73,7 +73,6 @@ bot.on('channel_post', async (ctx) => {
       });
       for (const user of users) {
         const res = await bot.telegram.sendMessage(user.chatId, message);
-
         botMessageServ.create({
           chatId: user.chatId,
           messageId: res.message_id,
@@ -82,6 +81,7 @@ bot.on('channel_post', async (ctx) => {
           updatedAt: new Date(),
         });
       }
+      console.log('Message: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -109,6 +109,7 @@ bot.on('channel_post', async (ctx) => {
       for (const user of users) {
         bot.telegram.sendVideo(user.chatId, video);
       }
+      console.log('Message: ', users.length);
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -121,6 +122,7 @@ bot.on('channel_post', async (ctx) => {
       for (const user of users) {
         bot.telegram.sendDocument(user.chatId, document);
       }
+      console.log('Message: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -134,6 +136,7 @@ bot.on('channel_post', async (ctx) => {
       for (const user of users) {
         bot.telegram.sendSticker(user.chatId, sticker);
       }
+      console.log('Message: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -147,6 +150,7 @@ bot.on('channel_post', async (ctx) => {
       for (const user of users) {
         bot.telegram.sendVoice(user.chatId, voice);
       }
+      console.log('Message: ', users.length);
     }
   } catch (e) {
     console.log(e);

@@ -136,7 +136,7 @@ class BotServ {
     const message = `<b>New Payment</b>
 
 Ticket: ${ticket.ticket}
-Username: ${ticket.username}
+Username: @${ticket.username}
 Telegram name: ${ticket.firstName}
 Plan: ${ticket.plan}
 Payment method: ${ticket.paymentMethod}

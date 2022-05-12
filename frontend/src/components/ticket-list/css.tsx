@@ -9,16 +9,12 @@ const useStyles = makeStyles(
       minWidth: 650,
     },
     tableContainer: {
-      backgroundColor: '#283046',
     },
     tableHead: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       margin: '12px',
-    },
-    text: {
-      color: '#c0c3c8',
     },
   }),
 );

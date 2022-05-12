@@ -3,7 +3,6 @@ import {
   QUESSION_ICON,
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
-  BLACK_SQUARE_ICON,
 } from './emoji.enum';
 import {
   FOREX_TITLE,
@@ -95,5 +94,6 @@ To make a payment, contact the administrator @BestSignalsAdmin`;
 export const CONFIRM_PAYMENT_TEXT = `We have received your payment.
 
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
-Track your subscription status in personal area`;
+
+<b>Track your subscription status in personal area</b>`;
 export const POP_UP_TEXT = 'You have already paid. Track information in personal area';

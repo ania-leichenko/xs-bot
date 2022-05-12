@@ -7,7 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
-import { useStyles } from './css';
 import { formateDate } from '../formateDate/formateDate';
 
 type Users = {
@@ -20,7 +19,6 @@ type Users = {
 };
 
 export const UserListTable: FC = () => {
-  const classes = useStyles();
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -41,21 +39,21 @@ export const UserListTable: FC = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
-          <TableCell align="center" className={classes.text}>
+          <TableCell align="center">
             User
           </TableCell>
-          <TableCell align="center" className={classes.text}>
+          <TableCell align="center">
             Admin
           </TableCell>
-          <TableCell align="center" className={classes.text}>
+          <TableCell align="center">
             Joined
           </TableCell>
-          <TableCell align="center" className={classes.text}>
+          <TableCell align="center">
             Last Action
           </TableCell>
-          <TableCell align="center" className={classes.text}>
+          <TableCell align="center">
             Actions
           </TableCell>
         </TableHead>
@@ -67,21 +65,20 @@ export const UserListTable: FC = () => {
                   component="th"
                   scope="row"
                   align="center"
-                  className={classes.text}
                 >
                   {user.firstName}
-                  {`@${user.username}`}
+                  <div>{`@${user.username}`}</div>
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {user.admin}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {formateDate(user.joined)}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {formateDate(user.lastAction)}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   <Actions user={user} setUsers={setUsers} />
                 </TableCell>
               </TableRow>

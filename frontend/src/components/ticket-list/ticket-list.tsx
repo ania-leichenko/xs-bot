@@ -22,10 +22,12 @@ type Ticket = {
   status: string;
 };
 
-const colorChip = {
+const colorChip: {
+  [key: string]: 'success' | 'warning' | 'default';
+} = {
   Active: 'success',
   Pending: 'warning',
-  Inactive: 'disabled',
+  Inactive: 'default',
 };
 
 export const TicketTable: FC = () => {
@@ -53,22 +55,22 @@ export const TicketTable: FC = () => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               User
             </TableCell>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               Subscription time
             </TableCell>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               Plan
             </TableCell>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               Payment method
             </TableCell>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               Status
             </TableCell>
-            <TableCell align="center" className={classes.text}>
+            <TableCell align="center">
               Actions
             </TableCell>
           </TableRow>
@@ -81,24 +83,22 @@ export const TicketTable: FC = () => {
                   component="th"
                   scope="row"
                   align="center"
-                  className={classes.text}
                 >
                   {ticket.firstName}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {formateDate(ticket.subscriptionTime)}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {ticket.plan}
                 </TableCell>
-                <TableCell align="center" className={classes.text}>
+                <TableCell align="center">
                   {ticket.paymentMethod}
                 </TableCell>
                 <TableCell align="center">
                   <Chip
-                    className={classes.text}
                     label={ticket.status}
-                    //color={colorChip[ticket.status]}
+                    color={colorChip[ticket.status]}
                   ></Chip>
                 </TableCell>
                 <TableCell align="center">

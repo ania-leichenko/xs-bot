@@ -11,15 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
     icons: {
       margin: '8px',
     },
-    edit: {
-      color: '#c0c3c8',
-      '&:hover': {
-        backgroundColor: '#7367f0',
-      },
-    },
-    drawer: {
-      backgroundColor: '#283046',
-    },
   }),
 );
 

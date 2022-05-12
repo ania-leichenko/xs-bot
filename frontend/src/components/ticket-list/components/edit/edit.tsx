@@ -86,7 +86,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         status: userStatus,
         chatId: ticket.chatId,
         messageForUser:
-          'Your payment has been approved! Thanks for the payment. All signals will be in the feed of the same bot',
+          `Your payment for ${ticket.plan} has been approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
     })
       .then((response) => response.json())
@@ -109,7 +109,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
             onClose={toggleDrawer(anchor, false)}
             onOpen={toggleDrawer(anchor, true)}
           >
-            <div>Add paid user</div>
+            <div className={classes.text}>Add paid user</div>
             <form className={classes.root} noValidate autoComplete="off">
               <div>
                 <TextField
@@ -142,24 +142,17 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
                 </TextField>
               </div>
             </form>
-
-            <div className={classes.buttons}>
               <div>
                 <Button
                   variant="contained"
                   color="primary"
                   href="#contained-buttons"
                   onClick={handleSaveTicket}
+                 className={classes.button}
                 >
                   Save
                 </Button>
               </div>
-              <div>
-                <Button variant="outlined" href="#outlined-buttons">
-                  Cancel
-                </Button>
-              </div>
-            </div>
           </SwipeableDrawer>
         </React.Fragment>
       ))}

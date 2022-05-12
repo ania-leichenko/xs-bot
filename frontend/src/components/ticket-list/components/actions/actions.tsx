@@ -45,7 +45,7 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
       body: JSON.stringify({
         chatId: ticket.chatId,
         messageForUser:
-          'Your subscription has been rejected by our system. For all questions, please contact the administrator @bestsignalsadmin',
+          `Your subscription for ${ticket.plan} has been rejected by our system. For all questions, please contact the administrator @bestsignalsadmin`,
       }),
     })
       .then((response) => response.json())
@@ -60,7 +60,6 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        className={classes.text}
       >
         <ListIcon />
       </Button>
@@ -75,10 +74,10 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
           <Edit setTickets={setTickets} ticket={ticket} />
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <div onClick={handleDeleteTicket} className={classes.button}>
+          <Button onClick={handleDeleteTicket} className={classes.button}>
             <DeleteOutlinedIcon className={classes.icons} />
             Delete
-          </div>
+          </Button>
         </MenuItem>
       </Menu>
     </div>

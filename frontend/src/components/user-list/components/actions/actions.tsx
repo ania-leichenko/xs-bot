@@ -55,7 +55,6 @@ export const Actions: FC<Props> = ({ user, setUsers }) => {
         aria-controls="simple-menu"
         aria-haspopup="true"
         onClick={handleClick}
-        className={classes.action}
       >
         <ListIcon />
       </Button>
@@ -66,17 +65,15 @@ export const Actions: FC<Props> = ({ user, setUsers }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <div className={classes.action}>
-          <MenuItem onClick={handleClose}>
-            <Edit user={user} setUsers={setUsers} />
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
-            <div onClick={handleDeleteUser} className={classes.button}>
-              <DeleteOutlinedIcon className={classes.icons} />
-              Delete
-            </div>
-          </MenuItem>
-        </div>
+        <MenuItem onClick={handleClose}>
+          <Edit user={user} setUsers={setUsers} />
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Button onClick={handleDeleteUser} className={classes.button}>
+            <DeleteOutlinedIcon className={classes.icons} />
+            Delete
+          </Button>
+        </MenuItem>
       </Menu>
     </div>
   );
