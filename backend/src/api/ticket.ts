@@ -4,6 +4,7 @@ import {
   ticket as ticketServ,
 } from '~/services/services';
 import fetch from 'node-fetch';
+import { ENV } from '~/common/enums/enums';
 
 type Options = {
   services: {
@@ -35,7 +36,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: '/tickets',
     async handler(req: FastifyRequest, rep: FastifyReply) {
       const tickets = await ticketService.getAllTickets();
-      
+
       return rep
         .send(tickets.filter((ticket) => ticket.deletedAt == null))
         .status(200);
@@ -50,12 +51,12 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep: FastifyReply,
     ) {
       await ticketService.softDelete(req.params.id);
-        const messages = await messageForUsers.create({
-          chatId: req.body.chatId,
-          message: req.body.messageForUser,
-        });
+      const messages = await messageForUsers.create({
+        chatId: req.body.chatId,
+        message: req.body.messageForUser,
+      });
       fetch(
-        `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
+        `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
         {
           method: 'GET',
           headers: {
@@ -91,7 +92,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         new Date(req.body.subscriptionTime) > date
       ) {
         fetch(
-          `https://api.telegram.org/bot5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
           {
             method: 'GET',
             headers: {

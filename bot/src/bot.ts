@@ -45,7 +45,10 @@ import {
   user as userServ,
 } from './services/services';
 
-const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
+const token = ENV.TELEGRAM_TOKEN;
+if (!token) {
+  throw Error('Cannot find token');
+}
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
@@ -194,7 +197,7 @@ bot.on('channel_post', async (ctx) => {
           console.log(`${user?.firstName} @${user?.username}  blocked bot`);
         }
       }
-     console.log('Done: ', users.length);
+      console.log('Done: ', users.length);
     }
   } catch (e) {
     console.log(e);
