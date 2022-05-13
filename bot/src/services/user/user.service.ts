@@ -38,8 +38,11 @@ class User {
     return this.#userRepository.getUserById(chatId);
   }
 
-  async getAllAdmins(): Promise<UserEntity[]> {
+  public async getAllAdmins(): Promise<UserEntity[]> {
     return this.#userRepository.getAllAdmins();
+  }
+  public async updateLastAction(chatId: number): Promise<void> {
+   this.#userRepository.updateLastAction(chatId);
   }
 }
 

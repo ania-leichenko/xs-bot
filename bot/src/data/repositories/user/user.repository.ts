@@ -38,6 +38,13 @@ class User {
     return admins.map((admin) => User.modelToEntity(admin));
   }
 
+  public async updateLastAction(chatId: number): Promise<void> {
+    await this.#UserModel
+      .query()
+      .patch({ lastAction: new Date() })
+      .where({ chatId });
+  }
+
   public static modelToEntity(model: UserM): UserEntity {
     const { chatId, firstName, username, admin, joined, lastAction } = model;
 

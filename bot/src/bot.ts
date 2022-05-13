@@ -42,6 +42,7 @@ import {
   ticket as ticketServ,
   channelMessage as channelMessageServ,
   botMessage as botMessageServ,
+  user as userServ,
 } from './services/services';
 
 const token = '5245583761:AAGViUQUROPfgNNSNLLRXK4_GPQ9nUZ3nVw';
@@ -72,16 +73,23 @@ bot.on('channel_post', async (ctx) => {
         message,
       });
       for (const user of users) {
-        const res = await bot.telegram.sendMessage(user.chatId, message);
-        botMessageServ.create({
-          chatId: user.chatId,
-          messageId: res.message_id,
-          channelMessageId: channelMessage.id,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
+        try {
+          const res = await bot.telegram.sendMessage(user.chatId, message);
+          botMessageServ.create({
+            chatId: user.chatId,
+            messageId: res.message_id,
+            channelMessageId: channelMessage.id,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
+        } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const user = await userServ.getUserById(e.on.payload.chat_id);
+          console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+        }
       }
-      console.log('Message: ', users.length);
+      console.log('Done: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -94,9 +102,17 @@ bot.on('channel_post', async (ctx) => {
       const users = await ticketServ.getUserByChannelPlan(channel.plan);
       for (const user of users) {
         for (const photo of photos) {
-          bot.telegram.sendPhoto(user.chatId, photo.file_id);
+          try {
+            bot.telegram.sendPhoto(user.chatId, photo.file_id);
+          } catch (e) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const user = await userServ.getUserById(e.on.payload.chat_id);
+            console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+          }
         }
       }
+      console.log('Done: ', users.length);
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -107,9 +123,16 @@ bot.on('channel_post', async (ctx) => {
       const channel = await botServ.getChannel(ctx);
       const users = await ticketServ.getUserByChannelPlan(channel.plan);
       for (const user of users) {
-        bot.telegram.sendVideo(user.chatId, video);
+        try {
+          bot.telegram.sendVideo(user.chatId, video);
+        } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const user = await userServ.getUserById(e.on.payload.chat_id);
+          console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+        }
       }
-      console.log('Message: ', users.length);
+      console.log('Done: ', users.length);
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -120,9 +143,16 @@ bot.on('channel_post', async (ctx) => {
       // @ts-ignore
       const document = ctx.update.channel_post.document.file_id;
       for (const user of users) {
-        bot.telegram.sendDocument(user.chatId, document);
+        try {
+          bot.telegram.sendDocument(user.chatId, document);
+        } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const user = await userServ.getUserById(e.on.payload.chat_id);
+          console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+        }
       }
-      console.log('Message: ', users.length);
+      console.log('Done: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -134,9 +164,16 @@ bot.on('channel_post', async (ctx) => {
       // @ts-ignore
       const sticker = ctx.update.channel_post.sticker.file_id;
       for (const user of users) {
-        bot.telegram.sendSticker(user.chatId, sticker);
+        try {
+          bot.telegram.sendSticker(user.chatId, sticker);
+        } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const user = await userServ.getUserById(e.on.payload.chat_id);
+          console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+        }
       }
-      console.log('Message: ', users.length);
+      console.log('Done: ', users.length);
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -148,9 +185,16 @@ bot.on('channel_post', async (ctx) => {
       // @ts-ignore
       const voice = ctx.update.channel_post.voice.file_id;
       for (const user of users) {
-        bot.telegram.sendVoice(user.chatId, voice);
+        try {
+          bot.telegram.sendVoice(user.chatId, voice);
+        } catch (e) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          const user = await userServ.getUserById(e.on.payload.chat_id);
+          console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+        }
       }
-      console.log('Message: ', users.length);
+     console.log('Done: ', users.length);
     }
   } catch (e) {
     console.log(e);
@@ -196,7 +240,7 @@ bot.on('edited_channel_post', async (ctx) => {
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
-   if (!ctx.chat) {
+  if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
 
@@ -209,8 +253,9 @@ bot.action(FOREX_SCREEN, async (ctx) => {
   if (ticket) {
     botServ.popUpScreen(ctx);
   } else {
-  botServ.forexScreen(ctx);
+    botServ.forexScreen(ctx);
   }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CRYPTO_SCREEN, async (ctx) => {
@@ -229,10 +274,11 @@ bot.action(CRYPTO_SCREEN, async (ctx) => {
   } else {
     botServ.cryptoScreen(ctx);
   }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
-   if (!ctx.chat) {
+  if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
 
@@ -245,36 +291,65 @@ bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
   if (ticket) {
     botServ.popUpScreen(ctx);
   } else {
-  botServ.copySignalsScreen(ctx);
+    botServ.copySignalsScreen(ctx);
   }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(FAQ_SCREEN, async (ctx) => {
   botServ.faqScreen(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PERSONAL_AREA_SCREEN, async (ctx) => {
   botServ.personalAreaScreen(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(START_SCREEN, async (ctx) => {
   botServ.mainScreen(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
   botServ.paymentByCryptoScreenOfForex(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
   botServ.paymentByScrillScreenOfForex(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
   botServ.paymentBySwiftScreenOfForex(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
   botServ.paymentByBankCardScreenOfForex(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
@@ -284,6 +359,10 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
     paymentMethod: 'Crypto',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
@@ -293,6 +372,10 @@ bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
     paymentMethod: 'Scrill',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
@@ -302,6 +385,10 @@ bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
     paymentMethod: 'SWIFT',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
@@ -311,21 +398,41 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
     paymentMethod: 'BankCard',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentByCryptoScreenOfCrypto(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentByScrillScreenOfCrypto(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentBySwiftScreenOfCrypto(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentByBankCardScreenOfCrypto(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -335,6 +442,10 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
     paymentMethod: 'Crypto',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -344,6 +455,10 @@ bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
     paymentMethod: 'Scrill',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -353,6 +468,10 @@ bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
     paymentMethod: 'SWIFT',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -362,22 +481,42 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
     paymentMethod: 'BankCard',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.paymentByCryptoOfCopySignals(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.paymentByScrillOfCopySignals(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.paymentBySwiftOfCopySignals(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.paymentByBankCardOfCopySignals(ctx);
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
@@ -387,6 +526,10 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     paymentMethod: 'Crypto',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
@@ -396,6 +539,10 @@ bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     paymentMethod: 'Scrill',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
@@ -405,6 +552,10 @@ bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     paymentMethod: 'SWIFT',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
@@ -414,6 +565,10 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     paymentMethod: 'BankCard',
     status: 'Pending',
   });
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 console.log('Bot started');

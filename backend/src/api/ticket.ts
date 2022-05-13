@@ -35,7 +35,10 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: '/tickets',
     async handler(req: FastifyRequest, rep: FastifyReply) {
       const tickets = await ticketService.getAllTickets();
-      return rep.send(tickets).status(200);
+      
+      return rep
+        .send(tickets.filter((ticket) => ticket.deletedAt == null))
+        .status(200);
     },
   });
 
