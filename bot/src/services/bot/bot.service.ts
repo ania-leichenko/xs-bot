@@ -13,7 +13,7 @@ import {
   USER_SUBCRITIONS,
   CRYPTO_TEXT,
   CRYPTO_BUTTON_TEXT,
-  SCRILL_TEXT,
+  SKRILL_TEXT,
   SWIFT_TEXT,
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
@@ -23,7 +23,7 @@ import {
   CRYPTO_TITLE,
   CRYPTO_BUTTON_TITLE,
   COPY_SIGNALS_TITLE,
-  SCRILL_TITLE,
+  SKRILL_TITLE,
   SWIFT_TITLE,
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
@@ -35,27 +35,27 @@ import {
   FAQ_SCREEN,
   PERSONAL_AREA_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
-  PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
   PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
-  PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
   PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
-  PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   PERSONAL_AREA_TITLE,
@@ -219,7 +219,7 @@ Country: ${ticket.country}`;
         html: `${FOREX_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
-          [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_FOREX }],
+          [{ title: SKRILL_TITLE, id: PAYMENT_BY_SKRILL_SCREEN_OF_FOREX }],
           [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }],
           [
             {
@@ -242,7 +242,7 @@ Country: ${ticket.country}`;
         html: `${CRYPTO_BUTTON_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
-          [{ title: SCRILL_TITLE, id: PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO }],
+          [{ title: SKRILL_TITLE, id: PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO }],
           [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }],
           [
             {
@@ -258,7 +258,7 @@ Country: ${ticket.country}`;
     }
   }
 
-   public async popUpScreen(ctx: Context): Promise<void> {
+  public async popUpScreen(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
@@ -287,8 +287,8 @@ Country: ${ticket.country}`;
           ],
           [
             {
-              title: SCRILL_TITLE,
-              id: PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+              title: SKRILL_TITLE,
+              id: PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
             },
           ],
           [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
@@ -349,7 +349,7 @@ ${TILL} ${subscriptionTime}
         }
         if (ticket.status === 'Pending') {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
-           html += `<b>Plan:</b> ${ticket.plan}
+          html += `<b>Plan:</b> ${ticket.plan}
 <b>Status:</b> Wait for subscription confirmation.
 ${TILL} -
 
@@ -397,16 +397,16 @@ ${html}`,
     }
   }
 
-  public async paymentByScrillScreenOfForex(ctx: Context): Promise<void> {
+  public async paymentByScreenOfForex(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `${SCRILL_TEXT}`,
+        html: `${SKRILL_TEXT}`,
         buttons: [
           [
             {
               title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+              id: CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
             },
           ],
           [{ title: BACK, id: FOREX_SCREEN }],
@@ -474,7 +474,7 @@ ${html}`,
     }
   }
 
-  public async confirmPaymentByScrillScreenOfForex(
+  public async confirmPaymentBySkrillScreenOfForex(
     ctx: Context,
   ): Promise<void> {
     try {
@@ -542,16 +542,16 @@ ${html}`,
     }
   }
 
-  public async paymentByScrillScreenOfCrypto(ctx: Context): Promise<void> {
+  public async paymentByScreenOfCrypto(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `${SCRILL_TEXT}`,
+        html: `${SKRILL_TEXT}`,
         buttons: [
           [
             {
               title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+              id: CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
             },
           ],
           [{ title: BACK, id: CRYPTO_SCREEN }],
@@ -619,7 +619,7 @@ ${html}`,
     }
   }
 
-  public async confirmPaymentByScrillScreenOfCrypto(
+  public async confirmPaymentBySkrillScreenOfCrypto(
     ctx: Context,
   ): Promise<void> {
     try {
@@ -690,16 +690,16 @@ ${html}`,
     }
   }
 
-  public async paymentByScrillOfCopySignals(ctx: Context): Promise<void> {
+  public async paymentBySkrillOfCopySignals(ctx: Context): Promise<void> {
     try {
       ctx.deleteMessage();
       this.renderScreen(ctx, {
-        html: `${SCRILL_TEXT}`,
+        html: `${SKRILL_TEXT}`,
         buttons: [
           [
             {
               title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+              id: CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
             },
           ],
           [{ title: BACK, id: COPY_SIGNALS_SCREEN }],

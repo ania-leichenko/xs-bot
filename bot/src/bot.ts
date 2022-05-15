@@ -12,27 +12,27 @@ import {
   START_SCREEN,
   COPY_SIGNALS_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
-  PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
   PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
-  PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
   PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
-  PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
-  CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS,
+  CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
@@ -330,8 +330,8 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentByScrillScreenOfForex(ctx);
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
+  botServ.paymentByScreenOfForex(ctx);
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
@@ -367,11 +367,11 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPaymentByScrillScreenOfForex(ctx);
+bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
+  botServ.confirmPaymentBySkrillScreenOfForex(ctx);
   botServ.createTicket(ctx, {
     plan: 'Forex',
-    paymentMethod: 'Scrill',
+    paymentMethod: 'Skrill',
     status: 'Pending',
   });
   if (!ctx.chat) {
@@ -413,8 +413,8 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.paymentByScrillScreenOfCrypto(ctx);
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
+  botServ.paymentByScreenOfCrypto(ctx);
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
@@ -450,11 +450,11 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.confirmPaymentByScrillScreenOfCrypto(ctx);
+bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
+  botServ.confirmPaymentBySkrillScreenOfCrypto(ctx);
   botServ.createTicket(ctx, {
     plan: 'Crypto',
-    paymentMethod: 'Scrill',
+    paymentMethod: 'Skrill',
     status: 'Pending',
   });
   if (!ctx.chat) {
@@ -497,8 +497,8 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.paymentByScrillOfCopySignals(ctx);
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  botServ.paymentBySkrillOfCopySignals(ctx);
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
@@ -534,11 +534,11 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(CONFIRM_PAYMENT_BY_SCRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentByScillScreenOfCopySignals(ctx);
   botServ.createTicket(ctx, {
     plan: 'CopySignals',
-    paymentMethod: 'Scrill',
+    paymentMethod: 'Skrill',
     status: 'Pending',
   });
   if (!ctx.chat) {

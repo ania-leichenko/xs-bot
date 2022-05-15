@@ -3,17 +3,16 @@ import {
   QUESSION_ICON,
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
+  BLACK_SQUARE_ICON,
 } from './emoji.enum';
 import {
   FOREX_TITLE,
   FAQ_TITLE,
   PERSONAL_AREA_TITLE,
   CRYPTO_TITLE,
-  CRYPTO_BUTTON_TITLE,
-  SCRILL_TITLE,
+  SKRILL_TITLE,
   SWIFT_TITLE,
   BANK_CARD_TITLE,
-  COPY_SIGNALS_TITLE,
 } from './title.enum';
 
 export const MESSAGE_FROM_BOT_TO_USER = `We have received your payment.
@@ -29,7 +28,7 @@ Choose from the list below ${SEE_BUTTONS}`;
 export const FOREX_TEXT = `<b>${FOREX_TITLE}</b>
 
 Get signals with a return of more than 95%. Signals for the forex market, gold and indices. During the day, 5-10 signals come, and the stop loss does not exceed the profit.The most successful signals for gold, more than 1000 pips per month. In just a month, the goal of 3000 points will always be reached.`;
-export const COPY_SIGNALS_TEXT = `<b>${COPY_SIGNALS_TITLE}</b>
+export const COPY_SIGNALS_TEXT = `<b>Copy Signals</b>
 
 Copy signals to your trading account with a delay of 0.00001ms! Trades with take profit and stop loss will be copied to your account, and if the trade is closed in the bot, it will be automatically closed on your account as well.`;
 export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
@@ -50,35 +49,36 @@ If you have any questions, please contact the administrator ?@bestsignalsadmin (
 export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
 
 `;
-export const CRYPTO_BUTTON_TEXT = `${CRYPTO_BUTTON_TITLE}
+export const CRYPTO_BUTTON_TEXT = `<b>Crypto</b>
 
 Get signals for the spot and futures market of cryptocurrencies. Transactions can be both short-term and long-term. When a signal is published, you will receive stop loss and take profit, as well as the trading leverage and the size of the deposit at which you need to enter the deal. The risk per trade is no more than 2%. High volatility instants`;
 export const CRYPTO_TEXT = `<b>${CRYPTO_TITLE}</b>
 
-Wallet: USDT
+${BLACK_SQUARE_ICON} Wallet: USDT
 Address: TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2
 Network: TRC20
 
-Wallet: BTC
+${BLACK_SQUARE_ICON} Wallet: BTC
 Address: 0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2
 Network: Binance Smart Chain
 
-Wallet: BTC
+${BLACK_SQUARE_ICON} Wallet: BTC
 Address: 14R9wSycdWe4GTPVy3qG4d2ih8MZH9W4et
 Network: Bitcoin
 
-Wallet: BTC
+${BLACK_SQUARE_ICON} Wallet: BTC
 Address: bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23
 Network: Binance Chain (BEP2)
 MEMO: 364451047
 
-Binance pay
+${BLACK_SQUARE_ICON} Binance pay
 ID: 383468420
-Name: Jexly
 No fee.
 
-${SERVICE_INACTIVE_ICON} Send an amount over 2% than the subscription amount, otherwise the commission will not be covered and the system will not count the payment ${SERVICE_INACTIVE_ICON}`;
-export const SCRILL_TEXT = `<b>${SCRILL_TITLE}</b>
+<b>Send an amount that covers the commission!</b>
+
+${SERVICE_INACTIVE_ICON} After you make payment, click on the button below ${SEE_BUTTONS}`;
+export const SKRILL_TEXT = `<b>${SKRILL_TITLE}</b>
 
 Send to my mail -> sergeisemenovfx@gmail.com
 
@@ -96,4 +96,5 @@ export const CONFIRM_PAYMENT_TEXT = `We have received your payment.
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
 <b>Track your subscription status in personal area</b>`;
-export const POP_UP_TEXT = 'You have already paid. Track information in personal area';
+export const POP_UP_TEXT =
+  'You have already paid. Track information in personal area';
