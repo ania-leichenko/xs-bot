@@ -1,3 +1,5 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React, { FC } from 'react';
 import { useStyles } from './css';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
@@ -85,8 +87,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         subscriptionTime: userSubcriptionTime,
         status: userStatus,
         chatId: ticket.chatId,
-        messageForUser:
-          `Your payment for ${ticket.plan} has been approved! Thanks for the payment. All signals will be in the feed of the same bot`,
+        messageForUser: `Your payment for ${ticket.plan} has been approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
     })
       .then((response) => response.json())
@@ -142,17 +143,17 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
                 </TextField>
               </div>
             </form>
-              <div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href="#contained-buttons"
-                  onClick={handleSaveTicket}
-                 className={classes.button}
-                >
-                  Save
-                </Button>
-              </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                href="#contained-buttons"
+                onClick={handleSaveTicket}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
           </SwipeableDrawer>
         </React.Fragment>
       ))}
