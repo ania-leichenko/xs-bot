@@ -62,11 +62,20 @@ bot.start((ctx) => {
 
 bot.on('channel_post', async (ctx) => {
   try {
+    const channel = await botServ.getChannel(ctx);
+    const users = await ticketServ.getUserByChannelPlan(channel.plan);
+
+    if (channel.plan === 'Forex') {
+      const usersCopySignals = await ticketServ.getUserByChannelPlan(
+        'CopySignals',
+      );
+      for (const user of usersCopySignals) {
+        users.push(user);
+      }
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (ctx.channelPost.text) {
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const message = ctx.channelPost.text;
@@ -101,8 +110,6 @@ bot.on('channel_post', async (ctx) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const photos = ctx.update.channel_post.photo.slice(-1);
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       for (const user of users) {
         for (const photo of photos) {
           try {
@@ -123,8 +130,6 @@ bot.on('channel_post', async (ctx) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const video = ctx.update.channel_post.video.file_id;
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       for (const user of users) {
         try {
           bot.telegram.sendVideo(user.chatId, video);
@@ -140,8 +145,6 @@ bot.on('channel_post', async (ctx) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (ctx.update.channel_post.document) {
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const document = ctx.update.channel_post.document.file_id;
@@ -161,8 +164,6 @@ bot.on('channel_post', async (ctx) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (ctx.update.channel_post.sticker) {
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const sticker = ctx.update.channel_post.sticker.file_id;
@@ -182,8 +183,6 @@ bot.on('channel_post', async (ctx) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (ctx.update.channel_post.voice) {
-      const channel = await botServ.getChannel(ctx);
-      const users = await ticketServ.getUserByChannelPlan(channel.plan);
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const voice = ctx.update.channel_post.voice.file_id;
