@@ -86,7 +86,7 @@ export const TicketTable: FC = () => {
                   component="th"
                   scope="row"
                   align="center"
-                ></TableCell>
+                >{ticket.ticket}</TableCell>
                 <TableCell 
                   align="center"
                 >
