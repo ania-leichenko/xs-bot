@@ -4,6 +4,7 @@ import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import EditIcon from '@material-ui/icons/Edit';
+import { formateDate } from '../../../formateDate/formateDate';
 
 const statuses = [
   {
@@ -44,7 +45,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
     right: false,
   });
   const [userSubcriptionTime, setUserSubcriptionTime] = React.useState(
-    ticket.subscriptionTime,
+    formateDate(String(new Date(ticket.subscriptionTime))),
   );
   const [userStatus, setUserStatus] = React.useState(ticket.status);
 
@@ -82,11 +83,10 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
       },
       body: JSON.stringify({
         ticket: ticket.ticket,
-        subscriptionTime: userSubcriptionTime,
+        subscriptionTime: new Date(userSubcriptionTime),
         status: userStatus,
         chatId: ticket.chatId,
-        messageForUser:
-          `Your payment for ${ticket.plan} has been approved! Thanks for the payment. All signals will be in the feed of the same bot`,
+        messageForUser: `Your payment for ${ticket.plan} has been approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
     })
       .then((response) => response.json())
@@ -142,17 +142,17 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
                 </TextField>
               </div>
             </form>
-              <div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href="#contained-buttons"
-                  onClick={handleSaveTicket}
-                 className={classes.button}
-                >
-                  Save
-                </Button>
-              </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                href="#contained-buttons"
+                onClick={handleSaveTicket}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
           </SwipeableDrawer>
         </React.Fragment>
       ))}

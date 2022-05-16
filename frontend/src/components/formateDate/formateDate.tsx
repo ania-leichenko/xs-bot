@@ -17,5 +17,5 @@ export function formateDate(date: string): string {
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
-  return `${day} / ${mouth} / ${year}  ${hour}:${minutes}`;
+  return `${year}.${mouth}.${day}  ${hour}:${minutes}`;
 }

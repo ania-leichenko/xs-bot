@@ -26,7 +26,7 @@ type Props = {
 export const Actions: FC<Props> = ({ ticket, setTickets }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
