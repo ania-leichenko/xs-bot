@@ -11,7 +11,7 @@ async function up(knex: Knex): Promise<void> {
       .notNullable()
       .primary({ constraintName: 'users_pkey' });
     table.string('first_name').notNullable();
-    table.string('username').notNullable();
+    table.string('username');
     table.tinyint('admin').notNullable().defaultTo(0);
     table.timestamp('joined').notNullable();
     table.timestamp('last_action').notNullable().defaultTo(knex.fn.now());
