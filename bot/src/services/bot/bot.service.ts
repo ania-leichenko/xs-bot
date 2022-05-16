@@ -342,7 +342,7 @@ Country: ${ticket.country}`;
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           html += `
 <b>Plan:</b> ${ticket.plan}
-<b>Status:</b> Your subscription active.
+<b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
 `;
