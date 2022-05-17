@@ -342,9 +342,10 @@ Country: ${ticket.country}`;
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           html += `
 <b>Plan:</b> ${ticket.plan}
-<b>Status:</b> Your subscription active.
+<b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
+<i>*add +1 to the month, this is a flaw in the telegram itself</i>
 `;
         }
         if (ticket.status === 'Pending') {

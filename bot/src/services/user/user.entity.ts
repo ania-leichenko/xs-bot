@@ -16,7 +16,7 @@ class User {
   }: {
     chatId: number;
     firstName: string;
-    username: string;
+    username?: string;
     admin: number;
     joined: Date;
     lastAction: Date;
@@ -38,7 +38,7 @@ class User {
   }: {
     chatId: number;
     firstName: string;
-    username: string;
+    username?: string;
     admin: number;
     joined: Date;
     lastAction: Date;

@@ -15,7 +15,7 @@ class Ticket {
   public async create(ticket: {
     chatId: number;
     firstName: string;
-    username: string;
+    username?: string;
     subscriptionTime: Date;
     plan: string;
     paymentMethod: string;
@@ -57,7 +57,7 @@ class Ticket {
       .query()
       .where('subscription_time', '>', new Date())
       .where('status', '=', 'Active');
-    if (channel_plan !== 'All') {
+    if (channel_plan !== 'Free') {
       usersQuery.where({ plan: channel_plan });
     }
 

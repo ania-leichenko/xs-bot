@@ -15,7 +15,7 @@ type Ticket = {
   ticket: number;
   chatId: number;
   firstName: string;
-  username: string;
+  username?: string;
   subscriptionTime: string;
   plan: string;
   paymentMethod: string;
@@ -56,6 +56,9 @@ export const TicketTable: FC = () => {
         <TableHead>
           <TableRow>
             <TableCell align="center">
+              Ticket
+            </TableCell>
+            <TableCell align="center">
               User
             </TableCell>
             <TableCell align="center">
@@ -79,9 +82,12 @@ export const TicketTable: FC = () => {
           {tickets &&
             tickets.map((ticket: Ticket) => (
               <TableRow key={ticket.ticket}>
-                <TableCell
+                 <TableCell 
                   component="th"
                   scope="row"
+                  align="center"
+                >{ticket.ticket}</TableCell>
+                <TableCell 
                   align="center"
                 >
                   {ticket.firstName}

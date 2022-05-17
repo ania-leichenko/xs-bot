@@ -102,7 +102,6 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           },
         );
       }
-
      rep.send(tickets.filter((ticket) => ticket.deletedAt == null)).status(200);
     },
   });
