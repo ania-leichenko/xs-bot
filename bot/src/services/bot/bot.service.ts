@@ -345,6 +345,7 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
+<i>*add +1 to the month, this is a flaw in the telegram itself</i>
 `;
         }
         if (ticket.status === 'Pending') {
