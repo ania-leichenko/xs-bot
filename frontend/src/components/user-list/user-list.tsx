@@ -12,7 +12,7 @@ import { formateDate } from '../formateDate/formateDate';
 type Users = {
   chatId: number;
   firstName: string;
-  username: string;
+  username?: string;
   admin: number;
   joined: string;
   lastAction: string;

@@ -15,7 +15,7 @@ class Ticket {
   public async create(ticket: {
     chatId: number;
     firstName: string;
-    username: string;
+    username?: string;
     subscriptionTime: Date;
     plan: string;
     paymentMethod: string;

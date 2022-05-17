@@ -12,7 +12,7 @@ type Ticket = {
   chatId: number;
   ticket: number;
   firstName: string;
-  username: string;
+  username?: string;
   subscriptionTime: string;
   plan: string;
   paymentMethod: string;

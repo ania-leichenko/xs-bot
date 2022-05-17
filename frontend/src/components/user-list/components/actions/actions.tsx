@@ -11,7 +11,7 @@ import { Edit } from '../edit/edit';
 type Users = {
   chatId: number;
   firstName: string;
-  username: string;
+  username?: string;
   admin: number;
   joined: string;
   lastAction: string;
