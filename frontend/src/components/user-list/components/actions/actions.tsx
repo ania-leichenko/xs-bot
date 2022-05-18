@@ -24,7 +24,8 @@ type Props = {
 
 export const Actions: FC<Props> = ({ user, setUsers }) => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const  [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { REACT_APP_API_ORIGIN_URL } = process.env;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
@@ -35,7 +36,7 @@ export const Actions: FC<Props> = ({ user, setUsers }) => {
   };
 
   const handleDeleteUser = (): void => {
-    fetch(`http://localhost:3001/user/${user.chatId}`, {
+    fetch(`${REACT_APP_API_ORIGIN_URL}user/${user.chatId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

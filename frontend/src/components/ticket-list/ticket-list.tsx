@@ -33,9 +33,10 @@ const colorChip: {
 export const TicketTable: FC = () => {
   const classes = useStyles();
   const [tickets, setTickets] = useState([]);
+  const { REACT_APP_API_ORIGIN_URL } = process.env;
 
   useEffect(() => {
-    fetch('http://localhost:3001/tickets', {
+    fetch(`${REACT_APP_API_ORIGIN_URL}tickets`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

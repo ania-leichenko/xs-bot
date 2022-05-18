@@ -18,6 +18,7 @@ const {
   DB_POOL_MAX,
   DB_DIALECT,
   TELEGRAM_TOKEN,
+  BACKEND_URL,
 } = process.env;
 
 const ENV = {
@@ -26,6 +27,7 @@ const ENV = {
     SERVER_PORT: Number(PORT),
     SERVER_HOST: HOST ?? 'http://localhost',
     FRONTEND_URL: FRONTEND_URL,
+    BACKEND_URL: BACKEND_URL,
   },
   JWT: {
     SECRET: SECRET_KEY,

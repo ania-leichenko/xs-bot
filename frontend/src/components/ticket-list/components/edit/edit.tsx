@@ -50,6 +50,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
     formateDate(String(new Date(ticket.subscriptionTime))),
   );
   const [userStatus, setUserStatus] = React.useState(ticket.status);
+  const { REACT_APP_API_ORIGIN_URL } = process.env;
 
   const onChangeSubscriptionTime = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -77,7 +78,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
     };
 
   const handleSaveTicket = (): void => {
-    fetch(`http://localhost:3001/tickets/${ticket.ticket}`, {
+    fetch(`${REACT_APP_API_ORIGIN_URL}tickets/${ticket.ticket}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

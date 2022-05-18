@@ -20,13 +20,13 @@ type Users = {
 
 export const UserListTable: FC = () => {
   const [users, setUsers] = useState([]);
-
+  const { REACT_APP_API_ORIGIN_URL } = process.env;
+ 
   useEffect(() => {
-    fetch('http://localhost:3001/users', {
+    fetch(`${REACT_APP_API_ORIGIN_URL}users`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        'Content-Type': 'null',
       },
     })
       .then((response) => {

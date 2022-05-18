@@ -40,10 +40,11 @@ export const Edit: FC<Props> = ({ user, setUsers }) => {
     right: false,
   });
   const [admin, setAdmin] = React.useState(user.admin);
+  const { REACT_APP_API_ORIGIN_URL } = process.env;
 
   const onChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setAdmin(Number(event.target.value));
-    fetch(`http://localhost:3001/user/${user.chatId}`, {
+    fetch(`${REACT_APP_API_ORIGIN_URL}user/${user.chatId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

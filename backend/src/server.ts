@@ -4,7 +4,7 @@ import { AbstractModel } from './data/models/abstract/abstract.model';
 import { ENV } from '~/common/enums/enums';
 import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
-import cors from 'fastify-cors';
+import cors from '@fastify/cors';
 import { task } from './services/cron/cron';
 
 const app = Fastify({
@@ -19,7 +19,7 @@ const app = Fastify({
 AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
 app.register(cors, {
-  origin: ENV.APP.FRONTEND_URL,
+  origin: '*',
 });
 
 app.register(initApi);
