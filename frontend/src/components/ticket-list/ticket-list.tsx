@@ -92,6 +92,7 @@ export const TicketTable: FC = () => {
                   align="center"
                 >
                   {ticket.firstName}
+                  <div>@{ticket.username}</div>
                 </TableCell>
                 <TableCell align="center">
                   {formateDate(ticket.subscriptionTime)}

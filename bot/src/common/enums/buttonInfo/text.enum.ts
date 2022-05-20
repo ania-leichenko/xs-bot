@@ -4,6 +4,8 @@ import {
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
   BLACK_SQUARE_ICON,
+  WARNING_ICON,
+  AHTUNG_ICON,
 } from './emoji.enum';
 import {
   FOREX_TITLE,
@@ -11,7 +13,6 @@ import {
   PERSONAL_AREA_TITLE,
   CRYPTO_TITLE,
   SKRILL_TITLE,
-  SWIFT_TITLE,
   BANK_CARD_TITLE,
 } from './title.enum';
 
@@ -20,17 +21,42 @@ export const MESSAGE_FROM_BOT_TO_USER = `We have received your payment.
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
 Track your subscription status in personal area`;
-export const START_TEXT = `In order to become a member of premium signals, you need to choose which subscription you need.Daily receipt of 5 to 10 signals!
+export const START_TEXT = `Hello! In order to become a member of premium signals, you need to choose which subscription you need.
 
-By purchasing our signals, you get access to trading strategies that are a guaranteed guarantee of your success! If our signals do not bring you profit, we will return the funds!
+Why should you use our signals?
+${CHECKED_ICON} Get access to trading strategies that are a guaranteed guarantee of your success.
+${CHECKED_ICON} Our team has over 5 years of experience in trading.
+${CHECKED_ICON} We take risk. We will never empty your deposit.
+${CHECKED_ICON} We are market makers, we see more than you. With us you can earn.
 
-Choose from the list below ${SEE_BUTTONS}`;
+${AHTUNG_ICON} <b>If our signals do not bring you profit, we will return the funds!</b>
+
+Select the subscription you need from the list below ${SEE_BUTTONS}`;
 export const FOREX_TEXT = `<b>${FOREX_TITLE}</b>
 
-Get signals with a return of more than 95%. Signals for the forex market, gold and indices. During the day, 5-10 signals come, and the stop loss does not exceed the profit.The most successful signals for gold, more than 1000 pips per month. In just a month, the goal of 3000 points will always be reached.`;
-export const COPY_SIGNALS_TEXT = `<b>Copy Signals</b>
+Get signals with a profitability of more than 95% per month.
 
-Copy signals to your trading account with a delay of 0.00001ms! Trades with take profit and stop loss will be copied to your account, and if the trade is closed in the bot, it will be automatically closed on your account as well.`;
+Signals for:
+${BLACK_SQUARE_ICON} Forex market
+${BLACK_SQUARE_ICON} XAU/USD
+${BLACK_SQUARE_ICON} Stock market
+
+During the day, 5-10 signals come, and the stop loss does not exceed the profit. The most successful signals for gold, more than 1000 pips per month. 
+
+<b>In just a month, the goal of 3000 pips will always be reached.</b>
+
+Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
+export const COPY_SIGNALS_TEXT = `<b>Copy signals</b>
+
+Copy our signals to your trading account from bot with a delay of 0.1ms! 
+
+What is included in setting up signal copying?
+${BLACK_SQUARE_ICON} Setting up a trading lot
+${BLACK_SQUARE_ICON} Enable or disable copying of individual currencies
+${BLACK_SQUARE_ICON} Copying signals with take profit and stop loss
+${BLACK_SQUARE_ICON} If the deal was closed in the bot, the deal is closed automatically on the account. If we close half lot of the deal in the bot, this is also will be closed half lot on your trading account
+
+Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
 export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
 
 ${QUESSION_ICON} Can I be sure of the authenticity of Premium Signals? Can I get free access for one day to try them out?
@@ -51,50 +77,77 @@ export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
 `;
 export const CRYPTO_BUTTON_TEXT = `<b>Crypto</b>
 
-Get signals for the spot and futures market of cryptocurrencies. Transactions can be both short-term and long-term. When a signal is published, you will receive stop loss and take profit, as well as the trading leverage and the size of the deposit at which you need to enter the deal. The risk per trade is no more than 2%. High volatility instants`;
+Get signals for the spot and futures market of cryptocurrencies. Deals can be both short-term and long-term. 
+
+Signals for:
+${BLACK_SQUARE_ICON} Futures (170 coins)
+${BLACK_SQUARE_ICON} Spot (250+ coins)
+
+When a signal is published, you will receive stop loss and take profit, as well as the trading leverage and the size of the deposit at which you need to enter the deal. The risk per trade is no more than 2%. High volatility instants
+
+Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
 export const CRYPTO_TEXT = `<b>${CRYPTO_TITLE}</b>
 
 ${BLACK_SQUARE_ICON} Wallet: USDT
-Address: TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2
-Network: TRC20
+Address: <code>TPXqExfPbXBWjum98PsHuJ916b9EkQKPN2</code>
+Network: TRC20 (TRX)
 
 ${BLACK_SQUARE_ICON} Wallet: BTC
-Address: 0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2
-Network: Binance Smart Chain
+Address: <code>0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2</code>
+Network: Binance Smart Chain (BEP20)
 
 ${BLACK_SQUARE_ICON} Wallet: BTC
-Address: 14R9wSycdWe4GTPVy3qG4d2ih8MZH9W4et
+Address: <code>14R9wSycdWe4GTPVy3qG4d2ih8MZH9W4et</code>
 Network: Bitcoin
 
 ${BLACK_SQUARE_ICON} Wallet: BTC
-Address: bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23
-Network: Binance Chain (BEP2)
+Address: <code>bnb136ns6lfw4zs5hg4n85vdthaad7hq5m4gtkgf23</code>
+Network: BNB Beacon Chain (BEP2)
 MEMO: 364451047
 
+${BLACK_SQUARE_ICON} ETH
+Address: <code>0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2</code>
+Network: ETH (ERC20)
+
+${BLACK_SQUARE_ICON} BNB
+Address: <code>0x520a98177b6e6cb286c3fc1b19a719daea2b6cf2</code>
+Network: BSC (BNB Smart Chain) (BEP20)
+
+${BLACK_SQUARE_ICON} LTC
+Address: <code>LU565cxgwFkaHsentg2ubMdWFW3KDb9wyd</code>
+Network: LTC
+
 ${BLACK_SQUARE_ICON} Binance pay
-ID: 383468420
+ID: <code>383468420</code>
 No fee.
 
-<b>Send an amount that covers the commission!</b>
+<b>Send an amount that covers the commission! Otherwise, the bot will not automatically give you a subscription</b>
 
 ${SERVICE_INACTIVE_ICON} After you make payment, click on the button below ${SEE_BUTTONS}`;
 export const SKRILL_TEXT = `<b>${SKRILL_TITLE}</b>
 
-Send to my mail -> sergeisemenovfx@gmail.com
+Email: sergeisemenovfx@gmail.com
+ID: 144096465
 
-${SERVICE_INACTIVE_ICON} Send an amount over 8% than the subscription amount, otherwise the commission will not be covered and the system will not count the payment ${SERVICE_INACTIVE_ICON}`;
-export const SWIFT_TEXT = `<b>${SWIFT_TITLE}</b>
+<b>Send an amount over 8% than the subscription amount, otherwise the commission will not be covered and the system will not count the payment</b>
 
-You can transfer funds to us using the swift method, but the minimum amount is $600 (payment for half a year in advance). It also depends on your bank and what fees it takes for the transfer. You may have to pay another 50-100 dollars for commissions.
+${SERVICE_INACTIVE_ICON} After you make payment, click on the button below ${SEE_BUTTONS}`;
 
-To make a payment, contact the administrator @BestSignalsAdmin`;
 export const BANK_CARD_TEXT = `<b>${BANK_CARD_TITLE}</b>
 
-To make a payment, contact the administrator @BestSignalsAdmin`;
-export const CONFIRM_PAYMENT_TEXT = `We have received your payment.
+You can pay for the subscription with your card, paying only $3 commission.
+
+How to pay:
+${BLACK_SQUARE_ICON} Register on wise.com
+${BLACK_SQUARE_ICON} Make payment to my details, not to the account of the site! (Write to @bestsignalsadmin for details)
+${BLACK_SQUARE_ICON} Be sure to include my email
+
+<b>Click on the "Instructions" button below to read the payment instructions</b>
+
+${SERVICE_INACTIVE_ICON} After you make payment, click on the button below ${SEE_BUTTONS}`;
+export const CONFIRM_PAYMENT_TEXT = `We have received your payment! ${CHECKED_ICON}
 
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
-<b>Track your subscription status in personal area</b>`;
-export const POP_UP_TEXT =
-  'You have already paid. Track information in personal area';
+<b>Track your subscription status in personal area ${SEE_BUTTONS}</b>`;
+export const POP_UP_TEXT =`You have already paid. Track information in personal area`;

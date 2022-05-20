@@ -6,3 +6,5 @@ export const BACK_ICON = '🔙';
 export const QUESSION_ICON = '❓';
 export const ACCOUNT_ICON = '👤';
 export const BLACK_SQUARE_ICON = '▪️';
+export const WARNING_ICON = '⚠️';
+export const AHTUNG_ICON = '‼️';

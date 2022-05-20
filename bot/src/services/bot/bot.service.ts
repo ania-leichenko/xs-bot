@@ -14,7 +14,6 @@ import {
   CRYPTO_TEXT,
   CRYPTO_BUTTON_TEXT,
   SKRILL_TEXT,
-  SWIFT_TEXT,
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
   FOREX_BUTTON_TITLE,
@@ -24,7 +23,6 @@ import {
   CRYPTO_BUTTON_TITLE,
   COPY_SIGNALS_TITLE,
   SKRILL_TITLE,
-  SWIFT_TITLE,
   BANK_CARD_TITLE,
   CONFIRM_PAYMENT_TITLE,
   BACK,
@@ -36,31 +34,29 @@ import {
   PERSONAL_AREA_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
-  PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
   PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
-  PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
-  PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
-  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   PERSONAL_AREA_TITLE,
   TILL,
   POP_UP_TEXT,
+  CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  INSTRUCTION_FOR_BANK_CARD_TITLE,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
@@ -214,13 +210,16 @@ Country: ${ticket.country}`;
 
   public async forexScreen(ctx: Context): Promise<void> {
     try {
+      try { 
       ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
       this.renderScreen(ctx, {
         html: `${FOREX_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
           [{ title: SKRILL_TITLE, id: PAYMENT_BY_SKRILL_SCREEN_OF_FOREX }],
-          [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_FOREX }],
           [
             {
               title: BANK_CARD_TITLE,
@@ -237,13 +236,16 @@ Country: ${ticket.country}`;
 
   public async cryptoScreen(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CRYPTO_BUTTON_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
           [{ title: SKRILL_TITLE, id: PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO }],
-          [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO }],
           [
             {
               title: BANK_CARD_TITLE,
@@ -260,7 +262,11 @@ Country: ${ticket.country}`;
 
   public async popUpScreen(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${POP_UP_TEXT}`,
         buttons: [
@@ -275,7 +281,11 @@ Country: ${ticket.country}`;
 
   public async copySignalsScreen(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${COPY_SIGNALS_TEXT}`,
         buttons: [
@@ -291,7 +301,6 @@ Country: ${ticket.country}`;
               id: PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
             },
           ],
-          [{ title: SWIFT_TITLE, id: PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS }],
           [
             {
               title: BANK_CARD_TITLE,
@@ -308,7 +317,11 @@ Country: ${ticket.country}`;
 
   public async faqScreen(ctx: Context): Promise<void> {
     try {
+      try { 
       ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
       this.renderScreen(ctx, {
         html: `${FAQ_TEXT}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
@@ -320,7 +333,11 @@ Country: ${ticket.country}`;
 
   public async personalAreaScreen(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
@@ -345,7 +362,7 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<i>*add +1 to the month, this is a flaw in the telegram itself</i>
+<i>*Add the number 1 to the month so that your subscription is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
 `;
         }
         if (ticket.status === 'Pending') {
@@ -371,7 +388,11 @@ ${html}`,
 
   public async mainScreen(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.startScreen(ctx);
     } catch (e) {
       console.error(e);
@@ -380,7 +401,11 @@ ${html}`,
 
   public async paymentByCryptoScreenOfForex(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
@@ -400,7 +425,11 @@ ${html}`,
 
   public async paymentByScreenOfForex(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
@@ -418,29 +447,13 @@ ${html}`,
     }
   }
 
-  public async paymentBySwiftScreenOfForex(ctx: Context): Promise<void> {
-    try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${SWIFT_TEXT}`,
-        buttons: [
-          [
-            {
-              title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
-            },
-          ],
-          [{ title: BACK, id: FOREX_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   public async paymentByBankCardScreenOfForex(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
@@ -448,6 +461,12 @@ ${html}`,
             {
               title: CONFIRM_PAYMENT_TITLE,
               id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
+            },
+          ],
+          [
+            {
+              title: INSTRUCTION_FOR_BANK_CARD_TITLE,
+              id:  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
             },
           ],
           [{ title: BACK, id: FOREX_SCREEN }],
@@ -462,7 +481,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -479,21 +502,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [
-          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: START_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  public async confirmPaymentBySwiftScreenOfForex(ctx: Context): Promise<void> {
-    try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -510,7 +523,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -525,7 +542,11 @@ ${html}`,
 
   public async paymentByCryptoScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
@@ -545,7 +566,11 @@ ${html}`,
 
   public async paymentByScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
@@ -563,29 +588,13 @@ ${html}`,
     }
   }
 
-  public async paymentBySwiftScreenOfCrypto(ctx: Context): Promise<void> {
-    try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${SWIFT_TEXT}`,
-        buttons: [
-          [
-            {
-              title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
-            },
-          ],
-          [{ title: BACK, id: CRYPTO_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   public async paymentByBankCardScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
@@ -593,6 +602,12 @@ ${html}`,
             {
               title: CONFIRM_PAYMENT_TITLE,
               id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
+            },
+          ],
+          [
+            {
+              title: INSTRUCTION_FOR_BANK_CARD_TITLE,
+              id:   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
             },
           ],
           [{ title: BACK, id: CRYPTO_SCREEN }],
@@ -607,7 +622,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -624,24 +643,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [
-          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: START_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  public async confirmPaymentBySwiftScreenOfCrypto(
-    ctx: Context,
-  ): Promise<void> {
-    try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -658,7 +664,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -673,7 +683,11 @@ ${html}`,
 
   public async paymentByCryptoOfCopySignals(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
@@ -693,7 +707,11 @@ ${html}`,
 
   public async paymentBySkrillOfCopySignals(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
@@ -711,29 +729,13 @@ ${html}`,
     }
   }
 
-  public async paymentBySwiftOfCopySignals(ctx: Context): Promise<void> {
-    try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${SWIFT_TEXT}`,
-        buttons: [
-          [
-            {
-              title: CONFIRM_PAYMENT_TITLE,
-              id: CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
-            },
-          ],
-          [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   public async paymentByBankCardOfCopySignals(ctx: Context): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
@@ -741,6 +743,12 @@ ${html}`,
             {
               title: CONFIRM_PAYMENT_TITLE,
               id: CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+            },
+          ],
+          [
+            {
+              title: INSTRUCTION_FOR_BANK_CARD_TITLE,
+              id:   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
             },
           ],
           [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
@@ -755,7 +763,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -772,7 +784,11 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
@@ -790,28 +806,15 @@ ${html}`,
     }
   }
 
-  public async confirmPaymentBySwiftScreenOfCopySignals(
-    ctx: Context,
-  ): Promise<void> {
-    try {
-      ctx.deleteMessage();
-      this.renderScreen(ctx, {
-        html: `${CONFIRM_PAYMENT_TEXT}`,
-        buttons: [
-          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-          [{ title: BACK, id: START_SCREEN }],
-        ],
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   public async confirmPaymentByBankCardScreenOfCopySignals(
     ctx: Context,
   ): Promise<void> {
     try {
-      ctx.deleteMessage();
+      try { 
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
       this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [

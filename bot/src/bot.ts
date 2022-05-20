@@ -13,28 +13,25 @@ import {
   COPY_SIGNALS_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
-  PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX,
   PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
   PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
-  PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO,
   PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
-  PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS,
-  CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS,
   CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
+  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import {
@@ -338,20 +335,31 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentBySwiftScreenOfForex(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
   botServ.paymentByBankCardScreenOfForex(ctx);
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
   userServ.updateLastAction(ctx.chat.id);
+});
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
+  for(const photo of photos) {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    bot.telegram.sendPhoto(ctx.chat.id, photo);
+  }
+  setTimeout(() => {
+    botServ.paymentByBankCardScreenOfForex(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  }, 1000);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
@@ -372,19 +380,6 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
   botServ.createTicket(ctx, {
     plan: 'Forex',
     paymentMethod: 'Skrill',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPaymentBySwiftScreenOfForex(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Forex',
-    paymentMethod: 'SWIFT',
     status: 'Pending',
   });
   if (!ctx.chat) {
@@ -421,20 +416,31 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.paymentBySwiftScreenOfCrypto(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.paymentByBankCardScreenOfCrypto(ctx);
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
   }
   userServ.updateLastAction(ctx.chat.id);
+});
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
+  for(const photo of photos) {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    bot.telegram.sendPhoto(ctx.chat.id, photo);
+  }
+  setTimeout(() => {
+    botServ.paymentByBankCardScreenOfCrypto(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  }, 1000);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -455,19 +461,6 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
   botServ.createTicket(ctx, {
     plan: 'Crypto',
     paymentMethod: 'Skrill',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.confirmPaymentBySwiftScreenOfCrypto(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Crypto',
-    paymentMethod: 'SWIFT',
     status: 'Pending',
   });
   if (!ctx.chat) {
@@ -505,14 +498,6 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.paymentBySwiftOfCopySignals(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.paymentByBankCardOfCopySignals(ctx);
   if (!ctx.chat) {
@@ -520,6 +505,26 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   }
   userServ.updateLastAction(ctx.chat.id);
 });
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
+  for(const photo of photos) {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    bot.telegram.sendPhoto(ctx.chat.id, photo);
+  }
+  setTimeout(() => {
+    botServ.paymentByBankCardOfCopySignals(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+  userServ.updateLastAction(ctx.chat.id);
+  }, 1000);
+});
+
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);
@@ -547,21 +552,7 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   userServ.updateLastAction(ctx.chat.id);
 });
 
-bot.action(CONFIRM_PAYMENT_BY_SWIFT_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'CopySignals',
-    paymentMethod: 'SWIFT',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.confirmPaymentBySwiftScreenOfCopySignals(ctx);
   botServ.createTicket(ctx, {
     plan: 'CopySignals',
     paymentMethod: 'BankCard',

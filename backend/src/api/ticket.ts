@@ -4,7 +4,7 @@ import {
   ticket as ticketServ,
 } from '~/services/services';
 import fetch from 'node-fetch';
-import { ENV } from '~/common/enums/enums';
+import { ENV, WARNING_ICON } from '~/common/enums/enums';
 
 type Options = {
   services: {
@@ -38,7 +38,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const tickets = await ticketService.getAllTickets();
 
       return rep
-        .send(tickets.filter((ticket) => ticket.deletedAt == null))
+        .send(tickets.filter((ticket) => ticket.deletedAt == null && ticket.status !== 'Inactive'))
         .status(200);
     },
   });
@@ -56,7 +56,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         message: req.body.messageForUser,
       });
       fetch(
-        `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
+        `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
         {
           method: 'GET',
           headers: {
@@ -67,7 +67,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       );
       await ticketService.updateStatus(req.params.id);
       const tickets = await ticketService.getAllTickets();
-      return rep.send(tickets.filter((ticket) => ticket.deletedAt == null)).status(200);
+      rep.send(tickets.filter((ticket) => ticket.deletedAt == null)).status(200);
     },
   });
   fastify.route({
@@ -92,7 +92,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         new Date(req.body.subscriptionTime) > date
       ) {
         fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${messages.message}`,
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
           {
             method: 'GET',
             headers: {
