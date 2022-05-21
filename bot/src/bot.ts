@@ -32,6 +32,7 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  DRAW_SCREEN,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import {
@@ -238,6 +239,21 @@ bot.on('edited_channel_post', async (ctx) => {
   }
 });
 
+bot.action(DRAW_SCREEN, async (ctx) => {
+    botServ.createTicket(ctx, {
+      plan: 'Forex',
+      paymentMethod: 'Free',
+      status: 'Pending',
+    });
+     if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    bot.telegram.sendMessage(
+      ctx.chat.id,
+      'You have registered for the draw',
+    );
+});
+
 bot.action(FOREX_SCREEN, async (ctx) => {
   if (!ctx.chat) {
     return 'ctx.chat is undefined';
@@ -344,8 +360,18 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
 });
 
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
-  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
-  for(const photo of photos) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const photos: String[] = [
+    'https://ibb.co/DCnKysP',
+    'https://ibb.co/hyBkf2p',
+    'https://ibb.co/Sm84QmV',
+    'https://ibb.co/GCzGsDs',
+    'https://ibb.co/dfd8Yfm',
+    'https://ibb.co/ZGd2ZQD',
+    'https://ibb.co/HtdLfpr',
+  ];
+  for (const photo of photos) {
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
@@ -425,6 +451,8 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
 });
 
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
   for(const photo of photos) {
     if (!ctx.chat) {
@@ -507,8 +535,18 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
 });
 
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
-  for(const photo of photos) {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const photos: String[] = [
+    'https://ibb.co/DCnKysP',
+    'https://ibb.co/hyBkf2p',
+    'https://ibb.co/Sm84QmV',
+    'https://ibb.co/GCzGsDs',
+    'https://ibb.co/dfd8Yfm',
+    'https://ibb.co/ZGd2ZQD',
+    'https://ibb.co/HtdLfpr',
+  ];
+  for (const photo of photos) {
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
@@ -521,7 +559,7 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
-  userServ.updateLastAction(ctx.chat.id);
+    userServ.updateLastAction(ctx.chat.id);
   }, 1000);
 });
 

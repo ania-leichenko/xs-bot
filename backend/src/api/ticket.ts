@@ -67,7 +67,14 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       );
       await ticketService.updateStatus(req.params.id);
       const tickets = await ticketService.getAllTickets();
-      rep.send(tickets.filter((ticket) => ticket.deletedAt == null)).status(200);
+      rep
+        .send(
+          tickets.filter(
+            (ticket) =>
+              ticket.deletedAt == null && ticket.status !== 'Inactive',
+          ),
+        )
+        .status(200);
     },
   });
   fastify.route({
@@ -89,7 +96,8 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const date = new Date();
       if (
         req.body.status === 'Active' &&
-        new Date(req.body.subscriptionTime) > date
+        new Date(req.body.subscriptionTime) > date &&
+        req.body.plan !== 'Free'
       ) {
         fetch(
           `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
@@ -102,7 +110,29 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           },
         );
       }
-     rep.send(tickets.filter((ticket) => ticket.deletedAt == null)).status(200);
+      if (
+        req.body.status === 'Active' &&
+        new Date(req.body.subscriptionTime) > date &&
+        req.body.plan === 'Free'
+      ) {
+        fetch(
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=You win subscription!`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          },
+        );
+      }
+     rep
+       .send(
+         tickets.filter(
+           (ticket) => ticket.deletedAt == null && ticket.status !== 'Inactive',
+         ),
+       )
+       .status(200);
     },
   });
 };

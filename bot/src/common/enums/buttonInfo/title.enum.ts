@@ -16,3 +16,4 @@ export const BANK_CARD_TITLE = 'Bank card (Credit & Debit / Visa & MC)';
 export const CONFIRM_PAYMENT_TITLE = `${PRICE_ICON} Confirm payment`;
 export const BACK = `${BACK_ICON} Back`;
 export const INSTRUCTION_FOR_BANK_CARD_TITLE = 'Instructions';
+export const DRAW_TITLE = 'Draw';

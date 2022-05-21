@@ -57,6 +57,8 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+  DRAW_SCREEN,
+  DRAW_TITLE,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
@@ -177,6 +179,7 @@ Country: ${ticket.country}`;
     this.renderScreen(ctx, {
       html: START_TEXT,
       buttons: [
+        [{ title: DRAW_TITLE, id: DRAW_SCREEN }],
         [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
         [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
         [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
@@ -210,7 +213,7 @@ Country: ${ticket.country}`;
 
   public async forexScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
       ctx.deleteMessage();
       } catch (e) {
         console.log(e);
@@ -236,7 +239,7 @@ Country: ${ticket.country}`;
 
   public async cryptoScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -262,7 +265,7 @@ Country: ${ticket.country}`;
 
   public async popUpScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -281,7 +284,7 @@ Country: ${ticket.country}`;
 
   public async copySignalsScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -317,7 +320,7 @@ Country: ${ticket.country}`;
 
   public async faqScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
       ctx.deleteMessage();
       } catch (e) {
         console.log(e);
@@ -333,7 +336,7 @@ Country: ${ticket.country}`;
 
   public async personalAreaScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -362,7 +365,7 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<i>*Add the number 1 to the month so that your subscription is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
+<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
 `;
         }
         if (ticket.status === 'Pending') {
@@ -388,7 +391,7 @@ ${html}`,
 
   public async mainScreen(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -401,7 +404,7 @@ ${html}`,
 
   public async paymentByCryptoScreenOfForex(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -425,7 +428,7 @@ ${html}`,
 
   public async paymentByScreenOfForex(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -449,7 +452,7 @@ ${html}`,
 
   public async paymentByBankCardScreenOfForex(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -481,7 +484,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -502,7 +505,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -523,7 +526,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -542,7 +545,7 @@ ${html}`,
 
   public async paymentByCryptoScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -566,7 +569,7 @@ ${html}`,
 
   public async paymentByScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -590,7 +593,7 @@ ${html}`,
 
   public async paymentByBankCardScreenOfCrypto(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -622,7 +625,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -643,7 +646,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -664,7 +667,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -683,7 +686,7 @@ ${html}`,
 
   public async paymentByCryptoOfCopySignals(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -707,7 +710,7 @@ ${html}`,
 
   public async paymentBySkrillOfCopySignals(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -731,7 +734,7 @@ ${html}`,
 
   public async paymentByBankCardOfCopySignals(ctx: Context): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -763,7 +766,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -784,7 +787,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
@@ -810,7 +813,7 @@ ${html}`,
     ctx: Context,
   ): Promise<void> {
     try {
-      try { 
+      try {
         ctx.deleteMessage();
         } catch (e) {
           console.log(e);
