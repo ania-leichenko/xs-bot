@@ -4,8 +4,8 @@ import {
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
   BLACK_SQUARE_ICON,
-  WARNING_ICON,
   AHTUNG_ICON,
+  SMILING_FACE_ICON,
 } from './emoji.enum';
 import {
   FOREX_TITLE,
@@ -41,14 +41,14 @@ ${BLACK_SQUARE_ICON} Forex market
 ${BLACK_SQUARE_ICON} XAU/USD
 ${BLACK_SQUARE_ICON} Stock market
 
-During the day, 5-10 signals come, and the stop loss does not exceed the profit. The most successful signals for gold, more than 1000 pips per month. 
+During the day, 5-10 signals come, and the stop loss does not exceed the profit. The most successful signals for gold, more than 1000 pips per month.
 
 <b>In just a month, the goal of 3000 pips will always be reached.</b>
 
 Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
 export const COPY_SIGNALS_TEXT = `<b>Copy signals</b>
 
-Copy our signals to your trading account from bot with a delay of 0.1ms! 
+Copy our signals to your trading account from bot with a delay of 0.1ms!
 
 What is included in setting up signal copying?
 ${BLACK_SQUARE_ICON} Setting up a trading lot
@@ -77,7 +77,7 @@ export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
 `;
 export const CRYPTO_BUTTON_TEXT = `<b>Crypto</b>
 
-Get signals for the spot and futures market of cryptocurrencies. Deals can be both short-term and long-term. 
+Get signals for the spot and futures market of cryptocurrencies. Deals can be both short-term and long-term.
 
 Signals for:
 ${BLACK_SQUARE_ICON} Futures (170 coins)
@@ -150,4 +150,6 @@ export const CONFIRM_PAYMENT_TEXT = `We have received your payment! ${CHECKED_IC
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
 <b>Track your subscription status in personal area ${SEE_BUTTONS}</b>`;
-export const POP_UP_TEXT =`You have already paid. Track information in personal area`;
+export const POP_UP_TEXT ='You have already paid. Track information in personal area';
+export const GIVEAWAY_TEXT=`${CHECKED_ICON} You are registered in the giveaway! Expect results. The result will come to this bot, with the same message`;
+export const GIVEAWAY_POP_UP_TEXT=`You are already registered in the contest. Expect results. ${SMILING_FACE_ICON}`;

@@ -32,7 +32,8 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
-  DRAW_SCREEN,
+  GIVEAWAY_SCREEN,
+  GIVEAWAY_TEXT,
 } from '~/common/enums/enums';
 import { knexConfig } from '../knexfile';
 import {
@@ -239,19 +240,29 @@ bot.on('edited_channel_post', async (ctx) => {
   }
 });
 
-bot.action(DRAW_SCREEN, async (ctx) => {
-    botServ.createTicket(ctx, {
+bot.action(GIVEAWAY_SCREEN, async (ctx) => {
+  if (!ctx.chat) {
+    return 'ctx.chat is undefined';
+  }
+  const ticket = await ticketServ.getTicketByStatus({
+    chatId: ctx.chat.id,
+    plan: 'Forex',
+    status: 'Pending',
+  });
+  if(!ticket) {
+    bot.telegram.sendMessage(
+      ctx.chat.id,
+      `${GIVEAWAY_TEXT}`,
+    );
+    await botServ.createTicket(ctx, {
       plan: 'Forex',
       paymentMethod: 'Free',
       status: 'Pending',
     });
-     if (!ctx.chat) {
-      return 'ctx.chat is undefined';
-    }
-    bot.telegram.sendMessage(
-      ctx.chat.id,
-      'You have registered for the draw',
-    );
+  } else {
+    botServ.popUpGiveAwayScreen(ctx);
+  }
+  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(FOREX_SCREEN, async (ctx) => {
@@ -362,7 +373,7 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const photos: String[] = [
+  const photos: [] = [
     'https://ibb.co/DCnKysP',
     'https://ibb.co/hyBkf2p',
     'https://ibb.co/Sm84QmV',
@@ -453,7 +464,7 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const photos: String[] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
+  const photos: [] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
   for(const photo of photos) {
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
@@ -537,7 +548,7 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
 bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const photos: String[] = [
+  const photos: [] = [
     'https://ibb.co/DCnKysP',
     'https://ibb.co/hyBkf2p',
     'https://ibb.co/Sm84QmV',
@@ -562,7 +573,6 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
     userServ.updateLastAction(ctx.chat.id);
   }, 1000);
 });
-
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
   botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);

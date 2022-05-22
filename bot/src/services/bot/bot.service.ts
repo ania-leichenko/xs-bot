@@ -57,8 +57,9 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
-  DRAW_SCREEN,
-  DRAW_TITLE,
+  GIVEAWAY_SCREEN,
+  GIVEAWAY_TITLE,
+  GIVEAWAY_POP_UP_TEXT,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
 import { Channel as ChannelEntity } from '~/services/channels/channel.entity';
@@ -179,7 +180,7 @@ Country: ${ticket.country}`;
     this.renderScreen(ctx, {
       html: START_TEXT,
       buttons: [
-        [{ title: DRAW_TITLE, id: DRAW_SCREEN }],
+        [{ title: GIVEAWAY_TITLE, id: GIVEAWAY_SCREEN }],
         [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
         [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
         [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
@@ -272,6 +273,25 @@ Country: ${ticket.country}`;
         }
       this.renderScreen(ctx, {
         html: `${POP_UP_TEXT}`,
+        buttons: [
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+          [{ title: BACK, id: START_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async popUpGiveAwayScreen(ctx: Context): Promise<void> {
+    try {
+      try {
+        ctx.deleteMessage();
+        } catch (e) {
+          console.log(e);
+        }
+      this.renderScreen(ctx, {
+        html: `${GIVEAWAY_POP_UP_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
           [{ title: BACK, id: START_SCREEN }],

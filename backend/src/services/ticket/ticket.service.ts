@@ -44,6 +44,9 @@ class Ticket {
     }
     return updateTicket;
   }
+  public async getTicketById(chatId: number, paymentMethod: string):Promise<TicketEntity | undefined> {
+   return this.#ticketRepository.getTicketById({ chatId, paymentMethod });
+  }
 }
 
 export { Ticket };
