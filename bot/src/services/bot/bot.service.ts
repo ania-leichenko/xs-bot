@@ -87,21 +87,23 @@ class BotServ {
     this.#channelService = channelService;
   }
   public async startBot(ctx: Context): Promise<void> {
-    if (!ctx.from) {
-      throw new Error('ctx.from is undefined');
-    }
-    const user = await this.#userService.getUserById(ctx.from.id);
+    try { 
+      if (!ctx.from) {
+        throw new Error('ctx.from is undefined');
+      }
+      const user = await this.#userService.getUserById(ctx.from.id);
 
-    if (!user) {
-      userServ.create({
-        chatId: ctx.from.id,
-        firstName: ctx.from.first_name,
-        username: ctx.from.username,
-        admin: 0,
-        joined: new Date(),
-        lastAction: new Date(),
-      });
-    }
+      if (!user) {
+        userServ.create({
+          chatId: ctx.from.id,
+          firstName: ctx.from.first_name,
+          username: ctx.from.username,
+          admin: 0,
+          joined: new Date(),
+          lastAction: new Date(),
+        });
+      }
+    } catch (e) {console.log(e)}
   }
 
   public async createTicket(
@@ -115,7 +117,8 @@ class BotServ {
       paymentMethod: string;
       status: string;
     },
-  ): Promise<TicketEntity> {
+  ): Promise<TicketEntity | undefined> {
+    try {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
@@ -142,7 +145,10 @@ ID: ${ticket.chatId}
 Country: ${ticket.country}`;
     this.sendMessageToAdmin(ctx, message);
     return ticket;
+  } catch (e) {
+    console.log(e);
   }
+}
 
   public async sendMessageToAdmin(
     ctx: Context,
@@ -179,7 +185,7 @@ Country: ${ticket.country}`;
     this.renderScreen(ctx, {
       html: START_TEXT,
       buttons: [
-        [{ title: DRAW_TITLE, id: DRAW_SCREEN }],
+       // [{ title: DRAW_TITLE, id: DRAW_SCREEN }],
         [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
         [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
         [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
