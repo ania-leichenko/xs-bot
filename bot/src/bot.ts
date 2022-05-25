@@ -81,7 +81,7 @@ bot.on('channel_post', async (ctx) => {
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (ctx.channelPost.text) {
+    if ('text' in ctx.channelPost) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const message = ctx.channelPost.text;
@@ -90,9 +90,10 @@ bot.on('channel_post', async (ctx) => {
         messageId: ctx.channelPost.message_id,
         message,
       });
+      const { text, entities } = ctx.channelPost;
       for (const user of users) {
         try {
-          const res = await bot.telegram.sendMessage(user.chatId, message);
+          const res = await bot.telegram.sendMessage(user.chatId, text, {   entities });
           botMessageServ.create({
             chatId: user.chatId,
             messageId: res.message_id,
