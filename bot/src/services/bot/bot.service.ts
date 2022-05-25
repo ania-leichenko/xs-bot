@@ -122,7 +122,7 @@ class BotServ {
     if (!ctx.from) {
       throw new Error('ctx.from is undefined');
     }
-
+ 
     const ticket = await this.#ticketService.create({
       chatId: ctx.from.id,
       firstName: ctx.from.first_name,
