@@ -56,6 +56,21 @@ class Ticket {
     return updateTicket;
   }
 
+  public async getTicketById({
+    chatId,
+    paymentMethod,
+  }: {
+     chatId: number;
+     paymentMethod: string;
+  }): Promise<TicketEntity | undefined> {
+    const ticket = await this.#TicketModel
+      .query()
+      .where({ chatId: chatId })
+      .where({ paymentMethod: paymentMethod })
+      .first();
+    return ticket;
+  }
+
   public static modelToEntity(model: TicketM): TicketEntity {
     return TicketEntity.initialize(model);
   }

@@ -55,16 +55,19 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         chatId: req.body.chatId,
         message: req.body.messageForUser,
       });
-      fetch(
-        `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+      const ticketFree = await ticketService.getTicketById(req.body.chatId, 'Free');
+      if(!ticketFree) {
+        fetch(
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
           },
-        },
-      );
+        );
+      }
       await ticketService.updateStatus(req.params.id);
       const tickets = await ticketService.getAllTickets();
       rep
@@ -94,13 +97,25 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const tickets = await ticketService.getAllTickets();
 
       const date = new Date();
+      const ticketFree = await ticketService.getTicketById(req.body.chatId, 'Free');
       if (
         req.body.status === 'Active' &&
-        new Date(req.body.subscriptionTime) > date &&
-        req.body.plan !== 'Free'
+        new Date(req.body.subscriptionTime) > date
       ) {
+          if(!ticketFree) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+        } else {
         fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🥳🥳🥳 YOU WON THE GIVEAWAY! CONGRATULATIONS! You have been given a 10 day subscription. All signals will be in the same bot!`,
           {
             method: 'GET',
             headers: {
@@ -109,22 +124,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             },
           },
         );
-      }
-      if (
-        req.body.status === 'Active' &&
-        new Date(req.body.subscriptionTime) > date &&
-        req.body.plan === 'Free'
-      ) {
-        fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=You win subscription!`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-          },
-        );
+        }
       }
      rep
        .send(
