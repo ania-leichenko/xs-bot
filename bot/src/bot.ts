@@ -54,9 +54,16 @@ AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 
 const bot = new Telegraf(token);
 
-bot.start((ctx) => {
+bot.start(async (ctx) => {
+  try{
   botServ.startBot(ctx);
   botServ.startScreen(ctx);
+  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const user = await userServ.getUserById(e.on.payload.chat_id);
+    console.log(`${user?.firstName} @${user?.username}  blocked bot`);
+  }
 });
 
 bot.on('channel_post', async (ctx) => {
@@ -241,248 +248,322 @@ bot.on('edited_channel_post', async (ctx) => {
 });
 
 bot.action(GIVEAWAY_SCREEN, async (ctx) => {
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  const ticket = await ticketServ.getTicketByStatus({
-    chatId: ctx.chat.id,
-    plan: 'Forex',
-    status: 'Pending',
-  });
-  if(!ticket) {
-    bot.telegram.sendMessage(
-      ctx.chat.id,
-      `${GIVEAWAY_TEXT}`,
-    );
-    await botServ.createTicket(ctx, {
-      plan: 'Forex',
-      paymentMethod: 'Free',
-      status: 'Pending',
-    });
-  } else {
-    botServ.popUpGiveAwayScreen(ctx);
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(FOREX_SCREEN, async (ctx) => {
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-
-  const ticket = await ticketServ.getTicketByStatus({
-    chatId: ctx.chat.id,
-    plan: 'Forex',
-    status: 'Pending',
-  });
-
-  if (ticket) {
-    botServ.popUpScreen(ctx);
-  } else {
-    botServ.forexScreen(ctx);
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CRYPTO_SCREEN, async (ctx) => {
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-
-  const ticket = await ticketServ.getTicketByStatus({
-    chatId: ctx.chat.id,
-    plan: 'Crypto',
-    status: 'Pending',
-  });
-
-  if (ticket) {
-    botServ.popUpScreen(ctx);
-  } else {
-    botServ.cryptoScreen(ctx);
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-
-  const ticket = await ticketServ.getTicketByStatus({
-    chatId: ctx.chat.id,
-    plan: 'CopySignals',
-    status: 'Pending',
-  });
-
-  if (ticket) {
-    botServ.popUpScreen(ctx);
-  } else {
-    botServ.copySignalsScreen(ctx);
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(FAQ_SCREEN, async (ctx) => {
-  botServ.faqScreen(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PERSONAL_AREA_SCREEN, async (ctx) => {
-  botServ.personalAreaScreen(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(START_SCREEN, async (ctx) => {
-  botServ.mainScreen(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentByCryptoScreenOfForex(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentByScreenOfForex(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.paymentByBankCardScreenOfForex(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const photos: [] = [
-    'https://ibb.co/DCnKysP',
-    'https://ibb.co/hyBkf2p',
-    'https://ibb.co/Sm84QmV',
-    'https://ibb.co/GCzGsDs',
-    'https://ibb.co/dfd8Yfm',
-    'https://ibb.co/ZGd2ZQD',
-    'https://ibb.co/HtdLfpr',
-  ];
-  for (const photo of photos) {
+  try {
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    bot.telegram.sendPhoto(ctx.chat.id, photo);
+    const ticket = await ticketServ.getTicketByStatus({
+      chatId: ctx.chat.id,
+      plan: 'Forex',
+      status: 'Pending',
+    });
+    if(!ticket) {
+      bot.telegram.sendMessage(
+        ctx.chat.id,
+        `${GIVEAWAY_TEXT}`,
+      );
+      await botServ.createTicket(ctx, {
+        plan: 'Forex',
+        paymentMethod: 'Free',
+        status: 'Pending',
+      });
+    } else {
+      botServ.popUpGiveAwayScreen(ctx);
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  setTimeout(() => {
+});
+
+bot.action(FOREX_SCREEN, async (ctx) => {
+  try {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+
+    const ticket = await ticketServ.getTicketByStatus({
+      chatId: ctx.chat.id,
+      plan: 'Forex',
+      status: 'Pending',
+    });
+
+    if (ticket) {
+      botServ.popUpScreen(ctx);
+    } else {
+      botServ.forexScreen(ctx);
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(CRYPTO_SCREEN, async (ctx) => {
+  try {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+
+    const ticket = await ticketServ.getTicketByStatus({
+      chatId: ctx.chat.id,
+      plan: 'Crypto',
+      status: 'Pending',
+    });
+
+    if (ticket) {
+      botServ.popUpScreen(ctx);
+    } else {
+      botServ.cryptoScreen(ctx);
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
+  try {
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+
+    const ticket = await ticketServ.getTicketByStatus({
+      chatId: ctx.chat.id,
+      plan: 'CopySignals',
+      status: 'Pending',
+    });
+
+    if (ticket) {
+      botServ.popUpScreen(ctx);
+    } else {
+      botServ.copySignalsScreen(ctx);
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(FAQ_SCREEN, async (ctx) => {
+  try {
+    botServ.faqScreen(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PERSONAL_AREA_SCREEN, async (ctx) => {
+  try {
+    botServ.personalAreaScreen(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(START_SCREEN, async (ctx) => {
+  try {
+    botServ.mainScreen(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    botServ.paymentByCryptoScreenOfForex(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    botServ.paymentByScreenOfForex(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
     botServ.paymentByBankCardScreenOfForex(ctx);
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const photos: [] = [
+      'https://ibb.co/DCnKysP',
+      'https://ibb.co/hyBkf2p',
+      'https://ibb.co/Sm84QmV',
+      'https://ibb.co/GCzGsDs',
+      'https://ibb.co/dfd8Yfm',
+      'https://ibb.co/ZGd2ZQD',
+      'https://ibb.co/HtdLfpr',
+    ];
+    for (const photo of photos) {
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      bot.telegram.sendPhoto(ctx.chat.id, photo);
+    }
+    setTimeout(() => {
+      botServ.paymentByBankCardScreenOfForex(ctx);
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      userServ.updateLastAction(ctx.chat.id);
+    }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPaymentByCryptoScreenOfForex(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Forex',
-    paymentMethod: 'Crypto',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPaymentBySkrillScreenOfForex(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Forex',
-    paymentMethod: 'Skrill',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
-  botServ.confirmPaymentByBankCardScreenOfForex(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Forex',
-    paymentMethod: 'BankCard',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.paymentByCryptoScreenOfCrypto(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.paymentByScreenOfCrypto(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.paymentByBankCardScreenOfCrypto(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const photos: [] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
-  for(const photo of photos) {
+  try {
+    botServ.confirmPaymentByCryptoScreenOfForex(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Forex',
+      paymentMethod: 'Crypto',
+      status: 'Pending',
+    });
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    bot.telegram.sendPhoto(ctx.chat.id, photo);
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  setTimeout(() => {
+});
+
+bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    botServ.confirmPaymentBySkrillScreenOfForex(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Forex',
+      paymentMethod: 'Skrill',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
+  try {
+    botServ.confirmPaymentByBankCardScreenOfForex(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Forex',
+      paymentMethod: 'BankCard',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    botServ.paymentByCryptoScreenOfCrypto(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    botServ.paymentByScreenOfCrypto(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  try{
     botServ.paymentByBankCardScreenOfCrypto(ctx);
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const photos: [] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
+    for(const photo of photos) {
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      bot.telegram.sendPhoto(ctx.chat.id, photo);
+    }
+    setTimeout(() => {
+      botServ.paymentByBankCardScreenOfCrypto(ctx);
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      userServ.updateLastAction(ctx.chat.id);
+    }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
+ try {
   botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
   botServ.createTicket(ctx, {
     plan: 'Crypto',
@@ -493,125 +574,168 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
     return 'ctx.chat is undefined';
   }
   userServ.updateLastAction(ctx.chat.id);
+ } catch(e) {
+   console.log(e);
+ }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.confirmPaymentBySkrillScreenOfCrypto(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Crypto',
-    paymentMethod: 'Skrill',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
-  botServ.confirmPaymentByBankCardScreenOfCrypto(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Crypto',
-    paymentMethod: 'BankCard',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.paymentByCryptoOfCopySignals(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.paymentBySkrillOfCopySignals(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.paymentByBankCardOfCopySignals(ctx);
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
-  }
-  userServ.updateLastAction(ctx.chat.id);
-});
-
-bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const photos: [] = [
-    'https://ibb.co/DCnKysP',
-    'https://ibb.co/hyBkf2p',
-    'https://ibb.co/Sm84QmV',
-    'https://ibb.co/GCzGsDs',
-    'https://ibb.co/dfd8Yfm',
-    'https://ibb.co/ZGd2ZQD',
-    'https://ibb.co/HtdLfpr',
-  ];
-  for (const photo of photos) {
+  try {
+    botServ.confirmPaymentBySkrillScreenOfCrypto(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Crypto',
+      paymentMethod: 'Skrill',
+      status: 'Pending',
+    });
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    bot.telegram.sendPhoto(ctx.chat.id, photo);
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  setTimeout(() => {
+});
+
+bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
+  try {
+    botServ.confirmPaymentByBankCardScreenOfCrypto(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Crypto',
+      paymentMethod: 'BankCard',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  try {
+    botServ.paymentByCryptoOfCopySignals(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  try {
+    botServ.paymentBySkrillOfCopySignals(ctx);
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  try {
     botServ.paymentByBankCardOfCopySignals(ctx);
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
+});
+
+bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
+  try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const photos: [] = [
+      'https://ibb.co/DCnKysP',
+      'https://ibb.co/hyBkf2p',
+      'https://ibb.co/Sm84QmV',
+      'https://ibb.co/GCzGsDs',
+      'https://ibb.co/dfd8Yfm',
+      'https://ibb.co/ZGd2ZQD',
+      'https://ibb.co/HtdLfpr',
+    ];
+    for (const photo of photos) {
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      bot.telegram.sendPhoto(ctx.chat.id, photo);
+    }
+    setTimeout(() => {
+      botServ.paymentByBankCardOfCopySignals(ctx);
+      if (!ctx.chat) {
+        return 'ctx.chat is undefined';
+      }
+      userServ.updateLastAction(ctx.chat.id);
+    }, 1000);
+  } catch(e) {
+    console.log(e);
+  }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'CopySignals',
-    paymentMethod: 'Crypto',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
+  try {
+    botServ.confirmPaymentByCryptoScreenOfCopySignals(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'CopySignals',
+      paymentMethod: 'Crypto',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.confirmPaymentByScillScreenOfCopySignals(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'CopySignals',
-    paymentMethod: 'Skrill',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
+  try {
+    botServ.confirmPaymentByScillScreenOfCopySignals(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'CopySignals',
+      paymentMethod: 'Skrill',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  userServ.updateLastAction(ctx.chat.id);
 });
 
 bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
-  botServ.createTicket(ctx, {
-    plan: 'CopySignals',
-    paymentMethod: 'BankCard',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
+  try {
+    botServ.createTicket(ctx, {
+      plan: 'CopySignals',
+      paymentMethod: 'BankCard',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch(e) {
+    console.log(e);
   }
-  userServ.updateLastAction(ctx.chat.id);
 });
 
 console.log('Bot started');
 
+try{
 bot.launch();
+} catch (e) {
+  console.log(e);
+}

@@ -57,8 +57,8 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
-  GIVEAWAY_SCREEN,
-  GIVEAWAY_TITLE,
+  //GIVEAWAY_SCREEN,
+  //GIVEAWAY_TITLE,
   GIVEAWAY_POP_UP_TEXT,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
@@ -88,20 +88,27 @@ class BotServ {
     this.#channelService = channelService;
   }
   public async startBot(ctx: Context): Promise<void> {
-    if (!ctx.from) {
-      throw new Error('ctx.from is undefined');
-    }
-    const user = await this.#userService.getUserById(ctx.from.id);
+    try {
+      if (!ctx.from) {
+        throw new Error('ctx.from is undefined');
+      }
+      const user = await this.#userService.getUserById(ctx.from.id);
 
-    if (!user) {
-      userServ.create({
-        chatId: ctx.from.id,
-        firstName: ctx.from.first_name,
-        username: ctx.from.username,
-        admin: 0,
-        joined: new Date(),
-        lastAction: new Date(),
-      });
+      if (!user) {
+        userServ.create({
+          chatId: ctx.from.id,
+          firstName: ctx.from.first_name,
+          username: ctx.from.username,
+          admin: 0,
+          joined: new Date(),
+          lastAction: new Date(),
+        });
+      }
+    } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const user = await userServ.getUserById(e.on.payload.chat_id);
+      console.log(`${user?.firstName} @${user?.username}  blocked bot`);
     }
   }
 
@@ -116,23 +123,24 @@ class BotServ {
       paymentMethod: string;
       status: string;
     },
-  ): Promise<TicketEntity> {
-    if (!ctx.from) {
-      throw new Error('ctx.from is undefined');
-    }
+  ): Promise<TicketEntity | undefined> {
+    try {
+      if (!ctx.from) {
+        throw new Error('ctx.from is undefined');
+      }
 
-    const ticket = await this.#ticketService.create({
-      chatId: ctx.from.id,
-      firstName: ctx.from.first_name,
-      username: ctx.from.username || '',
-      subscriptionTime: new Date(),
-      plan: plan,
-      paymentMethod: paymentMethod,
-      status: status,
-      country: ctx.from.language_code || '',
-    });
+      const ticket = await this.#ticketService.create({
+        chatId: ctx.from.id,
+        firstName: ctx.from.first_name,
+        username: ctx.from.username || '',
+        subscriptionTime: new Date(),
+        plan: plan,
+        paymentMethod: paymentMethod,
+        status: status,
+        country: ctx.from.language_code || '',
+      });
 
-    const message = `<b>New Payment</b>
+      const message = `<b>New Payment</b>
 
 Ticket: ${ticket.ticket}
 Username: @${ticket.username}
@@ -141,20 +149,27 @@ Plan: ${ticket.plan}
 Payment method: ${ticket.paymentMethod}
 ID: ${ticket.chatId}
 Country: ${ticket.country}`;
-    this.sendMessageToAdmin(ctx, message);
-    return ticket;
+      this.sendMessageToAdmin(ctx, message);
+      return ticket;
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public async sendMessageToAdmin(
     ctx: Context,
     message: string,
   ): Promise<void> {
-    const admins = await this.#userService.getAllAdmins();
-    admins.map((admin): void => {
-      ctx.telegram.sendMessage(admin.chatId, message, {
-        parse_mode: 'HTML',
+    try {
+      const admins = await this.#userService.getAllAdmins();
+      admins.map((admin): void => {
+        ctx.telegram.sendMessage(admin.chatId, message, {
+          parse_mode: 'HTML',
+        });
       });
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public async getChannel(ctx: Context): Promise<ChannelEntity> {
@@ -177,17 +192,21 @@ Country: ${ticket.country}`;
   }
 
   public async startScreen(ctx: Context): Promise<void> {
-    this.renderScreen(ctx, {
-      html: START_TEXT,
-      buttons: [
-        [{ title: GIVEAWAY_TITLE, id: GIVEAWAY_SCREEN }],
-        [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
-        [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
-        [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
-        [{ title: FAQ_BUTTON_TITLE, id: FAQ_SCREEN }],
-        [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
-      ],
-    });
+    try {
+      this.renderScreen(ctx, {
+        html: START_TEXT,
+        buttons: [
+          // [{ title: DRAW_TITLE, id: DRAW_SCREEN }],
+          [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
+          [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
+          [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
+          [{ title: FAQ_BUTTON_TITLE, id: FAQ_SCREEN }],
+          [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
+        ],
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public renderScreen(
@@ -197,29 +216,33 @@ Country: ${ticket.country}`;
       buttons: TButtons[];
     },
   ): void {
-    if (!options.buttons) {
-      return;
+    try {
+      if (!options.buttons) {
+        return;
+      }
+      ctx.replyWithHTML(
+        options.html,
+        Markup.inlineKeyboard(
+          options.buttons.map((arr) => {
+            return arr.map((button) =>
+              Markup.button.callback(button.title, button.id),
+            );
+          }),
+        ),
+      );
+    } catch (e) {
+      console.log(e);
     }
-    ctx.replyWithHTML(
-      options.html,
-      Markup.inlineKeyboard(
-        options.buttons.map((arr) => {
-          return arr.map((button) =>
-            Markup.button.callback(button.title, button.id),
-          );
-        }),
-      ),
-    );
   }
 
   public async forexScreen(ctx: Context): Promise<void> {
     try {
       try {
-      ctx.deleteMessage();
+        await ctx.deleteMessage();
       } catch (e) {
         console.log(e);
       }
-      this.renderScreen(ctx, {
+      await this.renderScreen(ctx, {
         html: `${FOREX_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX }],
@@ -241,11 +264,11 @@ Country: ${ticket.country}`;
   public async cryptoScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CRYPTO_BUTTON_TEXT}`,
         buttons: [
           [{ title: CRYPTO_TITLE, id: PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO }],
@@ -267,11 +290,11 @@ Country: ${ticket.country}`;
   public async popUpScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${POP_UP_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -286,11 +309,11 @@ Country: ${ticket.country}`;
   public async popUpGiveAwayScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${GIVEAWAY_POP_UP_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -305,11 +328,11 @@ Country: ${ticket.country}`;
   public async copySignalsScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${COPY_SIGNALS_TEXT}`,
         buttons: [
           [
@@ -341,11 +364,11 @@ Country: ${ticket.country}`;
   public async faqScreen(ctx: Context): Promise<void> {
     try {
       try {
-      ctx.deleteMessage();
+        await ctx.deleteMessage();
       } catch (e) {
         console.log(e);
       }
-      this.renderScreen(ctx, {
+      await this.renderScreen(ctx, {
         html: `${FAQ_TEXT}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
@@ -357,10 +380,10 @@ Country: ${ticket.country}`;
   public async personalAreaScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
@@ -412,11 +435,11 @@ ${html}`,
   public async mainScreen(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.startScreen(ctx);
+       await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.startScreen(ctx);
     } catch (e) {
       console.error(e);
     }
@@ -425,11 +448,11 @@ ${html}`,
   public async paymentByCryptoScreenOfForex(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
           [
@@ -449,11 +472,11 @@ ${html}`,
   public async paymentByScreenOfForex(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
           [
@@ -473,11 +496,11 @@ ${html}`,
   public async paymentByBankCardScreenOfForex(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
           [
@@ -489,7 +512,7 @@ ${html}`,
           [
             {
               title: INSTRUCTION_FOR_BANK_CARD_TITLE,
-              id:  INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
+              id: INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
             },
           ],
           [{ title: BACK, id: FOREX_SCREEN }],
@@ -505,11 +528,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -526,11 +549,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -547,11 +570,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -566,11 +589,11 @@ ${html}`,
   public async paymentByCryptoScreenOfCrypto(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
           [
@@ -590,11 +613,11 @@ ${html}`,
   public async paymentByScreenOfCrypto(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
           [
@@ -614,11 +637,11 @@ ${html}`,
   public async paymentByBankCardScreenOfCrypto(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
           [
@@ -630,7 +653,7 @@ ${html}`,
           [
             {
               title: INSTRUCTION_FOR_BANK_CARD_TITLE,
-              id:   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
+              id: INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
             },
           ],
           [{ title: BACK, id: CRYPTO_SCREEN }],
@@ -646,11 +669,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -667,11 +690,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -688,11 +711,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -707,11 +730,11 @@ ${html}`,
   public async paymentByCryptoOfCopySignals(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CRYPTO_TEXT}`,
         buttons: [
           [
@@ -731,11 +754,11 @@ ${html}`,
   public async paymentBySkrillOfCopySignals(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${SKRILL_TEXT}`,
         buttons: [
           [
@@ -755,11 +778,11 @@ ${html}`,
   public async paymentByBankCardOfCopySignals(ctx: Context): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${BANK_CARD_TEXT}`,
         buttons: [
           [
@@ -771,7 +794,7 @@ ${html}`,
           [
             {
               title: INSTRUCTION_FOR_BANK_CARD_TITLE,
-              id:   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
+              id: INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
             },
           ],
           [{ title: BACK, id: COPY_SIGNALS_SCREEN }],
@@ -787,11 +810,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -808,11 +831,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
@@ -834,11 +857,11 @@ ${html}`,
   ): Promise<void> {
     try {
       try {
-        ctx.deleteMessage();
-        } catch (e) {
-          console.log(e);
-        }
-      this.renderScreen(ctx, {
+        await ctx.deleteMessage();
+      } catch (e) {
+        console.log(e);
+      }
+      await this.renderScreen(ctx, {
         html: `${CONFIRM_PAYMENT_TEXT}`,
         buttons: [
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
