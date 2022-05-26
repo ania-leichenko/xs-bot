@@ -152,4 +152,5 @@ Within a few hours, the system will check the authenticity of the payment and gi
 <b>Track your subscription status in personal area ${SEE_BUTTONS}</b>`;
 export const POP_UP_TEXT ='You have already paid. Track information in personal area';
 export const GIVEAWAY_TEXT=`${CHECKED_ICON} You are registered in the giveaway! Expect results. The result will come to this bot, with the same message`;
-export const GIVEAWAY_POP_UP_TEXT=`You are already registered in the contest. Expect results. ${SMILING_FACE_ICON}`;
+export const GIVEAWAY_POP_UP_TEXT=`You are already registered in the giveaway. Expect results. ${SMILING_FACE_ICON}`;
+
