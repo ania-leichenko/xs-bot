@@ -24,6 +24,7 @@ type Body = {
   paymentMethod: string;
   status: string;
   chatId: number;
+  paymentMethoud: string;
   messageForUser: string;
 };
 
@@ -55,8 +56,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         chatId: req.body.chatId,
         message: req.body.messageForUser,
       });
-      const ticketFree = await ticketService.getTicketById(req.body.chatId, 'Free');
-      if(!ticketFree) {
+      if(req.body.paymentMethod !== 'Free') {
         fetch(
           `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
           {
@@ -97,12 +97,11 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const tickets = await ticketService.getAllTickets();
 
       const date = new Date();
-      const ticketFree = await ticketService.getTicketById(req.body.chatId, 'Free');
       if (
         req.body.status === 'Active' &&
         new Date(req.body.subscriptionTime) > date
       ) {
-          if(!ticketFree) {
+        if(req.body.paymentMethod !== 'Free') {
             fetch(
               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
               {

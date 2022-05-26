@@ -89,6 +89,7 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         subscriptionTime: new Date(userSubcriptionTime),
         status: userStatus,
         chatId: ticket.chatId,
+        paymentMethod: ticket.paymentMethod,
         messageForUser: `Your payment for ${ticket.plan} approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
     })

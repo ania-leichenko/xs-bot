@@ -93,7 +93,7 @@ bot.on('channel_post', async (ctx) => {
       const { text, entities } = ctx.channelPost;
       for (const user of users) {
         try {
-          const res = await bot.telegram.sendMessage(user.chatId, text, {   entities });
+          const res = await bot.telegram.sendMessage(user.chatId, text, { entities });
           botMessageServ.create({
             chatId: user.chatId,
             messageId: res.message_id,
