@@ -28,7 +28,7 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { REACT_APP_API_ORIGIN_URL } = process.env;
-  
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setAnchorEl(event.currentTarget);
   };
@@ -46,6 +46,7 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
       },
       body: JSON.stringify({
         chatId: ticket.chatId,
+        paymentMethod: ticket.paymentMethod,
         messageForUser: `Your subscription for ${ticket.plan} has been rejected by our system. For all questions, please contact the administrator @bestsignalsadmin`,
       }),
     })
