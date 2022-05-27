@@ -57,8 +57,8 @@ import {
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO,
   INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS,
-  GIVEAWAY_SCREEN,
-  GIVEAWAY_TITLE,
+  // GIVEAWAY_SCREEN,
+  // GIVEAWAY_TITLE,
   GIVEAWAY_POP_UP_TEXT,
 } from '~/common/enums/enums';
 import { Ticket as TicketEntity } from '~/services/ticket/ticket.entity';
@@ -125,20 +125,20 @@ class BotServ {
     },
   ): Promise<TicketEntity | undefined> {
     try {
-    if (!ctx.from) { 
-      throw new Error('ctx.from is undefined');
-    }
+      if (!ctx.from) {
+        throw new Error('ctx.from is undefined');
+      }
 
-    const ticket = await this.#ticketService.create({
-      chatId: ctx.from.id,
-      firstName: ctx.from.first_name,
-      username: ctx.from.username || '',
-      subscriptionTime: new Date(),
-      plan: plan,
-      paymentMethod: paymentMethod,
-      status: status,
-      country: ctx.from.language_code || '',
-    });
+      const ticket = await this.#ticketService.create({
+        chatId: ctx.from.id,
+        firstName: ctx.from.first_name,
+        username: ctx.from.username || '',
+        subscriptionTime: new Date(),
+        plan: plan,
+        paymentMethod: paymentMethod,
+        status: status,
+        country: ctx.from.language_code || '',
+      });
 
       const message = `<b>New Payment</b>
 
@@ -196,7 +196,7 @@ Country: ${ticket.country}`;
       this.renderScreen(ctx, {
         html: START_TEXT,
         buttons: [
-           [{ title: GIVEAWAY_TITLE, id: GIVEAWAY_SCREEN }],
+          // [{ title: GIVEAWAY_TITLE, id: GIVEAWAY_SCREEN }],
           [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
           [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
           [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
@@ -435,7 +435,7 @@ ${html}`,
   public async mainScreen(ctx: Context): Promise<void> {
     try {
       try {
-       await ctx.deleteMessage();
+        await ctx.deleteMessage();
       } catch (e) {
         console.log(e);
       }
