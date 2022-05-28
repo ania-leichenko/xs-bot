@@ -66,6 +66,46 @@ bot.start(async (ctx) => {
     console.log(`${user?.firstName} @${user?.username}  blocked bot`);
   }
 });
+bot.command('/forex', async (ctx) => {
+  try {
+   botServ.forexScreen(ctx);
+  }
+  catch (e) {
+    console.log(e);
+  }
+});
+
+bot.command('/crypto', async (ctx) => {
+  try {
+    botServ.cryptoScreen(ctx);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+bot.command('/copysignals', async (ctx) => {
+  try {
+    botServ.copySignalsScreen(ctx);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+bot.command('/bonus', async (ctx) => {
+  try {
+    botServ.faqScreen(ctx);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+bot.command('/personal_area', async (ctx) => {
+  try {
+    botServ.personalAreaScreen(ctx);
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 bot.on('channel_post', async (ctx) => {
   try {
@@ -107,7 +147,6 @@ bot.on('channel_post', async (ctx) => {
 
       if (text === '/d') {
         for (const message of repliedMessagesFromBot) {
-          // console.log('message to delete: ', message);
           await bot.telegram.deleteMessage(message.chatId, message.messageId);
         }
         return;
