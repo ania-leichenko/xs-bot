@@ -88,6 +88,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         ticket: req.params.id,
         subscriptionTime: req.body.subscriptionTime,
         status: req.body.status,
+        plan: req.body.plan,
       });
       const messages = await messageForUsers.create({
         chatId: req.body.chatId,
@@ -101,7 +102,21 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         req.body.status === 'Active' &&
         new Date(req.body.subscriptionTime) > date
       ) {
-        if(req.body.paymentMethod !== 'Free') {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if (req.body.planStatus) {
+          fetch(
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}  Your subscription was moved to ${req.body.plan} `,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+            },
+          );
+        } else {
+          if (req.body.paymentMethod !== 'Free') {
             fetch(
               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
               {
@@ -112,17 +127,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
-        } else {
-        fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🥳🥳🥳 YOU WON THE GIVEAWAY! CONGRATULATIONS! You have been given a 10 day subscription. All signals will be in the same bot!`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-          },
-        );
+          } else {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🥳🥳🥳 YOU WON THE GIVEAWAY! CONGRATULATIONS! You have been given a 10 day subscription. All signals will be in the same bot!`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          }
         }
       }
      rep

@@ -23,6 +23,21 @@ const statuses = [
   },
 ];
 
+const plans = [
+  {
+    value: 'Forex',
+    label: 'Forex',
+  },
+  {
+    value: 'Crypto',
+    label: 'Crypto',
+  },
+  {
+    value: 'CopySignals',
+    label: 'CopySignals',
+  },
+];
+
 type Anchor = 'right';
 
 type Ticket = {
@@ -51,6 +66,8 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
   );
   const [userStatus, setUserStatus] = React.useState(ticket.status);
   const { REACT_APP_API_ORIGIN_URL } = process.env;
+  const [ userPlan, setUserPlan ] = React.useState(ticket.plan);
+  const [ planStatus, setPlanStatus ] = React.useState(false);
 
   const onChangeSubscriptionTime = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -60,6 +77,11 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
 
   const onChangeStatus = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setUserStatus(event.target.value);
+  };
+
+  const onChangePlans = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setUserPlan(event.target.value);
+    setPlanStatus(true);
   };
 
   const toggleDrawer =
@@ -88,7 +110,9 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         ticket: ticket.ticket,
         subscriptionTime: new Date(userSubcriptionTime),
         status: userStatus,
+        plan: userPlan,
         chatId: ticket.chatId,
+        planStatus: planStatus,
         paymentMethod: ticket.paymentMethod,
         messageForUser: `Your payment for ${ticket.plan} approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
@@ -139,6 +163,25 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
                   variant="outlined"
                 >
                   {statuses.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+              </div>
+              <div>
+                <TextField
+                  id="outlined-select-currency-native"
+                  select
+                  label="Plan"
+                  value={userPlan}
+                  onChange={onChangePlans}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  variant="outlined"
+                >
+                  {plans.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>

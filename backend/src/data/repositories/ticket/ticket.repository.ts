@@ -41,16 +41,19 @@ class Ticket {
     ticket,
     subscriptionTime,
     status,
+    plan,
   }: {
     ticket: number;
     subscriptionTime: Date;
     status: string;
+    plan: string;
   }): Promise<number> {
     const updateTicket = await this.#TicketModel
       .query()
       .patch({
         subscriptionTime: subscriptionTime,
         status: status,
+        plan: plan,
       })
       .where({ ticket: ticket });
     return updateTicket;
