@@ -7,7 +7,7 @@ import {
   ENV,
   FOREX_SCREEN,
   CRYPTO_SCREEN,
-  FAQ_SCREEN,
+  BONUS_SCREEN,
   PERSONAL_AREA_SCREEN,
   START_SCREEN,
   COPY_SIGNALS_SCREEN,
@@ -93,7 +93,7 @@ bot.command('/copysignals', async (ctx) => {
 
 bot.command('/bonus', async (ctx) => {
   try {
-    botServ.faqScreen(ctx);
+    botServ.bonusScreen(ctx);
   } catch (e) {
     console.log(e);
   }
@@ -412,9 +412,9 @@ bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
   }
 });
 
-bot.action(FAQ_SCREEN, async (ctx) => {
+bot.action(BONUS_SCREEN, async (ctx) => {
   try {
-    botServ.faqScreen(ctx);
+    botServ.bonusScreen(ctx);
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }

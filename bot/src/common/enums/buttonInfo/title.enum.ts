@@ -9,8 +9,8 @@ import {
 export const FOREX_TITLE = 'Forex';
 export const FOREX_BUTTON_TITLE = 'Forex — 99$/month';
 export const COPY_SIGNALS_TITLE = 'Copy signals — 199$/month';
-export const FAQ_BUTTON_TITLE = `${STAR_ICON} Bonus accrual`;
-export const FAQ_TITLE =
+export const BONUS_BUTTON_TITLE = `${STAR_ICON} Bonus accrual`;
+export const BONUS_TITLE =
   'Accrual of additional days when paying for any subscription. How it works?';
 export const PERSONAL_AREA_TITLE = '<b>Personal Area</b>';
 export const USER_SUBCRITIONS = '<b>Your subscriptions:</b>';

@@ -9,7 +9,7 @@ import {
   START_TEXT,
   FOREX_TEXT,
   COPY_SIGNALS_TEXT,
-  FAQ_TEXT,
+  BONUS_TEXT,
   USER_SUBCRITIONS,
   CRYPTO_TEXT,
   CRYPTO_BUTTON_TEXT,
@@ -17,7 +17,7 @@ import {
   BANK_CARD_TEXT,
   CONFIRM_PAYMENT_TEXT,
   FOREX_BUTTON_TITLE,
-  FAQ_BUTTON_TITLE,
+  BONUS_BUTTON_TITLE,
   PERSONAL_AREA_BUTTON_TITLE,
   CRYPTO_TITLE,
   CRYPTO_BUTTON_TITLE,
@@ -30,7 +30,7 @@ import {
   FOREX_SCREEN,
   CRYPTO_SCREEN,
   COPY_SIGNALS_SCREEN,
-  FAQ_SCREEN,
+  BONUS_SCREEN,
   PERSONAL_AREA_SCREEN,
   PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX,
   PAYMENT_BY_SKRILL_SCREEN_OF_FOREX,
@@ -200,7 +200,7 @@ Country: ${ticket.country}`;
           [{ title: FOREX_BUTTON_TITLE, id: FOREX_SCREEN }],
           [{ title: CRYPTO_BUTTON_TITLE, id: CRYPTO_SCREEN }],
           [{ title: COPY_SIGNALS_TITLE, id: COPY_SIGNALS_SCREEN }],
-          [{ title: FAQ_BUTTON_TITLE, id: FAQ_SCREEN }],
+          [{ title: BONUS_BUTTON_TITLE, id: BONUS_SCREEN }],
           [{ title: PERSONAL_AREA_BUTTON_TITLE, id: PERSONAL_AREA_SCREEN }],
         ],
       });
@@ -361,7 +361,7 @@ Country: ${ticket.country}`;
     }
   }
 
-  public async faqScreen(ctx: Context): Promise<void> {
+  public async bonusScreen(ctx: Context): Promise<void> {
     try {
       try {
         await ctx.deleteMessage();
@@ -369,7 +369,7 @@ Country: ${ticket.country}`;
         console.log(e);
       }
       await this.renderScreen(ctx, {
-        html: `${FAQ_TEXT}`,
+        html: `${BONUS_TEXT}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {

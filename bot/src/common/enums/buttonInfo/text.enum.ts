@@ -1,6 +1,5 @@
 import {
   SEE_BUTTONS,
-  QUESSION_ICON,
   CHECKED_ICON,
   SERVICE_INACTIVE_ICON,
   BLACK_SQUARE_ICON,
@@ -9,7 +8,7 @@ import {
 } from './emoji.enum';
 import {
   FOREX_TITLE,
-  FAQ_TITLE,
+  BONUS_TITLE,
   PERSONAL_AREA_TITLE,
   CRYPTO_TITLE,
   SKRILL_TITLE,
@@ -57,7 +56,7 @@ ${BLACK_SQUARE_ICON} Copying signals with take profit and stop loss
 ${BLACK_SQUARE_ICON} If the deal was closed in the bot, the deal is closed automatically on the account. If we close half lot of the deal in the bot, this is also will be closed half lot on your trading account
 
 Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
-export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
+export const BONUS_TEXT = `<b>${BONUS_TITLE}</b>
 
 We are glad to inform you that we are switching to a unified bonus system in our premium services. To receive bonuses, you need to pay for any of the premium subscriptions.
 
