@@ -263,16 +263,16 @@ bot.on('edited_channel_post', async (ctx) => {
     }
     const botMessages = await botMessageServ.getByMessageId(channelMessage.id);
 
-     await botMessages.map((message) => {
-     bot.telegram.editMessageText(
+    await botMessages.map((message) => {
+      bot.telegram.editMessageText(
         message.chatId,
         message.messageId,
         undefined,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-commentf
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         ctx.editedChannelPost.text,
       );
-   });
+    });
   } catch (e) {
     console.log(e);
   }
