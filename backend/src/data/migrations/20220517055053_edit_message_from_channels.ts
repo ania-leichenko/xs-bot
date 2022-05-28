@@ -5,12 +5,12 @@ const TABLE_NAME = TableName.MESSAGE_FROM_CHANNELS;
 
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, function (table) {
-    table.text('message').notNullable();
+    table.text('message').notNullable().alter();
   });
 }
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema.table(TABLE_NAME, function (table) {
-    table.dropColumn('message');
+    table.string('message').notNullable().alter();
   });
 }
