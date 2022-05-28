@@ -9,4 +9,5 @@ export const BLACK_SQUARE_ICON = '▪️';
 export const WARNING_ICON = '⚠️';
 export const AHTUNG_ICON = '‼️';
 export const FIRE_ICON = '🔥';
-export const SMILING_FACE_ICON='😇';
+export const SMILING_FACE_ICON = '😇';
+export const STAR_ICON = '⭐️';

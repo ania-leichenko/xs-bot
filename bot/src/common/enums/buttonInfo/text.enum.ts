@@ -59,19 +59,15 @@ ${BLACK_SQUARE_ICON} If the deal was closed in the bot, the deal is closed autom
 Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
 export const FAQ_TEXT = `<b>${FAQ_TITLE}</b>
 
-${QUESSION_ICON} Can I be sure of the authenticity of Premium Signals? Can I get free access for one day to try them out?
-${CHECKED_ICON}  All free signals are updated daily in the free channel. You can test free signals at any time.
+We are glad to inform you that we are switching to a unified bonus system in our premium services. To receive bonuses, you need to pay for any of the premium subscriptions.
 
-${QUESSION_ICON}  I want to get a test signal to make sure they work.
-${CHECKED_ICON} Follow a free channel that provides free signals daily.
+<b>There are 4 levels of bonuses in total:</b>
+${BLACK_SQUARE_ICON} Silver level —  +1 day to the subscription (you need to be a member for 2 months)
+${BLACK_SQUARE_ICON} Bronze level — +3 days to the subscription (you need to be a member for 4 months)
+${BLACK_SQUARE_ICON} Gold level — +5 days to the subscription (you need to be a member for 6 months)
+${BLACK_SQUARE_ICON} Platinum level — +10 days to the subscription (you need to be a member for 12 months)
 
-${QUESSION_ICON}  I have no experience in this area, can I start trading with your signals?
-${CHECKED_ICON} We provide access signals to save you time on learning all the nuances. Experts are always in touch and are ready to provide detailed instructions for opening trades based on signals. For any questions, you can contact the administrator in the chat.
-
-${QUESSION_ICON}  What should I do if I fail to open trades?
-${CHECKED_ICON} All our instructions and training are directly aimed at your guaranteed result, and you can always contact the administrator for any questions.
-
-If you have any questions, please contact the administrator ?@bestsignalsadmin (Due to the extensive amount of work, the administrator's response may take some time.)`;
+<i>Bonuses do not expire if you do not pay for a subscription. After you get the platinum level, with each payment you will automatically receive +10 days.</i>`;
 export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
 
 `;
@@ -150,6 +146,7 @@ export const CONFIRM_PAYMENT_TEXT = `We have received your payment! ${CHECKED_IC
 Within a few hours, the system will check the authenticity of the payment and give you access. If for some reason you did not get access, contact the administrator @bestsignalsadmin
 
 <b>Track your subscription status in personal area ${SEE_BUTTONS}</b>`;
-export const POP_UP_TEXT ='You have already paid. Track information in personal area';
-export const GIVEAWAY_TEXT=`${CHECKED_ICON} You are registered in the giveaway! Expect results. The result will come to this bot, with the same message`;
-export const GIVEAWAY_POP_UP_TEXT=`You are already registered in the contest. Expect results. ${SMILING_FACE_ICON}`;
+export const POP_UP_TEXT =
+  'You have already paid. Track information in personal area';
+export const GIVEAWAY_TEXT = `${CHECKED_ICON} You are registered in the giveaway! Expect results. The result will come to this bot, with the same message`;
+export const GIVEAWAY_POP_UP_TEXT = `You are already registered in the giveaway. Expect results. ${SMILING_FACE_ICON}`;
