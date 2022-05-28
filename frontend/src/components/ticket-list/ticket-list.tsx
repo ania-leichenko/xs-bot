@@ -56,53 +56,35 @@ export const TicketTable: FC = () => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">
-              Ticket
-            </TableCell>
-            <TableCell align="center">
-              User
-            </TableCell>
-            <TableCell align="center">
-              Subscription time
-            </TableCell>
-            <TableCell align="center">
-              Plan
-            </TableCell>
-            <TableCell align="center">
-              Payment method
-            </TableCell>
-            <TableCell align="center">
-              Status
-            </TableCell>
-            <TableCell align="center">
-              Actions
-            </TableCell>
+            <TableCell align="center">Ticket</TableCell>
+            <TableCell align="center">Id</TableCell>
+            <TableCell align="center">User</TableCell>
+            <TableCell align="center">Subscription time</TableCell>
+            <TableCell align="center">Plan</TableCell>
+            <TableCell align="center">Payment method</TableCell>
+            <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {tickets &&
             tickets.map((ticket: Ticket) => (
               <TableRow key={ticket.ticket}>
-                 <TableCell 
-                  component="th"
-                  scope="row"
-                  align="center"
-                >{ticket.ticket}</TableCell>
-                <TableCell 
-                  align="center"
-                >
+                <TableCell component="th" scope="row" align="center">
+                  {ticket.ticket}
+                </TableCell>
+                <TableCell component="th" scope="row" align="center">
+                  {ticket.chatId}
+                </TableCell>
+                <TableCell align="center">
                   {ticket.firstName}
                   <div>@{ticket.username}</div>
                 </TableCell>
                 <TableCell align="center">
                   {formateDate(ticket.subscriptionTime)}
                 </TableCell>
-                <TableCell align="center">
-                  {ticket.plan}
-                </TableCell>
-                <TableCell align="center">
-                  {ticket.paymentMethod}
-                </TableCell>
+                <TableCell align="center">{ticket.plan}</TableCell>
+                <TableCell align="center">{ticket.paymentMethod}</TableCell>
                 <TableCell align="center">
                   <Chip
                     label={ticket.status}
