@@ -34,8 +34,6 @@ class BotMessage {
   }
 
   async getByMessageId(id: string): Promise<BotMessageEntity[]> {
-    // eslint-disable-next-line no-console
-    //console.log(id);
     return this.#botMessageRepository.getByMessageId(id);
   }
 }

@@ -43,6 +43,7 @@ import {
   botMessage as botMessageServ,
   user as userServ,
 } from './services/services';
+import { BotMessage as BotMessageEntity } from './services/bot-message/bot-message.entity';
 
 const token = ENV.TELEGRAM_TOKEN;
 if (!token) {
@@ -55,9 +56,9 @@ AbstractModel.knex(Knex(knexConfig[ENV.APP.NODE_ENV]));
 const bot = new Telegraf(token);
 
 bot.start(async (ctx) => {
-  try{
-  botServ.startBot(ctx);
-  botServ.startScreen(ctx);
+  try {
+    botServ.startBot(ctx);
+    botServ.startScreen(ctx);
   } catch (e) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -91,9 +92,31 @@ bot.on('channel_post', async (ctx) => {
         message,
       });
       const { text, entities } = ctx.channelPost;
+
+      let repliedMessagesFromBot: BotMessageEntity[] = [];
+      if (ctx.channelPost.reply_to_message) {
+        const repliedMessage = await channelMessageServ.getByChannelMessageId({
+          messageId: ctx.channelPost.reply_to_message.message_id,
+          channelId: ctx.channelPost.reply_to_message.chat.id,
+        });
+        if (repliedMessage) {
+          repliedMessagesFromBot = await botMessageServ.getByMessageId(
+            repliedMessage?.id,
+          );
+        }
+      }
+
       for (const user of users) {
         try {
-          const res = await bot.telegram.sendMessage(user.chatId, text, { entities });
+          const replyToMessageId = repliedMessagesFromBot.find(
+            (message) => message.chatId === user.chatId,
+          )?.messageId;
+          const res = await bot.telegram.sendMessage(user.chatId, text, {
+            entities,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            reply_to_message_id: replyToMessageId,
+          });
           botMessageServ.create({
             chatId: user.chatId,
             messageId: res.message_id,
@@ -258,11 +281,8 @@ bot.action(GIVEAWAY_SCREEN, async (ctx) => {
       plan: 'Forex',
       status: 'Pending',
     });
-    if(!ticket) {
-      bot.telegram.sendMessage(
-        ctx.chat.id,
-        `${GIVEAWAY_TEXT}`,
-      );
+    if (!ticket) {
+      bot.telegram.sendMessage(ctx.chat.id, `${GIVEAWAY_TEXT}`);
       await botServ.createTicket(ctx, {
         plan: 'Forex',
         paymentMethod: 'Free',
@@ -272,7 +292,7 @@ bot.action(GIVEAWAY_SCREEN, async (ctx) => {
       botServ.popUpGiveAwayScreen(ctx);
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -295,7 +315,7 @@ bot.action(FOREX_SCREEN, async (ctx) => {
       botServ.forexScreen(ctx);
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -318,7 +338,7 @@ bot.action(CRYPTO_SCREEN, async (ctx) => {
       botServ.cryptoScreen(ctx);
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -341,7 +361,7 @@ bot.action(COPY_SIGNALS_SCREEN, async (ctx) => {
       botServ.copySignalsScreen(ctx);
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -353,7 +373,7 @@ bot.action(FAQ_SCREEN, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -365,7 +385,7 @@ bot.action(PERSONAL_AREA_SCREEN, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -377,7 +397,7 @@ bot.action(START_SCREEN, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -389,7 +409,7 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -401,7 +421,7 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -413,7 +433,7 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -446,7 +466,7 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
       }
       userServ.updateLastAction(ctx.chat.id);
     }, 1000);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -463,7 +483,7 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -480,7 +500,7 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -497,7 +517,7 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_FOREX, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -509,7 +529,7 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -521,19 +541,19 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
 
 bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
-  try{
+  try {
     botServ.paymentByBankCardScreenOfCrypto(ctx);
     if (!ctx.chat) {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -542,8 +562,16 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
   try {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const photos: [] = [ 'https://ibb.co/DCnKysP', 'https://ibb.co/hyBkf2p', 'https://ibb.co/Sm84QmV', 'https://ibb.co/GCzGsDs', 'https://ibb.co/dfd8Yfm', 'https://ibb.co/ZGd2ZQD', 'https://ibb.co/HtdLfpr'];
-    for(const photo of photos) {
+    const photos: [] = [
+      'https://ibb.co/DCnKysP',
+      'https://ibb.co/hyBkf2p',
+      'https://ibb.co/Sm84QmV',
+      'https://ibb.co/GCzGsDs',
+      'https://ibb.co/dfd8Yfm',
+      'https://ibb.co/ZGd2ZQD',
+      'https://ibb.co/HtdLfpr',
+    ];
+    for (const photo of photos) {
       if (!ctx.chat) {
         return 'ctx.chat is undefined';
       }
@@ -558,26 +586,26 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
       }
       userServ.updateLastAction(ctx.chat.id);
     }, 1000);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_CRYPTO, async (ctx) => {
- try {
-  botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
-  botServ.createTicket(ctx, {
-    plan: 'Crypto',
-    paymentMethod: 'Crypto',
-    status: 'Pending',
-  });
-  if (!ctx.chat) {
-    return 'ctx.chat is undefined';
+  try {
+    botServ.confirmPaymentByCryptoScreenOfCrypto(ctx);
+    botServ.createTicket(ctx, {
+      plan: 'Crypto',
+      paymentMethod: 'Crypto',
+      status: 'Pending',
+    });
+    if (!ctx.chat) {
+      return 'ctx.chat is undefined';
+    }
+    userServ.updateLastAction(ctx.chat.id);
+  } catch (e) {
+    console.log(e);
   }
-  userServ.updateLastAction(ctx.chat.id);
- } catch(e) {
-   console.log(e);
- }
 });
 
 bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
@@ -592,7 +620,7 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_CRYPTO, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -609,7 +637,7 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_CRYPTO, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -621,7 +649,7 @@ bot.action(PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -633,7 +661,7 @@ bot.action(PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -645,7 +673,7 @@ bot.action(PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -678,7 +706,7 @@ bot.action(INSTRUCTION_FOR_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       }
       userServ.updateLastAction(ctx.chat.id);
     }, 1000);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -695,7 +723,7 @@ bot.action(CONFIRM_PAYMENT_BY_CRYPTO_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -712,7 +740,7 @@ bot.action(CONFIRM_PAYMENT_BY_SKRILL_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
@@ -728,15 +756,15 @@ bot.action(CONFIRM_PAYMENT_BY_BANK_CARD_SCREEN_OF_COPY_SIGNALS, async (ctx) => {
       return 'ctx.chat is undefined';
     }
     userServ.updateLastAction(ctx.chat.id);
-  } catch(e) {
+  } catch (e) {
     console.log(e);
   }
 });
 
 console.log('Bot started');
 
-try{
-bot.launch();
+try {
+  bot.launch();
 } catch (e) {
   console.log(e);
 }
