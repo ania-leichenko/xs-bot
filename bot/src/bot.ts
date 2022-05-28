@@ -105,7 +105,7 @@ bot.on('channel_post', async (ctx) => {
         }
       }
 
-      if (text === '/delete') {
+      if (text === '/d') {
         for (const message of repliedMessagesFromBot) {
           // console.log('message to delete: ', message);
           await bot.telegram.deleteMessage(message.chatId, message.messageId);
