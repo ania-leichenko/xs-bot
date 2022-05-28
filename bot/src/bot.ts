@@ -85,13 +85,12 @@ bot.on('channel_post', async (ctx) => {
     if ('text' in ctx.channelPost) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const message = ctx.channelPost.text;
+      const { text, entities } = ctx.channelPost;
       const channelMessage = await channelMessageServ.create({
         channelId: ctx.channelPost.chat.id,
         messageId: ctx.channelPost.message_id,
-        message,
+        message: text,
       });
-      const { text, entities } = ctx.channelPost;
 
       let repliedMessagesFromBot: BotMessageEntity[] = [];
       if (ctx.channelPost.reply_to_message) {
@@ -104,6 +103,14 @@ bot.on('channel_post', async (ctx) => {
             repliedMessage?.id,
           );
         }
+      }
+
+      if (text === '/delete') {
+        for (const message of repliedMessagesFromBot) {
+          // console.log('message to delete: ', message);
+          await bot.telegram.deleteMessage(message.chatId, message.messageId);
+        }
+        return;
       }
 
       for (const user of users) {
