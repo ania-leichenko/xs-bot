@@ -107,6 +107,15 @@ bot.command('/personal_area', async (ctx) => {
   }
 });
 
+bot.command('/rules', async (ctx) => {
+  try {
+    ctx.deleteMessage();
+    bot.telegram.sendMessage(ctx.chat.id, 'test123');
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 bot.on('channel_post', async (ctx) => {
   try {
     const channel = await botServ.getChannel(ctx);
