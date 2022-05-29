@@ -114,7 +114,7 @@ bot.command('/personal_area', async (ctx) => {
 
 bot.command('/rules', async (ctx) => {
   try {
-    ctx.deleteMessage();
+    await ctx.deleteMessage();
     bot.telegram.sendMessage(
       ctx.chat.id,
       `Trading rules:
