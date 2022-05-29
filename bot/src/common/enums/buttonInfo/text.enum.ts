@@ -24,8 +24,8 @@ export const START_TEXT = `Hello! In order to become a member of premium signals
 
 Why should you use our signals?
 ${CHECKED_ICON} Get access to trading strategies that are a guaranteed guarantee of your success.
-${CHECKED_ICON} Our team has over 5 years of experience in trading.
-${CHECKED_ICON} We take risk. We will never empty your deposit.
+${CHECKED_ICON} Our team has over 5 years of experience in trading. We always trade with a trading strategy.
+${CHECKED_ICON} We take risk. We will never empty your deposit. We do not open many positions for one symbol.
 ${CHECKED_ICON} We are market makers, we see more than you. With us you can earn.
 
 ${AHTUNG_ICON} <b>If our signals do not bring you profit, we will return the funds!</b>

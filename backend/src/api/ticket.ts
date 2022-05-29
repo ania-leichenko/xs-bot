@@ -106,7 +106,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         // @ts-ignore
         if (req.body.planStatus) {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}  Your subscription was moved to ${req.body.plan} `,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}  Your subscription has been changed to ${req.body.plan} `,
             {
               method: 'GET',
               headers: {
