@@ -11,3 +11,7 @@ export const AHTUNG_ICON = '‼️';
 export const FIRE_ICON = '🔥';
 export const SMILING_FACE_ICON = '😇';
 export const STAR_ICON = '⭐️';
+export const RED_TRIANGLE_POINTED_UP_ICON = '🔺';
+export const SMALL_ORANGE_DIAMONT_ICON = '🔸';
+export const SMALL_BLUE_DIAMONT_ICON = '🔹';
+export const CHECKMARK_ICON = '✔️';

@@ -44,6 +44,12 @@ import {
   user as userServ,
 } from './services/services';
 import { BotMessage as BotMessageEntity } from './services/bot-message/bot-message.entity';
+import {
+  RED_TRIANGLE_POINTED_UP_ICON,
+  SMALL_ORANGE_DIAMONT_ICON,
+  SMALL_BLUE_DIAMONT_ICON,
+  CHECKMARK_ICON,
+} from '~/common/enums/buttonInfo/emoji.enum';
 
 const token = ENV.TELEGRAM_TOKEN;
 if (!token) {
@@ -68,9 +74,8 @@ bot.start(async (ctx) => {
 });
 bot.command('/forex', async (ctx) => {
   try {
-   botServ.forexScreen(ctx);
-  }
-  catch (e) {
+    botServ.forexScreen(ctx);
+  } catch (e) {
     console.log(e);
   }
 });
@@ -110,18 +115,21 @@ bot.command('/personal_area', async (ctx) => {
 bot.command('/rules', async (ctx) => {
   try {
     ctx.deleteMessage();
-    bot.telegram.sendMessage(ctx.chat.id, `Trading rules:
+    bot.telegram.sendMessage(
+      ctx.chat.id,
+      `Trading rules:
 
 ▪️ Trade risk. Don't overestimate the risks.
 ▪️ Open all trades that we publish. No need to be independent, and open / close at will. So you will at best receive a small profit, and at worst only losses.
 ▪️ Don't jump to conclusions. Trading is a risk. Draw conclusions only when you are a premium member for at least half a year.
-    
+
 That's all. The rest of the work lies entirely with us. Trust us as market makers.
 
-🔺 Admin | @bestsignalsadmin
-🔸 Bot | @xpremium_bot
-🔹 Free group | @xsignals_success
-✔️ Our trading course | @xMMcourse`);
+${RED_TRIANGLE_POINTED_UP_ICON} Admin | @bestsignalsadmin
+${SMALL_ORANGE_DIAMONT_ICON} Bot | @xpremium_bot
+${SMALL_BLUE_DIAMONT_ICON} Free group | @xsignals_success
+${CHECKMARK_ICON} Our trading course | @xMMcourse`,
+    );
   } catch (e) {
     console.log(e);
   }
