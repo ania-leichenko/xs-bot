@@ -102,7 +102,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           req.body.countOfSubscription === 2
         ) {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now silver`,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now bronze 🥉 You can see what privileges are available to you by clicking on the command /bonus`,
             {
               method: 'GET',
               headers: {
@@ -114,7 +114,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         }
          if (req.body.countOfSubscription === 4) {
            fetch(
-             `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now bronze`,
+             `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now silver 🥈 You can see what privileges are available to you by clicking on the command /bonus`,
              {
                method: 'GET',
                headers: {
@@ -126,7 +126,9 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
          }
           if (req.body.countOfSubscription === 6) {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now gold`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 
+      
+Your bonus level is now gold🥇 You can see what privileges are available to you by clicking on the command /bonus`,
               {
                 method: 'GET',
                 headers: {
@@ -138,7 +140,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           }
            if (req.body.countOfSubscription === 12) {
              fetch(
-               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now platinum`,
+               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now Platinum 💎 You can see what privileges are available to you by clicking on the command /bonus`,
                {
                  method: 'GET',
                  headers: {

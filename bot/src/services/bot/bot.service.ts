@@ -398,16 +398,16 @@ Country: ${ticket.country}`;
           level = 'None';
         }
         if (ticket.countOfSubscription === 2) {
-          level = 'Silver';
+          level = 'Bronze 🥉';
         }
         if (ticket.countOfSubscription === 4) {
-          level = 'Bronze';
+          level = 'Silver 🥈';
         }
         if (ticket.countOfSubscription === 6) {
-          level = 'Gold';
+          level = 'Gold 🥇';
         }
         if (ticket.countOfSubscription === 12) {
-          level = 'Platinum';
+          level = 'Platinum 💎';
         }
         if (
           ticket.subscriptionTime > new Date() &&
@@ -424,7 +424,7 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<b>Your bonus:</b> ${level} level
+<b>Bonus level:</b> ${level}
 
 <i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
 `;

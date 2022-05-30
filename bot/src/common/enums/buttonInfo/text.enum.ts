@@ -65,10 +65,13 @@ export const BONUS_TEXT = `<b>${BONUS_TITLE}</b>
 We are glad to inform you that we are switching to a unified bonus system in our premium services. To receive bonuses, you need to pay for any of the premium subscriptions.
 
 <b>There are 4 levels of bonuses in total:</b>
-${BLACK_SQUARE_ICON} Silver level —  +1 day to the subscription (you need to be a member for 2 months)
-${BLACK_SQUARE_ICON} Bronze level — +3 days to the subscription (you need to be a member for 4 months)
-${BLACK_SQUARE_ICON} Gold level — +5 days to the subscription (you need to be a member for 6 months)
-${BLACK_SQUARE_ICON} Platinum level — +10 days to the subscription (you need to be a member for 12 months)
+🥉 Bronze level —  +1 day to the subscription (you need to be a member for 2 months)
+
+🥈 Silver level — +3 days to the subscription (you need to be a member for 4 months)
+
+🥇 Gold level — +5 days to the subscription (you need to be a member for 6 months)
+
+💎 Platinum level — +10 days to the subscription (you need to be a member for 12 months)
 
 <i>Bonuses do not expire if you do not pay for a subscription. After you get the platinum level, with each payment you will automatically receive +10 days.</i>`;
 export const PERSONAL_AREA_TEXT = `${PERSONAL_AREA_TITLE}
