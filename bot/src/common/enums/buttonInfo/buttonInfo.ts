@@ -13,6 +13,7 @@ export {
   POP_UP_TEXT,
   GIVEAWAY_TEXT,
   GIVEAWAY_POP_UP_TEXT,
+  RULES_TEXT,
 } from './text.enum';
 
 export {

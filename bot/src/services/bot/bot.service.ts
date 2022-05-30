@@ -393,6 +393,22 @@ Country: ${ticket.country}`;
         html += 'no active subscription';
       }
       tickets.map((ticket) => {
+        let level = 'None';
+        if(ticket.countOfSubscription === 0) {
+          level = 'None';
+        }
+        if (ticket.countOfSubscription === 2) {
+          level = 'Silver';
+        }
+        if (ticket.countOfSubscription === 4) {
+          level = 'Bronze';
+        }
+        if (ticket.countOfSubscription === 6) {
+          level = 'Gold';
+        }
+        if (ticket.countOfSubscription === 12) {
+          level = 'Platinum';
+        }
         if (
           ticket.subscriptionTime > new Date() &&
           ticket.status === 'Active'
@@ -408,9 +424,9 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
+<b>Your bonus:</b> ${level} level
 
-<b>Your bonus:</b> ${ticket.countOfSubscription} level
+<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
 `;
         }
         if (ticket.status === 'Pending') {

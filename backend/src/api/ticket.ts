@@ -99,13 +99,10 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       const tickets = await ticketService.getAllTickets();
       if(req.body.countOfSubscription > 0 ) {
         if (
-          req.body.countOfSubscription === 2 ||
-          req.body.countOfSubscription === 4 ||
-          req.body.countOfSubscription === 6 ||
-          req.body.countOfSubscription === 12
+          req.body.countOfSubscription === 2
         ) {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now ${req.body.countOfSubscription}`,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now silver`,
             {
               method: 'GET',
               headers: {
@@ -115,6 +112,42 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             },
           );
         }
+         if (req.body.countOfSubscription === 4) {
+           fetch(
+             `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now bronze`,
+             {
+               method: 'GET',
+               headers: {
+                 'Content-Type': 'application/json',
+                 'Accept': 'application/json',
+               },
+             },
+           );
+         }
+          if (req.body.countOfSubscription === 6) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now gold`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          }
+           if (req.body.countOfSubscription === 12) {
+             fetch(
+               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now platinum`,
+               {
+                 method: 'GET',
+                 headers: {
+                   'Content-Type': 'application/json',
+                   'Accept': 'application/json',
+                 },
+               },
+             );
+           }
       }
       const date = new Date();
       if (

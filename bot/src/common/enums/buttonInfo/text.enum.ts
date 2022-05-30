@@ -5,6 +5,10 @@ import {
   BLACK_SQUARE_ICON,
   AHTUNG_ICON,
   SMILING_FACE_ICON,
+  RED_TRIANGLE_POINTED_UP_ICON,
+  SMALL_ORANGE_DIAMONT_ICON,
+  SMALL_BLUE_DIAMONT_ICON,
+  CHECKMARK_ICON,
 } from './emoji.enum';
 import {
   FOREX_TITLE,
@@ -149,3 +153,17 @@ export const POP_UP_TEXT =
   'You have already paid. Track information in personal area';
 export const GIVEAWAY_TEXT = `${CHECKED_ICON} You are registered in the giveaway! Expect results. The result will come to this bot, with the same message`;
 export const GIVEAWAY_POP_UP_TEXT = `You are already registered in the giveaway. Expect results. ${SMILING_FACE_ICON}`;
+export const RULES_TEXT = `Trading rules:
+
+▪️ Trade risk. Don't overestimate the risks.
+▪️ Open all trades that we publish. No need to be independent, and open / close at will. So you will at best receive a small profit, and at worst only losses.
+▪️ Don't jump to conclusions. Trading is a risk. Draw conclusions only when you are a premium member for at least half a year.
+
+<i>The information posted in the bot including the results of research, forecasts, estimates in relation to financial instruments, on the substance, characteristics of a financial instrument(combonation of financial instruments), changes in its(their) value, the results of technical and (or) fundamental analysis is not an individual investment recommendation, and the financialinstruments or transactions mentioned in it may not correspond to your investment profile and investment goals (expectations). It is your task to determine whether a financial instrument or transaction matches your interests, investment objectives, investment horizon andacceptable risk level.</i>
+
+That's all. The rest of the work lies entirely with us. Trust us as market makers.
+
+${RED_TRIANGLE_POINTED_UP_ICON} Admin | @bestsignalsadmin
+${SMALL_ORANGE_DIAMONT_ICON} Bot | @xpremium_bot
+${SMALL_BLUE_DIAMONT_ICON} Free group | @xsignals_success
+${CHECKMARK_ICON} Our trading course | @xMMcourse`;

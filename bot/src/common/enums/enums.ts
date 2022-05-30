@@ -61,4 +61,5 @@ export {
   GIVEAWAY_TITLE,
   GIVEAWAY_TEXT,
   GIVEAWAY_POP_UP_TEXT,
+  RULES_TEXT,
 } from './buttonInfo/buttonInfo';
