@@ -9,6 +9,7 @@ enum TicketTableField {
   STATUS = 'status',
   COUNTRY = 'country',
   DELETED_AT = 'deletedAt',
+  COUNT_OF_SUBSCRIPTION = 'countOfSubscription',
 }
 
 export { TicketTableField };

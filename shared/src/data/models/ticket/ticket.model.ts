@@ -15,6 +15,7 @@ class Ticket extends AbstractModel {
   [TicketTableField.STATUS]: string;
   [TicketTableField.COUNTRY]: string;
   [TicketTableField.DELETED_AT]: Date;
+  [TicketTableField.COUNT_OF_SUBSCRIPTION]: number;
 
   static get idColumn(): string {
     return TicketTableField.TICKET;

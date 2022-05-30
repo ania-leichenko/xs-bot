@@ -409,6 +409,8 @@ Country: ${ticket.country}`;
 ${TILL} ${subscriptionTime}
 
 <i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
+
+<b>Your bonus:</b> ${ticket.countOfSubscription} level
 `;
         }
         if (ticket.status === 'Pending') {

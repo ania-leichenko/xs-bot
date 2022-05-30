@@ -20,6 +20,7 @@ type Ticket = {
   plan: string;
   paymentMethod: string;
   status: string;
+  countOfSubscription: number;
 };
 
 const colorChip: {
@@ -63,6 +64,7 @@ export const TicketTable: FC = () => {
             <TableCell align="center">Plan</TableCell>
             <TableCell align="center">Payment method</TableCell>
             <TableCell align="center">Status</TableCell>
+            <TableCell align="center">Count</TableCell>
             <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -90,6 +92,9 @@ export const TicketTable: FC = () => {
                     label={ticket.status}
                     color={colorChip[ticket.status]}
                   ></Chip>
+                </TableCell>
+                <TableCell align="center">
+                  {ticket.countOfSubscription}
                 </TableCell>
                 <TableCell align="center">
                   <Actions ticket={ticket} setTickets={setTickets} />

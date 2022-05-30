@@ -9,6 +9,7 @@ class Ticket {
   public status: string;
   public country: string;
   public deletedAt?: Date | null;
+  public countOfSubscription?: number;
 
   private constructor({
     ticket,
@@ -21,6 +22,7 @@ class Ticket {
     status,
     country,
     deletedAt,
+    countOfSubscription,
   }: {
     ticket: number;
     chatId: number;
@@ -32,6 +34,7 @@ class Ticket {
     status: string;
     country: string;
     deletedAt: Date | null;
+    countOfSubscription?: number | undefined;
   }) {
     this.ticket = ticket;
     this.chatId = chatId;
@@ -43,6 +46,7 @@ class Ticket {
     this.status = status;
     this.country = country;
     this.deletedAt = deletedAt;
+    this.countOfSubscription = countOfSubscription;
   }
   public static initialize({
     ticket,
@@ -55,6 +59,7 @@ class Ticket {
     status,
     country,
     deletedAt,
+    countOfSubscription,
   }: {
     ticket: number;
     chatId: number;
@@ -66,6 +71,7 @@ class Ticket {
     status: string;
     country: string;
     deletedAt: Date | null;
+    countOfSubscription?: number;
   }): Ticket {
     return new Ticket({
       ticket,
@@ -78,6 +84,7 @@ class Ticket {
       status,
       country,
       deletedAt,
+      countOfSubscription,
     });
   }
 }

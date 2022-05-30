@@ -42,11 +42,13 @@ class Ticket {
     subscriptionTime,
     status,
     plan,
+    countOfSubscription,
   }: {
     ticket: number;
     subscriptionTime: Date;
     status: string;
     plan: string;
+    countOfSubscription: number;
   }): Promise<number> {
     const updateTicket = await this.#TicketModel
       .query()
@@ -54,6 +56,7 @@ class Ticket {
         subscriptionTime: subscriptionTime,
         status: status,
         plan: plan,
+        countOfSubscription: countOfSubscription,
       })
       .where({ ticket: ticket });
     return updateTicket;
@@ -63,8 +66,8 @@ class Ticket {
     chatId,
     paymentMethod,
   }: {
-     chatId: number;
-     paymentMethod: string;
+    chatId: number;
+    paymentMethod: string;
   }): Promise<TicketEntity | undefined> {
     const ticket = await this.#TicketModel
       .query()

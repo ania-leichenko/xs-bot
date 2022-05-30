@@ -29,17 +29,20 @@ class Ticket {
     subscriptionTime,
     status,
     plan,
+    countOfSubscription,
   }: {
     ticket: number;
     subscriptionTime: Date;
     status: string;
     plan: string;
+    countOfSubscription: number;
   }): Promise<number> {
     const updateTicket = await this.#ticketRepository.update({
       ticket,
       subscriptionTime,
       status,
       plan,
+      countOfSubscription,
     });
 
     if (!updateTicket) {

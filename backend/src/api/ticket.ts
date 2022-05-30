@@ -26,6 +26,7 @@ type Body = {
   chatId: number;
   paymentMethoud: string;
   messageForUser: string;
+  countOfSubscription: number;
 };
 
 const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
@@ -37,7 +38,6 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: '/tickets',
     async handler(req: FastifyRequest, rep: FastifyReply) {
       const tickets = await ticketService.getAllTickets();
-
       return rep
         .send(tickets.filter((ticket) => ticket.deletedAt == null && ticket.status !== 'Inactive'))
         .status(200);
@@ -89,6 +89,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         subscriptionTime: req.body.subscriptionTime,
         status: req.body.status,
         plan: req.body.plan,
+        countOfSubscription: req.body.countOfSubscription,
       });
       const messages = await messageForUsers.create({
         chatId: req.body.chatId,
@@ -96,7 +97,25 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       const tickets = await ticketService.getAllTickets();
-
+      if(req.body.countOfSubscription > 0 ) {
+        if (
+          req.body.countOfSubscription === 2 ||
+          req.body.countOfSubscription === 4 ||
+          req.body.countOfSubscription === 6 ||
+          req.body.countOfSubscription === 12
+        ) {
+          fetch(
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=Your bonus level is now ${req.body.countOfSubscription}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+            },
+          );
+        }
+      }
       const date = new Date();
       if (
         req.body.status === 'Active' &&

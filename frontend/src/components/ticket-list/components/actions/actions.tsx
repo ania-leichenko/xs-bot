@@ -17,6 +17,7 @@ type Ticket = {
   plan: string;
   paymentMethod: string;
   status: string;
+  countOfSubscription: number;
 };
 
 type Props = {
