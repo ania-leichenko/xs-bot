@@ -406,11 +406,45 @@ Country: ${ticket.country}`;
           if (subscriptionDate.getFullYear() === 5000) {
             subscriptionTime = 'Lifetime';
           }
+          let level = '';
+          if (
+            user?.countOfSubscription === 0 ||
+            user?.countOfSubscription === 1
+          ) {
+            level = 'None';
+          }
+          if (
+            user?.countOfSubscription === 2 ||
+            user?.countOfSubscription === 3
+          ) {
+            level = 'Bronze 🥉';
+          }
+          if (
+            user?.countOfSubscription === 4 ||
+            user?.countOfSubscription === 5
+          ) {
+            level = 'Silver 🥈';
+          }
+          if (
+            user?.countOfSubscription === 6 ||
+            user?.countOfSubscription === 7 ||
+            user?.countOfSubscription === 8 ||
+            user?.countOfSubscription === 9 ||
+            user?.countOfSubscription === 10 ||
+            user?.countOfSubscription === 11
+          ) {
+            level = 'Gold 🥇';
+          }
+          if (user?.countOfSubscription === 12) {
+            level = 'Platinum 💎';
+          }
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           html += `
 <b>Plan:</b> ${ticket.plan}
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
+
+<b>Bonus level:</b> ${level}
 
 `;
         }
@@ -423,37 +457,12 @@ ${TILL} -
 `;
         }
       });
-      let level = '';
-      if (user?.countOfSubscription === 0 || user?.countOfSubscription === 1) {
-        level = 'None';
-      }
-      if (user?.countOfSubscription === 2 || user?.countOfSubscription === 3) {
-        level = 'Bronze 🥉';
-      }
-      if (user?.countOfSubscription === 4 || user?.countOfSubscription === 5) {
-        level = 'Silver 🥈';
-      }
-      if (
-        user?.countOfSubscription === 6 ||
-        user?.countOfSubscription === 7 ||
-        user?.countOfSubscription === 8 ||
-        user?.countOfSubscription === 9 ||
-        user?.countOfSubscription === 10 ||
-        user?.countOfSubscription === 11
-      ) {
-        level = 'Gold 🥇';
-      }
-      if (user?.countOfSubscription === 12) {
-        level = 'Platinum 💎';
-      }
       this.renderScreen(ctx, {
         html: `${PERSONAL_AREA_TITLE}
 
 ${USER_SUBCRITIONS}
 ${html}
-<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
-
-<b>Bonus level:</b> ${level}`,
+<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
