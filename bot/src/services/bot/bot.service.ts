@@ -394,16 +394,29 @@ Country: ${ticket.country}`;
       }
       tickets.map((ticket) => {
         let level = 'None';
-        if(ticket.countOfSubscription === 0) {
+        if(ticket.countOfSubscription === 0 || ticket.countOfSubscription === 1) {
           level = 'None';
         }
-        if (ticket.countOfSubscription === 2) {
+        if (
+          ticket.countOfSubscription === 2 ||
+          ticket.countOfSubscription === 3
+        ) {
           level = 'Bronze 🥉';
         }
-        if (ticket.countOfSubscription === 4) {
+        if (
+          ticket.countOfSubscription === 4 ||
+          ticket.countOfSubscription === 5
+        ) {
           level = 'Silver 🥈';
         }
-        if (ticket.countOfSubscription === 6) {
+        if (
+          ticket.countOfSubscription === 6 ||
+          ticket.countOfSubscription === 7 ||
+          ticket.countOfSubscription === 8 ||
+          ticket.countOfSubscription === 9 ||
+          ticket.countOfSubscription === 10 ||
+          ticket.countOfSubscription === 11
+        ) {
           level = 'Gold 🥇';
         }
         if (ticket.countOfSubscription === 12) {
