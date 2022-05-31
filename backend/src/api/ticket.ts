@@ -2,13 +2,24 @@ import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify';
 import {
   messageForUsers as messageForUsersServ,
   ticket as ticketServ,
+  users as usersServ,
 } from '~/services/services';
 import fetch from 'node-fetch';
-import { ENV, WARNING_ICON } from '~/common/enums/enums';
+import {
+  ENV,
+  WARNING_ICON,
+  BRONZE_BONUS,
+  SILVER_BONUS,
+  GOLD_BONUS,
+  PLATINUM_BONUS,
+  CHANGED_PLAN,
+  WIN_TEXT,
+} from '~/common/enums/enums';
 
 type Options = {
   services: {
     ticket: typeof ticketServ;
+    users: typeof usersServ;
     messageForUsers: typeof messageForUsersServ;
   };
 };
@@ -39,7 +50,12 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     async handler(req: FastifyRequest, rep: FastifyReply) {
       const tickets = await ticketService.getAllTickets();
       return rep
-        .send(tickets.filter((ticket) => ticket.deletedAt == null && ticket.status !== 'Inactive'))
+        .send(
+          tickets.filter(
+            (ticket) =>
+              ticket.deletedAt == null && ticket.status !== 'Inactive',
+          ),
+        )
         .status(200);
     },
   });
@@ -56,7 +72,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         chatId: req.body.chatId,
         message: req.body.messageForUser,
       });
-      if(req.body.paymentMethod !== 'Free') {
+      if (req.body.paymentMethod !== 'Free') {
         fetch(
           `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
           {
@@ -89,7 +105,6 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         subscriptionTime: req.body.subscriptionTime,
         status: req.body.status,
         plan: req.body.plan,
-        countOfSubscription: req.body.countOfSubscription,
       });
       const messages = await messageForUsers.create({
         chatId: req.body.chatId,
@@ -97,38 +112,24 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
 
       const tickets = await ticketService.getAllTickets();
-      if(req.body.countOfSubscription > 0 ) {
-        if (
-          req.body.countOfSubscription === 2
-        ) {
-          fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now bronze 🥉 You can see what privileges are available to you by clicking on the command /bonus`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-              },
-            },
-          );
-        }
-         if (req.body.countOfSubscription === 4) {
-           fetch(
-             `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now silver 🥈 You can see what privileges are available to you by clicking on the command /bonus`,
-             {
-               method: 'GET',
-               headers: {
-                 'Content-Type': 'application/json',
-                 'Accept': 'application/json',
-               },
-             },
-           );
-         }
-          if (req.body.countOfSubscription === 6) {
-            fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙
+      const date = new Date();
+      const user = await usersServ.getUserById(req.body.chatId);
 
-Your bonus level is now gold🥇 You can see what privileges are available to you by clicking on the command /bonus`,
+      if (
+        req.body.status === 'Active' &&
+        new Date(req.body.subscriptionTime) > date &&
+        user
+      ) {
+        let countOfSubscription = user.countOfSubscription;
+        if (countOfSubscription < 12) {
+          countOfSubscription++;
+          await usersServ.updateCount({
+            chatId: user.chatId,
+            countOfSubscription,
+          });
+          if (countOfSubscription === 2) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${BRONZE_BONUS}`,
               {
                 method: 'GET',
                 headers: {
@@ -138,29 +139,49 @@ Your bonus level is now gold🥇 You can see what privileges are available to yo
               },
             );
           }
-           if (req.body.countOfSubscription === 12) {
-             fetch(
-               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🆙 LEVEL UP! 🆙 Your bonus level is now Platinum 💎 You can see what privileges are available to you by clicking on the command /bonus`,
-               {
-                 method: 'GET',
-                 headers: {
-                   'Content-Type': 'application/json',
-                   'Accept': 'application/json',
-                 },
-               },
-             );
-           }
-      }
-      const date = new Date();
-      if (
-        req.body.status === 'Active' &&
-        new Date(req.body.subscriptionTime) > date
-      ) {
+          if (countOfSubscription === 4) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${SILVER_BONUS}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          }
+          if (countOfSubscription === 6) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${GOLD_BONUS}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          }
+          if (countOfSubscription === 12) {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${PLATINUM_BONUS}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          }
+        }
+
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (req.body.planStatus) {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}  Your subscription has been changed to ${req.body.plan} `,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${CHANGED_PLAN} ${req.body.plan} `,
             {
               method: 'GET',
               headers: {
@@ -183,7 +204,7 @@ Your bonus level is now gold🥇 You can see what privileges are available to yo
             );
           } else {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=🥳🥳🥳 YOU WON THE GIVEAWAY! CONGRATULATIONS! You have been given a 10 day subscription. All signals will be in the same bot!`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WIN_TEXT}`,
               {
                 method: 'GET',
                 headers: {
@@ -195,13 +216,14 @@ Your bonus level is now gold🥇 You can see what privileges are available to yo
           }
         }
       }
-     rep
-       .send(
-         tickets.filter(
-           (ticket) => ticket.deletedAt == null && ticket.status !== 'Inactive',
-         ),
-       )
-       .status(200);
+      rep
+        .send(
+          tickets.filter(
+            (ticket) =>
+              ticket.deletedAt == null && ticket.status !== 'Inactive',
+          ),
+        )
+        .status(200);
     },
   });
 };

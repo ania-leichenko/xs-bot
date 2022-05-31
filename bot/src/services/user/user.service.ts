@@ -34,7 +34,7 @@ class User {
     }
   }
 
-  public async getUserById(chatId: number): Promise<UserEntity | undefined | null> {
+  public async getUserById(chatId: number): Promise<UserEntity | null> {
     return this.#userRepository.getUserById(chatId);
   }
 

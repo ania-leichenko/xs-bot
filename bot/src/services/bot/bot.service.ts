@@ -387,41 +387,16 @@ Country: ${ticket.country}`;
       if (!ctx.from) {
         throw new Error('ctx.from is undefined');
       }
+      if (!ctx.chat) {
+        throw new Error('ctx.chat is undefined');
+      }
       const tickets = await this.#ticketService.getTicketByPlan(ctx.from.id);
+      const user = await this.#userService.getUserById(ctx.chat.id);
       let html = '';
       if (tickets.length === 0) {
         html += 'no active subscription';
       }
       tickets.map((ticket) => {
-        let level = 'None';
-        if(ticket.countOfSubscription === 0 || ticket.countOfSubscription === 1) {
-          level = 'None';
-        }
-        if (
-          ticket.countOfSubscription === 2 ||
-          ticket.countOfSubscription === 3
-        ) {
-          level = 'Bronze 🥉';
-        }
-        if (
-          ticket.countOfSubscription === 4 ||
-          ticket.countOfSubscription === 5
-        ) {
-          level = 'Silver 🥈';
-        }
-        if (
-          ticket.countOfSubscription === 6 ||
-          ticket.countOfSubscription === 7 ||
-          ticket.countOfSubscription === 8 ||
-          ticket.countOfSubscription === 9 ||
-          ticket.countOfSubscription === 10 ||
-          ticket.countOfSubscription === 11
-        ) {
-          level = 'Gold 🥇';
-        }
-        if (ticket.countOfSubscription === 12) {
-          level = 'Platinum 💎';
-        }
         if (
           ticket.subscriptionTime > new Date() &&
           ticket.status === 'Active'
@@ -437,9 +412,6 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<b>Bonus level:</b> ${level}
-
-<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
 `;
         }
         if (ticket.status === 'Pending') {
@@ -451,11 +423,37 @@ ${TILL} -
 `;
         }
       });
+      let level = '';
+      if (user?.countOfSubscription === 0 || user?.countOfSubscription === 1) {
+        level = 'None';
+      }
+      if (user?.countOfSubscription === 2 || user?.countOfSubscription === 3) {
+        level = 'Bronze 🥉';
+      }
+      if (user?.countOfSubscription === 4 || user?.countOfSubscription === 5) {
+        level = 'Silver 🥈';
+      }
+      if (
+        user?.countOfSubscription === 6 ||
+        user?.countOfSubscription === 7 ||
+        user?.countOfSubscription === 8 ||
+        user?.countOfSubscription === 9 ||
+        user?.countOfSubscription === 10 ||
+        user?.countOfSubscription === 11
+      ) {
+        level = 'Gold 🥇';
+      }
+      if (user?.countOfSubscription === 12) {
+        level = 'Platinum 💎';
+      }
       this.renderScreen(ctx, {
         html: `${PERSONAL_AREA_TITLE}
 
 ${USER_SUBCRITIONS}
-${html}`,
+${html}
+<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>
+
+<b>Bonus level:</b> ${level}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {

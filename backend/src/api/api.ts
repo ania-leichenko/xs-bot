@@ -12,6 +12,7 @@ const initApi: FastifyPluginAsync  = async (fastify) => {
     services: {
       ticket,
       messageForUsers,
+      users,
     },
   });
 };

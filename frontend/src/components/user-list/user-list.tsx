@@ -16,12 +16,13 @@ type Users = {
   admin: number;
   joined: string;
   lastAction: string;
+  countOfSubscription: number;
 };
 
 export const UserListTable: FC = () => {
   const [users, setUsers] = useState([]);
   const { REACT_APP_API_ORIGIN_URL } = process.env;
- 
+
   useEffect(() => {
     fetch(`${REACT_APP_API_ORIGIN_URL}users`, {
       method: 'GET',
@@ -41,40 +42,24 @@ export const UserListTable: FC = () => {
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
         <TableHead>
-          <TableCell align="center">
-            User
-          </TableCell>
-          <TableCell align="center">
-            Admin
-          </TableCell>
-          <TableCell align="center">
-            Joined
-          </TableCell>
-          <TableCell align="center">
-            Last Action
-          </TableCell>
-          <TableCell align="center">
-            Actions
-          </TableCell>
+          <TableCell align="center">User</TableCell>
+          <TableCell align="center">Admin</TableCell>
+          <TableCell align="center">Count</TableCell>
+          <TableCell align="center">Joined</TableCell>
+          <TableCell align="center">Last Action</TableCell>
+          <TableCell align="center">Actions</TableCell>
         </TableHead>
         <TableBody>
           {users &&
             users.map((user: Users) => (
               <TableRow key={user.chatId}>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  align="center"
-                >
+                <TableCell component="th" scope="row" align="center">
                   {user.firstName}
                   <div>{`@${user.username}`}</div>
                 </TableCell>
-                <TableCell align="center">
-                  {user.admin}
-                </TableCell>
-                <TableCell align="center">
-                  {formateDate(user.joined)}
-                </TableCell>
+                <TableCell align="center">{user.admin}</TableCell>
+                <TableCell align="center">{user.countOfSubscription}</TableCell>
+                <TableCell align="center">{formateDate(user.joined)}</TableCell>
                 <TableCell align="center">
                   {formateDate(user.lastAction)}
                 </TableCell>

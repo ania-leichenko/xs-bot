@@ -5,6 +5,7 @@ class User {
   public admin: number;
   public joined: Date;
   public lastAction: Date;
+  public countOfSubscription?: number;
 
   private constructor({
     chatId,
@@ -13,6 +14,7 @@ class User {
     admin,
     joined,
     lastAction,
+    countOfSubscription,
   }: {
     chatId: number;
     firstName: string;
@@ -20,6 +22,7 @@ class User {
     admin: number;
     joined: Date;
     lastAction: Date;
+    countOfSubscription?: number;
   }) {
     this.chatId = chatId;
     this.firstName = firstName;
@@ -27,6 +30,7 @@ class User {
     this.admin = admin;
     this.joined = joined;
     this.lastAction = lastAction;
+    this.countOfSubscription = countOfSubscription;
   }
   public static createNew({
     chatId,
@@ -35,6 +39,7 @@ class User {
     admin,
     joined,
     lastAction,
+    countOfSubscription,
   }: {
     chatId: number;
     firstName: string;
@@ -42,6 +47,7 @@ class User {
     admin: number;
     joined: Date;
     lastAction: Date;
+    countOfSubscription?: number;
   }): User {
     return new User({
       chatId,
@@ -50,6 +56,7 @@ class User {
       admin,
       joined,
       lastAction,
+      countOfSubscription,
     });
   }
 }

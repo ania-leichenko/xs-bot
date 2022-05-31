@@ -5,6 +5,7 @@ enum UserTableField {
   ADMIN = 'admin',
   JOINED = 'joined',
   LAST_ACTION = 'lastAction',
+  COUNT_OF_SUBSCRIPTION = 'countOfSubscription',
 }
 
 export { UserTableField };

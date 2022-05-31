@@ -49,7 +49,6 @@ type Ticket = {
   plan: string;
   paymentMethod: string;
   status: string;
-  countOfSubscription: number;
 };
 
 type Props = {
@@ -69,7 +68,6 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
   const { REACT_APP_API_ORIGIN_URL } = process.env;
   const [ userPlan, setUserPlan ] = React.useState(ticket.plan);
   const [ planStatus, setPlanStatus ] = React.useState(false);
-  const [ userCount, setUserCount ] = React.useState(ticket.countOfSubscription);
 
   const onChangeSubscriptionTime = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -85,10 +83,6 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
     setUserPlan(event.target.value);
     setPlanStatus(true);
   };
-
-   const onChangeCount = (event: React.ChangeEvent<HTMLInputElement>): void => {
-     setUserCount(Number(event.target.value));
-   };
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -120,7 +114,6 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
         chatId: ticket.chatId,
         planStatus: planStatus,
         paymentMethod: ticket.paymentMethod,
-        countOfSubscription: userCount,
         messageForUser: `Your payment for ${ticket.plan} approved! Thanks for the payment. All signals will be in the feed of the same bot`,
       }),
     })
@@ -194,17 +187,6 @@ export const Edit: FC<Props> = ({ ticket, setTickets }) => {
                     </option>
                   ))}
                 </TextField>
-              </div>
-              <div>
-                <TextField
-                  id="outlined-textarea"
-                  label="Count"
-                  placeholder=""
-                  multiline
-                  variant="outlined"
-                  onChange={onChangeCount}
-                  value={userCount}
-                />
               </div>
             </form>
             <div>

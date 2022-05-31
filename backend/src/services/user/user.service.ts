@@ -11,8 +11,11 @@ class UserService {
   constructor({ usersRepository }: Constructor) {
     this.#usersRepository = usersRepository;
   }
+  public async getUserById(id: number): Promise<UserEntity | undefined> {
+    return this.#usersRepository.getUserById(id);
+  }
 
-  async getAllUsers(): Promise<UserEntity[]> {
+  public async getAllUsers(): Promise<UserEntity[]> {
     return this.#usersRepository.getAllUsers();
   }
 
@@ -36,6 +39,24 @@ class UserService {
       throw new Error();
     }
     return updateAdmin;
+  }
+
+  public async updateCount({
+    countOfSubscription,
+    chatId,
+  }: {
+    countOfSubscription: number;
+    chatId: number;
+  }): Promise<number> {
+    const updateCount = await this.#usersRepository.updateCount({
+      countOfSubscription,
+      chatId,
+    });
+
+    if (!updateCount) {
+      throw new Error();
+    }
+    return updateCount;
   }
 
   async getAllAdmins(): Promise<UserEntity[]> {

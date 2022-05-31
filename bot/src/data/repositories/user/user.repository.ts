@@ -46,7 +46,7 @@ class User {
   }
 
   public static modelToEntity(model: UserM): UserEntity {
-    const { chatId, firstName, username, admin, joined, lastAction } = model;
+    const { chatId, firstName, username, admin, joined, lastAction, countOfSubscription } = model;
 
     return UserEntity.createNew({
       chatId,
@@ -55,6 +55,7 @@ class User {
       admin,
       joined,
       lastAction,
+      countOfSubscription,
     });
   }
 }

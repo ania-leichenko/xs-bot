@@ -11,15 +11,15 @@ class User extends AbstractModel {
   [UserTableField.ADMIN]: number;
   [UserTableField.JOINED]: Date;
   [UserTableField.LAST_ACTION]: Date;
+  [UserTableField.COUNT_OF_SUBSCRIPTION]: number;
 
-  static get idColumn():string {
+  static get idColumn(): string {
     return UserTableField.CHAT_ID;
   }
 
   static get tableName(): string {
     return TableName.USERS;
   }
-
 }
 
 export { User };
