@@ -444,9 +444,7 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<b>Bonus level:</b> ${level}
-
-`;
+<b>Bonus level:</b> ${level}`;
         }
         if (ticket.status === 'Pending') {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
