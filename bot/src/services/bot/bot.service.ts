@@ -446,7 +446,7 @@ ${TILL} ${subscriptionTime}
 
 <b>Bonus level:</b> ${level}
 
-`;
+<i>*Add the number 1 to the month so that option is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>`;
         }
         if (ticket.status === 'Pending') {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -461,8 +461,7 @@ ${TILL} -
         html: `${PERSONAL_AREA_TITLE}
 
 ${USER_SUBCRITIONS}
-${html}
-<i>*Add the number 1 to the month so that iption is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>`,
+${html}`,
         buttons: [[{ title: BACK, id: START_SCREEN }]],
       });
     } catch (e) {
