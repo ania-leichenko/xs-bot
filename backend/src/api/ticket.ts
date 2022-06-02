@@ -74,7 +74,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
       if (req.body.paymentMethod !== 'Free') {
         fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}%0A${messages.message}`,
           {
             method: 'GET',
             headers: {
@@ -129,7 +129,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           });
           if (countOfSubscription === 2) {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${BRONZE_BONUS}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${BRONZE_BONUS}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
@@ -141,7 +141,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           }
           if (countOfSubscription === 4) {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${SILVER_BONUS}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${SILVER_BONUS}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
@@ -153,7 +153,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           }
           if (countOfSubscription === 6) {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${GOLD_BONUS}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${GOLD_BONUS}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
@@ -165,7 +165,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           }
           if (countOfSubscription === 12) {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${PLATINUM_BONUS}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${PLATINUM_BONUS}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
@@ -193,7 +193,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         } else {
           if (req.body.paymentMethod !== 'Free') {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON} ${messages.message}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} <b>SYSTEM MESSAGE</b> ${WARNING_ICON}%0A${messages.message}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
@@ -204,7 +204,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
           } else {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WIN_TEXT}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WIN_TEXT}&parse_mode=HTML`,
               {
                 method: 'GET',
                 headers: {
