@@ -54,10 +54,11 @@ export const COPY_SIGNALS_TEXT = `<b>Copy signals</b>
 Copy our signals to your trading account from bot with a delay of 0.1ms!
 
 What is included in setting up signal copying?
-${BLACK_SQUARE_ICON} Setting up a trading lot
-${BLACK_SQUARE_ICON} Enable or disable copying of individual currencies
-${BLACK_SQUARE_ICON} Copying signals with take profit and stop loss
+${BLACK_SQUARE_ICON} Setting up a trading lot (in the possibility of setting a lot for each trading symbol + disabling signal copying for any trading symbol)
+${BLACK_SQUARE_ICON} Copying signals with take profit and stop loss including copying limit orders
 ${BLACK_SQUARE_ICON} If the deal was closed in the bot, the deal is closed automatically on the account. If we close half lot of the deal in the bot, this is also will be closed half lot on your trading account
+${BLACK_SQUARE_ICON} Full risk customization. Your account will never lose all funds from our signals, because we have a long conversation with each participant of signal copying, and come to a consensus of risks. We set the optimal lot so as not to overestimate the risks and recoup the monthly subscription + earn a net profit.
+${BLACK_SQUARE_ICON} The minimum deposit is 200$. With this amount, we will help you start earning. But the recommended amount starts from $1000. No hidden fees, and no share profit. Only monthly payment.
 
 Choose the most convenient payment method for you and get a subscription within a minute after payment ${SEE_BUTTONS}`;
 export const BONUS_TEXT = `<b>${BONUS_TITLE}</b>
