@@ -6,6 +6,7 @@ import { initApi } from '~/api/api';
 import knexConfig from '../knexfile';
 import cors from '@fastify/cors';
 import { task } from './services/cron/cron';
+import { task as dumpdbTask } from './services/cron/dumpdb';
 
 const app = Fastify({
   bodyLimit: 6 * 1024 * 1024,
@@ -34,3 +35,4 @@ app.listen(ENV.APP.SERVER_PORT, ENV.APP.SERVER_HOST, (err, address) => {
 });
 
 task.start();
+dumpdbTask.start();

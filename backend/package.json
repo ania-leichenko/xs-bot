@@ -18,7 +18,8 @@
     "prestart": "npm run migrate",
     "start": "node ./src/server.js",
     "build:ts": "tsc && tsc-alias -p tsconfig.json",
-    "build": "npm run build:ts"
+    "build": "npm run build:ts",
+    "dumpdb": "sh dumpdb.sh"
   },
   "dependencies": {
     "@aws-sdk/client-ec2": "3.51.0",
@@ -37,6 +38,8 @@
     "fastify": "3.25.3",
     "fastify-cors": "^6.1.0",
     "fastify-multer": "2.0.2",
+    "google-auth-library": "^8.0.2",
+    "googleapis": "^100.0.0",
     "jsonwebtoken": "8.5.1",
     "knex": "^1.0.1",
     "node-cron": "^3.0.0",

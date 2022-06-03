@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   xs_bot_postgres:
@@ -16,11 +16,8 @@ services:
       - POSTGRES_DB=xs_bot
       - PGDATA=/var/lib/postgresql/data
     volumes:
-      - xs_bot_postgres_data:/var/lib/postgresql/data
-
-volumes:
-  xs_bot_postgres_data:
-    driver: local
+      - ./postgresql/data:/var/lib/postgresql/data
+      - ./postgresql/dumps:/dumps
 
 networks:
   xs_bot_backend_network:
