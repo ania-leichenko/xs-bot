@@ -53,7 +53,7 @@ export const TicketTable: FC = () => {
   }, []);
 
   return (
-    <TableContainer component={Paper} className={classes.tableContainer}>
+    <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>

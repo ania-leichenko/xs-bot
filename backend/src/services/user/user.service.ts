@@ -26,13 +26,16 @@ class UserService {
   public async update({
     chatId,
     admin,
+    countOfSubscription,
   }: {
     chatId: number;
     admin: number;
+    countOfSubscription: number;
   }): Promise<number> {
     const updateAdmin = await this.#usersRepository.update({
       chatId,
       admin,
+      countOfSubscription,
     });
 
     if (!updateAdmin) {

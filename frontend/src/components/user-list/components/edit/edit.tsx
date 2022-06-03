@@ -27,6 +27,7 @@ type Users = {
   admin: number;
   joined: string;
   lastAction: string;
+  countOfSubscription: number;
 };
 
 type Props = {
@@ -40,26 +41,37 @@ export const Edit: FC<Props> = ({ user, setUsers }) => {
     right: false,
   });
   const [admin, setAdmin] = React.useState(user.admin);
+  const [userCount, setUserCount] = React.useState(user.countOfSubscription);
   const { REACT_APP_API_ORIGIN_URL } = process.env;
 
   const onChangeAdmin = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setAdmin(Number(event.target.value));
-    fetch(`${REACT_APP_API_ORIGIN_URL}user/${user.chatId}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        chatId: user.chatId,
-        admin: Number(event.target.value),
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-      });
   };
+
+  const onChangeUserCount = (event: {
+    target: { value: React.SetStateAction<number> };
+  }): void => {
+    setUserCount(event.target.value);
+  };
+
+   const handleSaveTicket = (): void => {
+      fetch(`${REACT_APP_API_ORIGIN_URL}user/${user.chatId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          chatId: user.chatId,
+          admin: admin,
+          countOfSubscription: userCount,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setUsers(data);
+        });
+   };
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -107,7 +119,31 @@ export const Edit: FC<Props> = ({ user, setUsers }) => {
                   ))}
                 </TextField>
               </div>
+              <div>
+                <TextField
+                  id="outlined-textarea"
+                  label="Count"
+                  placeholder=""
+                  multiline
+                  variant="outlined"
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  onChange={onChangeUserCount}
+                  value={userCount}
+                />
+              </div>
             </form>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                href="#contained-buttons"
+                onClick={handleSaveTicket}
+                className={classes.button}
+              >
+                Save
+              </Button>
+            </div>
           </SwipeableDrawer>
         </React.Fragment>
       ))}

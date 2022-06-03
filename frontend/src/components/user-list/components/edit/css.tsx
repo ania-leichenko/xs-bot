@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme: Theme) =>
     icons: {
       margin: '8px',
     },
+    button: {
+      margin: '16px',
+    },
   }),
 );
 

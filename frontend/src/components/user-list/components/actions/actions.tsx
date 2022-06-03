@@ -15,6 +15,7 @@ type Users = {
   admin: number;
   joined: string;
   lastAction: string;
+  countOfSubscription: number;
 };
 
 type Props = {

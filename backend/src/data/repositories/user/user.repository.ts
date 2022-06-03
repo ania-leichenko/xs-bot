@@ -29,14 +29,17 @@ class UserRepository {
   public async update({
     chatId,
     admin,
+    countOfSubscription,
   }: {
     chatId: number;
     admin: number;
+    countOfSubscription: number;
   }): Promise<number> {
     const updateAdmin = await this.#UserModel
       .query()
       .patch({
         admin: admin,
+        countOfSubscription: countOfSubscription,
       })
       .where({ chatId: chatId });
     return updateAdmin;

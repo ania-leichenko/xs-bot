@@ -8,8 +8,6 @@ const useStyles = makeStyles(
     table: {
       minWidth: 650,
     },
-    tableContainer: {
-    },
     tableHead: {
       display: 'flex',
       alignItems: 'center',

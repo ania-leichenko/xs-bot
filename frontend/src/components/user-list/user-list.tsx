@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Actions } from './components/actions/actions';
 import { formateDate } from '../formateDate/formateDate';
+import Chip from '@mui/material/Chip';
 
 type Users = {
   chatId: number;
@@ -17,6 +18,24 @@ type Users = {
   joined: string;
   lastAction: string;
   countOfSubscription: number;
+};
+
+const colorChip: {
+  [key: number]: 'None' | 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
+} = {
+  0: 'None',
+  1: 'None',
+  2: 'Bronze',
+  3: 'Bronze',
+  4: 'Silver',
+  5: 'Silver',
+  6: 'Gold',
+  7: 'Gold',
+  8: 'Gold',
+  9: 'Gold',
+  10: 'Gold',
+  11: 'Gold',
+  12: 'Platinum',
 };
 
 export const UserListTable: FC = () => {
@@ -44,6 +63,7 @@ export const UserListTable: FC = () => {
         <TableHead>
           <TableCell align="center">User</TableCell>
           <TableCell align="center">Admin</TableCell>
+          <TableCell align="center">Bonus</TableCell>
           <TableCell align="center">Count</TableCell>
           <TableCell align="center">Joined</TableCell>
           <TableCell align="center">Last Action</TableCell>
@@ -58,6 +78,12 @@ export const UserListTable: FC = () => {
                   <div>{`@${user.username}`}</div>
                 </TableCell>
                 <TableCell align="center">{user.admin}</TableCell>
+                <TableCell align="center">
+                  <Chip
+                    label={colorChip[user.countOfSubscription]}
+                    color="default"
+                  ></Chip>
+                </TableCell>
                 <TableCell align="center">{user.countOfSubscription}</TableCell>
                 <TableCell align="center">{formateDate(user.joined)}</TableCell>
                 <TableCell align="center">
