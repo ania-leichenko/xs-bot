@@ -74,7 +74,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       });
       if (req.body.paymentMethod !== 'Free') {
         fetch(
-          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} SYSTEM MESSAGE ${WARNING_ICON}%0A${messages.message}`,
+          `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WARNING_ICON} <b>SYSTEM MESSAGE</b> ${WARNING_ICON}%0A${messages.message}&parse_mode=HTML`,
           {
             method: 'GET',
             headers: {
@@ -181,7 +181,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         // @ts-ignore
         if (req.body.planStatus) {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${CHANGED_PLAN} ${req.body.plan} `,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${CHANGED_PLAN} ${req.body.plan}&parse_mode=HTML`,
             {
               method: 'GET',
               headers: {
