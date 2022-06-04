@@ -7,7 +7,7 @@ import {
 } from './emoji.enum';
 
 export const FOREX_TITLE = 'Forex';
-export const FOREX_BUTTON_TITLE = 'Forex — 99$/month';
+export const FOREX_BUTTON_TITLE = 'Forex — 79$/month [-20% OFF]';
 export const COPY_SIGNALS_TITLE = 'Copy signals — 199$/month';
 export const BONUS_BUTTON_TITLE = `${STAR_ICON} Bonus accrual`;
 export const BONUS_TITLE =
