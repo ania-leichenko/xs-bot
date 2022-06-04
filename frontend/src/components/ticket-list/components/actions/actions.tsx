@@ -48,6 +48,7 @@ export const Actions: FC<Props> = ({ ticket, setTickets }) => {
       body: JSON.stringify({
         chatId: ticket.chatId,
         paymentMethod: ticket.paymentMethod,
+        plan: ticket.plan,
         messageForUser: `Your subscription for ${ticket.plan} has been rejected by our system. For all questions, please contact the administrator @bestsignalsadmin`,
       }),
     })

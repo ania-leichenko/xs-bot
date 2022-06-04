@@ -81,7 +81,7 @@ export const UserListTable: FC = () => {
                 <TableCell align="center">
                   <Chip
                     label={colorChip[user.countOfSubscription]}
-                    color="default"
+                    color="primary"
                   ></Chip>
                 </TableCell>
                 <TableCell align="center">{user.countOfSubscription}</TableCell>

@@ -68,6 +68,8 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       rep: FastifyReply,
     ) {
       await ticketService.softDelete(req.params.id);
+      const admins = await usersServ.getAllAdmins();
+      const user = await usersServ.getUserById(req.body.chatId);
       const messages = await messageForUsers.create({
         chatId: req.body.chatId,
         message: req.body.messageForUser,
@@ -83,6 +85,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             },
           },
         );
+        admins.map((admin) => {
+          fetch(
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Subscription rejected — ❌%0ASubscription rejected for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
+            {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+              },
+            },
+          );
+        });
       }
       await ticketService.updateStatus(req.params.id);
       const tickets = await ticketService.getAllTickets();
@@ -120,6 +134,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         new Date(req.body.subscriptionTime) > date &&
         user
       ) {
+        const admins = await usersServ.getAllAdmins();
         let countOfSubscription = user.countOfSubscription;
         if (countOfSubscription < 12) {
           countOfSubscription++;
@@ -138,6 +153,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
+            admins.map((admin) => {
+              fetch(
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to bronze for ${user.firstName}, @${user.username}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                },
+              );
+            });
           }
           if (countOfSubscription === 4) {
             fetch(
@@ -150,6 +177,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
+            admins.map((admin) => {
+              fetch(
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to silver for ${user.firstName}, @${user.username}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                },
+              );
+            });
           }
           if (countOfSubscription === 6) {
             fetch(
@@ -162,6 +201,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
+            admins.map((admin) => {
+              fetch(
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to gold for ${user.firstName}, @${user.username}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                },
+              );
+            });
           }
           if (countOfSubscription === 12) {
             fetch(
@@ -174,6 +225,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
+            admins.map((admin) => {
+              fetch(
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to platinum for ${user.firstName}, @${user.username}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                },
+              );
+            });
           }
         }
 
@@ -190,6 +253,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
               },
             },
           );
+          admins.map((admin) => {
+            fetch(
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Plan moved — ❕%0APlan moved to ${req.body.plan} for ${user.firstName}, @${user.username}`,
+              {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+              },
+            );
+          });
         } else {
           if (req.body.paymentMethod !== 'Free') {
             fetch(
@@ -202,6 +277,18 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
                 },
               },
             );
+            admins.map((admin) => {
+              fetch(
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Subscription approved — ✅%0ASubscription approved for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
+                {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                },
+              );
+            });
           } else {
             fetch(
               `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${messages.chatId}&text=${WIN_TEXT}&parse_mode=HTML`,
