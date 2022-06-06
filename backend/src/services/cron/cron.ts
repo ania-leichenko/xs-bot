@@ -11,7 +11,7 @@ const task = cron.schedule('0 */1 * * * *', async () => {
   const tickets = await ticketService.getAllTickets();
   const admins = await usersService.getAllAdmins();
   for (const ticket of tickets) {
-    const SUBSCRIPTION_HAS_EXPIRED = `${WARNING_ICON} <b>SYSTEM MESSAGE</b> ${WARNING_ICON}}%0AYour subscription for ${ticket.plan} has expired. In order to continue using our signals, you need to pay for a subscription&parse_mode=HTML`;
+    const SUBSCRIPTION_HAS_EXPIRED = `${WARNING_ICON} <b>SYSTEM MESSAGE</b> ${WARNING_ICON}%0AYour subscription for ${ticket.plan} has expired. In order to continue using our signals, you need to pay for a subscription&parse_mode=HTML`;
     if (
       new Date(ticket.subscriptionTime) < new Date() &&
       ticket.status === 'Active'

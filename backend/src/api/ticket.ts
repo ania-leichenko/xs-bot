@@ -87,7 +87,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         );
         admins.map((admin) => {
           fetch(
-            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Subscription rejected — ❌%0ASubscription rejected for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
+            `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=❌ Subscription rejected for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
             {
               method: 'GET',
               headers: {
@@ -155,7 +155,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
             admins.map((admin) => {
               fetch(
-                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to bronze for ${user.firstName}, @${user.username}`,
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=⬆️ Level up to bronze 🥉 for ${user.firstName}, @${user.username}`,
                 {
                   method: 'GET',
                   headers: {
@@ -179,7 +179,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
             admins.map((admin) => {
               fetch(
-                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to silver for ${user.firstName}, @${user.username}`,
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=⬆️ Level up to silver 🥈 for ${user.firstName}, @${user.username}`,
                 {
                   method: 'GET',
                   headers: {
@@ -203,7 +203,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
             admins.map((admin) => {
               fetch(
-                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to gold for ${user.firstName}, @${user.username}`,
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=⬆️ Level up to gold 🥇 for ${user.firstName}, @${user.username}`,
                 {
                   method: 'GET',
                   headers: {
@@ -227,7 +227,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
             admins.map((admin) => {
               fetch(
-                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Level up — ⬆️%0ALevel up to platinum for ${user.firstName}, @${user.username}`,
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=⬆️ Level up to platinum 💎 for ${user.firstName}, @${user.username}`,
                 {
                   method: 'GET',
                   headers: {
@@ -255,7 +255,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           );
           admins.map((admin) => {
             fetch(
-              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Plan moved — ❕%0APlan moved to ${req.body.plan} for ${user.firstName}, @${user.username}`,
+              `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=❕Plan moved to ${req.body.plan} for ${user.firstName}, @${user.username}`,
               {
                 method: 'GET',
                 headers: {
@@ -279,7 +279,7 @@ const initTicketsApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
             );
             admins.map((admin) => {
               fetch(
-                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=Subscription approved — ✅%0ASubscription approved for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
+                `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${admin.chatId}&text=✅ Subscription approved for ${user?.firstName}, @${user?.username}, ${req.body.plan}`,
                 {
                   method: 'GET',
                   headers: {
