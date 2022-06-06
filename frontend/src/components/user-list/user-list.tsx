@@ -20,7 +20,7 @@ type Users = {
   countOfSubscription: number;
 };
 
-const colorChip: {
+const labelChip: {
   [key: number]: 'None' | 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
 } = {
   0: 'None',
@@ -36,6 +36,16 @@ const colorChip: {
   10: 'Gold',
   11: 'Gold',
   12: 'Platinum',
+};
+
+const colorChip: {
+  [key: string]: 'success' | 'warning' | 'default' | 'primary' | 'error';
+} = {
+  None: 'default',
+  Bronze: 'error',
+  Silver: 'success',
+  Gold: 'warning',
+  Platinum: 'primary',
 };
 
 export const UserListTable: FC = () => {
@@ -80,8 +90,8 @@ export const UserListTable: FC = () => {
                 <TableCell align="center">{user.admin}</TableCell>
                 <TableCell align="center">
                   <Chip
-                    label={colorChip[user.countOfSubscription]}
-                    color="primary"
+                    label={labelChip[user.countOfSubscription]}
+                    color={colorChip[labelChip[user.countOfSubscription]]}
                   ></Chip>
                 </TableCell>
                 <TableCell align="center">{user.countOfSubscription}</TableCell>
