@@ -5,8 +5,10 @@ export function formateDate(date: string): string {
     day = '0' + day;
   }
   let mouth: number | string = allDate.getMonth();
-  if (mouth < 10) {
+  if (mouth < 9) {
     mouth = `0${mouth + 1}`;
+  } else {
+    mouth = `${mouth + 1}`;
   }
   const year = allDate.getFullYear();
   let hour: number | string = allDate.getHours();
