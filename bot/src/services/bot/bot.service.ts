@@ -444,14 +444,12 @@ Country: ${ticket.country}`;
 <b>Status:</b> Your subscription active
 ${TILL} ${subscriptionTime}
 
-<b>Bonus level:</b> ${level}
-
-<i>*Add the number 1 to the month so that option is displayed correctly. We are working on fixing this error. The problem is on the telegram side.</i>`;
+<b>Bonus level:</b> ${level}`;
         }
         if (ticket.status === 'Pending') {
           // eslint-disable-next-line @typescript-eslint/no-unused-vars
           html += `<b>Plan:</b> ${ticket.plan}
-<b>Status:</b> Wait for subscription confirmation.
+<b>Status:</b> Your subscription is being processed...
 ${TILL} -
 
 `;
