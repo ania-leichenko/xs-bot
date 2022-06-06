@@ -6,7 +6,7 @@ export function formateDate(date: string): string {
   }
   let mouth: number | string = allDate.getMonth();
   if (mouth < 10) {
-    mouth = `0${mouth}`;
+    mouth = `0${mouth + 1}`;
   }
   const year = allDate.getFullYear();
   let hour: number | string = allDate.getHours();

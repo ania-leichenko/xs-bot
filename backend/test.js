@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable no-console */
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
+const { GoogleAuth } = require('google-auth-library');
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
@@ -103,7 +105,11 @@ async function listFiles(auth) {
   const service = google.drive({ version: 'v3', auth });
   const fileMetadata = {
     'title': 'test.txt',
-    'parents': [{ id: '1jOqU56P3RXrf-Htd23I_APJbejdOCVUn' }],
+    // 'parents': [
+    //   {
+    //     id: '1jOqU56P3RXrf-Htd23I_APJbejdOCVUn',
+    //   },
+    // ],
   };
   const media = {
     mimeType: 'text/plain',
@@ -117,3 +123,35 @@ async function listFiles(auth) {
   console.log('File Id:', file.data.id);
   return file.data.id;
 }
+
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// async function moveFileToFolder(fileId, folderId) {
+
+//   // Get credentials and build service
+//   // TODO (developer) - Use appropriate auth mechanism for your app
+//   const auth = new GoogleAuth({
+//     scopes: 'https://www.googleapis.com/auth/drive',
+//   });
+//   const service = google.drive({ version: 'v3', auth });
+
+//     // Retrieve the existing parents to remove
+//     const file = await service.files.get({
+//       fileId: fileId,
+//       fields: 'parents',
+//     });
+
+//     // Move the file to the new folder
+//     const previousParents = file.data.parents
+//       .map(function (parent) {
+//         return parent.id;
+//       })
+//       .join(',');
+//     const files = await service.files.update({
+//       fileId: fileId,
+//       addParents: folderId,
+//       removeParents: previousParents,
+//       fields: 'id, parents',
+//     });
+//     console.log(files.status);
+//     return files.status;
+// }
