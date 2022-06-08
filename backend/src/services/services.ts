@@ -6,6 +6,7 @@ import {
 import { UserService } from './user/user.service';
 import { Ticket } from './ticket/ticket.service';
 import { MessageForUsers } from './message-for-users/message-for-users.service';
+import { GoogleDrive } from './google-drive/google-drive.service';
 
 const users = new UserService({
   usersRepository,
@@ -19,4 +20,6 @@ const ticket = new Ticket({
   ticketRepository,
 });
 
-export { users, ticket, messageForUsers };
+const googleDrive = new GoogleDrive();
+
+export { users, ticket, messageForUsers, googleDrive };
