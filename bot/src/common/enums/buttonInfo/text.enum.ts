@@ -169,5 +169,4 @@ That's all. The rest of the work lies entirely with us. Trust us as market maker
 
 ${RED_TRIANGLE_POINTED_UP_ICON} Admin | @bestsignalsadmin
 ${SMALL_ORANGE_DIAMONT_ICON} Bot | @xpremium_bot
-${SMALL_BLUE_DIAMONT_ICON} Free group | @xsignals_success
 ${CHECKMARK_ICON} Our trading course | @xMMcourse`;

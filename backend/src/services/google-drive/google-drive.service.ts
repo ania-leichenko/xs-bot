@@ -36,7 +36,7 @@ class GoogleDrive {
     name: string;
     mimeType: string;
   }): Promise<unknown> {
-    return this.#drive.files.create({
+    const result = await this.#drive.files.create({
       requestBody: {
         name, //file name
         mimeType,
@@ -46,6 +46,7 @@ class GoogleDrive {
         body: fs.createReadStream(filePath),
       },
     });
+    return result;
   }
 }
 

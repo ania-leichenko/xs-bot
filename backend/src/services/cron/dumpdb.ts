@@ -4,8 +4,11 @@ import cron from 'node-cron';
 import fs from 'fs';
 import { googleDrive } from '../services';
 
-const task = cron.schedule('0 * 1 * * *', async () => {
-  exec('yarn dumpdb');
+const task = cron.schedule('0 * */1 * * *', async () => {
+  const date = new Date();
+  const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  exec(`docker exec xs_bot_postgres pg_dumpall --schema-only -U postgres --file=dumps/dump-${dateStr}-schema.sql`);
+  exec(`docker exec xs_bot_postgres pg_dumpall --data-only -U postgres --file=dumps/dump-${dateStr}-data.sql`);
   // TODO upload dumps to storage (Google drive etc.)
   const dumpsPath = __dirname + '/../../../../.docker/xs_bot/postgresql/dumps/';
   const files = fs.readdirSync(dumpsPath);
@@ -18,7 +21,6 @@ const task = cron.schedule('0 * 1 * * *', async () => {
     });
     fs.rmSync(filePath);
   }
-  // TODO delete files after upload
 });
 
 export { task };
