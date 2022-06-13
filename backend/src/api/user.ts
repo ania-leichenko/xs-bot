@@ -54,7 +54,6 @@ const initUsersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ) {
       const countOfSubscription = req.body.countOfSubscription;
       if (countOfSubscription < 12) {
-        //console.log('.........', req.params.id);
         if (countOfSubscription === 2) {
           fetch(
             `https://api.telegram.org/bot${ENV.TELEGRAM_TOKEN}/sendMessage?chat_id=${req.params.id}&text=${BRONZE_BONUS}&parse_mode=HTML`,
@@ -102,7 +101,7 @@ const initUsersApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
               },
             },
           );
-       }
+        }
       }
       await usersService.update({
         chatId: req.params.id,

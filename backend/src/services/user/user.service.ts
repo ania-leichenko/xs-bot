@@ -1,5 +1,10 @@
 import { users as usersRep } from '~/data/repositories/repositories';
 import { User as UserEntity } from './user.entity';
+import {
+  messageForUsers as messageForUsersServ,
+  ticket as ticketServ,
+  messageFromBot as messageFromBotServ,
+} from '~/services/services';
 
 type Constructor = {
   usersRepository: typeof usersRep;
@@ -20,6 +25,9 @@ class UserService {
   }
 
   public async delete(id: number): Promise<void> {
+    await messageFromBotServ.delete(id);
+    await messageForUsersServ.delete(id);
+    await ticketServ.delete(id);
     await this.#usersRepository.delete(id);
   }
 

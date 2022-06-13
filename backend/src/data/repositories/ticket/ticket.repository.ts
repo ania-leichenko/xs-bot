@@ -74,6 +74,10 @@ class Ticket {
     return ticket;
   }
 
+  public async delete(usersId: number): Promise<number> {
+    return this.#TicketModel.query().deleteById(usersId);
+  }
+
   public static modelToEntity(model: TicketM): TicketEntity {
     return TicketEntity.initialize(model);
   }

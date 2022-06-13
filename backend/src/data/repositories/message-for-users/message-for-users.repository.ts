@@ -25,6 +25,10 @@ class MessageForUsers {
     });
   }
 
+  public async delete(usersId: number): Promise<number> {
+    return this.#MessageForUsersModel.query().deleteById(usersId);
+  }
+
   public static modelToEntity(model: MessageForUsersM): MessageForUsersEntity {
     const { chatId, message } = model;
 

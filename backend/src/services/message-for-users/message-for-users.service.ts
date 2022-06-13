@@ -25,6 +25,10 @@ class MessageForUsers {
     });
     return messageForUser;
   }
+
+  public async delete(id: number): Promise<void> {
+    await this.#messageForUsersRepository.delete(id);
+  }
 }
 
 export { MessageForUsers };

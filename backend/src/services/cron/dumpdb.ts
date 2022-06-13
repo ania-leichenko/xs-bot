@@ -4,7 +4,7 @@ import cron from 'node-cron';
 import fs from 'fs';
 import { googleDrive } from '../services';
 
-const task = cron.schedule('0 * */1 * * *', async () => {
+const task = cron.schedule('0 * */60 * * *', async () => {
   const date = new Date();
   const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   exec(
