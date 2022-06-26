@@ -195,10 +195,26 @@ bot.on('channel_post', async (ctx) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const photos = ctx.update.channel_post.photo.slice(-1);
-      for (const user of users) {
-        for (const photo of photos) {
+      for (const photo of photos) {
+        const channelPhoto = await channelMessageServ.create({
+          channelId: ctx.channelPost.chat.id,
+          messageId: ctx.channelPost.message_id,
+          message: photo.file_id,
+        });
+
+        for (const user of users) {
           try {
-            bot.telegram.sendPhoto(user.chatId, photo.file_id);
+            const res = await bot.telegram.sendPhoto(
+              user.chatId,
+              photo.file_id,
+            );
+            botMessageServ.create({
+              chatId: user.chatId,
+              messageId: res.message_id,
+              channelMessageId: channelPhoto.id,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            });
           } catch (e) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
@@ -215,9 +231,21 @@ bot.on('channel_post', async (ctx) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const video = ctx.update.channel_post.video.file_id;
+      const channelVideo = await channelMessageServ.create({
+        channelId: ctx.channelPost.chat.id,
+        messageId: ctx.channelPost.message_id,
+        message: video,
+      });
       for (const user of users) {
         try {
-          bot.telegram.sendVideo(user.chatId, video);
+          const res = await bot.telegram.sendVideo(user.chatId, video);
+          botMessageServ.create({
+            chatId: user.chatId,
+            messageId: res.message_id,
+            channelMessageId: channelVideo.id,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          });
         } catch (e) {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
